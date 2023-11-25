@@ -1,0 +1,57 @@
+  .menu-page {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start; /* Align items to the top */
+      justify-content: space-between;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 30px; /* Increase top padding */
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #ccc;
+    }
+    
+    .menu-logo {
+      display: flex;
+      align-items: flex-start; /* Align items to the top */
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .menu-nav {
+      list-style: none;
+      display: flex;
+      align-items: flex-start; /* Align items to the top */
+      margin: 0;
+      padding: 0;
+    }
+    
+    .menu-nav li {
+      margin-right: 20px;
+    }
+    
+    .menu-nav a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav-link.active {
+      color: maroon; /* Change the color for the active link */
+    }
+
+    .explore-cit-buildings {
+      margin-top: 20px;
+      font-size: 1.5em;
+      text-align: center;
+    }
+    
+    .map-building {
+      margin-top: 20px;
+      font-size: 1.5em;
+      text-align: center;
+    }
