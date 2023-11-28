@@ -32,9 +32,9 @@ const UserProfile = () => {
                 <Card className="mb-4">
                   <Card.Body className="text-center">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" className="rounded-circle img-fluid" style={{ width: '150px' }} />
-                    <h5 className="my-3">Chris</h5>
-                    <p className="text-muted mb-1">User </p>
-                    <p className="text-muted mb-4">Cebu City</p>
+                    <h5 className="my-3">John</h5>
+                    <p className="text-muted mb-1">Student </p>
+                    <p className="text-muted mb-4">BSIT</p>
                     <div className="d-flex justify-content-center mb-2">
                     </div>
                   </Card.Body>
@@ -59,7 +59,7 @@ const UserProfile = () => {
                         <p className="mb-0">Full Name</p>
                       </div>
                       <div className="col-sm-9">
-                        <p className="text-muted mb-0">Christian</p>
+                        <p className="text-muted mb-0">John Doe</p>
                       </div>
                     </div>
                     <hr />
