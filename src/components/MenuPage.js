@@ -69,8 +69,8 @@ const MenuPage = () => {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
-    setActiveLink('home');
-    navigate('/');
+    // setActiveLink('home');
+    // navigate('/');
   };
 
   const navBarStyles = {
