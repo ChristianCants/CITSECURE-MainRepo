@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
 import { SearchBar } from './SearchBar'; // Update the path accordingly
+import Carousel from 'react-bootstrap/Carousel';
 
 const Building = () => {
   const [activeLink, setActiveLink] = useState('building');
@@ -73,6 +73,7 @@ const Building = () => {
     position: 'relative',
   };
 
+
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
@@ -134,29 +135,72 @@ const Building = () => {
         </div>
       </div>
 
-      {/* SearchBar Container */}
-      <div style={searchBarContainerStyles}>
-      <SearchBar setResults={handleSearchResults} placeholderText="Search Course" />
+      {/* Container for SearchBar, DarkVariantExample Carousel, and Building content */}
+      <div style={{ position: 'relative', marginTop: '20px' }}>
+        {/* SearchBar Container */}
+        <div style={searchBarContainerStyles}>
+          <SearchBar setResults={handleSearchResults} placeholderText="Search Course" />
 
-        {/* Get Directions Button */}
-       
+          {/* Get Directions Button */}
+          <button style={directionButtonStyles} onClick={handleGetDirections}>
+            Get Directions
+          </button>
+        </div>
+
+        {/* DarkVariantExample Carousel */}
+        <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto' }}>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="/images/Building1.jpg"
+              alt=""
+              style={{ height: '600px', width: '200%' }}
+            />
+            <Carousel.Caption>
+              <h5>First slide label</h5>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="https://images.pexels.com/photos/1480688/pexels-photo-1480688.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+              alt=""
+              style={{ height: '600px' }}
+            />
+            <Carousel.Caption>
+              <h5>Second slide label</h5>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.2116175301.1701129600&semt=ais"
+              alt=""
+              style={{ height: '600px' }}
+            />
+            <Carousel.Caption>
+              <h5>Third slide label</h5>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+
+        {/* Your Building content goes here */}
+        <div style={{ marginTop: '20px', position: 'relative' }}>
+          {/* Add your content, images, etc. */}
+        </div>
+
+        {/* Display search results */}
+        <div>
+          {searchResults.map((result) => (
+            <div key={result.id}>{result.name}</div>
+          ))}
+        </div>
       </div>
-
-      {/* Your Building content goes here */}
-      <div style={{ marginTop: '20px', position: 'relative' }}>
-        {/* Add your content, images, etc. */}
-        
-      </div>
-
-    {/* Display search results */}
-<div>
-  {searchResults.map((result) => (
-    <div key={result.id}>{result.name}</div>
-  ))}
-</div>
-
-</div>
-);
+    </div>
+  );
 };
 
 export default Building;
