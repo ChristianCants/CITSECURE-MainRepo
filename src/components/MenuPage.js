@@ -173,7 +173,7 @@ const MenuPage = () => {
 
       <Container fluid style={styles}>
         <div style={welcomeRectangleStyles}>
-          <h1>WELCOME CIT-Navigo </h1>
+          <h1>Welcome CIT-Navigo </h1>
         </div>
       </Container>
 
