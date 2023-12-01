@@ -89,14 +89,25 @@ const Building = () => {
     console.log('Getting directions...');
   };
 
-  const handleProfileClick = () => {
-    // Implement logic for handling profile click
-    console.log('Profile clicked');
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?');
+
+    if (shouldLogout) {
+      // Add any logout logic here
+      // For example, clear user session, cookies, or perform API logout
+      // After the logout logic, navigate to the login page or any other desired page
+      navigate('/');
+    }
   };
 
-  const handleLogout = () => {
-    // Implement logic for handling logout click
-    console.log('Logout clicked');
+  const handleSettingsClick = () => {
+    // Add logic to handle settings click
+    console.log('Settings clicked');
+  };
+
+  const handleProfileClick = () => {
+    // Add logic to handle profile click
+    navigate('/user-profile'); // Navigate to the user profile page
   };
 
   return (
