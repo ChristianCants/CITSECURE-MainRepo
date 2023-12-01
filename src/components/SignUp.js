@@ -4,46 +4,44 @@ import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const SignUp = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
   const [gender, setGender] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedGender, setSelectedGender] = useState('');
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
-      let newUser = {}; // Initialize an empty object
-
-      // Conditionally create newUser object only if fields are not empty
-      if (firstName && lastName && gender && email && password) {
-        newUser = {
-          firstName,
-          lastName,
-          gender,
-          email,
-          password,
-        };
-      } else {
-        // If any of the fields are empty, do not proceed with signup
+      if (!firstName || !lastName || !selectedGender || !email || !password) {
         alert('Please fill out all fields');
         return;
       }
-
+  
+      const newUser = {
+        firstName,
+        lastName,
+        gender: selectedGender,
+        email,
+        password,
+      };
+  
       const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+  
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
       console.error('Signup failed:', error.message);
     }
   };
+  
+
 
   const handleClose = () => {
     setShowModal(false);
@@ -120,7 +118,7 @@ const SignUp = () => {
                           style={inputStyle}
                           value={firstName}
                           onChange={(e) => {
-                            setFirstName(e.target.value);
+                            setfirstName(e.target.value);
                           }}
                         />
                         <label className="form-label" htmlFor="form3Example1">
@@ -137,7 +135,7 @@ const SignUp = () => {
                           style={inputStyle}
                           value={lastName}
                           onChange={(e) => {
-                            setLastName(e.target.value);
+                            setlastName(e.target.value);
                           }}
                         />
                         <label className="form-label" htmlFor="form3Example2">
@@ -182,7 +180,7 @@ const SignUp = () => {
                       style={inputStyle}
                       value={email}
                       onChange={(e) => {
-                        setEmail(e.target.value);
+                        setemail(e.target.value);
                       }}
                     />
                     <label className="form-label" htmlFor="form3Example3">
@@ -198,7 +196,7 @@ const SignUp = () => {
                       style={inputStyle}
                       value={password}
                       onChange={(e) => {
-                        setPassword(e.target.value);
+                        setpassword(e.target.value);
                       }}
                     />
                     <label className="form-label" htmlFor="form3Example4">
