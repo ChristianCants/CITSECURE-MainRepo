@@ -256,11 +256,24 @@ const MenuPage = () => {
       </Row>
     </div>
 
-    <section>
-      <div>
-        
-      </div>
-    </section>
+    <section style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <div style={{ backgroundColor: '#FFEFBA', width: '1100px', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 56 54" fill="none">
+        <path d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <span style={{ width: '1px', height: '35px', backgroundColor: 'black', margin: '0 5px' }}></span>
+      <span>CIT NaviGO</span>
+    </div>
+    <div style={{ marginTop: '20px', textAlign: 'center' }}>
+      <p style={{ color: 'maroon' }}>Contact Us</p>
+      <p>Natalio B. Bacalso Ave, Cebu City, 6000 Cebu</p>
+      <p>(032) 261 7741</p>
+    </div>
+  </div>
+</section>
+
+
     </>
   );
 };
