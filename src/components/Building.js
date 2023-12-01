@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar'; // Update the path accordingly
 import Carousel from 'react-bootstrap/Carousel';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const Building = () => {
   const [activeLink, setActiveLink] = useState('building');
@@ -73,7 +74,6 @@ const Building = () => {
     position: 'relative',
   };
 
-
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
@@ -87,6 +87,16 @@ const Building = () => {
   const handleGetDirections = () => {
     // Implement logic to get directions
     console.log('Getting directions...');
+  };
+
+  const handleProfileClick = () => {
+    // Implement logic for handling profile click
+    console.log('Profile clicked');
+  };
+
+  const handleLogout = () => {
+    // Implement logic for handling logout click
+    console.log('Logout clicked');
   };
 
   return (
@@ -133,6 +143,18 @@ const Building = () => {
             </Link>
           ))}
         </div>
+
+        {/* Dropdown Button */}
+        <Dropdown>
+          <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ color: 'white', marginLeft: '10px' }}>
+            <img src="images/Avatar.png" alt="Your Image" width="32" height="32" className="rounded-circle" />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
 
       {/* Container for SearchBar, DarkVariantExample Carousel, and Building content */}
