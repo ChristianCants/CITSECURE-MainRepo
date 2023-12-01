@@ -30,7 +30,7 @@ const Building = () => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     zIndex: '1',
-    width: '60%', // Adjust as needed
+    width: '300px', // Adjust as needed
     textAlign: 'center',
   };
 

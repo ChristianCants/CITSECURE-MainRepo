@@ -270,12 +270,16 @@ const MenuPage = () => {
       <p>Natalio B. Bacalso Ave, Cebu City, 6000 Cebu</p>
       <p>(032) 261 7741</p>
     </div>
+    <div style={lineStyles}></div>
   </div>
 </section>
+<div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '80%' }}></div>
 
-
-    </>
-  );
+<div style={{ textAlign: 'center', color: 'maroon', marginBottom: '20px' }}>
+  2023 CIT NaviGo. All rights reserved.
+</div>
+  </>
+);
 };
 
 export default MenuPage;
