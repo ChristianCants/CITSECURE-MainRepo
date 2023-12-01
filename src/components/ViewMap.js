@@ -25,7 +25,7 @@ const ViewMap = () => {
 
   const searchBarContainerStyles = {
     position: 'absolute',
-    top: '15%',
+    top: '16%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
     zIndex: '1', // Ensures the search bar is above the image

@@ -25,46 +25,12 @@ const Building = () => {
 
   const searchBarContainerStyles = {
     position: 'absolute',
-    top: '30%',
+    top: '20%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    zIndex: '1', // Ensures the search bar is above the image
-  };
-
-  const directionButtonStyles = {
-    backgroundColor: 'maroon',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '30px',
-    marginTop: '70px',
-    cursor: 'pointer',
-    width: '323px',
-    height: '50px',
-    flexShrink: 0,
-  };
-
-  const citNaviGoStyles = {
-    color: 'white',
-    marginLeft: '10px',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-  };
-
-  const iconStyles = {
-    marginRight: '5px', // Adjust the margin as needed
-  };
-
-  const lineStyles = {
-    content: '""',
-    height: '2px',
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    bottom: '-4px',
-    left: 0,
-    display: 'block',
-    transition: '0.3s',
+    zIndex: '1',
+    width: '60%', // Adjust as needed
+    textAlign: 'center',
   };
 
   const navLinkStyles = {
@@ -72,7 +38,6 @@ const Building = () => {
     margin: '0 80px',
     position: 'relative',
   };
-
 
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
@@ -84,33 +49,34 @@ const Building = () => {
     setSearchResults(results);
   };
 
-  const handleGetDirections = () => {
-    // Implement logic to get directions
-    console.log('Getting directions...');
-  };
-
   return (
     <div style={pageStyles}>
       {/* Navigation Bar */}
       <div style={navBarStyles}>
         <div
-          style={citNaviGoStyles}
+          style={{
+            color: 'white',
+            marginLeft: '10px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+          }}
           onClick={() => {
             setActiveLink('home');
             navigate('/menu');
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 56 54" fill="none">
-            <path d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+            <path
+              d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z"
+              stroke="white"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
           <span style={{ width: '1px', height: '35px', backgroundColor: 'white', margin: '0 5px' }}></span>
           <span>CIT NaviGO</span>
-          <div
-            style={{
-              ...lineStyles,
-              display: activeLink === 'home' ? 'block' : 'none',
-            }}
-          ></div>
         </div>
         <div>
           {navLinks.map((link) => (
@@ -126,8 +92,15 @@ const Building = () => {
               {link.label}
               <div
                 style={{
-                  ...lineStyles,
+                  content: '""',
+                  height: '2px',
+                  width: '100%',
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  bottom: '-4px',
+                  left: 0,
                   display: activeLink === link.id ? 'block' : 'none',
+                  transition: '0.3s',
                 }}
               ></div>
             </Link>
@@ -135,69 +108,19 @@ const Building = () => {
         </div>
       </div>
 
-      {/* Container for SearchBar, DarkVariantExample Carousel, and Building content */}
-      <div style={{ position: 'relative', marginTop: '20px' }}>
-        {/* SearchBar Container */}
-        <div style={searchBarContainerStyles}>
-          <SearchBar setResults={handleSearchResults} placeholderText="Search Course" />
+      {/* SearchBar Container */}
+      <div style={searchBarContainerStyles}>
+        <SearchBar setResults={handleSearchResults} placeholderText="Search Course" />
+      </div>
 
-          {/* Get Directions Button */}
-          <button style={directionButtonStyles} onClick={handleGetDirections}>
-            Get Directions
-          </button>
-        </div>
+      {/* Your Carousel and content */}
+      {/* ... */}
 
-        {/* DarkVariantExample Carousel */}
-        <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto' }}>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="/images/Building1.jpg"
-              alt=""
-              style={{ height: '600px', width: '200%' }}
-            />
-            <Carousel.Caption>
-              <h5>First slide label</h5>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://images.pexels.com/photos/1480688/pexels-photo-1480688.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-              alt=""
-              style={{ height: '600px' }}
-            />
-            <Carousel.Caption>
-              <h5>Second slide label</h5>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src="https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.2116175301.1701129600&semt=ais"
-              alt=""
-              style={{ height: '600px' }}
-            />
-            <Carousel.Caption>
-              <h5>Third slide label</h5>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
-
-        {/* Your Building content goes here */}
-        <div style={{ marginTop: '20px', position: 'relative' }}>
-          {/* Add your content, images, etc. */}
-        </div>
-
-        {/* Display search results */}
-        <div>
-          {searchResults.map((result) => (
-            <div key={result.id}>{result.name}</div>
-          ))}
-        </div>
+      {/* Display search results */}
+      <div>
+        {searchResults.map((result) => (
+          <div key={result.id}>{result.name}</div>
+        ))}
       </div>
     </div>
   );

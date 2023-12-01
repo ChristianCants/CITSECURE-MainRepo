@@ -255,6 +255,12 @@ const MenuPage = () => {
         ))}
       </Row>
     </div>
+
+    <section>
+      <div>
+        
+      </div>
+    </section>
     </>
   );
 };
