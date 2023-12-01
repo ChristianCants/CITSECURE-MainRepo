@@ -1,39 +1,49 @@
-  import React, { useState } from 'react';
-  import { useNavigate } from 'react-router-dom';
-  import { Modal, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
 
-  const SignUp = () => {
-    const backgroundImageStyle = {
-      backgroundImage: 'url("images/GLE SIGN-UP.png")',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      height: '100vh',
-      overflow: 'hidden',
-    };
+const SignUp = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedGender, setSelectedGender] = useState('');
+  const navigate = useNavigate();
 
-  const formStyle = {
-    border: '2px solid maroon',
-    borderRadius: '8px',
-    padding: '20px',
-    backgroundColor: '#FFF9EB',
+  const handleSignUp = async () => {
+    try {
+      let newUser = {}; // Initialize an empty object
+
+      // Conditionally create newUser object only if fields are not empty
+      if (firstName && lastName && gender && email && password) {
+        newUser = {
+          firstName,
+          lastName,
+          gender,
+          email,
+          password,
+        };
+      } else {
+        // If any of the fields are empty, do not proceed with signup
+        alert('Please fill out all fields');
+        return;
+      }
+
+      const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Signup successful:', response.data);
+      setShowModal(true);
+    } catch (error) {
+      console.error('Signup failed:', error.message);
+    }
   };
-
-    const inputStyle = {
-      borderColor: 'maroon',    // Set border color to maroon
-      borderRadius: '8px',
-      color: 'black',           // Set text color to black
-      backgroundColor: 'white', // Set background color to white
-    };
-    
-    const checkmarkStyle = {
-      color: 'green',
-      fontSize: '2rem',
-      marginRight: '10px',
-    };
-
-    const navigate = useNavigate();
-    const [showModal, setShowModal] = useState(false);
-    const [selectedGender, setSelectedGender] = useState('');
 
   const handleClose = () => {
     setShowModal(false);
@@ -41,6 +51,7 @@
 
   const navigateToLogin = () => {
     setShowModal(true);
+    handleSignUp();
   };
 
   const handleConfirm = () => {
@@ -48,9 +59,41 @@
     navigate('/login');
   };
 
-    const handleGenderSelect = (gender) => {
-      setSelectedGender(gender);
-    };
+  const handleGenderSelect = (gender) => {
+    setSelectedGender(gender);
+  };
+
+  const backgroundImageStyle = {
+    backgroundImage: 'url("images/GLE SIGN-UP.png")',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height: '100vh',
+    overflow: 'hidden',
+    // Other background styles
+  };
+
+  const formStyle = {
+    border: '2px solid maroon',
+    borderRadius: '8px',
+    padding: '20px',
+    backgroundColor: '#FFF9EB',
+    // Other form styles
+  };
+
+  const inputStyle = {
+    borderColor: 'maroon',
+    borderRadius: '8px',
+    color: 'black',
+    backgroundColor: 'white',
+    // Other input styles
+  };
+
+  const checkmarkStyle = {
+    color: 'green',
+    fontSize: '2rem',
+    marginRight: '10px',
+    // Other checkmark styles
+  };
 
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
@@ -63,30 +106,47 @@
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
             {/* Content for the right column */}
 
-              {/* Form */}
-              <div className="card bg-glass" style={formStyle}>
-                <div className="card-body px-4 py-5 px-md-5">
-                  <form>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input type="text" id="form3Example1" className="form-control custom-input" style={inputStyle} />
-                          <label className="form-label" htmlFor="form3Example1">
-                            First name
-                          </label>
-                        </div>
-                      </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <input type="text" id="form3Example2" className="form-control custom-input" style={inputStyle} />
-                          <label className="form-label" htmlFor="form3Example2">
-                            Last name
-                          </label>
-                        </div>
+            {/* Form */}
+            <div className="card bg-glass" style={formStyle}>
+              <div className="card-body px-4 py-5 px-md-5">
+                <form>
+                  <div className="row">
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="form3Example1"
+                          className="form-control custom-input"
+                          style={inputStyle}
+                          value={firstName}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                          }}
+                        />
+                        <label className="form-label" htmlFor="form3Example1">
+                          First name
+                        </label>
                       </div>
                     </div>
+                    <div className="col-md-6 mb-4">
+                      <div className="form-outline">
+                        <input
+                          type="text"
+                          id="form3Example2"
+                          className="form-control custom-input"
+                          style={inputStyle}
+                          value={lastName}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                          }}
+                        />
+                        <label className="form-label" htmlFor="form3Example2">
+                          Last name
+                        </label>
+                      </div>
+                    </div>
+                  </div>
 
-                  {/* Gender dropdown */}
                   <div className="form-outline mb-4">
                     <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>
                       Gender:
@@ -114,30 +174,46 @@
                     </div>
                   </div>
 
-                    {/* Email address field */}
-                    <div className="form-outline mb-4">
-                      <input type="email" id="form3Example3" className="form-control custom-input" style={inputStyle} />
-                      <label className="form-label" htmlFor="form3Example3">
-                        Email address
-                      </label>
-                    </div>
+                  <div className="form-outline mb-4">
+                    <input
+                      type="email"
+                      id="form3Example3"
+                      className="form-control custom-input"
+                      style={inputStyle}
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                    />
+                    <label className="form-label" htmlFor="form3Example3">
+                      Email address
+                    </label>
+                  </div>
 
-                    {/* Password field */}
-                    <div className="form-outline mb-4">
-                      <input type="password" id="form3Example4" className="form-control custom-input" style={inputStyle} />
-                      <label className="form-label" htmlFor="form3Example4">
-                        Password
-                      </label>
-                    </div>
+                  <div className="form-outline mb-4">
+                    <input
+                      type="password"
+                      id="form3Example4"
+                      className="form-control custom-input"
+                      style={inputStyle}
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
+                    />
+                    <label className="form-label" htmlFor="form3Example4">
+                      Password
+                    </label>
+                  </div>
 
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-block mb-4"
-                      style={{ background: '#A43F3F', borderRadius: '17px' }}
-                      onClick={navigateToLogin}
-                    >
-                      Register
-                    </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-block mb-4"
+                    style={{ background: '#A43F3F', borderRadius: '17px' }}
+                    onClick={navigateToLogin}
+                  >
+                    Register
+                  </button>
 
                   <div className="text-center">
                     <button type="button" className="btn btn-link btn-floating mx-1">
