@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { SearchBar } from './SearchBar'; // Update the path accordingly
 import Carousel from 'react-bootstrap/Carousel';
 import Dropdown from 'react-bootstrap/Dropdown';
+import BuildingSearchBar from './BuildingSearchBar';
+
 
 const Building = () => {
   const [activeLink, setActiveLink] = useState('building');
@@ -152,7 +153,7 @@ const Building = () => {
 
       {/* SearchBar Container */}
       <div style={searchBarContainerStyles}>
-        <SearchBar setResults={handleSearchResults} placeholderText="Search Course" />
+        <BuildingSearchBar setResults={handleSearchResults} placeholderText="Search Course" />
       </div>
 
       {/* Your Carousel and content */}
