@@ -173,98 +173,95 @@ const ViewMap = () => {
       </div>
 
       {/* Carousel */}
-      <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
-        {/* First Carousel Item */}
-        <Carousel.Item>
-          {/* Content for the first slide */}
-          <img
-            className="d-block w-100"
-            src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
-            alt="First slide"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <div>
-                <h5>Academic Building</h5>
-                <p>One of the best buildings at CIT-U University</p>
-              </div>
-              <button style={directionButtonStyles} onClick={handleGetDirections}>
-                Get Directions
-              </button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
+    <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
+  {/* First Carousel Item */}
+  <Carousel.Item>
+    {/* Content for the first slide */}
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
+      alt="First slide"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>Academic Building</h5>
+          <p>One of the best buildings at CIT-U University</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
 
-        {/* Second Carousel Item */}
-        <Carousel.Item>
-          {/* Content for the second slide */}
-          <img
-            className="d-block w-100"
-            src="https://cit.edu/wp-content/uploads/2023/07/SAL-Building.jpg"
-            alt="Second slide"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <div>
-                <h5>High School Building</h5>
-                <p>One of the best buildings at CIT-U University</p>
-              </div>
-              <button style={directionButtonStyles} onClick={handleGetDirections}>
-                Get Directions
-              </button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
+  {/* Second Carousel Item */}
+  <Carousel.Item>
+    {/* Content for the second slide */}
+    <img
+      className="d-block w-100"
+      src="https://cit.edu/wp-content/uploads/2023/07/SAL-Building.jpg"
+      alt="Second slide"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>High School Building</h5>
+          <p>One of the best buildings at CIT-U University</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
 
-        {/* Third Carousel Item */}
-        <Carousel.Item>
-          {/* Content for the third slide */}
-          <img
-            className="d-block w-100"
-            src="https://cit.edu/wp-content/uploads/2023/07/Elementary-Building.jpg"
-            alt="Third slide"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <div>
-                <h5>Elementary Building</h5>
-                <p>One of the best buildings at CIT-U University</p>
-              </div>
-              <button style={directionButtonStyles} onClick={handleGetDirections}>
-                Get Directions
-              </button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
+  {/* Third Carousel Item */}
+  <Carousel.Item>
+    {/* Content for the third slide */}
+    <img
+      className="d-block w-100"
+      src="https://cit.edu/wp-content/uploads/2023/07/Elementary-Building.jpg"
+      alt="Third slide"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>Elementary Building</h5>
+          <p>One of the best buildings at CIT-U University</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
 
-        {/* GLE Building Carousel Item */}
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeH4YJ3ewAXxeEZWKUllvmrusOKrfiTjMuuw4qt-JOMy6ws0EhnQNqYZhkXeugb5jqE7yzilwMLN_fssIX_JYrsh&_nc_ohc=KYx0WMR84hkAX_e3iE4&_nc_ht=scontent.fceb3-1.fna&oh=03_AdSlsEhQ4B2wxZmIpPCR8AHU6t0b3DxYy6Lfrle9p0fk4A&oe=65924EBF"
-            alt="GLE Building"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <div>
-                <h5>GLE Building</h5>
-                <p>This is a new building at CIT-U University</p>
-              </div>
-              <button style={directionButtonStyles} onClick={handleGetDirections}>
-                Get Directions
-              </button>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
+  {/* GLE Building Carousel Item */}
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeH4YJ3ewAXxeEZWKUllvmrusOKrfiTjMuuw4qt-JOMy6ws0EhnQNqYZhkXeugb5jqE7yzilwMLN_fssIX_JYrsh&_nc_ohc=KYx0WMR84hkAX_e3iE4&_nc_ht=scontent.fceb3-1.fna&oh=03_AdSlsEhQ4B2wxZmIpPCR8AHU6t0b3DxYy6Lfrle9p0fk4A&oe=65924EBF"
+      alt="GLE Building"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>GLE Building</h5>
+          <p>This is a new building at CIT-U University</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
 
-
-      
-  
+  {/* Main Canteen Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
@@ -285,7 +282,7 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-  
+  {/* RTL Building Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
@@ -306,8 +303,7 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-
-      
+</Carousel>
 
       {/* Display search results */}
       <div>
