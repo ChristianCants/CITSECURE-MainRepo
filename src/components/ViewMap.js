@@ -303,6 +303,90 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
+  {/* RTL Building Carousel Item */}
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+      alt="RTL"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>NGE BUILDING</h5>
+          <p>Description for the new building 2</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
+  {/* RTL Building Carousel Item */}
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+      alt="RTL"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>ALLIED BUILDING</h5>
+          <p>Description for the new building 2</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
+  {/* RTL Building Carousel Item */}
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+      alt="RTL"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>HIGH SCHOOL CANTEEN </h5>
+          <p>Description for the new building 2</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
+  {/* RTL Building Carousel Item */}
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+      alt="RTL"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>Extraa BUILDING</h5>
+          <p>Description for the new building 2</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
 </Carousel>
 
       {/* Display search results */}
