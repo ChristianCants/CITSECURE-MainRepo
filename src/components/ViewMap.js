@@ -244,7 +244,7 @@ const ViewMap = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://storage.googleapis.com/bukas-website-v3-prd/website_v3/images/CIT-U_GLE_Building_01.original.png"
+            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeH4YJ3ewAXxeEZWKUllvmrusOKrfiTjMuuw4qt-JOMy6ws0EhnQNqYZhkXeugb5jqE7yzilwMLN_fssIX_JYrsh&_nc_ohc=KYx0WMR84hkAX_e3iE4&_nc_ht=scontent.fceb3-1.fna&oh=03_AdSlsEhQ4B2wxZmIpPCR8AHU6t0b3DxYy6Lfrle9p0fk4A&oe=65924EBF"
             alt="GLE Building"
             style={{ height: '600px', width: '100%', objectFit: 'cover' }}
           />
@@ -261,6 +261,53 @@ const ViewMap = () => {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+
+
+      
+  
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFhLMwCtqF9GfbYJ24sLzZKtGfr-qdm_Z20Z-v6p2b9narKh0MtKl-tpTPe41nXkwzW9Hezt09nxLAafQ5YyqG2&_nc_ohc=_uRE4owBP1oAX-ZeBP6&_nc_ht=scontent.fceb3-1.fna&oh=03_AdS13t71Jt0Y98Te1IY9L3VLZfb7kU6Agm9MmgR4ldvqaw&oe=65924CB3"
+      alt="Canteen"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>Main Canteen</h5>
+          <p>Enjoy spending money</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
+  
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+      alt="RTL"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
+          <h5>RTL BUILDING</h5>
+          <p>Description for the new building 2</p>
+        </div>
+        <button style={directionButtonStyles} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+      </div>
+    </Carousel.Caption>
+  </Carousel.Item>
+
+
+      
 
       {/* Display search results */}
       <div>
