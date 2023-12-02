@@ -303,12 +303,12 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-  {/* RTL Building Carousel Item */}
+  {/* NGE Building Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
-      alt="RTL"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405163005_300960122904581_3254547494294859463_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFzls6QtGSf_l8ho_sNkXCTn62iURtPKh2fraJRG08qHbHsXRwSI_J3Ld7ec9N9vLcES11xWAeJSnwrbhLab4GQ&_nc_ohc=AySrOyNGWRoAX-_H6Fu&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRqiXulrYtdoN9bynJv3-FHDnKpbt9Wp5fTGnoW6PQehg&oe=659227D9"
+      alt="NGE"
       style={{ height: '600px', width: '100%', objectFit: 'cover' }}
     />
     <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
@@ -324,18 +324,18 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-  {/* RTL Building Carousel Item */}
+  {/* LIB Building Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
-      alt="RTL"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeE_a4klRbr01RTpQOIJ60rX0NWEt2-8TAjQ1YS3b7xMCIr61s85JZzjiW068dRO9993k_p8fplehB-YNDcACZd5&_nc_ohc=8_6167HbqaEAX-s3X7D&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRkZK5EIglh8-ISdJQiWg1jv2qbmwjn2fWmNEczLOhlXA&oe=65922C0C"
+      alt="LIB"
       style={{ height: '600px', width: '100%', objectFit: 'cover' }}
     />
     <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
-          <h5>ALLIED BUILDING</h5>
+          <h5>LIBRARY BUILDING</h5>
           <p>Description for the new building 2</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
@@ -345,18 +345,18 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-  {/* RTL Building Carousel Item */}
+  {/* ALLIED Building Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
-      alt="RTL"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370207209_1952851695116256_2470887601798806799_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHO0bK3W6cMlKeMIH6nEuKR-5DPL2NLp_L7kM8vY0un8mJHnSwDQlmOi4kCnMt9HKiW-HcOk6pvEov7mcAv2EOz&_nc_ohc=IagXPZPdGDkAX8eQCkF&_nc_ht=scontent.fceb3-1.fna&oh=03_AdReZ2oRJh1fvcPgXZ1tqtE3oiNN__R7t91DxkxMjRD2xg&oe=65922AB3"
+      alt="ALLIED"
       style={{ height: '600px', width: '100%', objectFit: 'cover' }}
     />
     <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
-          <h5>HIGH SCHOOL CANTEEN </h5>
+          <h5>ALLIED BUILDING </h5>
           <p>Description for the new building 2</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
@@ -366,18 +366,18 @@ const ViewMap = () => {
     </Carousel.Caption>
   </Carousel.Item>
 
-  {/* RTL Building Carousel Item */}
+  {/* HS CANTEEN Building Carousel Item */}
   <Carousel.Item>
     <img
       className="d-block w-100"
-      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
-      alt="RTL"
+      src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeGnJhpB6GIg43ZNxjgWML3iiy-5E4NY4PiLL7kTg1jg-MQEDaNbSCQBHQ7eViwHFLMOleknwlF0VyFHgLY2kjmj&_nc_ohc=xpjfaiUL3JgAX8U0O6c&_nc_ht=scontent.fceb3-1.fna&oh=03_AdQRKdSL5ZUus5SiBaD4-uTEW_12o5Wo94T-K6r6F7SVzQ&oe=6592551C"
+      alt="HS CANTEEN"
       style={{ height: '600px', width: '100%', objectFit: 'cover' }}
     />
     <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
-          <h5>Extraa BUILDING</h5>
+          <h5>HS CANTEEN</h5>
           <p>Description for the new building 2</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
