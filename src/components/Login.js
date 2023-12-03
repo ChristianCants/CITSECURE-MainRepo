@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -10,25 +8,31 @@ const Login = () => {
   const [password, setpassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
-      const response = await axios.post('http://localhost:8080/User/login', {
-        email: email, // Include the 'email' parameter in the request body
-        password: password, // Include the 'password' parameter in the request body
+      const response = await axios.post('http://localhost:8080/User/login', null, {
+        params: {
+          email: email,
+          password: password,
+        },
       });
-  
-      // Handle the response as before...
+
+      // Assuming the response includes a status code to indicate success (e.g., 200)
+      if (response.status === 200) {
+        // Redirect to the menu page upon successful login
+        navigate('/menu'); // Update '/menu' with your actual menu page URL
+      } else {
+        setError('Login failed. Please try again.');
+      }
     } catch (error) {
       // Handle login error
       console.error('Login failed:', error.message);
       setError('Login failed. Please try again.');
     }
   };
-
   
   const backgroundImageStyle = {
     backgroundImage: 'url("images/GLE SIGN-UP.png")', // Corrected the URL format
