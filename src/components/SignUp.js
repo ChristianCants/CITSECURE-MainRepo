@@ -28,7 +28,7 @@ const SignUp = () => {
         password,
       };
   
-      const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
+      const response = await axios.post('http://localhost:8080/User/signup', newUser, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -259,3 +259,4 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
