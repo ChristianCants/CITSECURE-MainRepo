@@ -187,7 +187,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>Academic Building</h5>
-          <p>One of the best buildings at CIT-U University</p>
+          <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -209,7 +209,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>High School Building</h5>
-          <p>One of the best buildings at CIT-U University</p>
+          <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -231,7 +231,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>Elementary Building</h5>
-          <p>One of the best buildings at CIT-U University</p>
+          <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -252,7 +252,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>GLE Building</h5>
-          <p>This is a new building at CIT-U University</p>
+          <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -273,7 +273,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>Main Canteen</h5>
-          <p>Enjoy spending money</p>
+          <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -294,7 +294,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>RTL BUILDING</h5>
-          <p>Description for the new building 2</p>
+          <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -315,7 +315,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>NGE BUILDING</h5>
-          <p>Description for the new building 2</p>
+          <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -336,7 +336,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>LIBRARY BUILDING</h5>
-          <p>Description for the new building 2</p>
+          <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -357,7 +357,7 @@ const ViewMap = () => {
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
           <h5>ALLIED BUILDING </h5>
-          <p>Description for the new building 2</p>
+          <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
@@ -377,8 +377,8 @@ const ViewMap = () => {
     <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
         <div>
-          <h5>HS CANTEEN</h5>
-          <p>Description for the new building 2</p>
+          <h5>HIGH-SCHOOL CANTEEN</h5>
+          <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
         </div>
         <button style={directionButtonStyles} onClick={handleGetDirections}>
           Get Directions
