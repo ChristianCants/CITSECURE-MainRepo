@@ -19,7 +19,6 @@ const Login = () => {
           password: password,
         },
       });
-
       // Assuming the response includes a status code to indicate success (e.g., 200)
       if (response.status === 200) {
         // Redirect to the menu page upon successful login
