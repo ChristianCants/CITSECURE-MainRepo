@@ -22,9 +22,9 @@
     };
 
     const teamMembers = [
-      { name: 'Adrian Alegarbes', imageSrc: './images/adrian.png' },
-      { name: 'Christian Cantiveros', imageSrc: './images/christian.png' },
-      { name: 'Jaimes Cabante', imageSrc: './images/jaimes.png' },
+      { name: 'Adrian Alegarbes', imageSrc: './images/adrian.jpg' },
+      { name: 'Christian Cantiveros', imageSrc: './images/christian.jpg' },
+      { name: 'Jaimes Cabante', imageSrc: './images/jaimes.jpg' },
       { name: 'Ñamalyzha Tejeno', imageSrc: './images/Ñamalyzha.png' },
     ];
 
@@ -242,18 +242,24 @@
         </div>
 
         <Row>
-          {teamMembers.map((member, index) => (
-            <Col key={index} xs={6} md={3}>
-              <Card style={{ width: '18rem', marginBottom: '20px' }}>
-                <Card.Img variant="top" src={member.imageSrc} alt={member.name} />
-                <Card.Body>
-                  {/* Apply font size style here */}
-                  <Card.Title style={{ fontSize: '25px' }}>{member.name}</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
+  {teamMembers.map((member, index) => (
+    <Col key={index} xs={6} md={3}>
+      <Card style={{ width: '18rem', marginBottom: '20px' }}>
+        <Card.Img
+          variant="top"
+          src={member.imageSrc}
+          alt={member.name}
+          style={{ height: '350px', objectFit: 'cover' }}
+        />
+        <Card.Body>
+          {/* Apply font size style here */}
+          <Card.Title style={{ fontSize: '25px' }}>{member.name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
       </div>
     
 
