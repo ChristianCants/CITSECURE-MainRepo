@@ -7,6 +7,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 const ViewMap = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const [searchResults, setSearchResults] = useState([]);
+  const [activePage, setActivePage] = useState(0); // Added state for page indicator
   const navigate = useNavigate();
 
   const pageStyles = {
@@ -109,6 +110,14 @@ const ViewMap = () => {
     navigate('/user-profile'); // Navigate to the user profile page
   };
 
+  const handlePageSelect = (selectedIndex, e) => {
+    setActivePage(selectedIndex);
+  };
+
+  const handleCarouselSlide = (index) => {
+    setActivePage(index);
+  };
+
   return (
     <div style={pageStyles}>
       {/* Navigation Bar */}
@@ -173,7 +182,12 @@ const ViewMap = () => {
       </div>
 
       {/* Carousel */}
-    <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
+    <Carousel
+        activeIndex={activePage}
+        onSelect={handlePageSelect}
+        data-bs-theme="dark"
+        style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}
+      > 
   {/* First Carousel Item */}
   <Carousel.Item>
     {/* Content for the first slide */}
@@ -388,6 +402,22 @@ const ViewMap = () => {
   </Carousel.Item>
 
 </Carousel>
+
+
+
+
+     {/* Page Indicator */}
+     <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        {Array.from({ length: 8 }, (_, index) => (
+          <div
+            key={index}
+            className={`carousel-indicator ${index === activePage ? 'active' : ''}`}
+            onClick={() => {
+              setActivePage(index);
+            }}
+          ></div>
+        ))}
+      </div>
 
       {/* Display search results */}
       <div>

@@ -6,11 +6,10 @@ import axios from 'axios';
 const SignUp = () => {
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
-  const [gender, setGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [selectedGender, setSelectedGender] = useState('');
   const navigate = useNavigate();
 
   const handleSignUp = async () => {
@@ -19,7 +18,18 @@ const SignUp = () => {
         alert('Please fill out all fields');
         return;
       }
-  
+
+      if (password.length < 8) {
+        alert('Password should be at least 8 characters long');
+        return;
+      }
+      
+
+      if (!(password.match(/[a-z]/) && password.match(/[A-Z]/))) {
+        alert('Password should contain both uppercase and lowercase letters');
+        return;
+      }
+
       const newUser = {
         firstName,
         lastName,
@@ -27,28 +37,30 @@ const SignUp = () => {
         email,
         password,
       };
-  
+
       const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
       console.error('Signup failed:', error.message);
     }
   };
-  
-
 
   const handleClose = () => {
     setShowModal(false);
   };
 
   const navigateToLogin = () => {
-    setShowModal(true);
+    if (!firstName || !lastName || !selectedGender || !email || !password) {
+      alert('Please fill out all fields');
+      return;
+    }
+
     handleSignUp();
   };
 
@@ -60,6 +72,7 @@ const SignUp = () => {
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
   };
+
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/GLE SIGN-UP.png")',
@@ -238,14 +251,15 @@ const SignUp = () => {
       </div>
 
       {/* Integrated SuccessPopup logic */}
+      {/* Integrated SuccessPopup logic */}
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-          <Modal.Title>Notification </Modal.Title>
+          <Modal.Title>Notification</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="d-flex justify-content-center align-items-center">
             <p style={{ marginRight: '10px' }}>Successfully Created!</p>
-            <p style={checkmarkStyle}>✓</p>
+            <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
           </div>
         </Modal.Body>
         <Modal.Footer style={{ borderTop: '2px solid maroon' }}>
