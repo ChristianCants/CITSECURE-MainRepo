@@ -18,6 +18,7 @@ import AcademicBuilding from './AcademicBuilding';
 import HighSchoolBuilding from './HighSchoolBuilding';
 import GLEBuilding from './GLEBuilding';
 import MainCanteen from './MainCanteen';
+import Building from './Building';
 
 const AppRouter = () => {
   return (
@@ -28,7 +29,7 @@ const AppRouter = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
-        <Route path="/building" element={<ViewMap />} />
+        <Route path="/building" element={<Building />} />
 
 
         {/* Routes for specific buildings */}
