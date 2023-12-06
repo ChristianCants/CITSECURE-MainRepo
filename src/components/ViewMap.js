@@ -114,7 +114,15 @@ const ViewMap = () => {
     // Add logic to handle profile click
     navigate('/user-profile'); // Navigate to the user profile page
   };
- 
+
+  const handlePageSelect = (selectedIndex, e) => {
+    setActivePage(selectedIndex);
+  };
+
+  const handleCarouselSlide = (index) => {
+    setActivePage(index);
+  };
+
   return (
     <div style={pageStyles}>
       {/* Navigation Bar */}
@@ -180,19 +188,18 @@ const ViewMap = () => {
  
       {/* Carousel */}
     <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
- 
- 
- {/* First Carousel Item */}
-    <Carousel.Item>
-      {/* Content for the first slide */}
-      <img
-        className="d-block w-100"
-        src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
-        alt="First slide"
-        style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-      />
-      <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-        <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+  {/* First Carousel Item */}
+  <Carousel.Item>
+    {/* Content for the first slide */}
+    <img
+      className="d-block w-100"
+      src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
+      alt="First slide"
+      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+    />
+    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+        <div>
           <h5>Academic Building</h5>
           <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -474,9 +481,9 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
- 
-      </Carousel>
- 
+
+</Carousel>
+
       {/* Display search results */}
       <div>
         {searchResults.map((result) => (
