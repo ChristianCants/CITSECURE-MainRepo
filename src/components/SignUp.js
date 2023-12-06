@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
-
+ 
 const SignUp = () => {
   const [firstName, setfirstName] = useState('');
   const [lastName, setlastName] = useState('');
@@ -11,25 +11,24 @@ const SignUp = () => {
   const [password, setpassword] = useState('');
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
+ 
   const handleSignUp = async () => {
     try {
       if (!firstName || !lastName || !selectedGender || !email || !password) {
         alert('Please fill out all fields');
         return;
       }
-
+ 
       if (password.length < 8) {
         alert('Password should be at least 8 characters long');
         return;
       }
-      
-
+ 
       if (!(password.match(/[a-z]/) && password.match(/[A-Z]/))) {
         alert('Password should contain both uppercase and lowercase letters');
         return;
       }
-
+ 
       const newUser = {
         firstName,
         lastName,
@@ -37,43 +36,43 @@ const SignUp = () => {
         email,
         password,
       };
-
+ 
       const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+ 
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
       console.error('Signup failed:', error.message);
     }
   };
-
+ 
   const handleClose = () => {
     setShowModal(false);
   };
-
+ 
   const navigateToLogin = () => {
     if (!firstName || !lastName || !selectedGender || !email || !password) {
       alert('Please fill out all fields');
       return;
     }
-
+ 
     handleSignUp();
   };
-
+ 
   const handleConfirm = () => {
     handleClose();
     navigate('/login');
   };
-
+ 
   const handleGenderSelect = (gender) => {
     setSelectedGender(gender);
   };
-
-
+ 
+ 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/GLE SIGN-UP.png")',
     backgroundRepeat: 'no-repeat',
@@ -82,7 +81,7 @@ const SignUp = () => {
     overflow: 'hidden',
     // Other background styles
   };
-
+ 
   const formStyle = {
     border: '2px solid maroon',
     borderRadius: '8px',
@@ -90,7 +89,7 @@ const SignUp = () => {
     backgroundColor: '#FFF9EB',
     // Other form styles
   };
-
+ 
   const inputStyle = {
     borderColor: 'maroon',
     borderRadius: '8px',
@@ -98,14 +97,14 @@ const SignUp = () => {
     backgroundColor: 'white',
     // Other input styles
   };
-
+ 
   const checkmarkStyle = {
     color: 'green',
     fontSize: '2rem',
     marginRight: '10px',
     // Other checkmark styles
   };
-
+ 
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
       <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -113,10 +112,10 @@ const SignUp = () => {
           <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
             {/* Content for the left column */}
           </div>
-
+ 
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
             {/* Content for the right column */}
-
+ 
             {/* Form */}
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
@@ -157,7 +156,7 @@ const SignUp = () => {
                       </div>
                     </div>
                   </div>
-
+ 
                   <div className="form-outline mb-4">
                     <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>
                       Gender:
@@ -184,7 +183,7 @@ const SignUp = () => {
                       </div>
                     </div>
                   </div>
-
+ 
                   <div className="form-outline mb-4">
                     <input
                       type="email"
@@ -200,7 +199,7 @@ const SignUp = () => {
                       Email address
                     </label>
                   </div>
-
+ 
                   <div className="form-outline mb-4">
                     <input
                       type="password"
@@ -216,7 +215,7 @@ const SignUp = () => {
                       Password
                     </label>
                   </div>
-
+ 
                   <button
                     type="button"
                     className="btn btn-primary btn-block mb-4"
@@ -225,20 +224,20 @@ const SignUp = () => {
                   >
                     Register
                   </button>
-
+ 
                   <div className="text-center">
                     <button type="button" className="btn btn-link btn-floating mx-1">
                       <i className="fab fa-facebook-f"></i>
                     </button>
-
+ 
                     <button type="button" className="btn btn-link btn-floating mx-1">
                       <i className="fab fa-google"></i>
                     </button>
-
+ 
                     <button type="button" className="btn btn-link btn-floating mx-1">
                       <i className="fab fa-twitter"></i>
                     </button>
-
+ 
                     <button type="button" className="btn btn-link btn-floating mx-1">
                       <i className="fab fa-github"></i>
                     </button>
@@ -249,7 +248,7 @@ const SignUp = () => {
           </div>
         </div>
       </div>
-
+ 
       {/* Integrated SuccessPopup logic */}
       {/* Integrated SuccessPopup logic */}
       <Modal show={showModal} onHide={handleClose} centered>
@@ -271,5 +270,5 @@ const SignUp = () => {
     </section>
   );
 };
-
+ 
 export default SignUp;
