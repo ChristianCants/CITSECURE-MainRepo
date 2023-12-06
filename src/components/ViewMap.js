@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
  
 const ViewMap = () => {
   const [activeLink, setActiveLink] = useState('view-map');
+  const [activePage, setActivePage] = useState(0);
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
  
@@ -123,6 +124,7 @@ const ViewMap = () => {
     setActivePage(index);
   };
 
+
   return (
     <div style={pageStyles}>
       {/* Navigation Bar */}
@@ -186,70 +188,71 @@ const ViewMap = () => {
         <SearchBar setResults={handleSearchResults} placeholderText="What are you looking for?" />
       </div>
  
-      {/* Carousel */}
-    <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
-  {/* First Carousel Item */}
-  <Carousel.Item>
-    {/* Content for the first slide */}
-    <img
-      className="d-block w-100"
-      src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
-      alt="First slide"
-      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-    />
-    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-        <div>
-          <h5>Academic Building</h5>
-          <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
-            {/* View Building Rooms Button (switched to the right) */}
-            <button
-              variant="dark"
-              onClick={() => handleViewRooms('Academic Building', 'academic-building')}  // Update the route and building name as needed
-              style={{ ...directionButtonStyles, marginLeft: 'auto' }}
-            >
-              View Building Rooms
-            </button>
-          </div>
+      
+<Carousel.Item>
+  {/* Content for the first slide */}
+  <img
+    className="d-block w-100"
+    src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
+    alt="First slide"
+    style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+  />
+  <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+    <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+      <div>
+        <h5>Academic Building</h5>
+        <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Get Directions Button (switched to the left) */}
+          <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
+            Get Directions
+          </button>
+          {/* View Building Rooms Button (switched to the right) */}
+          <button
+            variant="dark"
+            onClick={() => handleViewRooms('Academic Building', 'academic-building')}  // Update the route and building name as needed
+            style={{ ...directionButtonStyles, marginLeft: 'auto' }}
+          >
+            View Building Rooms
+          </button>
         </div>
-      </Carousel.Caption>
-    </Carousel.Item>
+      </div>
+    </div>
+  </Carousel.Caption>
+</Carousel.Item>
+
  
     {/* Second Carousel Item */}
-    {/* Content for the second slide */}
-    <Carousel.Item>
-      <img
-        className="d-block w-100"
-        src="https://cit.edu/wp-content/uploads/2023/07/SAL-Building.jpg"
-        alt="Second slide"
-        style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-      />
-      <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-        <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-          <h5>High School Building</h5>
-          <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
-            {/* View Building Rooms Button (switched to the right) */}
-            <button
-              variant="dark"
-              onClick={() => handleViewRooms('High School Building', 'high-school-building')}  // Update the route and building name as needed
-              style={{ ...directionButtonStyles, marginLeft: 'auto' }}
-            >
-              View Building Rooms
-            </button>
-          </div>
-        </div>
-      </Carousel.Caption>
-    </Carousel.Item>
+{/* Content for the second slide */}
+<Carousel.Item>
+  <img
+    className="d-block w-100"
+    src="https://cit.edu/wp-content/uploads/2023/07/SAL-Building.jpg"
+    alt="Second slide"
+    style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+  />
+  <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+    <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+      <h5>High School Building</h5>
+      <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        {/* Get Directions Button (switched to the left) */}
+        <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
+          Get Directions
+        </button>
+        {/* View Building Rooms Button (switched to the right) */}
+        <button
+          variant="dark"
+          onClick={() => handleViewRooms('High School Building', 'high-school-building')}  // Update the route and building name as needed
+          style={{ ...directionButtonStyles, marginLeft: 'auto' }}
+        >
+          View Building Rooms
+        </button>
+      </div>
+    </div>
+  </Carousel.Caption>
+</Carousel.Item>
+
  
     {/* Third Carousel Item */}
     {/* Content for the third slide */}
@@ -482,7 +485,7 @@ const ViewMap = () => {
           </Carousel.Caption>
         </Carousel.Item>
 
-</Carousel>
+
 
       {/* Display search results */}
       <div>
