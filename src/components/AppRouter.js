@@ -28,18 +28,20 @@ const AppRouter = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
+        <Route path="/building" element={<ViewMap />} />
+
 
         {/* Routes for specific buildings */}
-        <Route path="/building/high-school-canteen" element={<HighSchoolCanteen />} />
-        <Route path="/building/allied-building" element={<AlliedBuilding />} />
-        <Route path="/building/library-building" element={<LibraryBuilding />} />
-        <Route path="/building/nge-building" element={<NGEBuilding />} />
-        <Route path="/building/rtl-building" element={<RTLBuilding />} />
-        <Route path="/building/elementary-building" element={<ElementaryBuilding />} />
-        <Route path="/building/academic-building" element={<AcademicBuilding />} />
-        <Route path="/building/high-school-building" element={<HighSchoolBuilding />} />
-        <Route path="/building/gle-building" element={<GLEBuilding />} />
-        <Route path="/building/main-canteen" element={<MainCanteen />} />
+        <Route path="/view-map/high-school-canteen" element={<HighSchoolCanteen />} />
+        <Route path="/view-map/allied-building" element={<AlliedBuilding />} />
+        <Route path="/view-map/library-building" element={<LibraryBuilding />} />
+        <Route path="/view-map/nge-building" element={<NGEBuilding />} />
+        <Route path="/view-map/rtl-building" element={<RTLBuilding />} />
+        <Route path="/view-map/elementary-building" element={<ElementaryBuilding />} />
+        <Route path="/view-map/academic-building" element={<AcademicBuilding />} />
+        <Route path="/view-map/high-school-building" element={<HighSchoolBuilding />} />
+        <Route path="/view-map/gle-building" element={<GLEBuilding />} />
+        <Route path="/view-map/main-canteen" element={<MainCanteen />} />
 
         {/* Add more routes for other components as needed */}
 

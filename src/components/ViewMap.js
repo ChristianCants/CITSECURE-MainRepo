@@ -91,9 +91,9 @@ const ViewMap = () => {
   const handleViewRooms = (buildingName, buildingRoute) => {
     // Implement logic to view building rooms
     console.log(`Viewing rooms for ${buildingName}...`);
-    navigate(`/building/${buildingRoute}`); // Use the provided building route
+    navigate(`/view-map/${buildingRoute}`); // Use the correct path
   };
-
+  
   const handleLogout = () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?');
 
