@@ -3,19 +3,18 @@ import { useNavigate, Link } from 'react-router-dom';
 import { SearchBar } from './SearchBar'; // Update the path accordingly
 import Carousel from 'react-bootstrap/Carousel';
 import Dropdown from 'react-bootstrap/Dropdown';
-
+ 
 const ViewMap = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const [searchResults, setSearchResults] = useState([]);
-  const [activePage, setActivePage] = useState(0); // Added state for page indicator
   const navigate = useNavigate();
-
+ 
   const pageStyles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   };
-
+ 
   const navBarStyles = {
     backgroundColor: 'maroon',
     width: '100%',
@@ -24,7 +23,7 @@ const ViewMap = () => {
     alignItems: 'center',
     justifyContent: 'space-between',
   };
-
+ 
   const searchBarContainerStyles = {
     position: 'absolute',
     top: '16%',
@@ -32,7 +31,7 @@ const ViewMap = () => {
     transform: 'translate(-50%, -50%)',
     zIndex: '1', // Ensures the search bar is above the image
   };
-
+ 
   const directionButtonStyles = {
     backgroundColor: 'maroon',
     color: 'white',
@@ -43,7 +42,7 @@ const ViewMap = () => {
     flexShrink: 0,
     margin: '0 auto',
   };
-
+ 
   const citNaviGoStyles = {
     color: 'white',
     marginLeft: '10px',
@@ -51,11 +50,11 @@ const ViewMap = () => {
     display: 'flex',
     alignItems: 'center',
   };
-
+ 
   const iconStyles = {
     marginRight: '5px', // Adjust the margin as needed
   };
-
+ 
   const lineStyles = {
     content: '""',
     height: '2px',
@@ -67,37 +66,37 @@ const ViewMap = () => {
     display: 'block',
     transition: '0.3s',
   };
-
+ 
   const navLinkStyles = {
     color: 'white',
     margin: '0 80px',
     position: 'relative',
   };
-
+ 
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
     { label: 'Building', href: '/building', id: 'building' },
   ];
-
+ 
   const handleSearchResults = (results) => {
     setSearchResults(results);
   };
-
+ 
   const handleGetDirections = () => {
     // Implement logic to get directions
     console.log('Getting directions...');
   };
-
+ 
   const handleViewRooms = (buildingName, buildingRoute) => {
     // Implement logic to view building rooms
     console.log(`Viewing rooms for ${buildingName}...`);
     navigate(`/view-map/${buildingRoute}`); // Use the correct path
   };
-  
+ 
   const handleLogout = () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?');
-
+ 
     if (shouldLogout) {
       // Add any logout logic here
       // For example, clear user session, cookies, or perform API logout
@@ -105,25 +104,17 @@ const ViewMap = () => {
       navigate('/');
     }
   };
-
+ 
   const handleSettingsClick = () => {
     // Add logic to handle settings click
     console.log('Settings clicked');
   };
-
+ 
   const handleProfileClick = () => {
     // Add logic to handle profile click
     navigate('/user-profile'); // Navigate to the user profile page
   };
-
-  const handlePageSelect = (selectedIndex, e) => {
-    setActivePage(selectedIndex);
-  };
-
-  const handleCarouselSlide = (index) => {
-    setActivePage(index);
-  };
-
+ 
   return (
     <div style={pageStyles}>
       {/* Navigation Bar */}
@@ -168,39 +159,40 @@ const ViewMap = () => {
             </Link>
           ))}
         </div>
-
+ 
         {/* Dropdown Button */}
         <Dropdown>
           <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ color: 'white', marginLeft: '10px' }}>
             <img src="images/Avatar.png" alt="Your Image" width="32" height="32" className="rounded-circle" />
           </Dropdown.Toggle>
-
+ 
           <Dropdown.Menu>
             <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
             <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
-
+ 
       {/* SearchBar Container */}
       <div style={searchBarContainerStyles}>
         <SearchBar setResults={handleSearchResults} placeholderText="What are you looking for?" />
       </div>
-
+ 
       {/* Carousel */}
     <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
-  {/* First Carousel Item */}
-  <Carousel.Item>
-    {/* Content for the first slide */}
-    <img
-      className="d-block w-100"
-      src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
-      alt="First slide"
-      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-    />
-    <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
-      <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-        <div>
+ 
+ 
+ {/* First Carousel Item */}
+    <Carousel.Item>
+      {/* Content for the first slide */}
+      <img
+        className="d-block w-100"
+        src="https://scontent.fceb1-1.fna.fbcdn.net/v/t39.30808-6/306843108_570231334896413_7426194698363759958_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=783fdb&_nc_ohc=JWjL1a2-03MAX_YR0QL&_nc_ht=scontent.fceb1-1.fna&oh=00_AfCm-6PIb0WHfpYo9VHuAKS7SNNX8-S5WLujQj3_IrlhYg&oe=656C3361"
+        alt="First slide"
+        style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+      />
+      <Carousel.Caption style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', backgroundColor: 'white', padding: '20px', textAlign: 'left', border: '5px solid black' }}>
+        <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
           <h5>Academic Building</h5>
           <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -220,7 +212,7 @@ const ViewMap = () => {
         </div>
       </Carousel.Caption>
     </Carousel.Item>
-
+ 
     {/* Second Carousel Item */}
     {/* Content for the second slide */}
     <Carousel.Item>
@@ -251,7 +243,7 @@ const ViewMap = () => {
         </div>
       </Carousel.Caption>
     </Carousel.Item>
-
+ 
     {/* Third Carousel Item */}
     {/* Content for the third slide */}
     <Carousel.Item>
@@ -282,7 +274,7 @@ const ViewMap = () => {
         </div>
       </Carousel.Caption>
     </Carousel.Item>
-
+ 
     {/* GLE Building Carousel Item */}
     <Carousel.Item>
       <img
@@ -312,7 +304,7 @@ const ViewMap = () => {
         </div>
       </Carousel.Caption>
     </Carousel.Item>
-
+ 
     {/* Main Canteen Carousel Item */}
     <Carousel.Item>
       <img
@@ -342,7 +334,7 @@ const ViewMap = () => {
         </div>
       </Carousel.Caption>
     </Carousel.Item>
-
+ 
   {/* RTL Building Carousel Item */}
         <Carousel.Item>
           <img
@@ -370,7 +362,7 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-
+ 
         {/* NGE Building Carousel Item */}
         <Carousel.Item>
           <img
@@ -398,7 +390,7 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-
+ 
         {/* LIB Building Carousel Item */}
         <Carousel.Item>
           <img
@@ -426,7 +418,7 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-
+ 
         {/* ALLIED Building Carousel Item */}
         <Carousel.Item>
           <img
@@ -454,7 +446,7 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-
+ 
         {/* HS CANTEEN Building Carousel Item */}
         <Carousel.Item>
           <img
@@ -482,9 +474,9 @@ const ViewMap = () => {
             </div>
           </Carousel.Caption>
         </Carousel.Item>
-
-</Carousel>
-
+ 
+      </Carousel>
+ 
       {/* Display search results */}
       <div>
         {searchResults.map((result) => (
@@ -494,5 +486,5 @@ const ViewMap = () => {
     </div>
   );
 };
-
+ 
 export default ViewMap;
