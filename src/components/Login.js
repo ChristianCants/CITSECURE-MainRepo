@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
- 
- 
+
+
 const Login = () => {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
- 
+
   const handleLogin = async (e) => {
     e.preventDefault();
- 
+
     try {
       const response = await axios.post('http://localhost:8080/User/login', null, {
         params: {
@@ -19,10 +19,10 @@ const Login = () => {
           password: password,
         },
       });
-      // Assuming the response includes a status code to indicate success (e.g., 200)
+      
       if (response.status === 200) {
         // Redirect to the menu page upon successful login
-        navigate('/menu'); // Update '/menu' with your actual menu page URL
+        navigate('/menu'); 
       } else {
         setError('Login failed. Please try again.');
       }
@@ -32,15 +32,15 @@ const Login = () => {
       setError('Login failed. Please try again.');
     }
   };
- 
+  
   const backgroundImageStyle = {
-    backgroundImage: 'url("images/GLE SIGN-UP.png")', // Corrected the URL format
+    backgroundImage: 'url("images/GLE SIGN-UP.png")', 
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100vh',
     overflow: 'hidden',
   };
- 
+
   const formStyle = {
     border: '2px solid #A43F3F',
     borderRadius: '8px',
@@ -85,7 +85,7 @@ const Login = () => {
                     required
                   />
                 </div>
- 
+
                 <div className="form-outline mb-4">
                   <label className="form-label" htmlFor="formPassword">
                     Password
@@ -100,7 +100,7 @@ const Login = () => {
                     required
                   />
                 </div>
- 
+
                 <button
                   type="submit"
                   className="btn btn-primary btn-block mb-4"
@@ -108,7 +108,7 @@ const Login = () => {
                 >
                   Login
                 </button>
- 
+
                 <div className="text-center">
                   <button type="button" className="btn btn-link btn-floating mx-1">
                     <i className="fab fa-facebook-f"></i>
@@ -123,5 +123,5 @@ const Login = () => {
     </section>
   );
 };
- 
+
 export default Login;
