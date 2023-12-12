@@ -8,6 +8,7 @@ const ViewMap = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+  const [showMapImage, setShowMapImage] = useState(false);
  
   const pageStyles = {
     display: 'flex',
@@ -38,7 +39,7 @@ const ViewMap = () => {
     borderRadius: '30px',
     cursor: 'pointer',
     width: '323px',
-    height: '50px',
+    height: '45px', // Adjust the height as needed
     flexShrink: 0,
     margin: '0 auto',
   };
@@ -97,6 +98,9 @@ const ViewMap = () => {
   const handleGetDirections = () => {
     // Implement logic to get directions
     console.log('Getting directions...');
+    
+    // Toggle the visibility of the map image
+    setShowMapImage(!showMapImage);
   };
  
   const handleViewRooms = (buildingName, buildingRoute) => {
@@ -185,9 +189,7 @@ const ViewMap = () => {
       </div>
  
       {/* SearchBar Container */}
-      <div style={searchBarContainerStyles}>
-        <SearchBar setResults={handleSearchResults} placeholderText="What are you looking for?" />
-      </div>
+      
  
       {/* Carousel */}
     <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
