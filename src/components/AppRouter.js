@@ -20,10 +20,18 @@ import GLEBuilding from './GLEBuilding';
 import MainCanteen from './MainCanteen';
 import Building from './Building';
 
+
+
+//Import your Get Direction components
+
+import AcadDirection from './AcadDirection';
+
+
+
 const AppRouter = () => {
   return (
     <Router>
-      <Routes>
+      <Routes>  
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -45,6 +53,11 @@ const AppRouter = () => {
         <Route path="/view-map/main-canteen" element={<MainCanteen />} />
 
         {/* Add more routes for other components as needed */}
+
+      {/* Add the route for AcadDirection component */}
+      <Route path="/view-map/academic-direction" element={<AcadDirection />} />
+
+
 
         <Route path="/user-profile" element={<UserProfile />} />
       </Routes>

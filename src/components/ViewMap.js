@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { SearchBar } from './SearchBar'; // Update the path accordingly
+
+import { SearchBar } from './SearchBar'; 
 import Carousel from 'react-bootstrap/Carousel';
 import Dropdown from 'react-bootstrap/Dropdown';
+
  
 const ViewMap = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+
   const [showMapImage, setShowMapImage] = useState(false);
+  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+
  
   const pageStyles = {
     display: 'flex',
@@ -95,14 +100,21 @@ const ViewMap = () => {
     setSearchResults(results);
   };
  
-  const handleGetDirections = () => {
-    // Implement logic to get directions
-    console.log('Getting directions...');
-    
-    // Toggle the visibility of the map image
-    setShowMapImage(!showMapImage);
+  
+
+  const handleGetDirections = (route, index) => {
+    console.log(`Handling Get Directions for route: ${route}`);
+    setCurrentCarouselIndex(index);
+    setShowMapImage(true);
+    navigate(`/view-map/${route}`);
   };
- 
+  
+  
+  
+  
+  
+  
+  
   const handleViewRooms = (buildingName, buildingRoute) => {
     // Implement logic to view building rooms
     console.log(`Viewing rooms for ${buildingName}...`);
@@ -192,7 +204,11 @@ const ViewMap = () => {
       
  
       {/* Carousel */}
-    <Carousel data-bs-theme="dark" style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}>
+      <Carousel
+  data-bs-theme="dark"
+  style={{ width: '80%', margin: '20px auto', marginTop: '60px' }}
+  onSelect={(index) => setCurrentCarouselIndex(index)}
+>
  
  
  {/* First Carousel Item */}
@@ -210,9 +226,13 @@ const ViewMap = () => {
           <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
+            <button
+  style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+  onClick={() => handleGetDirections('academic-direction', 0)} // Pass the route and index
+>
+  Get Directions
+</button>
+
             {/* View Building Rooms Button (switched to the right) */}
             <button
               variant="dark"
@@ -241,9 +261,13 @@ const ViewMap = () => {
           <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
+            <button
+              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+             onClick={() => handleGetDirections('')}
+              >
+            Get Directions
+              </button>
+
             {/* View Building Rooms Button (switched to the right) */}
             <button
               variant="dark"
@@ -272,9 +296,13 @@ const ViewMap = () => {
           <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
+            <button
+              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+       onClick={() => handleGetDirections('academic-building')}
+          >
+          Get Directions
+          </button>
+
             {/* View Building Rooms Button (switched to the right) */}
             <button
               variant="dark"
@@ -302,9 +330,13 @@ const ViewMap = () => {
           <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
+            <button
+            style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+          onClick={() => handleGetDirections('')}
+            >
+           Get Directions
+         </button>
+
             {/* View Building Rooms Button (switched to the right) */}
             <button
               variant="dark"
@@ -332,9 +364,13 @@ const ViewMap = () => {
           <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {/* Get Directions Button (switched to the left) */}
-            <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-              Get Directions
-            </button>
+            <button
+        style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+           onClick={() => handleGetDirections('')}
+        >
+       Get Directions
+          </button>
+
             {/* View Building Rooms Button (switched to the right) */}
             <button
               variant="dark"
@@ -361,9 +397,13 @@ const ViewMap = () => {
               <h5>RTL BUILDING</h5>
               <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-                  Get Directions
+              <button
+              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+             onClick={() => handleGetDirections('academic-building')}
+                >
+                Get Directions
                 </button>
+
                 <button
                   variant="dark"
                   onClick={() => handleViewRooms('RTL Building', 'rtl-building')}
@@ -389,9 +429,13 @@ const ViewMap = () => {
               <h5>NGE BUILDING</h5>
               <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-                  Get Directions
-                </button>
+              <button
+                  style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+                  onClick={() => handleGetDirections('')}
+                  >
+               Get Directions
+                  </button>
+
                 <button
                   variant="dark"
                   onClick={() => handleViewRooms('NGE Building', 'nge-building')}
@@ -417,9 +461,13 @@ const ViewMap = () => {
               <h5>LIBRARY BUILDING</h5>
               <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-                  Get Directions
-                </button>
+              <button
+                      style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+                      onClick={() => handleGetDirections('academic-building')}
+                        >
+                    Get Directions
+                    </button>
+
                 <button
                   variant="dark"
                   onClick={() => handleViewRooms('LIBRARY Building', 'library-building')}
@@ -445,9 +493,13 @@ const ViewMap = () => {
               <h5>ALLIED BUILDING </h5>
               <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-                  Get Directions
-                </button>
+              <button
+                 style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+            onClick={() => handleGetDirections('')}
+                >
+             Get Directions
+              </button>
+
                 <button
                   variant="dark"
                   onClick={() => handleViewRooms('Allied Building', 'allied-building')}
@@ -473,9 +525,13 @@ const ViewMap = () => {
               <h5>HIGH-SCHOOL CANTEEN</h5>
               <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <button style={{ ...directionButtonStyles, marginRight: '10px' }} onClick={handleGetDirections}>
-                  Get Directions
+              <button
+                   style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
+                    onClick={() => handleGetDirections('')}
+                          >
+                Get Directions
                 </button>
+
                 <button
                   variant="dark"
                   onClick={() => handleViewRooms('High School Canteen', 'high-school-canteen')}
@@ -489,6 +545,15 @@ const ViewMap = () => {
         </Carousel.Item>
  
       </Carousel>
+
+      {showMapImage && (
+  <img
+    src="images/GLE.png"  // Replace with your map image URL
+    alt="Map"
+    style={{ width: '100%', maxHeight: '600px', objectFit: 'contain' }}
+  />
+)}
+
  
       {/* Display search results */}
       <div>
