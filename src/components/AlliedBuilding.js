@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const GLEBuilding = () => {
+const AlliedBuilding = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const navigate = useNavigate();
 
@@ -295,4 +295,4 @@ const GLEBuilding = () => {
   );
 };
 
-export default GLEBuilding;
+export default AlliedBuilding;

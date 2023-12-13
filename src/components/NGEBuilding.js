@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const GLEBuilding = () => {
+const NGEBuilding = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const navigate = useNavigate();
 
@@ -44,12 +44,65 @@ const GLEBuilding = () => {
     position: 'relative',
   };
 
+  const roofStyles = {
+    width: '100%',
+    height: '20px',
+    backgroundColor: 'maroon',
+    position: 'relative',
+    marginTop: '10px',
+  };
+
+  const roofSvg = (
+    <svg width="645" height="92" viewBox="0 0 645 92" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_d_1_2)">
+        <path d="M322.5 0L640.764 84H4.23566L322.5 0Z" fill="#D9D9D9"/>
+        <path d="M8.08939 83.5L322.5 0.517121L636.911 83.5H8.08939Z" stroke="black"/>
+        <path d="M8.08939 83.5L322.5 0.517121L636.911 83.5H8.08939Z" stroke="black" strokeOpacity="0.2"/>
+        <path d="M8.08939 83.5L322.5 0.517121L636.911 83.5H8.08939Z" stroke="black" strokeOpacity="0.2"/>
+        <path d="M8.08939 83.5L322.5 0.517121L636.911 83.5H8.08939Z" stroke="black" strokeOpacity="0.2"/>
+      </g>
+      <defs>
+        <filter id="filter0_d_1_2" x="0.235657" y="0" width="644.529" height="92" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+          <feOffset dy="4"/>
+          <feGaussianBlur stdDeviation="2"/>
+          <feComposite in2="hardAlpha" operator="out"/>
+          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_2"/>
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_2" result="shape"/>
+        </filter>
+      </defs>
+    </svg>
+  );
+
+
+  const roofTitleStyles = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    color: 'white',
+    fontSize: '18px',
+    fontWeight: 'bold',
+  };
+
+
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
     { label: 'Building', href: '/building', id: 'building' },
     // Add more navigation links as needed
   ];
+
+  {/* Roof Design with Title */}
+<div style={{ position: 'relative', width: '100%', backgroundColor: 'maroon' }}>
+  {roofSvg}
+  <div style={roofTitleStyles}>
+    NGE BUILDING ROOMS
+  </div>
+</div>
+
 
   return (
     <div style={pageStyles}>
@@ -126,8 +179,8 @@ const GLEBuilding = () => {
         </Dropdown>
       </div>
 
-      {/* Title */}
-      <div style={titleStyles}>NGE BUILDING ROOMS</div>
+          {/* Title */}
+          <div style={titleStyles}>NGE BUILDING ROOMS</div>
 
       {/* Cards Section */}
       <div className="container">
@@ -295,4 +348,4 @@ const GLEBuilding = () => {
   );
 };
 
-export default GLEBuilding;
+export default NGEBuilding;
