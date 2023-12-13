@@ -194,7 +194,7 @@ const HighSchoolBuilding = () => {
       {/* Roof Design with Title */}
       <div style={roofContainerStyles}>
         {roofSvg}
-        <div style={roofTitleStyles}>NGE BUILDING ROOMS</div>
+        <div style={roofTitleStyles}>HIGH SCHOOL BUILDING ROOMS</div>
       </div>
 
 

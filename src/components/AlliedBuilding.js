@@ -194,7 +194,7 @@ const AlliedBuilding = () => {
       {/* Roof Design with Title */}
       <div style={roofContainerStyles}>
         {roofSvg}
-        <div style={roofTitleStyles}>NGE BUILDING ROOMS</div>
+        <div style={roofTitleStyles}>ALLIED BUILDING ROOMS</div>
       </div>
 
 

@@ -194,7 +194,7 @@ const GLEBuilding = () => {
       {/* Roof Design with Title */}
       <div style={roofContainerStyles}>
         {roofSvg}
-        <div style={roofTitleStyles}>NGE BUILDING ROOMS</div>
+        <div style={roofTitleStyles}>GLE BUILDING ROOMS</div>
       </div>
 
 
