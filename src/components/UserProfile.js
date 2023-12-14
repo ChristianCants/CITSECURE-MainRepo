@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import './UserProfile.css'; // Assuming the CSS file with styles is named styles.css
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -83,12 +84,13 @@ function UserProfile() {
 
   return (
     <section style={{ backgroundColor: '#eee' }}>
-      <Container fluid className="py-5">
+      <Container fluid className="py-5" style={{ backgroundColor: '#fff' }}>
         <Row>
           <Col>
             {/* Breadcrumb navigation */}
             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
-              <ol className="breadcrumb mb-0">
+            <ol className="breadcrumb mb-0 custom-breadcrumb" style={{ backgroundColor: '#fff' }}>
+
                 <li className="breadcrumb-item" onClick={() => navigate('/menu')}>
                   <a href="#">Home</a>
                 </li>
@@ -100,6 +102,7 @@ function UserProfile() {
                 </li>
               </ol>
             </nav>
+
           </Col>
         </Row>
 

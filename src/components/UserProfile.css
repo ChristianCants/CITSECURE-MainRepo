@@ -1,0 +1,11 @@
+/* styles.css (or your CSS file) */
+.custom-breadcrumb .breadcrumb-item a {
+    color: blue; /* Change 'blue' to your desired color */
+    /* Add other styles as needed */
+  }
+  
+  .custom-breadcrumb .breadcrumb-item.active {
+    color: green; /* Change 'green' to your desired color for the active item */
+    /* Add other styles as needed */
+  }
+  
