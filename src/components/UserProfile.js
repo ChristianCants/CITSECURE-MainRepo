@@ -1,34 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-const UserProfile = () => {
+function UserProfile() {
   const navigate = useNavigate();
-  const [isEditing, setEditing] = useState(false);
+  const [data, setData] = useState([]);
 
-  const handleHomeClick = () => {
-    console.log('Home link clicked');
-    navigate('/menu');
-  };
-
-  const handleEditProfileClick = () => {
-    console.log('Edit Profile button clicked');
-    setEditing(true);
-  };
 
   const handleSaveChanges = () => {
     console.log('Changes saved');
     // Add logic to save the changes (e.g., make an API request)
-    setEditing(false);
+    // setEditing(false);
   };
+  
+  const handleEditProfileClick = () => {
+    console.log('Edit Profile button clicked');
+    // setEditing(true);
+  };
+  
 
-  const handleDeleteAccount = () => {
-    const confirmDelete = window.confirm('Are you sure you want to delete your account?');
-    if (confirmDelete) {
-      console.log('Account deleted');
-      // Add logic to delete the account (e.g., make an API request)
-      // After successful deletion, you may want to navigate the user to a different page or log them out.
-    }
+  useEffect(() => {
+    axios.get("http://localhost:8080/User/getAllUsers")
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(err => console.log(err));
+  }, []);
+
+  const handleEdit = (user) => {
+    confirmAlert({
+      title: 'Edit User',
+      message: (
+        <>
+          <div>
+            <label>First Name:</label>
+            <input type="text" id="editedFirstName" defaultValue={user.firstName} />
+          </div>
+          <div>
+            <label>Last Name:</label>
+            <input type="text" id="editedLastName" defaultValue={user.lastName} />
+          </div>
+          <div>
+            <label>Password:</label>
+            <input type="text" id="editedPassword" defaultValue={user.password} />
+          </div>
+        </>
+      ),
+      buttons: [
+        {
+          label: 'Save',
+          onClick: () => {
+            const updatedFirstName = document.getElementById('editedFirstName').value;
+            const updatedLastName = document.getElementById('editedLastName').value;
+            const updatedPassword = document.getElementById('editedPassword').value;
+
+            if (updatedFirstName || updatedLastName || updatedPassword) {
+              axios.put(`http://localhost:8080/User/updateUser/${user.id}`, {
+                firstName: updatedFirstName || user.firstName,
+                lastName: updatedLastName || user.lastName,
+                password: updatedPassword || user.password,
+              })
+                .then(res => {
+                  setData(data.map((u) => (u.id === user.id ? res.data : u)));
+                })
+                .catch(err => console.log(err));
+            }
+          }
+        },
+        {
+          label: 'Cancel',
+          onClick: () => {}
+        }
+      ],
+      closeOnEscape: true,
+      closeOnClickOutside: true,
+      overlayClassName: 'custom-overlay',
+    });
   };
 
   return (
@@ -36,9 +86,10 @@ const UserProfile = () => {
       <Container fluid className="py-5">
         <Row>
           <Col>
+            {/* Breadcrumb navigation */}
             <nav aria-label="breadcrumb" className="bg-light rounded-3 p-3 mb-4">
               <ol className="breadcrumb mb-0">
-                <li className="breadcrumb-item" onClick={handleHomeClick}>
+                <li className="breadcrumb-item" onClick={() => navigate('/menu')}>
                   <a href="#">Home</a>
                 </li>
                 <li className="breadcrumb-item">
@@ -54,6 +105,7 @@ const UserProfile = () => {
 
         <Row>
           <Col lg={4}>
+            {/* User profile card */}
             <Card className="mb-4">
               <Card.Body className="text-center">
                 <img
@@ -68,158 +120,46 @@ const UserProfile = () => {
                 <div className="d-flex justify-content-center mb-2"></div>
               </Card.Body>
             </Card>
-            <Card className="mb-4 mb-lg-0">
-              <Card.Body className="p-0">
-                <ul className="list-group list-group-flush rounded-3">
-                  <li className="list-group-item d-flex justify-content-between align-items-center p-3">
-                    <i className="fas fa-globe fa-lg text-warning"></i>
-                    <p className="mb-0">CIT-NaviGo</p>
-                  </li>
-                  {/* ... (other list items) */}
-                </ul>
-              </Card.Body>
-            </Card>
+            {/* Additional card (if needed) */}
           </Col>
           <Col lg={8}>
+            {/* User information card */}
             <Card className="mb-4">
               <Card.Body>
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Full Name</p>
+                {/* Information rows (editable or non-editable) */}
+                {data.map((user, i) => (
+                  <div key={i}>
+                    <div className="row">
+                      <div className="col-sm-3">
+                        <p className="mb-0">Full Name</p>
+                      </div>
+                      <div className="col-sm-9">
+                        {user.isEditing ? (
+                          <input
+                            type="text"
+                            value={user.firstName}
+                            onChange={(e) => console.log(e.target.value)}
+                          />
+                        ) : (
+                          <p className="text-muted mb-0">{user.firstName}</p>
+                        )}
+                      </div>
+                    </div>
+                    {/* ... (repeat for other information rows) */}
+                    <hr />
                   </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="John Doe"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">John Doe</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Nickname</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="Johnny"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">Johnny</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Gender</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="Male"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">Male</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Email</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="john.doe@example.com"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">john.doe@example.com</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Phone Number</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="123-456-7890"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">123-456-7890</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Student ID</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="ST123456"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">ST123456</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
-                <div className="row">
-                  <div className="col-sm-3">
-                    <p className="mb-0">Address</p>
-                  </div>
-                  <div className="col-sm-9">
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        value="123 Main Street, Cityville"
-                        onChange={(e) => console.log(e.target.value)}
-                      />
-                    ) : (
-                      <p className="text-muted mb-0">123 Main Street, Cityville</p>
-                    )}
-                  </div>
-                </div>
-                <hr />
+                ))}
+                {/* Save Changes or Edit Profile button */}
                 <div className="row">
                   <div className="col-sm-9">
-                    {isEditing ? (
-                      <Button variant="success" onClick={handleSaveChanges}>
-                        Save Changes
-                      </Button>
-                    ) : (
-                      <Button variant="primary" onClick={handleEditProfileClick}>
-                        Edit Profile
-                      </Button>
-                    )}
+                    <Button variant="success" onClick={handleSaveChanges}>
+                      Save Changes
+                    </Button>
                   </div>
                   <div className="col-sm-3 d-flex justify-content-end">
-                    {isEditing ? null : (
-                      <Button variant="danger" onClick={handleDeleteAccount}>
-                        Delete Account
-                      </Button>
-                    )}
+                    <Button variant="primary" onClick={handleEditProfileClick}>
+                      Edit Profile
+                    </Button>
                   </div>
                 </div>
               </Card.Body>
@@ -229,6 +169,6 @@ const UserProfile = () => {
       </Container>
     </section>
   );
-};
+}
 
 export default UserProfile;

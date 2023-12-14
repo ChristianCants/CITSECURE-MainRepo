@@ -351,38 +351,31 @@ const ViewMap = () => {
     </Carousel.Item>
  
     {/* Main Canteen Carousel Item */}
-    <Carousel.Item>
-      <img
-        className="d-block w-100"
-        src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFhLMwCtqF9GfbYJ24sLzZKtGfr-qdm_Z20Z-v6p2b9narKh0MtKl-tpTPe41nXkwzW9Hezt09nxLAafQ5YyqG2&_nc_ohc=_uRE4owBP1oAX-ZeBP6&_nc_ht=scontent.fceb3-1.fna&oh=03_AdS13t71Jt0Y98Te1IY9L3VLZfb7kU6Agm9MmgR4ldvqaw&oe=65924CB3"
-        alt="Canteen"
-        style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-      />
-      <Carousel.Caption style={carouselCaptionStyle}>
-        <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-          <h5>Main Canteen</h5>
-          <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button
-        style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-           onClick={() => handleGetDirections('main-canteen-direction', 0)}
+    
+<Carousel.Item>
+  <img
+    className="d-block w-100"
+    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFhLMwCtqF9GfbYJ24sLzZKtGfr-qdm_Z20Z-v6p2b9narKh0MtKl-tpTPe41nXkwzW9Hezt09nxLAafQ5YyqG2&_nc_ohc=_uRE4owBP1oAX-ZeBP6&_nc_ht=scontent.fceb3-1.fna&oh=03_AdS13t71Jt0Y98Te1IY9L3VLZfb7kU6Agm9MmgR4ldvqaw&oe=65924CB3"
+    alt="Canteen"
+    style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+  />
+  <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
+    <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+      <h5>Main Canteen</h5>
+      <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
         >
-       Get Directions
-          </button>
+          Get Directions
+        </button>
+      </div>
+    </div>
+  </Carousel.Caption>
+</Carousel.Item>
 
-            {/* View Building Rooms Button (switched to the right) */}
-            <button
-              variant="dark"
-              onClick={() => handleViewRooms('Main Canteen', 'main-canteen')}  // Update the route and building name as needed
-              style={{ ...directionButtonStyles, marginLeft: 'auto' }}
-            >
-              View Building Rooms
-            </button>
-          </div>
-        </div>
-      </Carousel.Caption>
-    </Carousel.Item>
  
   {/* RTL Building Carousel Item */}
         <Carousel.Item>
@@ -448,37 +441,31 @@ const ViewMap = () => {
           </Carousel.Caption>
         </Carousel.Item>
  
-        {/* LIB Building Carousel Item */}
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeE_a4klRbr01RTpQOIJ60rX0NWEt2-8TAjQ1YS3b7xMCIr61s85JZzjiW068dRO9993k_p8fplehB-YNDcACZd5&_nc_ohc=8_6167HbqaEAX-s3X7D&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRkZK5EIglh8-ISdJQiWg1jv2qbmwjn2fWmNEczLOhlXA&oe=65922C0C"
-            alt="LIB"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={carouselCaptionStyle}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <h5>LIBRARY BUILDING</h5>
-              <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-                      style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                      onClick={() => handleGetDirections('library-direction', 0)}
-                        >
-                    Get Directions
-                    </button>
+       {/* LIB Building Carousel Item */}
+<Carousel.Item>
+  <img
+    className="d-block w-100"
+    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeE_a4klRbr01RTpQOIJ60rX0NWEt2-8TAjQ1YS3b7xMCIr61s85JZzjiW068dRO9993k_p8fplehB-YNDcACZd5&_nc_ohc=8_6167HbqaEAX-s3X7D&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRkZK5EIglh8-ISdJQiWg1jv2qbmwjn2fWmNEczLOhlXA&oe=65922C0C"
+    alt="LIB"
+    style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+  />
+  <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
+    <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+      <h5>LIBRARY BUILDING</h5>
+      <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('library-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
+    </div>
+  </Carousel.Caption>
+</Carousel.Item>
 
-                <button
-                  variant="dark"
-                  onClick={() => handleViewRooms('LIBRARY Building', 'library-building')}
-                  style={{ ...directionButtonStyles, marginLeft: 'auto' }}
-                >
-                  View Building Rooms
-                </button>
-              </div>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
  
         {/* ALLIED Building Carousel Item */}
         <Carousel.Item>
@@ -513,36 +500,30 @@ const ViewMap = () => {
         </Carousel.Item>
  
         {/* HS CANTEEN Building Carousel Item */}
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeGnJhpB6GIg43ZNxjgWML3iiy-5E4NY4PiLL7kTg1jg-MQEDaNbSCQBHQ7eViwHFLMOleknwlF0VyFHgLY2kjmj&_nc_ohc=xpjfaiUL3JgAX8U0O6c&_nc_ht=scontent.fceb3-1.fna&oh=03_AdQRKdSL5ZUus5SiBaD4-uTEW_12o5Wo94T-K6r6F7SVzQ&oe=6592551C"
-            alt="HS CANTEEN"
-            style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-          />
-          <Carousel.Caption style={carouselCaptionStyle}>
-            <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-              <h5>HIGH-SCHOOL CANTEEN</h5>
-              <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-                   style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                    onClick={() => handleGetDirections('hs-canteen-direction', 0)}
-                          >
-                Get Directions
-                </button>
+<Carousel.Item>
+  <img
+    className="d-block w-100"
+    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeGnJhpB6GIg43ZNxjgWML3iiy-5E4NY4PiLL7kTg1jg-MQEDaNbSCQBHQ7eViwHFLMOleknwlF0VyFHgLY2kjmj&_nc_ohc=xpjfaiUL3JgAX8U0O6c&_nc_ht=scontent.fceb3-1.fna&oh=03_AdQRKdSL5ZUus5SiBaD4-uTEW_12o5Wo94T-K6r6F7SVzQ&oe=6592551C"
+    alt="HS CANTEEN"
+    style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+  />
+  <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
+    <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+      <h5>HIGH-SCHOOL CANTEEN</h5>
+      <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('hs-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
+    </div>
+  </Carousel.Caption>
+</Carousel.Item>
 
-                <button
-                  variant="dark"
-                  onClick={() => handleViewRooms('High School Canteen', 'high-school-canteen')}
-                  style={{ ...directionButtonStyles, marginLeft: 'auto' }}
-                >
-                  View Building Rooms
-                </button>
-              </div>
-            </div>
-          </Carousel.Caption>
-        </Carousel.Item>
  
       </Carousel>
 
