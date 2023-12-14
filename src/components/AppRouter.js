@@ -30,10 +30,10 @@ import LibraryDirection from './LibraryDirection';
 import NGEDirection from './NGEDirection';
 import RTLDirection from './RTLDirection';
 import ElementaryDirection from './ElementaryDirection';
-import HighSchoolDirection from './HighSchoolDirection';
+import HSDirection from './HSDirection';
 import GLEDirection from './GLEDirection';
 import MainCanteenDirection from './MainCanteenDirection';
-import HighSchoolCanteenDirection from './HighSchoolCanteenDirection';
+import HSCanteenDirection from './HSCanteenDirection';
 
 const AppRouter = () => {
   return (
@@ -68,10 +68,10 @@ const AppRouter = () => {
       <Route path="/view-map/nge-direction" element={<NGEDirection />} />
       <Route path="/view-map/rtl-direction" element={<RTLDirection />} />
       <Route path="/view-map/elementary-direction" element={<ElementaryDirection />} />
-      <Route path="/view-map/high-school-direction" element={<HighSchoolDirection />} />
+      <Route path="/view-map/hs-direction" element={<HSDirection />} />
       <Route path="/view-map/gle-direction" element={<GLEDirection />} />
       <Route path="/view-map/main-canteen-direction" element={<MainCanteenDirection />} />
-      <Route path="/view-map/high-school-canteen-direction" element={<HighSchoolCanteenDirection />} />
+      <Route path="/view-map/hs-canteen-direction" element={<HSCanteenDirection />} />
 
 
 

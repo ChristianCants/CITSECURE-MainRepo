@@ -263,7 +263,7 @@ const ViewMap = () => {
             {/* Get Directions Button (switched to the left) */}
             <button
               style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-             onClick={() => handleGetDirections('')}
+             onClick={() => handleGetDirections('hs-direction', 0)}
               >
             Get Directions
               </button>
@@ -298,7 +298,7 @@ const ViewMap = () => {
             {/* Get Directions Button (switched to the left) */}
             <button
               style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-       onClick={() => handleGetDirections('academic-building')}
+       onClick={() => handleGetDirections('elementary-direction', 0)}
           >
           Get Directions
           </button>
@@ -332,7 +332,7 @@ const ViewMap = () => {
             {/* Get Directions Button (switched to the left) */}
             <button
             style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-          onClick={() => handleGetDirections('')}
+          onClick={() => handleGetDirections('gle-direction', 0)}
             >
            Get Directions
          </button>
@@ -366,7 +366,7 @@ const ViewMap = () => {
             {/* Get Directions Button (switched to the left) */}
             <button
         style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-           onClick={() => handleGetDirections('')}
+           onClick={() => handleGetDirections('main-canteen-direction', 0)}
         >
        Get Directions
           </button>
@@ -399,7 +399,7 @@ const ViewMap = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <button
               style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-             onClick={() => handleGetDirections('academic-building')}
+             onClick={() => handleGetDirections('rtl-direction', 0)}
                 >
                 Get Directions
                 </button>
@@ -431,7 +431,7 @@ const ViewMap = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <button
                   style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                  onClick={() => handleGetDirections('')}
+                  onClick={() => handleGetDirections('nge-direction', 0)}
                   >
                Get Directions
                   </button>
@@ -463,7 +463,7 @@ const ViewMap = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <button
                       style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                      onClick={() => handleGetDirections('academic-building')}
+                      onClick={() => handleGetDirections('library-direction', 0)}
                         >
                     Get Directions
                     </button>
@@ -495,7 +495,7 @@ const ViewMap = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <button
                  style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-            onClick={() => handleGetDirections('')}
+            onClick={() => handleGetDirections('allied-direction', 0)}
                 >
              Get Directions
               </button>
@@ -527,7 +527,7 @@ const ViewMap = () => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
               <button
                    style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                    onClick={() => handleGetDirections('')}
+                    onClick={() => handleGetDirections('hs-canteen-direction', 0)}
                           >
                 Get Directions
                 </button>
