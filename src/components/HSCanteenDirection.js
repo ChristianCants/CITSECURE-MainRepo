@@ -27,6 +27,12 @@ const ViewMap = () => {
     position: 'relative',
   };
 
+  const imageStyles = {
+    width: '550px', // Adjust the width as needed
+    height: '550px', // Adjust the height as needed
+    marginTop: '20px', // Add margin to the top
+  };
+
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
@@ -124,6 +130,13 @@ const ViewMap = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
+
+      {/* Centered Image */}
+      <img
+        src="\images\HS CANTEEN DIRECTION.png"
+        alt="Centered Image"
+        style={imageStyles}
+      />
 
       {/* Your View Map content */}
       {/* ... */}
