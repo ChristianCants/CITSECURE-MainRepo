@@ -116,6 +116,19 @@ const AcadDirection = () => {
             </Link>
           ))}
         </div>
+
+        {/* Dropdown Button */}
+        <Dropdown>
+          <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ color: 'white', marginLeft: '10px' }}>
+            <img src="/images/Avatar.png" alt="Your Image" width="32" height="32" className="rounded-circle" />
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+            {/* Add more dropdown items as needed */}
+          </Dropdown.Menu>
+        </Dropdown>
       </div>
 
       {/* Centered Image */}
@@ -124,19 +137,6 @@ const AcadDirection = () => {
         alt="Centered Image"
         style={imageStyles}
       />
-
-      {/* Dropdown Button */}
-      <Dropdown>
-        <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ color: 'white', marginLeft: '10px' }}>
-          <img src="/images/Avatar.png" alt="Your Image" width="32" height="32" className="rounded-circle" />
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
-          <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-          {/* Add more dropdown items as needed */}
-        </Dropdown.Menu>
-      </Dropdown>
 
       {/* Your View Map content */}
       {/* ... */}
