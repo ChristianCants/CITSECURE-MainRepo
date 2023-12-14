@@ -14,7 +14,7 @@ import LibraryBuilding from './LibraryBuilding';
 import NGEBuilding from './NGEBuilding';
 import RTLBuilding from './RTLBuilding';
 import ElementaryBuilding from './ElementaryBuilding';
-import AcademicBuilding from './AcademicBuilding';
+import AcademicBuilding from './AcademicBuilding'; 
 import HighSchoolBuilding from './HighSchoolBuilding';
 import GLEBuilding from './GLEBuilding';
 import MainCanteen from './MainCanteen';
@@ -25,8 +25,15 @@ import Building from './Building';
 //Import your Get Direction components
 
 import AcadDirection from './AcadDirection';
-
-
+import AlliedDirection from './AlliedDirection';
+import LibraryDirection from './LibraryDirection';
+import NGEDirection from './NGEDirection';
+import RTLDirection from './RTLDirection';
+import ElementaryDirection from './ElementaryDirection';
+import HighSchoolDirection from './HighSchoolDirection';
+import GLEDirection from './GLEDirection';
+import MainCanteenDirection from './MainCanteenDirection';
+import HighSchoolCanteenDirection from './HighSchoolCanteenDirection';
 
 const AppRouter = () => {
   return (
@@ -56,6 +63,16 @@ const AppRouter = () => {
 
       {/* Add the route for AcadDirection component */}
       <Route path="/view-map/academic-direction" element={<AcadDirection />} />
+      <Route path="/view-map/allied-direction" element={<AlliedDirection />} />
+      <Route path="/view-map/library-direction" element={<LibraryDirection />} />
+      <Route path="/view-map/nge-direction" element={<NGEDirection />} />
+      <Route path="/view-map/rtl-direction" element={<RTLDirection />} />
+      <Route path="/view-map/elementary-direction" element={<ElementaryDirection />} />
+      <Route path="/view-map/high-school-direction" element={<HighSchoolDirection />} />
+      <Route path="/view-map/gle-direction" element={<GLEDirection />} />
+      <Route path="/view-map/main-canteen-direction" element={<MainCanteenDirection />} />
+      <Route path="/view-map/high-school-canteen-direction" element={<HighSchoolCanteenDirection />} />
+
 
 
 
