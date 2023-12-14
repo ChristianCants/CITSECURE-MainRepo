@@ -13,6 +13,23 @@ const AcademicBuilding = () => {
     background: '#FFFFFF',
   };
 
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?');
+ 
+    if (shouldLogout) {
+      // Add any logout logic here
+      // For example, clear user session, cookies, or perform API logout
+      // After the logout logic, navigate to the login page or any other desired page
+      navigate('/');
+    }
+  };
+ 
+  const handleProfileClick = () => {
+    // Add logic to handle profile click
+    navigate('/user-profile'); // Navigate to the user profile page
+  };
+
+
   const titleStyles = {
     marginTop: '20px',
     fontSize: '24px',
@@ -184,9 +201,8 @@ const AcademicBuilding = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => console.log('Profile clicked')}>Profile</Dropdown.Item>
-            <Dropdown.Item onClick={() => console.log('Logout clicked')}>Logout</Dropdown.Item>
-            {/* Add more dropdown items as needed */}
+          <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>

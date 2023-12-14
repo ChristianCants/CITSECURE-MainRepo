@@ -52,6 +52,22 @@ const NGEBuilding = () => {
     marginTop: '10px',
   };
 
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?');
+ 
+    if (shouldLogout) {
+      // Add any logout logic here
+      // For example, clear user session, cookies, or perform API logout
+      // After the logout logic, navigate to the login page or any other desired page
+      navigate('/');
+    }
+  };
+ 
+  const handleProfileClick = () => {
+    // Add logic to handle profile click
+    navigate('/user-profile'); // Navigate to the user profile page
+  };
+
   const roofSvg = (
   <svg width="1161" height="122" viewBox="0 0 1161 122" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d_1_2)">
@@ -184,9 +200,8 @@ const NGEBuilding = () => {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => console.log('Profile clicked')}>Profile</Dropdown.Item>
-            <Dropdown.Item onClick={() => console.log('Logout clicked')}>Logout</Dropdown.Item>
-            {/* Add more dropdown items as needed */}
+          <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+          <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
