@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-router-dom
 import axios from 'axios';
 
 const Login = () => {
@@ -53,8 +53,22 @@ const Login = () => {
   };
 
   const loginButtonStyle = {
-    backgroundColor: '#A43F3F', // Set the button background color
-    color: '#FFFFFF', // Set the text color to ensure visibility
+    backgroundColor: '#A43F3F',
+    color: '#FFFFFF',
+    border: 'none',
+    borderRadius: '5px',
+    padding: '10px',
+    cursor: 'pointer',
+  };
+
+  const orTextStyle = {
+    margin: '10px',
+    fontWeight: 'bold',
+  };
+
+  const signUpButtonStyle = {
+    backgroundColor: '#A43F3F',
+    color: '#FFFFFF',
     border: 'none',
     borderRadius: '5px',
     padding: '10px',
@@ -106,6 +120,12 @@ const Login = () => {
                 >
                   Login
                 </button>
+                <p style={orTextStyle}>or</p>
+
+                {/* Use Link component for the "Sign up" button */}
+                <Link to="/signup" className="btn btn-primary btn-block" style={signUpButtonStyle}>
+                  Sign up
+                </Link>
 
                 <div className="text-center">
                   <button type="button" className="btn btn-link btn-floating mx-1">
