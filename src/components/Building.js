@@ -16,6 +16,17 @@ const Building = () => {
     alignItems: 'center',
   };
 
+  const lineStyles = {
+    content: '""',
+    height: '4px',
+    width: '100%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: '-10px',
+    left: 0,
+    display: 'block',
+    transition: '0.3s',
+  };
   const navBarStyles = {
     backgroundColor: 'maroon',
     width: '100%',
@@ -108,6 +119,14 @@ const Building = () => {
           </svg>
           <span style={{ width: '1px', height: '35px', backgroundColor: 'white', margin: '0 5px' }}></span>
           <span>CIT NaviGO</span>
+
+          <div
+            style={{
+              ...lineStyles,
+              display: activeLink === 'home' ? 'block' : 'none',
+            }}
+          ></div>
+            
         </div>
         <div>
           {navLinks.map((link) => (

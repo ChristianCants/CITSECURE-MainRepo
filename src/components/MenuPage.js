@@ -108,13 +108,13 @@
     
     const lineStyles = {
       content: '""',
-      height: '2px',
+      height: '4px',
       width: '100%',
       backgroundColor: 'white',
       position: 'absolute',
-      bottom: '-4px',
-      left: '0',
-      display: 'none', // Hide the underline
+      bottom: '-10px',
+      left: 0,
+      display: 'block',
       transition: '0.3s',
     };
 
