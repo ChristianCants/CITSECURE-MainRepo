@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-
+import axios from 'axios';
 
 const Login = () => {
   const [email, setemail] = useState('');
@@ -19,10 +18,10 @@ const Login = () => {
           password: password,
         },
       });
-      
+
       if (response.status === 200) {
         // Redirect to the menu page upon successful login
-        navigate('/menu'); 
+        navigate('/menu');
       } else {
         setError('Login failed. Please try again.');
       }
@@ -32,9 +31,9 @@ const Login = () => {
       setError('Login failed. Please try again.');
     }
   };
-  
+
   const backgroundImageStyle = {
-    backgroundImage: 'url("images/GLE SIGN-UP.png")', 
+    backgroundImage: 'url("images/GLE SIGN-UP.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100vh',
@@ -47,12 +46,12 @@ const Login = () => {
     padding: '20px',
     backgroundColor: '#FFF9EB',
   };
- 
+
   const inputStyle = {
     borderColor: '#A43F3F',
     borderRadius: '8px',
   };
- 
+
   const loginButtonStyle = {
     backgroundColor: '#A43F3F', // Set the button background color
     color: '#FFFFFF', // Set the text color to ensure visibility
@@ -61,11 +60,10 @@ const Login = () => {
     padding: '10px',
     cursor: 'pointer',
   };
- 
+
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
-      <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-        {/* ... (other content remains the same) */}
+      <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 d-flex justify-content-end align-items-center">
         <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
           <div className="card bg-glass" style={formStyle}>
             <div className="card-body px-4 py-5 px-md-5">
