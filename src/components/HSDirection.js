@@ -30,8 +30,10 @@ const HSDirection = () => {
   const imageStyles = {
     width: '550px', // Adjust the width as needed
     height: '550px', // Adjust the height as needed
-    marginTop: '20px', // Add margin to the top
+    marginTop: '20px',
+    border: '2px solid maroon', // Corrected property
   };
+  
 
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
