@@ -3,10 +3,9 @@
     border: 2px solid rgb(164, 63, 63);;
     padding: 15px;
     width: 200px;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     background-color: transparent;
-    margin-top: 450px;
+    /* margin-top: 450px; */
     }
 .table{
     text-align: -300px !important;
@@ -14,7 +13,6 @@
     padding: 15px;
     width: 1500px;
     height: 150px;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     background-color: rgb(255, 249, 235);
 }
