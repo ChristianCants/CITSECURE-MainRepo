@@ -1,18 +1,21 @@
-.Search{
+/* BuildingSearchBar.css */
+.Search {
     text-align: center;
-    border: 2px solid rgb(164, 63, 63);;
+    border: 2px solid rgb(164, 63, 63);
     padding: 15px;
     width: 200px;
     font-size: 12px;
     background-color: transparent;
-    /* margin-top: 450px; */
-    }
-.table{
-    text-align: -300px !important;
+  }
+  
+  .table {
+    text-align: center; /* Adjusted to center */
     border: 2px solid rgb(164, 63, 63);
     padding: 15px;
-    width: 1500px;
-    height: 150px;
+    width: 70%; /* Adjusted width */
     font-size: 12px;
     background-color: rgb(255, 249, 235);
-}
+    margin-top: 20px; /* Adjusted margin-top */
+    margin-bottom: 20px; /* Added margin-bottom */
+  }
+  

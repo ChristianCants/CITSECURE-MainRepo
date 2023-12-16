@@ -1,9 +1,8 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel';
 import Dropdown from 'react-bootstrap/Dropdown';
 import BuildingSearchBar from './BuildingSearchBar';
-
 
 const Building = () => {
   const [activeLink, setActiveLink] = useState('building');
@@ -26,12 +25,7 @@ const Building = () => {
   };
 
   const searchBarContainerStyles = {
-    position: 'absolute',
-    top: '20%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    zIndex: '1',
-    width: '300px', // Adjust as needed
+    marginTop: '50px', // Adjust as needed
     textAlign: 'center',
   };
 
@@ -51,34 +45,17 @@ const Building = () => {
     setSearchResults(results);
   };
 
-
-
-  const handleGetDirections = () => {
-    // Implement logic to get directions
-    console.log('Getting directions...');
-  };
-
   const handleLogout = () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?');
- 
+
     if (shouldLogout) {
-      // Add any logout logic here
-      // For example, clear user session, cookies, or perform API logout
-      // After the logout logic, navigate to the login page or any other desired page
       navigate('/');
     }
   };
- 
-  const handleSettingsClick = () => {
-    // Add logic to handle settings click
-    console.log('Settings clicked');
-  };
- 
-  const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
-  };
 
+  const handleProfileClick = () => {
+    navigate('/user-profile');
+  };
 
   return (
     <div style={pageStyles}>
@@ -153,7 +130,8 @@ const Building = () => {
 
       {/* SearchBar Container */}
       <div style={searchBarContainerStyles}>
-        <BuildingSearchBar setResults={handleSearchResults} placeholderText="Search Course" />
+        {/* Pass the handleSearchResults function as a prop to BuildingSearchBar */}
+        <BuildingSearchBar setResults={handleSearchResults} placeholderText="Search Building" />
       </div>
 
       {/* Your Carousel and content */}
@@ -165,6 +143,17 @@ const Building = () => {
           <div key={result.id}>{result.name}</div>
         ))}
       </div>
+
+          
+      {/* Line at the bottom of the page */}
+      <div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '80%' }}></div>
+
+      {/* Copyright Information */}
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'maroon', marginBottom: '20px', padding: '0 30px' }}>
+  <p style={{ marginRight: '100px' }}>&copy; 2023 CIT NaviGo.</p>
+  <p style={{ marginLeft: '400px' }}>Discover Your Campus Pathways with CIT-NaviGo.</p>
+  </div>
+      
     </div>
   );
 };

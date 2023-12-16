@@ -535,15 +535,28 @@ const ViewMap = () => {
   />
 )}
 
- 
-      {/* Display search results */}
-      <div>
+   {/* Display search results */}
+   <div>
         {searchResults.map((result) => (
           <div key={result.id}>{result.name}</div>
         ))}
       </div>
+
+      
+
+      {/* Line at the bottom of the page */}
+      <div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '80%' }}></div>
+
+      {/* Copyright Information */}
+  {/* Copyright Information */}
+<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'maroon', marginBottom: '20px', padding: '0 30px' }}>
+  <p style={{ marginRight: '100px' }}>&copy; 2023 CIT NaviGo.</p>
+  <p style={{ marginLeft: '400px' }}>Discover Your Campus Pathways with CIT-NaviGo.</p>
+</div>
+
+
     </div>
   );
 };
- 
+
 export default ViewMap;

@@ -261,8 +261,7 @@ const MenuPage = () => {
 </Row>
 
     </div>
-  
-
+    
     <section style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
   <div style={{ backgroundColor: '#FFEFBA', width: '1100px', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
     <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
