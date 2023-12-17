@@ -1,21 +1,44 @@
-/* BuildingSearchBar.css */
-.Search {
+  /* BuildingSearchBar.css */
+
+  .building-search-container {
+    margin-top: 20px;
     text-align: center;
-    border: 2px solid rgb(164, 63, 63);
-    padding: 15px;
-    width: 200px;
-    font-size: 12px;
-    background-color: transparent;
   }
-  
-  .table {
-    text-align: center; /* Adjusted to center */
-    border: 2px solid rgb(164, 63, 63);
-    padding: 15px;
-    width: 70%; /* Adjusted width */
-    font-size: 12px;
-    background-color: rgb(255, 249, 235);
-    margin-top: 20px; /* Adjusted margin-top */
-    margin-bottom: 20px; /* Added margin-bottom */
+
+  .input-wrapper {
+    position: relative;
   }
-  
+
+  .building-search-input {
+    padding: 10px 30px 10px 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 16px; /* Adjust the width and height as needed */
+    height: 16px;
+  }
+
+  .building-table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .building-table th,
+  .building-table td {
+    border: 1px solid #bc4749;
+    padding: 10px;
+    text-align: left;
+  }
+
+  .building-table th {
+    background-color: #bc4749;
+  }

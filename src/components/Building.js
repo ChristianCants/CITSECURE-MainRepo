@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import BuildingSearchBar from './BuildingSearchBar';
+import "./BuildingSearchbar.css";
+
 
 const Building = () => {
   const [activeLink, setActiveLink] = useState('building');
