@@ -4,6 +4,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { Container, Card, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import './UserProfile.css';
 
 function UserProfile() {
   const navigate = useNavigate();
@@ -113,18 +114,22 @@ function UserProfile() {
   };
 
   useEffect(() => {
+    // Replace 'loggedInUserEmail' and 'loggedInUserPassword' with actual logged-in user credentials
+    const loggedInUserEmail = 'example@email.com';
+    const loggedInUserPassword = 'Password123';
+
     const fetchUserData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/User/getAllUsers');
- 
+        const response = await fetch(`http://localhost:8080/User/getUserDetails?email=${loggedInUserEmail}&password=${loggedInUserPassword}`);
+
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
- 
+
         const data = await response.json();
- 
-        if (data.length > 0) {
-          setUserData(data[0]);
+
+        if (data) {
+          setUserData(data);
         } else {
           console.warn('No user data found');
         }
@@ -132,7 +137,7 @@ function UserProfile() {
         console.error('Error fetching user data:', error.message);
       }
     };
- 
+
     fetchUserData();
   }, []);
 
@@ -145,7 +150,7 @@ function UserProfile() {
         <Col>
           {/* Breadcrumb navigation */}
           <nav aria-label="breadcrumb" className="rounded-3 p-3 mb-4" style={{ backgroundColor: 'rgb(164, 63, 63)' }}>
-            <ol className="breadcrumb mb-0" style={{  backgroundColor: 'rgb(164, 63, 63)' }}>
+            <ol className="breadcrumb mb-0" style={{  backgroundColor: '#fff' }}>
               <li className="breadcrumb-item" onClick={() => navigate('/menu')}>
                 <a href="#">Home</a>
               </li>

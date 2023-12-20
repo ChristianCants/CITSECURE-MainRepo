@@ -1,4 +1,4 @@
-/*.Usertable{
+/* .Usertable{
     text-align: -300px !important;
     border: 2px solid rgb(164, 63, 63);
     padding: 15px;
@@ -44,13 +44,13 @@
     width: 300px;
     color: black;
     margin-top: 4px;
-}*/
-.edit{
+} */
+/* .edit{
     font-family: 'Times New Roman', Times, serif;
  
-}
+} */
 .EditProfile{
-    font-family: 'Times New Roman', Times, serif;
+    
     background-color: '#FEE4A1';
     border-color: '#FEE4A1' ;
     color: black;
@@ -59,7 +59,7 @@
 }
 .Card{
     border: 2px solid rgb(164, 63, 63);
-    font-family: 'Times New Roman', Times, serif;
+    
     font-size: 20px;
     font-style: inherit;
     color: black;
@@ -67,7 +67,7 @@
 }
 .body{
     border: 2px solid rgb(164, 63, 63);
-    font-family: 'Times New Roman', Times, serif;
+    
     font-size: 20px;
     font-style: inherit;
     color: black;
