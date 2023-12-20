@@ -1,0 +1,74 @@
+/*.Usertable{
+    text-align: -300px !important;
+    border: 2px solid rgb(164, 63, 63);
+    padding: 15px;
+    width: 1500px;
+    height: 150px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    background-color: rgb(255, 249, 235);
+    margin-top: 100px;
+}
+.edit-button{
+    border: 2px solid rgb(255, 254, 254);
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(164, 63, 63);
+    color: white;
+    width: 55px;
+}
+.delete-button{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(164, 63, 63);
+    color: white;
+    width: 65px;
+}
+.Fname{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    width: 300px;
+    color: black;
+ 
+}
+.Lname{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    width: 300px;
+    color: black;
+    margin-top: 4px;
+ 
+}
+.password{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    width: 300px;
+    color: black;
+    margin-top: 4px;
+}*/
+.edit{
+    font-family: 'Times New Roman', Times, serif;
+ 
+}
+.EditProfile{
+    font-family: 'Times New Roman', Times, serif;
+    background-color: '#FEE4A1';
+    border-color: '#FEE4A1' ;
+    color: black;
+    margin-left: 6px;
+   
+}
+.Card{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-style: inherit;
+    color: black;
+    margin-left: 150px;
+}
+.body{
+    border: 2px solid rgb(164, 63, 63);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    font-style: inherit;
+    color: black;
+}
