@@ -4,6 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const NGEBuilding = () => {
   const [activeLink, setActiveLink] = useState('view-map');
+  const [isEditing, setEditing] = useState(false); // New state for editing
+  const [rooms, setRooms] = useState([]); // New state for the list of rooms
   const navigate = useNavigate();
 
   const pageStyles = {
@@ -11,6 +13,46 @@ const NGEBuilding = () => {
     flexDirection: 'column',
     alignItems: 'center',
     background: '#FFFFFF',
+  };
+
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?');
+ 
+    if (shouldLogout) {
+      // Add any logout logic here
+      // For example, clear user session, cookies, or perform API logout
+      // After the logout logic, navigate to the login page or any other desired page
+      navigate('/');
+    }
+  };
+ 
+  const handleProfileClick = () => {
+    // Add logic to handle profile click
+    navigate('/user-profile'); // Navigate to the user profile page
+  };
+
+  const handleEditClick = () => {
+    setEditing(true);
+  };
+
+  const handleAddRoom = () => {
+    // Implement logic to add a new room to the list
+    // You may open a modal or update the state directly
+    // For example: setRooms([...rooms, { id: newId, name: 'New Room' }]);
+  };
+
+  const handleUpdateRoom = () => {
+    // Implement logic to create a room
+    // For example: send a request to the server to create a room
+  };
+
+  const handleDeleteRoom = (roomId) => {
+    // Implement logic to delete a room
+    // For example: setRooms(rooms.filter(room => room.id !== roomId));
+  };
+
+  const handleDoneEditing = () => {
+    setEditing(false);
   };
 
   const titleStyles = {
@@ -52,21 +94,6 @@ const NGEBuilding = () => {
     marginTop: '10px',
   };
 
-  const handleLogout = () => {
-    const shouldLogout = window.confirm('Are you sure you want to log out?');
- 
-    if (shouldLogout) {
-      // Add any logout logic here
-      // For example, clear user session, cookies, or perform API logout
-      // After the logout logic, navigate to the login page or any other desired page
-      navigate('/');
-    }
-  };
- 
-  const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
-  };
 
   const roofSvg = (
   <svg width="1161" height="122" viewBox="0 0 1161 122" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -206,12 +233,65 @@ const NGEBuilding = () => {
         </Dropdown>
       </div>
 
-      {/* Roof Design with Title */}
-      <div style={roofContainerStyles}>
-        {roofSvg}
-        <div style={roofTitleStyles}>NGE BUILDING ROOMS</div>
-      </div>
+      <div style={{ display: 'flex', margin: '20px', gap: '20px', justifyContent: 'flex-start' }}>
+  <div>
+    {isEditing ? null : (
+      <button
+        onClick={handleEditClick}
+        style={{
+          backgroundColor: 'maroon',
+          color: 'white',
+          padding: '10px',
+          borderRadius: '5px',
+          marginRight: '1100px', // Adjust the margin to position the button
+        }}
+      >
+        Edit Room
+      </button>
+    )}
+  </div>
+  {isEditing ? (
+    <div style={{ marginLeft: 'auto' }}>
+      <button
+        onClick={handleDoneEditing}
+        style={{ backgroundColor: 'maroon', color: 'white', padding: '10px', borderRadius: '5px', marginLeft: '1100px' }}
+      >
+        Done Editing
+      </button>
+    </div>
+  ) : null}
+</div>
 
+
+{/* Roof Design with Title */}
+<div style={roofContainerStyles}>
+  {roofSvg}
+  <div style={roofTitleStyles}>ACADEMIC BUILDING ROOMS</div>
+</div>
+
+{/* Edit Room Buttons (moved below the roof) */}
+{isEditing ? (
+  <div style={{ margin: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+    <button
+      onClick={handleAddRoom}
+      style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }}
+    >
+      Add Room
+    </button>
+    <button
+      onClick={handleUpdateRoom}
+      style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px' }}
+    >
+      Update Room
+    </button>
+    <button
+      onClick={handleDeleteRoom}
+      style={{ backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '5px' }}
+    >
+      Delete Room
+    </button>
+  </div>
+) : null}
 
       {/* Cards Section */}
       <div className="container">
