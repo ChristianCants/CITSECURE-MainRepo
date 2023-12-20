@@ -3,8 +3,9 @@ import { useNavigate, Link } from 'react-router-dom'; // Import Link from react-
 import axios from 'axios';
 
 const Login = () => {
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userRole, setUserRole] = useState('user'); // Default role is 'user'
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -12,12 +13,17 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8080/User/login', null, {
-        params: {
-          email: email,
-          password: password,
-        },
-      });
+      const response = await axios.post(
+        'http://localhost:8080/User/login',
+        null,
+        {
+          params: {
+            email: email,
+            password: password,
+            userRole: userRole, // Pass userRole to the API
+          },
+        }
+      );
 
       if (response.status === 200) {
         // Redirect to the menu page upon successful login
@@ -93,7 +99,7 @@ const Login = () => {
                     className="form-control custom-input"
                     style={inputStyle}
                     value={email}
-                    onChange={(e) => setemail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -108,9 +114,26 @@ const Login = () => {
                     className="form-control custom-input"
                     style={inputStyle}
                     value={password}
-                    onChange={(e) => setpassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
                   />
+                </div>
+
+                <div className="mb-4">
+                <label className="form-label" htmlFor="userRole">
+                User Role:
+                </label>
+
+                  <select
+                    id="userRole"
+                    className="form-select custom-input"
+                    style={inputStyle}
+                    value={userRole}
+                    onChange={(e) => setUserRole(e.target.value)}
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                  </select>
                 </div>
 
                 <button
@@ -122,10 +145,10 @@ const Login = () => {
                 </button>
                 <p style={orTextStyle}>or</p>
 
-                {/* Use Link component for the "Sign up" button */}
                 <Link to="/signup" className="btn btn-primary btn-block" style={signUpButtonStyle}>
                   Sign up
                 </Link>
+
 
                 <div className="text-center">
                   <button type="button" className="btn btn-link btn-floating mx-1">

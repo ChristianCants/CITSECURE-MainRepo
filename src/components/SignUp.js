@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
@@ -10,6 +9,7 @@ const SignUp = () => {
   const [selectedGender, setSelectedGender] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const [userRole, setUserRole] = useState('User'); // New state for user role
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -36,6 +36,7 @@ const SignUp = () => {
         gender: selectedGender,
         email,
         password,
+        role: userRole, // Add user role to the newUser object
       };
 
       const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
@@ -43,11 +44,12 @@ const SignUp = () => {
           'Content-Type': 'application/json',
         },
       });
-
+  
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
       console.error('Signup failed:', error.message);
+      alert('Signup failed. Please check the console for details.');
     }
   };
 
@@ -78,8 +80,8 @@ const SignUp = () => {
     backgroundImage: 'url("images/GLE SIGN-UP.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    height: '100vh',
-    overflow: 'hidden',
+    height: 'auto', // Change to 'auto' or a specific height that allows scrolling
+    overflowY: 'auto',
     // Other background styles
   };
 
@@ -216,6 +218,36 @@ const SignUp = () => {
                       Password
                     </label>
                   </div>
+                
+                {/* Add a dropdown or radio button for user role */}
+            <div className="form-outline mb-4">
+              <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>
+                Role:
+              </label>
+              <div className="dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="roleDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  style={inputStyle}
+                >
+                  {userRole ? userRole : 'Select Role'}
+                </button>
+                <div className="dropdown-menu" aria-labelledby="roleDropdown">
+                  <a className="dropdown-item" href="#" onClick={() => setUserRole('User')}>
+                    User
+                  </a>
+                  <a className="dropdown-item" href="#" onClick={() => setUserRole('Admin')}>
+                    Admin
+                  </a>
+                </div>
+              </div>
+            </div>
+
+
 
                   <button
                     type="button"

@@ -1,3 +1,5 @@
+// AppRouter.js
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
@@ -6,6 +8,7 @@ import SignUp from './SignUp';
 import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
 import UserProfile from './UserProfile';
+import AdminPage from './AdminPage'; // Import the AdminPage component
 
 // Import your building components
 import HighSchoolCanteen from './HighSchoolCanteen';
@@ -20,10 +23,7 @@ import GLEBuilding from './GLEBuilding';
 import MainCanteen from './MainCanteen';
 import Building from './Building';
 
-
-
-//Import your Get Direction components
-
+// Import your Get Direction components
 import AcadDirection from './AcadDirection';
 import AlliedDirection from './AlliedDirection';
 import LibraryDirection from './LibraryDirection';
@@ -36,6 +36,15 @@ import MainCanteenDirection from './MainCanteenDirection';
 import HSCanteenDirection from './HSCanteenDirection';
 
 const AppRouter = () => {
+  // Assume you have a function to get the user role, you can replace this with your actual logic
+  const getUserRole = () => {
+    // Replace this with your actual logic to get the user role
+    // For example, you might get it from the authentication token or API response
+    return 'Admin'; // Replace 'Admin' with the actual user role
+  };
+
+  const userRole = getUserRole();
+
   return (
     <Router>
       <Routes>  
@@ -46,9 +55,8 @@ const AppRouter = () => {
         <Route path="/view-map" element={<ViewMap />} />
         <Route path="/building" element={<Building />} />
 
-
-        {/* Routes for specific buildings */}
-        <Route path="/view-map/high-school-canteen" element={<HighSchoolCanteen />} />
+          {/* Routes for specific buildings */}
+          <Route path="/view-map/high-school-canteen" element={<HighSchoolCanteen />} />
         <Route path="/view-map/allied-building" element={<AlliedBuilding />} />
         <Route path="/view-map/library-building" element={<LibraryBuilding />} />
         <Route path="/view-map/nge-building" element={<NGEBuilding />} />
@@ -73,8 +81,9 @@ const AppRouter = () => {
       <Route path="/view-map/main-canteen-direction" element={<MainCanteenDirection />} />
       <Route path="/view-map/hs-canteen-direction" element={<HSCanteenDirection />} />
 
-
-
+        {userRole === 'Admin' && (
+          <Route path="/admin" element={<AdminPage />} />
+        )}
 
         <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
