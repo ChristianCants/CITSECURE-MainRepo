@@ -40,12 +40,13 @@ const AppRouter = () => {
   const getUserRole = () => {
     // Replace this with your actual logic to get the user role
     // For example, you might get it from the authentication token or API response
-    return 'Admin'; // Replace 'Admin' with the actual user role
+    return 'Admin'; // Replace 'admin' with the actual user role
   };
-
+  
   const userRole = getUserRole();
-
-  return (
+  console.log('User Role:', userRole); // Log the user role to the console
+  
+  return (      
     <Router>
       <Routes>  
         <Route path="/" element={<Home />} />

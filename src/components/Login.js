@@ -11,7 +11,7 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await axios.post(
         'http://localhost:8080/User/login',
@@ -20,14 +20,18 @@ const Login = () => {
           params: {
             email: email,
             password: password,
-            userRole: userRole, // Pass userRole to the API
+            userRole: userRole,
           },
         }
       );
-
+  
       if (response.status === 200) {
-        // Redirect to the menu page upon successful login
-        navigate('/menu');
+        // Check the user role and redirect accordingly
+        if (userRole === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/menu');
+        }
       } else {
         setError('Login failed. Please try again.');
       }
@@ -37,6 +41,7 @@ const Login = () => {
       setError('Login failed. Please try again.');
     }
   };
+  
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/GLE SIGN-UP.png")',
