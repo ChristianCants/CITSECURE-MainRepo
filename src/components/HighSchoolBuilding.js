@@ -1,12 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import axios from 'axios';
 
 const HighSchoolBuilding = () => {
   const [activeLink, setActiveLink] = useState('view-map');
-  const [isEditing, setEditing] = useState(false); // New state for editing
-  const [rooms, setRooms] = useState([]); // New state for the list of rooms
+  const [isEditing, setEditing] = useState(false);
+  const [rooms, setRooms] = useState([]);
+  const [fetchedData, setFetchedData] = useState([]);
+  const [editedName, setEditedName] = useState(''); // New state for edited name
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/highschool/getAllHighSchool');
+      setFetchedData(response.data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleAddRoom = async () => {
+    try {
+      const roomName = window.prompt('Room Name:');
+      if (!roomName) {
+        // If the user cancels or enters an empty name, do nothing
+        return;
+      }
+  
+      const newHighSchool = {
+        highSchoolName: roomName, // Use the entered roomName
+        // You can add other properties as needed
+      };
+  
+      const response = await axios.post('http://localhost:8080/highschool/addHighSchool', newHighSchool);
+      console.log('High School added:', response.data);
+      fetchData();
+    } catch (error) {
+      console.error('Error adding High School:', error);
+    }
+  };
+  
+
+  const handleDeleteRoom = async (id) => {
+    try {
+      const confirmDelete = window.confirm('Are you sure you want to delete this room?');
+      if (confirmDelete) {
+        await axios.delete(`http://localhost:8080/highschool/deleteHighSchool/${id}`);
+        console.log('High School deleted:', id);
+        // Update the state to trigger a re-render without fetching the data again
+        setFetchedData((prevData) => prevData.filter((room) => room.highSchoolId !== id));
+      }
+    } catch (error) {
+      console.error('Error deleting High School:', error);
+    }
+  };
+  
+
+  const handleUpdateRoom = async (id) => {
+    try {
+      const updatedName = editedName.trim(); // Get the trimmed edited name
+      if (!updatedName) {
+        alert('Please enter a valid name.');
+        return;
+      }
+
+      const updatedHighSchool = {
+        highschoolName: updatedName, // Include the updated name in the request body
+      };
+
+      const response = await axios.put(`http://localhost:8080/highschool/updateHighSchool/${id}`, updatedHighSchool);
+      console.log('High School updated:', response.data);
+      fetchData();
+      setEditing(false); // Disable editing mode after updating
+    } catch (error) {
+      console.error('Error updating HighSchool:', error);
+    }
+  };
+
 
   const pageStyles = {
     display: 'flex',
@@ -33,22 +108,6 @@ const HighSchoolBuilding = () => {
 
   const handleEditClick = () => {
     setEditing(true);
-  };
-
-  const handleAddRoom = () => {
-    // Implement logic to add a new room to the list
-    // You may open a modal or update the state directly
-    // For example: setRooms([...rooms, { id: newId, name: 'New Room' }]);
-  };
-
-  const handleUpdateRoom = () => {
-    // Implement logic to create a room
-    // For example: send a request to the server to create a room
-  };
-
-  const handleDeleteRoom = (roomId) => {
-    // Implement logic to delete a room
-    // For example: setRooms(rooms.filter(room => room.id !== roomId));
   };
 
   const handleDoneEditing = () => {
@@ -234,227 +293,78 @@ const HighSchoolBuilding = () => {
       </div>
       
       <div style={{ display: 'flex', margin: '20px', gap: '20px', justifyContent: 'flex-start' }}>
-  <div>
-    {isEditing ? null : (
-      <button
-        onClick={handleEditClick}
-        style={{
-          backgroundColor: 'maroon',
-          color: 'white',
-          padding: '10px',
-          borderRadius: '5px',
-          marginRight: '1100px', // Adjust the margin to position the button
-        }}
-      >
-        Edit Room
-      </button>
-    )}
-  </div>
-  {isEditing ? (
-    <div style={{ marginLeft: 'auto' }}>
-      <button
-        onClick={handleDoneEditing}
-        style={{ backgroundColor: 'maroon', color: 'white', padding: '10px', borderRadius: '5px', marginLeft: '1100px' }}
-      >
-        Done Editing
-      </button>
-    </div>
-  ) : null}
-</div>
-
-
-{/* Roof Design with Title */}
-<div style={roofContainerStyles}>
-  {roofSvg}
-  <div style={roofTitleStyles}>ACADEMIC BUILDING ROOMS</div>
-</div>
-
-{/* Edit Room Buttons (moved below the roof) */}
-{isEditing ? (
-  <div style={{ margin: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
-    <button
-      onClick={handleAddRoom}
-      style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }}
-    >
-      Add Room
-    </button>
-    <button
-      onClick={handleUpdateRoom}
-      style={{ backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px' }}
-    >
-      Update Room
-    </button>
-    <button
-      onClick={handleDeleteRoom}
-      style={{ backgroundColor: 'red', color: 'white', padding: '10px', borderRadius: '5px' }}
-    >
-      Delete Room
-    </button>
-  </div>
-) : null}
-
-      {/* Cards Section */}
+        <div>
+          {isEditing ? null : (
+            <button
+              onClick={handleEditClick}
+              style={{
+                backgroundColor: 'maroon',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '5px',
+                marginRight: '1100px',
+              }}
+            >
+              Edit Room
+            </button>
+          )}
+        </div>
+        {isEditing ? (
+          <div style={{ marginLeft: 'auto' }}>
+            <button
+              onClick={handleDoneEditing}
+              style={{ backgroundColor: 'maroon', color: 'white', padding: '10px', borderRadius: '5px', marginLeft: '1100px' }}
+            >
+              Done Editing
+            </button>
+          </div>
+        ) : null}
+      </div>
+      <div style={roofContainerStyles}>
+        {roofSvg}
+        <div style={roofTitleStyles}>HIGH SCHOOL BUILDING ROOMS</div>
+      </div>
+      {isEditing ? (
+        <div style={{ margin: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
+          <button
+            onClick={handleAddRoom}
+            style={{ backgroundColor: 'green', color: 'white', padding: '10px', borderRadius: '5px' }}
+          >
+            Add Room
+          </button>
+        </div>
+      ) : null}
       <div className="container">
         <div className="row">
-          <div className="col-md-3" style={{ ...cardStyles, ...cardWrapperStyles }}>
-            {/* Card 1 */}
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Primary card title</h5>
-              </div>
-            </div>
+        {fetchedData.map((highschool) => (
+      <div className="col-md-3" style={{ ...cardStyles }} key={highschool.highSchoolId}>
+        <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
+          <div className="card-header">Room Id: {highschool.highSchoolId}</div>
+          <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
+            <h5 className="card-title">{highschool.highSchoolName}</h5>
           </div>
-
-          {/* Add more cards with the same structure */}
-          {/* Card 2 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-          <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Secondary card title</h5>
-              </div>
+          {isEditing && (
+            <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
+              <button
+                onClick={() => handleUpdateRoom(highschool.highSchoolId)}
+                style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
+              >
+                Update
+              </button>
+              <button
+                onClick={() => handleDeleteRoom(highschool.highSchoolId)}
+                style={{ backgroundColor: 'red', color: 'white', padding: '5px', borderRadius: '5px' }}
+              >
+                Delete
+              </button>
             </div>
-          </div>
-
-          {/* Card 3 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Success card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 4 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Danger card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 5 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Warning card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 6 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Info card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 7 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Light card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 8 */}
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-3" style={{ ...cardStyles }}>
-            <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
-              <div className="card-header">Room Id</div>
-              <div className="card-body">
-                <h5 className="card-title">Dark card title</h5>
-              </div>
-            </div>
-          </div>
-
-          {/* Add more cards with the same structure */}
+          )}
         </div>
       </div>
+    ))}
 
-      {/* Your View Map content */}
-      {/* ... */}
+        </div>
+      </div>
     </div>
   );
 };
