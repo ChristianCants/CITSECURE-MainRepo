@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 const AlliedBuilding = () => {
@@ -8,8 +10,10 @@ const AlliedBuilding = () => {
   const [isEditing, setEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-  const [editedName, setEditedName] = useState(''); // New state for edited name
+  const [editedNames, setEditedNames] = useState({});
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -28,20 +32,18 @@ const AlliedBuilding = () => {
     try {
       const roomName = window.prompt('Room Name:');
       if (!roomName) {
-        // If the user cancels or enters an empty name, do nothing
         return;
       }
 
       const newAllied = {
-        alliedName: roomName, // Use the entered roomName
-        // You can add other properties as needed
+        alliedName: roomName,
       };
 
       const response = await axios.post('http://localhost:8080/allied/addAllied', newAllied);
       console.log('Allied added:', response.data);
       fetchData();
     } catch (error) {
-      console.error('Error adding allied:', error);
+      console.error('Error adding Allied:', error);
     }
   };
 
@@ -51,32 +53,64 @@ const AlliedBuilding = () => {
       if (confirmDelete) {
         await axios.delete(`http://localhost:8080/allied/deleteAllied/${id}`);
         console.log('Allied deleted:', id);
-        // Update the state to trigger a re-render
         setFetchedData((prevData) => prevData.filter((room) => room.alliedId !== id));
       }
     } catch (error) {
-      console.error('Error deleting allied:', error);
+      console.error('Error deleting Allied:', error);
     }
   };
 
   const handleUpdateRoom = async (id) => {
     try {
-      const updatedName = editedName.trim(); // Get the trimmed edited name
-      if (!updatedName) {
-        alert('Please enter a valid name.');
+      const updatedName = editedNames[id].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
         return;
       }
 
       const updatedAllied = {
-        alliedName: updatedName, // Include the updated name in the request body
+        alliedName: updatedName,
       };
 
       const response = await axios.put(`http://localhost:8080/allied/updateAllied/${id}`, updatedAllied);
       console.log('Allied updated:', response.data);
       fetchData();
-      setEditing(false); // Disable editing mode after updating
+      setEditing(false);
     } catch (error) {
-      console.error('Error updating allied:', error);
+      console.error('Error updating Allied:', error);
+    }
+  };
+
+  
+
+  const openModal = (roomId) => {
+    setCurrentRoomId(roomId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setCurrentRoomId(null);
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const updatedName = editedNames[currentRoomId].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
+        return;
+      }
+
+      const updatedAllied = {
+        alliedName: updatedName,
+      };
+
+      const response = await axios.put(`http://localhost:8080/allied/updateAllied/${currentRoomId}`, updatedAllied);
+      console.log('Allied updated:', response.data);
+      fetchData();
+      closeModal();
+    } catch (error) {
+      console.error('Error updating Allied:', error);
     }
   };
 
@@ -100,8 +134,14 @@ const AlliedBuilding = () => {
   };
 
   const handleEditClick = () => {
+    const initialEditedNames = {};
+    fetchedData.forEach((allied) => {
+      initialEditedNames[allied.alliedId] = allied.alliedName;
+    });
+    setEditedNames(initialEditedNames);
     setEditing(true);
   };
+  
 
   const handleDoneEditing = () => {
     setEditing(false);
@@ -292,7 +332,7 @@ const AlliedBuilding = () => {
                 color: 'white',
                 padding: '10px',
                 borderRadius: '5px',
-                marginRight: '1100px', // Adjust the margin to position the button
+                marginRight: '1100px',
               }}
             >
               Edit Room
@@ -310,14 +350,10 @@ const AlliedBuilding = () => {
           </div>
         ) : null}
       </div>
-
-      {/* Roof Design with Title */}
       <div style={roofContainerStyles}>
         {roofSvg}
         <div style={roofTitleStyles}>ALLIED BUILDING ROOMS</div>
       </div>
-
-      {/* Edit Room Buttons (moved below the roof) */}
       {isEditing ? (
         <div style={{ margin: '20px', display: 'flex', gap: '10px', justifyContent: 'center' }}>
           <button
@@ -328,21 +364,30 @@ const AlliedBuilding = () => {
           </button>
         </div>
       ) : null}
-
-      {/* Add more cards with the same structure */}
-      <div className="container">
+       <div className="container">
         <div className="row">
           {fetchedData.map((allied) => (
             <div className="col-md-3" style={{ ...cardStyles }} key={allied.alliedId}>
               <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
                 <div className="card-header">Room Id: {allied.alliedId}</div>
                 <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
-                  <h5 className="card-title">{allied.alliedName}</h5>
+                  <h5 className="card-title">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={isEditing ? editedNames[allied.alliedId] : allied.alliedName}
+                        onChange={(e) => setEditedNames({ ...editedNames, [allied.alliedId]: e.target.value })}
+                        placeholder="Room Name"
+                      />
+                    ) : (
+                      allied.alliedName
+                    )}
+                  </h5>
                 </div>
                 {isEditing && (
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <button
-                      onClick={() => handleUpdateRoom(allied.alliedId)}
+                      onClick={() => openModal(allied.alliedId)} // Open the modal with the current room ID
                       style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
                     >
                       Update
@@ -361,8 +406,28 @@ const AlliedBuilding = () => {
         </div>
       </div>
 
-      {/* Your View Map content */}
-      {/* ... */}
+      {/* Modal for updating room */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedNames[currentRoomId] || ''}
+            onChange={(e) => setEditedNames({ ...editedNames, [currentRoomId]: e.target.value })}
+            placeholder="Room Name"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
