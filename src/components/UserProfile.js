@@ -33,11 +33,15 @@ function UserProfile() {
       const updatedFields = {
         firstName: userData.firstName,
         lastName: userData.lastName,
+        password: userData.pass,
       };
 
       // Include password in the update only if it is being edited
       if (isEditing) {
         updatedFields.password = userData.password;
+      } else {
+        // If not editing, exclude the password from the update
+        delete updatedFields.password;
       }
 
       console.log('Updated fields:', updatedFields);
@@ -114,22 +118,18 @@ function UserProfile() {
   };
 
   useEffect(() => {
-    // Replace 'loggedInUserEmail' and 'loggedInUserPassword' with actual logged-in user credentials
-    const loggedInUserEmail = 'example@email.com';
-    const loggedInUserPassword = 'Password123';
-
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/User/getUserDetails?email=${loggedInUserEmail}&password=${loggedInUserPassword}`);
-
+        const response = await fetch('http://localhost:8080/User/getAllUsers');
+ 
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
-
+ 
         const data = await response.json();
-
-        if (data) {
-          setUserData(data);
+ 
+        if (data.length > 0) {
+          setUserData(data[0]);
         } else {
           console.warn('No user data found');
         }
@@ -137,7 +137,7 @@ function UserProfile() {
         console.error('Error fetching user data:', error.message);
       }
     };
-
+ 
     fetchUserData();
   }, []);
 
@@ -240,7 +240,7 @@ function UserProfile() {
                     <p className="text-muted mb-0">{userData.email}</p>
                   </div>
                 </div>
-                <hr />
+                {/* <hr />
                 <div className="row">
                   <div className="col-sm-3">
                     <p className="mb-0">Password</p>
@@ -256,7 +256,7 @@ function UserProfile() {
                       <p className="text-muted mb-0">{userData.password}</p>
                     )}
                   </div>
-                </div>
+                </div> */}
                 <hr />
                 <div className="row">
                   <div className="edit">
@@ -270,13 +270,13 @@ function UserProfile() {
                       </Button>
                     )}
                   </div>
-                  <div className="col-sm-3 d-flex justify-content-end">
+                  {/* <div className="col-sm-3 d-flex justify-content-end">
                     {isEditing ? null : (
                       <Button style={{ backgroundColor: '#A43F3F', color: 'white', border: '#A43F3F', marginLeft:'5px' }} onClick={handleDeleteAccount}>
                         Delete Account
                       </Button>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </Card.Body>
             </Card>
