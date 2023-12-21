@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 const NGEBuilding = () => {
@@ -8,8 +10,10 @@ const NGEBuilding = () => {
   const [isEditing, setEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-  const [editedName, setEditedName] = useState(''); // New state for edited name
+  const [editedNames, setEditedNames] = useState({});
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -61,20 +65,53 @@ const NGEBuilding = () => {
 
   const handleUpdateRoom = async (id) => {
     try {
-      const updatedName = editedName.trim(); // Get the trimmed edited name
-      if (!updatedName) {
-        alert('Please enter a valid name.');
+      const updatedName = editedNames[id].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
         return;
       }
 
       const updatedNGE = {
-        ngeName: updatedName, // Include the updated name in the request body
+        ngeName: updatedName,
       };
 
       const response = await axios.put(`http://localhost:8080/nge/updateNGE/${id}`, updatedNGE);
       console.log('NGE updated:', response.data);
       fetchData();
-      setEditing(false); // Disable editing mode after updating
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating NGE:', error);
+    }
+  };
+
+  
+
+  const openModal = (roomId) => {
+    setCurrentRoomId(roomId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setCurrentRoomId(null);
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const updatedName = editedNames[currentRoomId].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
+        return;
+      }
+
+      const updatedNGE = {
+        ngeName: updatedName,
+      };
+
+      const response = await axios.put(`http://localhost:8080/nge/updateNGE/${currentRoomId}`, updatedNGE);
+      console.log('NGE updated:', response.data);
+      fetchData();
+      closeModal();
     } catch (error) {
       console.error('Error updating NGE:', error);
     }
@@ -99,13 +136,18 @@ const NGEBuilding = () => {
   };
  
   const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
+    navigate('/user-profile');
   };
 
   const handleEditClick = () => {
+    const initialEditedNames = {};
+    fetchedData.forEach((nge) => {
+      initialEditedNames[nge.ngeId] = nge.ngeName;
+    });
+    setEditedNames(initialEditedNames);
     setEditing(true);
   };
+  
 
   const handleDoneEditing = () => {
     setEditing(false);
@@ -331,19 +373,30 @@ const NGEBuilding = () => {
           </button>
         </div>
       ) : null}
-      <div className="container">
+       <div className="container">
         <div className="row">
           {fetchedData.map((nge) => (
             <div className="col-md-3" style={{ ...cardStyles }} key={nge.ngeId}>
               <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
                 <div className="card-header">Room Id: {nge.ngeId}</div>
                 <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
-                  <h5 className="card-title">{nge.ngeName}</h5>
+                  <h5 className="card-title">
+                    {isEditing ? (
+                      <input
+                      type="text"
+                      value={editedNames[nge.ngeId] || ''}
+                      onChange={(e) => setEditedNames({ ...editedNames, [nge.ngeId]: e.target.value })}
+                      placeholder="Room Name"
+                    />
+                    ) : (
+                      nge.ngeName
+                    )}
+                  </h5>
                 </div>
                 {isEditing && (
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <button
-                      onClick={() => handleUpdateRoom(nge.ngeId)}
+                      onClick={() => openModal(nge.ngeId)} // Open the modal with the current room ID
                       style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
                     >
                       Update
@@ -361,6 +414,29 @@ const NGEBuilding = () => {
           ))}
         </div>
       </div>
+
+      {/* Modal for updating room */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedNames[currentRoomId] || ''}
+            onChange={(e) => setEditedNames({ ...editedNames, [currentRoomId]: e.target.value })}
+            placeholder="Room Name"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
