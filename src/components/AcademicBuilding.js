@@ -34,14 +34,22 @@ const AcademicBuilding = () => {
       if (!roomName) {
         return;
       }
-
+   
       const newAcad = {
         acadName: roomName,
       };
-
+   
       const response = await axios.post('http://localhost:8080/acad/addAcad', newAcad);
       console.log('Academy added:', response.data);
+   
+      // Fetch the updated data
       fetchData();
+   
+      // Set the editedNames state to include the newly added room with its default name
+      setEditedNames((prevNames) => ({
+        ...prevNames,
+        [response.data.acadId]: roomName,
+      }));
     } catch (error) {
       console.error('Error adding academy:', error);
     }
@@ -367,11 +375,11 @@ const AcademicBuilding = () => {
                   <h5 className="card-title">
                     {isEditing ? (
                       <input
-                        type="text"
-                        value={isEditing ? editedNames[acad.acadId] : acad.acadName}
-                        onChange={(e) => setEditedNames({ ...editedNames, [acad.acadId]: e.target.value })}
-                        placeholder="Room Name"
-                      />
+                      type="text"
+                      value={editedNames[acad.acadId] || ''}
+                      onChange={(e) => setEditedNames({ ...editedNames, [acad.acadId]: e.target.value })}
+                      placeholder="Room Name"
+                    />
                     ) : (
                       acad.acadName
                     )}
