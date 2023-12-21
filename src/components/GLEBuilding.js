@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 const GLEBuilding = () => {
@@ -8,8 +10,10 @@ const GLEBuilding = () => {
   const [isEditing, setEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-  const [editedName, setEditedName] = useState(''); // New state for edited name
+  const [editedNames, setEditedNames] = useState({});
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -61,20 +65,53 @@ const GLEBuilding = () => {
 
   const handleUpdateRoom = async (id) => {
     try {
-      const updatedName = editedName.trim(); // Get the trimmed edited name
-      if (!updatedName) {
-        alert('Please enter a valid name.');
+      const updatedName = editedNames[id].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
         return;
       }
 
       const updatedGLE = {
-        gleName: updatedName, // Include the updated name in the request body
+        gleName: updatedName,
       };
 
       const response = await axios.put(`http://localhost:8080/gle/updateGLE/${id}`, updatedGLE);
       console.log('GLE updated:', response.data);
       fetchData();
-      setEditing(false); // Disable editing mode after updating
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating GLE:', error);
+    }
+  };
+
+  
+
+  const openModal = (roomId) => {
+    setCurrentRoomId(roomId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setCurrentRoomId(null);   
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const updatedName = editedNames[currentRoomId].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
+        return;
+      }
+
+      const updatedGLE = {
+        gleName: updatedName,
+      };
+
+      const response = await axios.put(`http://localhost:8080/gle/updateGLE/${currentRoomId}`, updatedGLE);
+      console.log('GLE updated:', response.data);
+      fetchData();
+      closeModal();
     } catch (error) {
       console.error('Error updating GLE:', error);
     }
@@ -99,13 +136,18 @@ const GLEBuilding = () => {
   };
  
   const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
+    navigate('/user-profile');
   };
 
   const handleEditClick = () => {
+    const initialEditedNames = {};
+    fetchedData.forEach((gle) => {
+      initialEditedNames[gle.gleId] = gle.gleName;
+    });
+    setEditedNames(initialEditedNames);
     setEditing(true);
   };
+  
 
   const handleDoneEditing = () => {
     setEditing(false);
@@ -332,19 +374,30 @@ const GLEBuilding = () => {
           </button>
         </div>
       ) : null}
-      <div className="container">
+       <div className="container">
         <div className="row">
           {fetchedData.map((gle) => (
             <div className="col-md-3" style={{ ...cardStyles }} key={gle.gleId}>
               <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
                 <div className="card-header">Room Id: {gle.gleId}</div>
                 <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
-                  <h5 className="card-title">{gle.gleName}</h5>
+                  <h5 className="card-title">
+                    {isEditing ? (
+                      <input
+                      type="text"
+                      value={editedNames[gle.gleId] || ''}
+                      onChange={(e) => setEditedNames({ ...editedNames, [gle.gleId]: e.target.value })}
+                      placeholder="Room Name"
+                    />
+                    ) : (
+                      gle.gleName
+                    )}
+                  </h5>
                 </div>
                 {isEditing && (
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <button
-                      onClick={() => handleUpdateRoom(gle.gleId)}
+                      onClick={() => openModal(gle.gleId)} // Open the modal with the current room ID
                       style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
                     >
                       Update
@@ -362,6 +415,29 @@ const GLEBuilding = () => {
           ))}
         </div>
       </div>
+
+      {/* Modal for updating room */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedNames[currentRoomId] || ''}
+            onChange={(e) => setEditedNames({ ...editedNames, [currentRoomId]: e.target.value })}
+            placeholder="Room Name"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
