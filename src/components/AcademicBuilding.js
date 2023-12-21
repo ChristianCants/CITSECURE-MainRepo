@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 
 const AcademicBuilding = () => {
@@ -8,8 +10,10 @@ const AcademicBuilding = () => {
   const [isEditing, setEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-  const [editedName, setEditedName] = useState(''); // New state for edited name
+  const [editedNames, setEditedNames] = useState({});
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -28,15 +32,13 @@ const AcademicBuilding = () => {
     try {
       const roomName = window.prompt('Room Name:');
       if (!roomName) {
-        // If the user cancels or enters an empty name, do nothing
         return;
       }
-  
+
       const newAcad = {
-        acadName: roomName, // Use the entered roomName
-        // You can add other properties as needed
+        acadName: roomName,
       };
-  
+
       const response = await axios.post('http://localhost:8080/acad/addAcad', newAcad);
       console.log('Academy added:', response.data);
       fetchData();
@@ -51,7 +53,6 @@ const AcademicBuilding = () => {
       if (confirmDelete) {
         await axios.delete(`http://localhost:8080/acad/deleteAcad/${id}`);
         console.log('Academy deleted:', id);
-        // Update the state to trigger a re-render
         setFetchedData((prevData) => prevData.filter((room) => room.acadId !== id));
       }
     } catch (error) {
@@ -61,20 +62,53 @@ const AcademicBuilding = () => {
 
   const handleUpdateRoom = async (id) => {
     try {
-      const updatedName = editedName.trim(); // Get the trimmed edited name
-      if (!updatedName) {
-        alert('Please enter a valid name.');
+      const updatedName = editedNames[id].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
         return;
       }
 
       const updatedAcad = {
-        acadName: updatedName, // Include the updated name in the request body
+        acadName: updatedName,
       };
 
       const response = await axios.put(`http://localhost:8080/acad/updateAcad/${id}`, updatedAcad);
       console.log('Academy updated:', response.data);
       fetchData();
-      setEditing(false); // Disable editing mode after updating
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating academy:', error);
+    }
+  };
+
+  
+
+  const openModal = (roomId) => {
+    setCurrentRoomId(roomId);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setCurrentRoomId(null);
+    setShowModal(false);
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      const updatedName = editedNames[currentRoomId].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
+        return;
+      }
+
+      const updatedAcad = {
+        acadName: updatedName,
+      };
+
+      const response = await axios.put(`http://localhost:8080/acad/updateAcad/${currentRoomId}`, updatedAcad);
+      console.log('Academy updated:', response.data);
+      fetchData();
+      closeModal();
     } catch (error) {
       console.error('Error updating academy:', error);
     }
@@ -100,8 +134,14 @@ const AcademicBuilding = () => {
   };
 
   const handleEditClick = () => {
+    const initialEditedNames = {};
+    fetchedData.forEach((acad) => {
+      initialEditedNames[acad.acadId] = acad.acadName;
+    });
+    setEditedNames(initialEditedNames);
     setEditing(true);
   };
+  
 
   const handleDoneEditing = () => {
     setEditing(false);
@@ -317,19 +357,30 @@ const AcademicBuilding = () => {
           </button>
         </div>
       ) : null}
-      <div className="container">
+       <div className="container">
         <div className="row">
           {fetchedData.map((acad) => (
             <div className="col-md-3" style={{ ...cardStyles }} key={acad.acadId}>
               <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
                 <div className="card-header">Room Id: {acad.acadId}</div>
                 <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
-                  <h5 className="card-title">{acad.acadName}</h5>
+                  <h5 className="card-title">
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={isEditing ? editedNames[acad.acadId] : acad.acadName}
+                        onChange={(e) => setEditedNames({ ...editedNames, [acad.acadId]: e.target.value })}
+                        placeholder="Room Name"
+                      />
+                    ) : (
+                      acad.acadName
+                    )}
+                  </h5>
                 </div>
                 {isEditing && (
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <button
-                      onClick={() => handleUpdateRoom(acad.acadId)}
+                      onClick={() => openModal(acad.acadId)} // Open the modal with the current room ID
                       style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
                     >
                       Update
@@ -347,6 +398,29 @@ const AcademicBuilding = () => {
           ))}
         </div>
       </div>
+
+      {/* Modal for updating room */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedNames[currentRoomId] || ''}
+            onChange={(e) => setEditedNames({ ...editedNames, [currentRoomId]: e.target.value })}
+            placeholder="Room Name"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
