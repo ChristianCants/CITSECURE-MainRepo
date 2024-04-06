@@ -1,9 +1,7 @@
-// AppRouter.js
-
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
-import Login from './Login';
+import VisitorOut from './VisitorOut'; // Import the VisitorOut component
 import SignUp from './SignUp';
 import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
@@ -50,7 +48,7 @@ const AppRouter = () => {
     <Router>
       <Routes>  
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/VisitorOut" element={<VisitorOut />} /> {/* Use VisitorOut component here */}
         <Route path="/signup" element={<SignUp />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
