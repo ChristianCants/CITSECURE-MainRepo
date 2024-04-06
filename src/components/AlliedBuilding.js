@@ -34,14 +34,22 @@ const AlliedBuilding = () => {
       if (!roomName) {
         return;
       }
-
+   
       const newAllied = {
         alliedName: roomName,
       };
-
+   
       const response = await axios.post('http://localhost:8080/allied/addAllied', newAllied);
       console.log('Allied added:', response.data);
+   
+      // Fetch the updated data
       fetchData();
+   
+      // Set the editedNames state to include the newly added room with its default name
+      setEditedNames((prevNames) => ({
+        ...prevNames,
+        [response.data.alliedId]: roomName,
+      }));
     } catch (error) {
       console.error('Error adding Allied:', error);
     }
@@ -374,11 +382,11 @@ const AlliedBuilding = () => {
                   <h5 className="card-title">
                     {isEditing ? (
                       <input
-                        type="text"
-                        value={isEditing ? editedNames[allied.alliedId] : allied.alliedName}
-                        onChange={(e) => setEditedNames({ ...editedNames, [allied.alliedId]: e.target.value })}
-                        placeholder="Room Name"
-                      />
+                      type="text"
+                      value={editedNames[allied.alliedId] || ''}
+                      onChange={(e) => setEditedNames({ ...editedNames, [allied.alliedId]: e.target.value })}
+                      placeholder="Room Name"
+                    />
                     ) : (
                       allied.alliedName
                     )}

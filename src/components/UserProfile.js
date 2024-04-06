@@ -144,7 +144,7 @@ function UserProfile() {
 
 
   return (
-    <section style={{ backgroundcolor: ``,  height: '800px', width: '100%', backgroundSize: 'cover', backgroundPosition: 'center'}}>
+    <section style={{ backgroundImage: 'url("images/GLE SIGN-UP.png")',  height: '1100px', width: '100%', backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <Container fluid className="py-5">
       <Row>
         <Col>

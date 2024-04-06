@@ -2,19 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import axios from 'axios';
-
+import { Modal, Button } from 'react-bootstrap';
+ 
 const ElementaryBuilding = () => {
   const [activeLink, setActiveLink] = useState('view-map');
   const [isEditing, setEditing] = useState(false);
   const [rooms, setRooms] = useState([]);
   const [fetchedData, setFetchedData] = useState([]);
-  const [editedName, setEditedName] = useState(''); // New state for edited name
+  const [editedNames, setEditedNames] = useState({});
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [currentRoomId, setCurrentRoomId] = useState(null);
+ 
   useEffect(() => {
     fetchData();
   }, []);
-
+ 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8080/elementary/getAllElementary');
@@ -23,111 +26,151 @@ const ElementaryBuilding = () => {
       console.error('Error fetching data:', error);
     }
   };
-
+ 
+ 
   const handleAddRoom = async () => {
     try {
       const roomName = window.prompt('Room Name:');
       if (!roomName) {
-        // If the user cancels or enters an empty name, do nothing
         return;
       }
-  
+   
       const newElementary = {
-        elementaryName: roomName, // Use the entered roomName
-        // You can add other properties as needed
+        elementaryName: roomName,
       };
-  
+   
       const response = await axios.post('http://localhost:8080/elementary/addElementary', newElementary);
       console.log('Elementary added:', response.data);
+   
+      // Fetch the updated datas
       fetchData();
+   
+      // Set the editedNames state to include the newly added room with its default name
+      setEditedNames((prevNames) => ({
+        ...prevNames,
+        [response.data.elementaryId]: roomName,
+      }));
     } catch (error) {
-      console.error('Error adding Elementary:', error);
+      console.error('Error adding elementary:', error);
     }
   };
-
+ 
   const handleDeleteRoom = async (id) => {
     try {
       const confirmDelete = window.confirm('Are you sure you want to delete this room?');
       if (confirmDelete) {
         await axios.delete(`http://localhost:8080/elementary/deleteElementary/${id}`);
         console.log('Elementary deleted:', id);
-        // Update the state to trigger a re-render
         setFetchedData((prevData) => prevData.filter((room) => room.elementaryId !== id));
       }
     } catch (error) {
-      console.error('Error deleting Elementary:', error);
+      console.error('Error deleting elementary:', error);
     }
   };
-
+ 
   const handleUpdateRoom = async (id) => {
     try {
-      const updatedName = editedName.trim(); // Get the trimmed edited name
-      if (!updatedName) {
-        alert('Please enter a valid name.');
+      const updatedName = editedNames[id].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
         return;
       }
-
+ 
       const updatedElementary = {
-        elementaryName: updatedName, // Include the updated name in the request body
+        ElementaryName: updatedName,
       };
-
+ 
       const response = await axios.put(`http://localhost:8080/elementary/updateElementary/${id}`, updatedElementary);
       console.log('Elementary updated:', response.data);
       fetchData();
-      setEditing(false); // Disable editing mode after updating
+      setEditing(false);
     } catch (error) {
       console.error('Error updating Elementary:', error);
     }
   };
-
-
+ 
+ 
+  const openModal = (roomId) => {
+    setCurrentRoomId(roomId);
+    setShowModal(true);
+  };
+ 
+  const closeModal = () => {
+    setCurrentRoomId(null);
+    setShowModal(false);
+  };
+ 
+ 
+  const handleSaveChanges = async () => {
+    try {
+      const updatedName = editedNames[currentRoomId].trim();
+      if (!updatedName || updatedName.length > 50) {
+        alert('Please enter a valid name (up to 50 characters).');
+        return;
+      }
+ 
+      const updatedElementary = {
+        elementaryNameName: updatedName,
+      };
+ 
+      const response = await axios.put(`http://localhost:8080/elementary/updateElementary/${currentRoomId}`, updatedElementary);
+      console.log('Elementary updated:', response.data);
+      fetchData();
+      closeModal();
+    } catch (error) {
+      console.error('Error updating Elementary:', error);
+    }
+  };
+ 
   const pageStyles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     background: '#FFFFFF',
   };
-
+ 
   const handleLogout = () => {
     const shouldLogout = window.confirm('Are you sure you want to log out?');
  
     if (shouldLogout) {
-      // Add any logout logic here
-      // For example, clear user session, cookies, or perform API logout
-      // After the logout logic, navigate to the login page or any other desired page
+     
       navigate('/');
     }
   };
  
   const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
+    navigate('/user-profile');
   };
-
+ 
   const handleEditClick = () => {
+    const initialEditedNames = {};
+    fetchedData.forEach((elementary) => {
+      initialEditedNames[elementary.elementaryId] = elementary.elementaryName;
+    });
+    setEditedNames(initialEditedNames);
     setEditing(true);
   };
-
+ 
   const handleDoneEditing = () => {
     setEditing(false);
   };
-
+ 
   const titleStyles = {
     marginTop: '20px',
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '20px',
   };
-
+ 
   const cardStyles = {
     marginTop: '20px',
     marginBottom: '10px'
   };
-
+ 
   const cardWrapperStyles = {
     marginBottom: '10px', // Set the bottom margin for consistent spacing
   };
-
+ 
   const navBarStyles = {
     backgroundColor: 'maroon',
     width: '100%',
@@ -136,13 +179,13 @@ const ElementaryBuilding = () => {
     alignItems: 'center',
     justifyContent: 'space-between',
   };
-
+ 
   const navLinkStyles = {
     color: 'white',
     margin: '0 80px',
     position: 'relative',
   };
-
+ 
   const roofStyles = {
     width: '100%',
     height: '20px',
@@ -150,8 +193,8 @@ const ElementaryBuilding = () => {
     position: 'relative',
     marginTop: '10px',
   };
-
-
+ 
+ 
   const roofSvg = (
   <svg width="1161" height="122" viewBox="0 0 1161 122" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d_1_2)">
@@ -188,9 +231,9 @@ const ElementaryBuilding = () => {
     </defs>
   </svg>
 );
-
-  
-
+ 
+ 
+ 
   const roofTitleStyles = {
     position: 'absolute',
     top: '50%',
@@ -200,7 +243,7 @@ const ElementaryBuilding = () => {
     fontSize: '18px',
     fontWeight: 'bold',
   };
-
+ 
   const roofContainerStyles = {
     marginTop: '20px',
     position: 'relative',
@@ -208,17 +251,16 @@ const ElementaryBuilding = () => {
     backgroundColor: 'white',
     textAlign: 'center', // Center the content
   };
-
+ 
   const navLinks = [
     { label: 'Home', href: '/menu', id: 'home' },
     { label: 'View Map', href: '/view-map', id: 'view-map' },
     { label: 'Building', href: '/building', id: 'building' },
     // Add more navigation links as needed
   ];
-
+ 
   return (
     <div style={pageStyles}>
-      {/* Navigation Bar */}
       <div style={navBarStyles}>
         <div
           style={{
@@ -233,7 +275,6 @@ const ElementaryBuilding = () => {
             navigate('/view-map');
           }}
         >
-          {/* Your logo or icon */}
           <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 56 54" fill="none">
             <path
               d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z"
@@ -276,20 +317,16 @@ const ElementaryBuilding = () => {
             </Link>
           ))}
         </div>
-
-        {/* Dropdown Button */}
         <Dropdown>
           <Dropdown.Toggle variant="link" id="dropdown-basic" style={{ color: 'white', marginLeft: '10px' }}>
             <img src="/images/Avatar.png" alt="Your Image" width="32" height="32" className="rounded-circle" />
           </Dropdown.Toggle>
-
           <Dropdown.Menu>
-          <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
-          <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+            <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
-
       <div style={{ display: 'flex', margin: '20px', gap: '20px', justifyContent: 'flex-start' }}>
         <div>
           {isEditing ? null : (
@@ -332,19 +369,30 @@ const ElementaryBuilding = () => {
           </button>
         </div>
       ) : null}
-      <div className="container">
+       <div className="container">
         <div className="row">
           {fetchedData.map((elementary) => (
             <div className="col-md-3" style={{ ...cardStyles }} key={elementary.elementaryId}>
               <div className="card text-black" style={{ backgroundColor: '#FFEBCD', ...cardStyles }}>
                 <div className="card-header">Room Id: {elementary.elementaryId}</div>
                 <div className="card-body" style={{ height: '90px', overflow: 'hidden' }}>
-                  <h5 className="card-title">{elementary.elementaryName}</h5>
+                  <h5 className="card-title">
+                    {isEditing ? (
+                      <input
+                      type="text"
+                      value={editedNames[elementary.elementaryId] || ''}
+                      onChange={(e) => setEditedNames({ ...editedNames, [elementary.elementaryId]: e.target.value })}
+                      placeholder="Room Name"
+                    />
+                    ) : (
+                      elementary.elementaryName
+                    )}
+                  </h5>
                 </div>
                 {isEditing && (
                   <div className="card-footer" style={{ display: 'flex', justifyContent: 'space-between', padding: '10px' }}>
                     <button
-                      onClick={() => handleUpdateRoom(elementary.elementaryId)}
+                      onClick={() => openModal(elementary.elementaryId)} // Open the modal with the current room ID
                       style={{ backgroundColor: 'blue', color: 'white', padding: '5px', borderRadius: '5px' }}
                     >
                       Update
@@ -362,8 +410,32 @@ const ElementaryBuilding = () => {
           ))}
         </div>
       </div>
+ 
+      {/* Modal for updating room */}
+      <Modal show={showModal} onHide={closeModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Update Room</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            value={editedNames[currentRoomId] || ''}
+            onChange={(e) => setEditedNames({ ...editedNames, [currentRoomId]: e.target.value })}
+            placeholder="Room Name"
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={closeModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSaveChanges}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
-
+ 
+ 
 export default ElementaryBuilding;
