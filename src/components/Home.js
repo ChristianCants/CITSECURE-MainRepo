@@ -48,7 +48,7 @@ const Home = () => {
  
   return (
     <div style={containerStyle}>
-      <Link to="/login" className="btn btn-primary btn-lg rounded-pill mx-2" style={loginButtonStyle}>
+      <Link to="/visitorout" className="btn btn-primary btn-lg rounded-pill mx-2" style={loginButtonStyle}>
         <span style={{ marginRight: '8px' }}>Sign In</span>
         <svg className="bi" width="24" height="24">
           <use xlinkHref="#arrow-right-short"></use>

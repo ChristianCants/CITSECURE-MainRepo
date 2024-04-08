@@ -104,43 +104,22 @@ const VisitorOut = () => {
                 </div>
 
                 <div className="form-outline mb-4">
-                  <label className="form-label" htmlFor="formTimeOut">
-                    Time Out
+                  <label className="form-label" htmlFor="timeIn">
+                    Time In
                   </label>
-                  <div className="d-flex align-items-center">
-                    <input
-                      type="tel"
-                      id="formTimeOutHours"
-                      className="form-control custom-input"
-                      style={{ ...inputStyle, width: '60px' }}
-                      value={hours}
-                      onChange={(e) => setHours(e.target.value)}
-                      maxLength={2}
-                      placeholder="HH"
-                      required
-                    />
-                    :
-                    <input
-                      type="tel"
-                      id="formTimeOutMinutes"
-                      className="form-control custom-input"
-                      style={{ ...inputStyle, width: '60px' }}
-                      value={minutes}
-                      onChange={(e) => setMinutes(e.target.value)}
-                      maxLength={2}
-                      placeholder="MM"
-                      required
-                    />
-                    <select
-                      className="form-select custom-select"
-                      style={dropdownStyle}
-                      value={ampm}
-                      onChange={(e) => setAmPm(e.target.value)}
-                    >
-                      <option value="AM">AM</option>
-                      <option value="PM">PM</option>
-                    </select>
-                  </div>
+                  <input
+                    type="time"
+                    id="timeIn"
+                    className="form-control custom-input"
+                    style={inputStyle}
+                    value={hours + ':' + minutes}
+                    onChange={(e) => {
+                      const [hour, minute] = e.target.value.split(':');
+                      setHours(hour);
+                      setMinutes(minute);
+                    }}
+                    required
+                  />
                 </div>
 
                 <button
@@ -148,7 +127,7 @@ const VisitorOut = () => {
                   className="btn btn-primary btn-block mb-4"
                   style={loginButtonStyle}
                 >
-                  Visitor In
+                  Submit
                 </button>
 
                 <div className="text-center">

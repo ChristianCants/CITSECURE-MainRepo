@@ -1,50 +1,40 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const SignUp = () => {
-  const [firstName, setfirstName] = useState('');
-  const [lastName, setlastName] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
-  const [userRole, setUserRole] = useState('User'); // New state for user role
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [purpose, setPurpose] = useState('');
+  const [cardNo, setCardNo] = useState('');
+  const [timeIn, setTimeIn] = useState('');
+  const [buildingToVisit, setBuildingToVisit] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
 
   const handleSignUp = async () => {
     try {
-      if (!firstName || !lastName || !selectedGender || !email || !password) {
+      if (!firstName || !lastName || !purpose || !cardNo || !timeIn || !buildingToVisit) {
         alert('Please fill out all fields');
         return;
       }
 
-      if (password.length < 8) {
-        alert('Password should be at least 8 characters long');
-        return;
-      }
-
-      if (!(password.match(/[a-z]/) && password.match(/[A-Z]/))) {
-        alert('Password should contain both uppercase and lowercase letters');
-        return;
-      }
-
-      const newUser = {
+      // Form data to be sent in the request
+      const formData = {
         firstName,
         lastName,
-        gender: selectedGender,
-        email,
-        password,
-        role: userRole, // Add user role to the newUser object
+        purpose,
+        cardNo,
+        timeIn,
+        buildingToVisit,
       };
 
-      const response = await axios.post('http://localhost:8080/User/insertUser', newUser, {
+      // Example POST request using axios
+      const response = await axios.post('http://localhost:8080/User/insertUser', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
@@ -57,24 +47,10 @@ const SignUp = () => {
     setShowModal(false);
   };
 
-  const navigateToLogin = () => {
-    if (!firstName || !lastName || !selectedGender || !email || !password) {
-      alert('Please fill out all fields');
-      return;
-    }
-
-    handleSignUp();
-  };
-
   const handleConfirm = () => {
     handleClose();
-    navigate('/login');
+    // Navigate to login or any other page
   };
-
-  const handleGenderSelect = (gender) => {
-    setSelectedGender(gender);
-  };
-
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/GLE SIGN-UP.png")',
@@ -101,13 +77,6 @@ const SignUp = () => {
     // Other input styles
   };
 
-  const checkmarkStyle = {
-    color: 'green',
-    fontSize: '2rem',
-    marginRight: '10px',
-    // Other checkmark styles
-  };
-
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
       <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -122,21 +91,20 @@ const SignUp = () => {
             {/* Form */}
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
-                <form>
+                <form onSubmit={handleSignUp}>
+                  <h2 style={{ color: 'maroon', marginBottom: '20px' }}>Visitor Form</h2> {/* Added heading */}
                   <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="form3Example1"
+                          id="firstName"
                           className="form-control custom-input"
-                          style={inputStyle}
                           value={firstName}
-                          onChange={(e) => {
-                            setfirstName(e.target.value);
-                          }}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          required
                         />
-                        <label className="form-label" htmlFor="form3Example1">
+                        <label className="form-label" htmlFor="firstName">
                           First name
                         </label>
                       </div>
@@ -145,15 +113,13 @@ const SignUp = () => {
                       <div className="form-outline">
                         <input
                           type="text"
-                          id="form3Example2"
+                          id="lastName"
                           className="form-control custom-input"
-                          style={inputStyle}
                           value={lastName}
-                          onChange={(e) => {
-                            setlastName(e.target.value);
-                          }}
+                          onChange={(e) => setLastName(e.target.value)}
+                          required
                         />
-                        <label className="form-label" htmlFor="form3Example2">
+                        <label className="form-label" htmlFor="lastName">
                           Last name
                         </label>
                       </div>
@@ -161,120 +127,70 @@ const SignUp = () => {
                   </div>
 
                   <div className="form-outline mb-4">
-                    <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>
-                      Gender:
-                    </label>
-                    <div className="dropdown">
-                      <button
-                        className="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="genderDropdown"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        style={inputStyle}
-                      >
-                        {selectedGender ? selectedGender : 'Select Gender'}
-                      </button>
-                      <div className="dropdown-menu" aria-labelledby="genderDropdown">
-                        <a className="dropdown-item" href="#" onClick={() => handleGenderSelect('Male')}>
-                          Male
-                        </a>
-                        <a className="dropdown-item" href="#" onClick={() => handleGenderSelect('Female')}>
-                          Female
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="form-outline mb-4">
                     <input
-                      type="email"
-                      id="form3Example3"
+                      type="text"
+                      id="purpose"
                       className="form-control custom-input"
-                      style={inputStyle}
-                      value={email}
-                      onChange={(e) => {
-                        setemail(e.target.value);
-                      }}
+                      value={purpose}
+                      onChange={(e) => setPurpose(e.target.value)}
+                      required
                     />
-                    <label className="form-label" htmlFor="form3Example3">
-                      Email address
+                    <label className="form-label" htmlFor="purpose">
+                      Purpose
                     </label>
                   </div>
 
                   <div className="form-outline mb-4">
                     <input
-                      type="password"
-                      id="form3Example4"
+                      type="number"
+                      id="cardNo"
                       className="form-control custom-input"
-                      style={inputStyle}
-                      value={password}
-                      onChange={(e) => {
-                        setpassword(e.target.value);
-                      }}
+                      value={cardNo}
+                      onChange={(e) => setCardNo(e.target.value)}
+                      min={0} // Set minimum value if needed
+                      step={1} // Set step size if needed
+                      required
                     />
-                    <label className="form-label" htmlFor="form3Example4">
-                      Password
+                    <label className="form-label" htmlFor="cardNo">
+                      Card Number
                     </label>
                   </div>
-                
-                {/* Add a dropdown or radio button for user role */}
-            <div className="form-outline mb-4">
-              <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>
-                Role:
-              </label>
-              <div className="dropdown">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="roleDropdown"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  style={inputStyle}
-                >
-                  {userRole ? userRole : 'Select Role'}
-                </button>
-                <div className="dropdown-menu" aria-labelledby="roleDropdown">
-                  <a className="dropdown-item" href="#" onClick={() => setUserRole('User')}>
-                    User
-                  </a>
-                  <a className="dropdown-item" href="#" onClick={() => setUserRole('Admin')}>
-                    Admin
-                  </a>
-                </div>
-              </div>
-            </div>
 
+                  <div className="form-outline mb-4">
+                    <input
+                      type="time"
+                      id="timeIn"
+                      className="form-control custom-input"
+                      value={timeIn}
+                      onChange={(e) => setTimeIn(e.target.value)}
+                      required
+                    />
+                    <label className="form-label" htmlFor="timeIn">
+                      Time In
+                    </label>
+                  </div>
 
+                  <div className="form-outline mb-4">
+                    <input
+                      type="text"
+                      id="buildingToVisit"
+                      className="form-control custom-input"
+                      value={buildingToVisit}
+                      onChange={(e) => setBuildingToVisit(e.target.value)}
+                      required
+                    />
+                    <label className="form-label" htmlFor="buildingToVisit">
+                      Building to Visit
+                    </label>
+                  </div>
 
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-primary btn-block mb-4"
                     style={{ background: '#A43F3F', borderRadius: '17px' }}
-                    onClick={navigateToLogin}
                   >
-                    Register
+                   Submit
                   </button>
-
-                  <div className="text-center">
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                      <i className="fab fa-facebook-f"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                      <i className="fab fa-google"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                      <i className="fab fa-twitter"></i>
-                    </button>
-
-                    <button type="button" className="btn btn-link btn-floating mx-1">
-                      <i className="fab fa-github"></i>
-                    </button>
-                  </div>
                 </form>
               </div>
             </div>
@@ -282,8 +198,7 @@ const SignUp = () => {
         </div>
       </div>
 
-      {/* Integrated SuccessPopup logic */}
-      {/* Integrated SuccessPopup logic */}
+      {/* Success Modal */}
       <Modal show={showModal} onHide={handleClose} centered>
         <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
           <Modal.Title>Notification</Modal.Title>
