@@ -53,7 +53,7 @@ const SignUp = () => {
   };
 
   const backgroundImageStyle = {
-    backgroundImage: 'url("images/GLE SIGN-UP.png")',
+    backgroundImage: 'url("images/TIME IN.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: 'auto', // Change to 'auto' or a specific height that allows scrolling

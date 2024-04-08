@@ -38,7 +38,7 @@ const VisitorOut = () => {
   };
 
   const backgroundImageStyle = {
-    backgroundImage: 'url("images/GLE SIGN-UP.png")',
+    backgroundImage: 'url("images/TIME OUT.png")',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: '100vh',

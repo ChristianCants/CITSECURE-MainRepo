@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
  
 const Home = () => {
   const containerStyle = {
-    backgroundImage: `url('/images/GLE HOME.png')`,
+    backgroundImage: `url('/images/Menu.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
