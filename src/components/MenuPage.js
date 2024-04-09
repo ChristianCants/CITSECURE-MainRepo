@@ -32,7 +32,7 @@ const MenuPage = () => {
             <path d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <span style={{ width: '2px', height: '30px', backgroundColor: 'white', margin: '0 5px' }}></span>
-          <span>CitSecure</span>
+          <span>CIT Secure</span>
         </div>
         <Nav className="d-flex align-items-center">
           {navLinks.map(({ label, href, id }) => (
