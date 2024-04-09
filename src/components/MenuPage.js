@@ -163,9 +163,9 @@ const MenuPage = () => {
           </Col>
         </Row>
         <Row>
-          <Col sm={3} style={{ position: 'relative', marginLeft: 'auto' }}>
-            <Card style={{ width: '500px', right: '200px' }}>
-              <Card.Header>Campus Directory</Card.Header>
+          <Col sm={3} style={{ position: 'relative', marginLeft: 'auto', marginBottom: '50px' }}>
+            <Card style={{ width: '500px', right: '200px', border: '2px solid maroon', backgroundColor: '#fff9eb' }}>
+            <Card.Header style={{ backgroundColor: 'maroon', color: 'white', fontWeight: 'bold' }}>Campus Directory</Card.Header>
               <Card.Body>
                 <ul style={{ listStyleType: 'none', padding: 0 }}>
                   {campusLocations.map(location => (
