@@ -62,21 +62,24 @@ const SignUp = () => {
   };
 
   const formStyle = {
-    border: '2px solid maroon',
+    border: '3px solid maroon',
     borderRadius: '8px',
-    padding: '20px',
+    padding: '15px',
     backgroundColor: '#FFF9EB',
+    fontFamily: 'Roboto, sans-serif', // Set the font family to Roboto
     // Other form styles
   };
-
+  
   const inputStyle = {
     borderColor: 'maroon',
     borderRadius: '8px',
     color: 'black',
     backgroundColor: 'white',
+    fontFamily: 'Roboto, sans-serif', // Set the font family to Roboto
+    width: '100%', // Adjust the width as needed
     // Other input styles
   };
-
+  
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
       <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -92,18 +95,19 @@ const SignUp = () => {
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
                 <form onSubmit={handleSignUp}>
-                  <h2 style={{ color: 'maroon', marginBottom: '20px' }}>Visitor Form</h2> {/* Added heading */}
+                  <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Form</h2> {/* Added heading */}
                   <div className="row">
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
-                        <input
-                          type="text"
-                          id="firstName"
-                          className="form-control custom-input"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
-                          required
+                      <input
+                        type="text"
+                        id="firstName"
+                        className="form-control custom-input" // Apply custom-input class
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
                         />
+
                         <label className="form-label" htmlFor="firstName">
                           First name
                         </label>
@@ -111,14 +115,15 @@ const SignUp = () => {
                     </div>
                     <div className="col-md-6 mb-4">
                       <div className="form-outline">
-                        <input
-                          type="text"
-                          id="lastName"
-                          className="form-control custom-input"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
-                          required
-                        />
+                      <input
+                      type="text"
+                      id="lastName"
+                      className="form-control custom-input" // Apply custom-input class
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                      />
+
                         <label className="form-label" htmlFor="lastName">
                           Last name
                         </label>

@@ -46,7 +46,7 @@ const VisitorOut = () => {
   };
 
   const formStyle = {
-    border: '2px solid #A43F3F',
+    border: '3px solid #A43F3F',
     borderRadius: '8px',
     padding: '20px',
     backgroundColor: '#FFF9EB',
