@@ -139,9 +139,7 @@ const MenuPage = () => {
               ></div>
             </Nav.Link>
           ))}
-          <Dropdown>
-            {/* Dropdown content */}
-          </Dropdown>
+         
         </Nav>
       </Navbar>
 
