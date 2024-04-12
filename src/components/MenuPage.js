@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import VisitorNavigationPage from './VisitorNavigationPage'; // Make sure this import is correct
+
 import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
 import { Card, Row, Col } from 'react-bootstrap';
 import './MenuPage.css';
@@ -8,16 +11,9 @@ const MenuPage = () => {
   const [activeLink, setActiveLink] = useState('home');
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    const shouldLogout = window.confirm('Are you sure you want to log out?');
-    if (shouldLogout) {
-      navigate('/');
-    }
-  };
-
   const navLinks = [
     { label: 'View Map', href: '/view-map', id: 'view-map' },
-    { label: 'Exit', href: '/exit', id: 'exit' },
+    { label: 'Exit', href: '/', id: '' },
   ];
 
   // Array containing all campus locations
@@ -62,86 +58,30 @@ const MenuPage = () => {
     "B38 - Front Gate Isolation Room"
   ];
 
-  return (
+ 
+
+return (
     <>
-      <Navbar
-        className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-0 border-bottom"
+      <header
+        className="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom"
         style={{
-          backgroundColor: 'maroon',
+          backgroundColor: 'maroon', // Changed to maroon color
           display: 'flex',
           alignItems: 'center',
           padding: '10px',
           justifyContent: 'space-between',
         }}
       >
-        <div
-          style={{
-            color: 'white',
-            marginLeft: '10px',
-            position: 'relative',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-          onClick={() => navigate('/')}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="56"
-            height="40"
-            viewBox="0 0 56 54"
-            fill="none"
-          >
-            <path
-              d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z"
-              stroke="white"
-              strokeWidth="4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span
-            style={{
-              width: '2px',
-              height: '30px',
-              backgroundColor: 'white',
-              margin: '0 5px',
-            }}
-          ></span>
-          <span>CIT Secure</span>
-        </div>
-        <Nav className="d-flex align-items-center">
-          {navLinks.map(({ label, href, id }) => (
-            <Nav.Link
-              key={id}
-              href={href}
-              className={`nav-link ${activeLink === id ? 'active' : ''}`}
-              style={{
-                color: activeLink === id ? 'white' : 'white',
-                margin: '0 80px',
-                textDecoration: 'none',
-                position: 'relative',
-              }}
-              onClick={() => setActiveLink(id)}
-            >
-              {label}
-              <div
-                style={{
-                  height: '4px',
-                  width: '100%',
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  bottom: '-4px',
-                  left: '0',
-                  display: activeLink === id ? 'block' : 'none',
-                  transition: '0.3s',
-                }}
-              ></div>
-            </Nav.Link>
-          ))}
-         
-        </Nav>
-      </Navbar>
+        
+        <ul className="nav nav-pills" style={{ margin: 0, padding: 0 }}>
+          <li className="nav-item"><Link to="/" className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white' }}>Home</Link></li>
+          <li className="nav-item"><Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</Link></li>
+
+          <li className="nav-item"><Link to="/about" className="nav-link" style={{ color: 'white' }}>About us</Link></li>
+        </ul>
+        
+      </header>
+
 
       <Container fluid style={{ backgroundColor: '#ebebeb' }}>
         <Row>

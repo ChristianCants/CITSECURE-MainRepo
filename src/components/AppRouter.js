@@ -7,8 +7,8 @@ import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
 import UserProfile from './UserProfile';
 import AdminPage from './AdminPage'; // Import the AdminPage component
-
-
+import VisitorNavigationPage from './VisitorNavigationPage';
+import About from './About'; 
 
 
 const AppRouter = () => {
@@ -30,6 +30,10 @@ const AppRouter = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
+        <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
+        <Route path="/About" element={<About />} />
+
+        
         
 
           
