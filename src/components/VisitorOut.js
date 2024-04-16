@@ -29,11 +29,11 @@ const VisitorOut = () => {
       if (response.status === 200) {
         navigate('/menu');
       } else {
-        setError('Login failed. Please try again.');
+        setError('Submit failed. Please try again.');
       }
     } catch (error) {
       console.error('Login failed:', error.message);
-      setError('Login failed. Please try again.');
+      setError('Submit failed. Please try again.');
     }
   };
 
