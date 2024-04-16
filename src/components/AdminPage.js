@@ -132,11 +132,11 @@ const AdminPage = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Gender</th>
-                  <th>Email</th>
-                  <th>Actions</th>
+                  <th>Full Name</th>
+                  <th>Building</th>
+                  <th>Purpose</th>
+                  <th>Time in</th>
+                  <th>Time out</th>
                 </tr>
               </thead>
               <tbody style={{ color: 'black' }}>
