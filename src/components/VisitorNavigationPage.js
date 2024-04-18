@@ -5,18 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const VisitorNavigationPage = () => {
     const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
-    const [showMapImage, setShowMapImage] = useState(false); // Define currentCarouselIndex state
-
+    const [showMapImage, setShowMapImage] = useState(false);
 
     const handleGetDirections = (direction, index) => {
-        // Handle get directions logic here
         console.log('Get directions clicked:', direction, index);
         // Implement the logic to navigate or display directions
     };
-    
-    
 
-      const carouselCaptionStyle = {
+    const carouselCaptionStyle = {
         position: 'absolute',
         bottom: 0,
         left: 0,
@@ -25,7 +21,6 @@ const VisitorNavigationPage = () => {
         padding: '20px',
         textAlign: 'left',
         border: '5px solid maroon', // Updated to maroon
-        marginTop: '20px', // Added margin top to move down the page indicator
     };
       
     const directionButtonStyles = {
@@ -39,27 +34,29 @@ const VisitorNavigationPage = () => {
         margin: '0 auto',
     };
 
-
-  
     return (
-    <>
-      <header
-        className="d-flex flex-wrap align-items-center justify-content-center py-3 mb-4 border-bottom"
-        style={{
-          backgroundColor: 'maroon',
-          display: 'flex',
-          alignItems: 'center',
-          padding: '10px',
-          justifyContent: 'space-between',
-        }}
-      >
-        <ul className="nav nav-pills" style={{ margin: 0, padding: 0 }}>
-          <li className="nav-item"><NavLink to="/" className="nav-link" style={{ color: 'white' }}>Home</NavLink></li>
-          <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white' }}>Visitor Navigation</NavLink></li>
-          <li className="nav-item"><NavLink to="/about" className="nav-link" style={{ color: 'white' }}>About us</NavLink></li>
-        </ul>
-      </header>
-
+        <>
+            <header
+                className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+                style={{
+                    backgroundColor: 'maroon',
+                    padding: '10px',
+                    fontSize: '20px',
+                }}
+            >
+                <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 54" fill="none">
+                        <path d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span style={{ width: '2px', height: '30px', backgroundColor: 'white', margin: '0 5px' }}></span>
+                    <span>CITSecure</span>
+                </div>
+                <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+                    <li className="nav-item"><NavLink to="/" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>Home</NavLink></li>
+                    <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white', marginRight: '10px' }}>Visitor Navigation</NavLink></li>
+                    <li className="nav-item"><NavLink to="/about" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>About us</NavLink></li>
+                </ul>
+            </header>
       <div>
         
         {/* Add navigation information and links here */}
