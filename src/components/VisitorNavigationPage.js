@@ -75,7 +75,7 @@ const VisitorNavigationPage = () => {
       {/* Content for the first slide */}
       <img
         className="d-block w-100"
-        src="https://scontent.xx.fbcdn.net/v/t1.15752-9/404848766_3530568167184243_5377353952213421616_n.jpg?stp=dst-jpg_p206x206&_nc_cat=110&ccb=1-7&_nc_sid=510075&_nc_eui2=AeEsEf4SouLMOpcw2UNHKPGD7LHQpONP9m7ssdCk40_2bmqnYYnajcuvmKtAWq-kB1dNVud4meC6DHuFM7w-o4Db&_nc_ohc=7tdhCeKFuRYAX86g6H6&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTImPLuJMLx1nOjRJlxYx9x7NUJ0AiUwmpNOphR1G9P0Q&oe=6598921C"
+        src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/385551382_1325420938165319_6667272040145660917_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=8OHgZ66EbggAb4abnJT&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QG0ZUJ1lFN0Vdnf_oyqu9-J4IeRgFDRWuiIetXYFlbALA&oe=664892D4"
         alt="ACAD Building"
         style={{ height: '600px', width: '100%', objectFit: 'cover' }}
       />
@@ -158,7 +158,7 @@ const VisitorNavigationPage = () => {
     <Carousel.Item>
       <img
         className="d-block w-100"
-        src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeH4YJ3ewAXxeEZWKUllvmrusOKrfiTjMuuw4qt-JOMy6ws0EhnQNqYZhkXeugb5jqE7yzilwMLN_fssIX_JYrsh&_nc_ohc=KYx0WMR84hkAX_e3iE4&_nc_ht=scontent.fceb3-1.fna&oh=03_AdSlsEhQ4B2wxZmIpPCR8AHU6t0b3DxYy6Lfrle9p0fk4A&oe=65924EBF"
+        src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=UG28_pPHEHoAb4pPdkK&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QGTcdRiWEyUVPgOhvIyY5NfpqDz45cMusK_IGQV6FabjQ&oe=664875FF"
         alt="GLE Building"
         style={{ height: '600px', width: '100%', objectFit: 'cover' }}
       />
@@ -186,7 +186,7 @@ const VisitorNavigationPage = () => {
 <Carousel.Item>
   <img
     className="d-block w-100"
-    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFhLMwCtqF9GfbYJ24sLzZKtGfr-qdm_Z20Z-v6p2b9narKh0MtKl-tpTPe41nXkwzW9Hezt09nxLAafQ5YyqG2&_nc_ohc=_uRE4owBP1oAX-ZeBP6&_nc_ht=scontent.fceb3-1.fna&oh=03_AdS13t71Jt0Y98Te1IY9L3VLZfb7kU6Agm9MmgR4ldvqaw&oe=65924CB3"
+    src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=7jEXOQk76IcAb72RgTf&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QF3b4b0BXkCUcVyayuYGaLlG034vB6gtZeeQMmTnfyB2g&oe=664873F3"
     alt="Canteen"
     style={{ height: '600px', width: '100%', objectFit: 'cover' }}
   />
@@ -212,7 +212,7 @@ const VisitorNavigationPage = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHKffuhZ9NEBt6YGhkO6RMNNIm8CriwhuU0ibwKuLCG5WrFfxw_qRRcjxRvzSkGC-9TsVWB9R7o4apsv-53gDTQ&_nc_ohc=TWmi3jQi46EAX-zgK5r&_nc_oc=AQnHbgTn9jGJnLgRx7DM6XmLI6EKZuRxMwgde9WYJFmTY8K_GsJAijj_Cc9U6ScOpVY&_nc_ht=scontent.fceb3-1.fna&oh=03_AdTSic1vGKxNZRq4zjTNvHaHcxw7Q050voDRKHteyk-rfg&oe=6592279B"
+            src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=uT_Og12BfXEAb5EsMdi&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QHnBmkJwvjPG9k4mnizEugYCA3er3yN_q47PaJfKCoF4w&oe=6648871B"
             alt="RTL"
             style={{ height: '600px', width: '100%', objectFit: 'cover' }}
           />
@@ -239,7 +239,7 @@ const VisitorNavigationPage = () => {
           <img
             className="d-block w-100"
             
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/405163005_300960122904581_3254547494294859463_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeFzls6QtGSf_l8ho_sNkXCTn62iURtPKh2fraJRG08qHbHsXRwSI_J3Ld7ec9N9vLcES11xWAeJSnwrbhLab4GQ&_nc_ohc=AySrOyNGWRoAX-_H6Fu&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRqiXulrYtdoN9bynJv3-FHDnKpbt9Wp5fTGnoW6PQehg&oe=659227D9"
+            src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/405163005_300960122904581_3254547494294859463_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iHLpvncIWCEAb4iFxxO&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QHg0kpBAawIE6DlqKhIXDt9t6ZcDEd7PJthHMGsQCxg-Q&oe=66488759"
             alt="NGE"
             style={{ height: '600px', width: '100%', objectFit: 'cover' }}
           />
@@ -265,7 +265,7 @@ const VisitorNavigationPage = () => {
 <Carousel.Item>
   <img
     className="d-block w-100"
-    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeE_a4klRbr01RTpQOIJ60rX0NWEt2-8TAjQ1YS3b7xMCIr61s85JZzjiW068dRO9993k_p8fplehB-YNDcACZd5&_nc_ohc=8_6167HbqaEAX-s3X7D&_nc_ht=scontent.fceb3-1.fna&oh=03_AdRkZK5EIglh8-ISdJQiWg1jv2qbmwjn2fWmNEczLOhlXA&oe=65922C0C"
+    src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=M4twlOvOM0YAb52AUOx&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QH7-pwxVKBqFlyNbzKsmvaK1HsZI7WtP44xypwdaPD9gQ&oe=66488B8C"
     alt="LIB"
     style={{ height: '600px', width: '100%', objectFit: 'cover' }}
   />
@@ -291,7 +291,7 @@ const VisitorNavigationPage = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/370207209_1952851695116256_2470887601798806799_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeHO0bK3W6cMlKeMIH6nEuKR-5DPL2NLp_L7kM8vY0un8mJHnSwDQlmOi4kCnMt9HKiW-HcOk6pvEov7mcAv2EOz&_nc_ohc=IagXPZPdGDkAX8eQCkF&_nc_ht=scontent.fceb3-1.fna&oh=03_AdReZ2oRJh1fvcPgXZ1tqtE3oiNN__R7t91DxkxMjRD2xg&oe=65922AB3"
+            src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/370207209_1952851695116256_2470887601798806799_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=hMs94LPtQ1cAb6zl3bb&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QG2cdQg9u0usZxDcdayDRHLTzx6XPNNqTgzUluyrAQFzg&oe=66488A33"
             alt="ALLIED"
             style={{ height: '600px', width: '100%', objectFit: 'cover' }}
           />
@@ -317,7 +317,7 @@ const VisitorNavigationPage = () => {
 <Carousel.Item>
   <img
     className="d-block w-100"
-    src="https://scontent.fceb3-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=8cd0a2&_nc_eui2=AeGnJhpB6GIg43ZNxjgWML3iiy-5E4NY4PiLL7kTg1jg-MQEDaNbSCQBHQ7eViwHFLMOleknwlF0VyFHgLY2kjmj&_nc_ohc=xpjfaiUL3JgAX8U0O6c&_nc_ht=scontent.fceb3-1.fna&oh=03_AdQRKdSL5ZUus5SiBaD4-uTEW_12o5Wo94T-K6r6F7SVzQ&oe=6592551C"
+    src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=3L9gxlzQ8rcAb6R1poB&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QEytycguDGr_ExOIPiTv0oFO9B-rBBLIiDa_sN2Eqrq6A&oe=66487C5C"
     alt="HS CANTEEN"
     style={{ height: '600px', width: '100%', objectFit: 'cover' }}
   />
