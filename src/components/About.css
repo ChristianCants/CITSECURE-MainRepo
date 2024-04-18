@@ -1,183 +1,182 @@
 .about-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s ease forwards;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: fadeInDown 0.7s ease 0.3s forwards;
+  color: #5c2e26; /* Maroon color */
+}
+
+.about-description {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 0.7s ease 0.5s forwards;
+  color: #7c5048; /* Slightly lighter maroon */
+}
+
+.about-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease 0.7s forwards;
+}
+
+.about-feature {
+  text-align: center;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: scaleIn 0.6s ease 1s forwards;
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  transform: translateY(-10px);
+  opacity: 0;
+  animation: fadeInDown 0.5s ease 1.2s forwards;
+  color: #8c4c40; /* Maroon color for the icon */
+}
+
+.feature-text {
+  font-size: 1.2rem;
+  color: #7c5048; /* Slightly lighter maroon for the text */
+}
+
+.about-button {
+  display: block;
+  margin: 0 auto;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: #8c4c40; /* Maroon color for the button */
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: scaleIn 0.7s ease 1.4s forwards;
+}
+
+.about-commitment {
+  margin-top: 3rem;
+  padding: 2rem;
+  background-color: #f5f1f0; /* Slightly lighter background for the commitment section */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.8s ease 1.6s forwards;
+}
+
+.commitment-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  transform: translateX(-20px);
+  opacity: 0;
+  animation: fadeInLeft 0.6s ease 1.8s forwards;
+  color: #5c2e26; /* Maroon color for the title */
+}
+
+.commitment-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  transform: translateX(20px);
+  opacity: 0;
+  animation: fadeInRight 0.6s ease 2s forwards;
+  color: #7c5048; /* Slightly lighter maroon for the description */
+}
+
+.commitment-contact {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeInUp 0.6s ease 2.2s forwards;
+  color: #8c4c40; /* Maroon color for the contact */
+}
+
+.commitment-contact a {
+  color: #8c4c40;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.commitment-contact a:hover {
+  text-decoration: underline;
+  color: #5c2e26; /* Darker maroon on hover */
+}
+
+@keyframes fadeInUp {
+  0% {
     opacity: 0;
     transform: translateY(50px);
-    animation: fadeInUp 1s ease forwards;
-    background-color: #fff; /* Added background color */
-    border-radius: 10px; /* Increased border radius for a smoother look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow for depth */
   }
-  
-  .about-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
     transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  0% {
     opacity: 0;
-    animation: fadeInDown 0.7s ease 0.3s forwards;
-    color: #333; /* Changed title color to a darker shade */
-  }
-  
-  .about-description {
-    font-size: 1.2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: fadeInUp 0.7s ease 0.5s forwards;
-    color: #555; /* Changed description text color */
-  }
-  
-  .about-features {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 0.7s forwards;
-  }
-  
-  .about-feature {
-    text-align: center;
-    transform: scale(0.9);
-    opacity: 0;
-    animation: scaleIn 0.6s ease 1s forwards;
-  }
-  
-  .feature-icon {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-    transform: translateY(-10px);
-    opacity: 0;
-    animation: fadeInDown 0.5s ease 1.2s forwards;
-    color: #007bff; /* Changed feature icon color */
-  }
-  
-  .feature-text {
-    font-size: 1.2rem;
-    color: #777; /* Changed feature text color */
-  }
-  
-  .about-button {
-    display: block;
-    margin: 0 auto;
-    padding: 0.8rem 1.5rem;
-    font-size: 1.2rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    transform: scale(0.9);
-    opacity: 0;
-    animation: scaleIn 0.7s ease 1.4s forwards;
-  }
-  
-  .about-commitment {
-    margin-top: 3rem;
-    padding: 2rem;
-    background-color: #f8f9fa;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease 1.6s forwards;
-  }
-  
-  .commitment-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
     transform: translateX(-20px);
-    opacity: 0;
-    animation: fadeInLeft 0.6s ease 1.8s forwards;
-    color: #333; /* Changed title color */
   }
-  
-  .commitment-description {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 1rem;
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
     transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
     opacity: 0;
-    animation: fadeInRight 0.6s ease 2s forwards;
-    color: #555; /* Changed description text color */
   }
-  
-  .commitment-contact {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    transform: translateY(20px);
-    opacity: 0;
-    animation: fadeInUp 0.6s ease 2.2s forwards;
-    color: #007bff; /* Changed contact text color */
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  .commitment-contact a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .commitment-contact a:hover {
-    text-decoration: underline;
-    color: #0056b3;
-  }
-  
-  @keyframes fadeInUp {
-    0% {
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeInDown {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeInLeft {
-    0% {
-      opacity: 0;
-      transform: translateX(-20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes fadeInRight {
-    0% {
-      opacity: 0;
-      transform: translateX(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes scaleIn {
-    0% {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-  
+}
