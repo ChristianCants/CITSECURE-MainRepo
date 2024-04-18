@@ -16,7 +16,7 @@ const VisitorNavigationPage = () => {
     
     
 
-    const carouselCaptionStyle = {
+      const carouselCaptionStyle = {
         position: 'absolute',
         bottom: 0,
         left: 0,
@@ -25,9 +25,10 @@ const VisitorNavigationPage = () => {
         padding: '20px',
         textAlign: 'left',
         border: '5px solid maroon', // Updated to maroon
-      };
+        marginTop: '20px', // Added margin top to move down the page indicator
+    };
       
-      const directionButtonStyles = {
+    const directionButtonStyles = {
         backgroundColor: 'maroon',
         color: 'white',
         borderRadius: '30px',
@@ -36,8 +37,9 @@ const VisitorNavigationPage = () => {
         height: '45px', // Adjust the height as needed
         flexShrink: 0,
         margin: '0 auto',
-      };
-  
+    };
+
+
   
     return (
     <>
@@ -83,17 +85,15 @@ const VisitorNavigationPage = () => {
         <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
           <h5>Academic Building</h5>
           <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button
-  style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-  onClick={() => handleGetDirections('academic-direction', 0)} // Pass the route and index
->
-  Get Directions
-</button>
-
-            {/* View Building Rooms Button (removed) */}
-          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
         </div>
       </Carousel.Caption>
     </Carousel.Item>
@@ -111,17 +111,15 @@ const VisitorNavigationPage = () => {
         <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
           <h5>High School Building</h5>
           <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button
-              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-             onClick={() => handleGetDirections('hs-direction', 0)}
-              >
-            Get Directions
-              </button>
-
-            {/* View Building Rooms Button (removed) */}
-          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
         </div>
       </Carousel.Caption>
     </Carousel.Item>
@@ -139,17 +137,15 @@ const VisitorNavigationPage = () => {
         <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
           <h5>Elementary Building</h5>
           <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button
-              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-       onClick={() => handleGetDirections('elementary-direction', 0)}
-          >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
           Get Directions
-          </button>
-
-            {/* View Building Rooms Button (removed) */}
-          </div>
+        </button>
+      </div>
         </div>
       </Carousel.Caption>
     </Carousel.Item>
@@ -166,17 +162,15 @@ const VisitorNavigationPage = () => {
         <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
           <h5>GLE Building</h5>
           <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {/* Get Directions Button (switched to the left) */}
-            <button
-            style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-          onClick={() => handleGetDirections('gle-direction', 0)}
-            >
-           Get Directions
-         </button>
-
-            {/* View Building Rooms Button (removed) */}
-          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
         </div>
       </Carousel.Caption>
     </Carousel.Item>
@@ -220,16 +214,15 @@ const VisitorNavigationPage = () => {
             <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
               <h5>RTL BUILDING</h5>
               <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-              style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-             onClick={() => handleGetDirections('rtl-direction', 0)}
-                >
-                Get Directions
-                </button>
-
-                {/* View Building Rooms Button (removed) */}
-              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -247,16 +240,15 @@ const VisitorNavigationPage = () => {
             <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
               <h5>NGE BUILDING</h5>
               <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-                  style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-                  onClick={() => handleGetDirections('nge-direction', 0)}
-                  >
-               Get Directions
-                  </button>
-
-                
-              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -277,7 +269,7 @@ const VisitorNavigationPage = () => {
         {/* Get Directions Button (centered) */}
         <button
           style={{ ...directionButtonStyles, color: 'white' }}
-          onClick={() => handleGetDirections('library-direction', 0)}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
         >
           Get Directions
         </button>
@@ -299,16 +291,15 @@ const VisitorNavigationPage = () => {
             <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
               <h5>ALLIED BUILDING </h5>
               <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
-                 style={{ ...directionButtonStyles, marginRight: '10px', color: 'white' }}
-            onClick={() => handleGetDirections('allied-direction', 0)}
-                >
-             Get Directions
-              </button>
-
-                
-              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* Get Directions Button (centered) */}
+        <button
+          style={{ ...directionButtonStyles, color: 'white' }}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
+        >
+          Get Directions
+        </button>
+      </div>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -329,7 +320,7 @@ const VisitorNavigationPage = () => {
         {/* Get Directions Button (centered) */}
         <button
           style={{ ...directionButtonStyles, color: 'white' }}
-          onClick={() => handleGetDirections('hs-canteen-direction', 0)}
+          onClick={() => handleGetDirections('main-canteen-direction', 0)}
         >
           Get Directions
         </button>
