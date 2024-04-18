@@ -7,34 +7,38 @@ const SignUp = () => {
   const [lastName, setLastName] = useState('');
   const [purpose, setPurpose] = useState('');
   const [cardNo, setCardNo] = useState('');
-  const [timeIn, setTimeIn] = useState('');
+  const [timeInString, setTimeInString] = useState('');
   const [buildingToVisit, setBuildingToVisit] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+    
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !timeIn || !buildingToVisit) {
+      if (!firstName || !lastName || !purpose || !cardNo || !timeInString || !buildingToVisit) {
         alert('Please fill out all fields');
         return;
       }
-
-      // Form data to be sent in the request
+  
       const formData = {
         firstName,
         lastName,
         purpose,
         cardNo,
-        timeIn,
+        timeInString,
         buildingToVisit,
       };
-
-      // Example POST request using axios
-      const response = await axios.post('http://localhost:8080/User/insertUser', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
+  
+      const response = await axios.post(
+        'http://localhost:8080/admin/addvisitor',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
       console.log('Signup successful:', response.data);
       setShowModal(true);
     } catch (error) {
@@ -166,8 +170,8 @@ const SignUp = () => {
                       type="time"
                       id="timeIn"
                       className="form-control custom-input"
-                      value={timeIn}
-                      onChange={(e) => setTimeIn(e.target.value)}
+                      value={timeInString} // Updated variable name
+                      onChange={(e) => setTimeInString(e.target.value)} // Updated setter function
                       required
                     />
                     <label className="form-label" htmlFor="timeIn">
@@ -210,7 +214,7 @@ const SignUp = () => {
         </Modal.Header>
         <Modal.Body>
           <div className="d-flex justify-content-center align-items-center">
-            <p style={{ marginRight: '10px' }}>Successfully Created!</p>
+            <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
             <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
           </div>
         </Modal.Body>
