@@ -116,7 +116,8 @@ const AdminPage = () => {
                     <span>CITSecure</span>
                 </div>
                 <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-                <li className="nav-item"><Link to="/menu" className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white' }}>Home</Link></li>
+                
+                <li className="nav-item"><Link to="/menu" className="nav-link" style={{ color: 'white' }}>Home</Link></li>
                 <li className="nav-item"><Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</Link></li>
                  <li className="nav-item"><Link to="/about" className="nav-link" style={{ color: 'white' }}>About us</Link></li>
         </ul>
