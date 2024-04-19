@@ -21,7 +21,7 @@ const AboutPage = () => {
                     <span>CITSecure</span>
                 </div>
                 <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-          <li className="nav-item"><NavLink exact to="/" className="nav-link" style={{ color: 'white' }}>Home</NavLink></li>
+          <li className="nav-item"><NavLink exact to="  /menu" className="nav-link" style={{ color: 'white' }}>Home</NavLink></li>
           <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</NavLink></li>
           <li className="nav-item"><NavLink to="/about" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white' }}>About Us</NavLink></li>
           

@@ -52,7 +52,7 @@ const VisitorNavigationPage = () => {
                     <span>CITSecure</span>
                 </div>
                 <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-                    <li className="nav-item"><NavLink to="/" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>Home</NavLink></li>
+                    <li className="nav-item"><NavLink to="/menu" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>Home</NavLink></li>
                     <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white', marginRight: '10px' }}>Visitor Navigation</NavLink></li>
                     <li className="nav-item"><NavLink to="/about" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>About us</NavLink></li>
                 </ul>
