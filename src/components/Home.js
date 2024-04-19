@@ -53,7 +53,7 @@ const Home = () => {
         to="/signup"
         className="btn btn-primary btn-lg rounded-pill mx-2"
         style={loginButtonStyle}
-        onMouseEnter={(e) => e.target.style.backgroundColor = '#6D2932'} // Change color on mouse enter
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#7D0A0A'} // Change color on mouse enter
         onMouseLeave={(e) => e.target.style.backgroundColor = '#FFF9EB'} // Restore color on mouse leave
       >
         <span style={{ marginRight: '8px' }}>Time In</span>
@@ -65,7 +65,7 @@ const Home = () => {
         to="/visitorout"
         className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
         style={signupButtonStyle}
-        onMouseEnter={(e) => e.target.style.backgroundColor = '#6D2932'} // Change color on mouse enter
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#7D0A0A'} // Change color on mouse enter
         onMouseLeave={(e) => e.target.style.backgroundColor = '#FFF9EB'} // Restore color on mouse leave
       >
         <span style={{ marginRight: '8px' }}>Time Out</span>
