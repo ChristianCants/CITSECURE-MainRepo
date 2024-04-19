@@ -16,7 +16,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
-    axios.get('http://localhost:8080/User/getAllUsers')
+    axios.get('http://localhost:8080/admin/getAllVisitors')
       .then(response => {
         setUsers(response.data);
       })
@@ -60,13 +60,13 @@ const AdminPage = () => {
     try {
       const confirmDelete = window.confirm('Are you sure you want to delete this user?');
       if (confirmDelete) {
-        const response = await axios.delete(`http://localhost:8080/User/deleteUser/${userId}`);
+        const response = await axios.delete(`http://localhost:8080/admin/deleteUser/${userId}`);
         if (response.status === 200) {
           alert('User deleted successfully!');
           // You may want to fetch the updated user list after deletion
           // to reflect the changes in the table.
           // For simplicity, you can re-fetch the user list here.
-          const updatedUsers = await axios.get('http://localhost:8080/User/getAllUsers');
+          const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
           setUsers(updatedUsers.data);
         } else {
           alert('Failed to delete user.');
@@ -88,7 +88,7 @@ const AdminPage = () => {
       if (response.status === 200) {
         alert('User updated successfully!');
         // Fetch the updated user list after the update to reflect changes in the table
-        const updatedUsers = await axios.get('http://localhost:8080/User/getAllUsers');
+        const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
         setUsers(updatedUsers.data);
       } else {
         alert('Failed to update user.');

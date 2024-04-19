@@ -16,7 +16,7 @@ const VisitorOut = () => {
     try {
       const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')} ${ampm}`;
       const response = await axios.post(
-        'http://localhost:8080/User/login',
+        `http://localhost:8080/admin/updateVisitorTimeOut/${cardNo}`,
         null,
         {
           params: {
@@ -32,7 +32,7 @@ const VisitorOut = () => {
         setError('Submit failed. Please try again.');
       }
     } catch (error) {
-      console.error('Login failed:', error.message);
+      console.error('Submit failed:', error.message);
       setError('Submit failed. Please try again.');
     }
   };
@@ -105,7 +105,7 @@ const VisitorOut = () => {
 
                 <div className="form-outline mb-4">
                   <label className="form-label" htmlFor="timeIn">
-                    Time In
+                    Time Out
                   </label>
                   <input
                     type="time"
