@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Dropdown, Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -104,20 +105,28 @@ const AdminPage = () => {
 
   return (
     <>
-      <Navbar className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom" style={navBarStyles}>
-        <div style={citNaviGoStyles}>
-          {/* Your CIT NaviGO logo SVG and text */}
-        </div>
-        <Nav className="d-flex align-items-center">
-          {/* Add your navigation links here */}
-          {/* ... */}
-          {/* Dropdown Button */}
-          <Dropdown>
-            {/* Dropdown content */}
-          </Dropdown>
-          {/* Logout button */}
-        </Nav>
-      </Navbar>
+      <header
+                className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+                style={{
+                    backgroundColor: 'maroon',
+                    padding: '10px',
+                    fontSize: '20px',
+                }}
+            >
+                <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 54" fill="none">
+                        <path d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                    <span style={{ width: '2px', height: '30px', backgroundColor: 'white', margin: '0 5px' }}></span>
+                    <span>CITSecure</span>
+                </div>
+                <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+                <li className="nav-item"><Link to="/menu" className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white' }}>Home</Link></li>
+                <li className="nav-item"><Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</Link></li>
+                 <li className="nav-item"><Link to="/about" className="nav-link" style={{ color: 'white' }}>About us</Link></li>
+        </ul>
+        
+      </header>
 
       <Container fluid className="py-5">
         <Row>
@@ -147,10 +156,9 @@ const AdminPage = () => {
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.gender}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.email}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>
-                      <Button variant="info" onClick={() => handleUpdate(user.id)}>Update</Button>
-                      {/* Use a different onClick handler for the delete button */}
-                      <Button variant="danger" onClick={() => handleDelete(user.id)}>Delete</Button>
+                    <td style={{ borderBottom: '1px solid #B06161', textAlign: 'right' }}>
+                      <Button variant="info" style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleUpdate(user.id)}>Update</Button>
+                      <Button variant="danger" style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleDelete(user.id)}>Delete</Button>
                     </td>
                   </tr>
                 ))}
