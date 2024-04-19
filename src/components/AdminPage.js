@@ -64,9 +64,6 @@ const AdminPage = () => {
         const response = await axios.delete(`http://localhost:8080/admin/deleteUser/${userId}`);
         if (response.status === 200) {
           alert('User deleted successfully!');
-          // You may want to fetch the updated user list after deletion
-          // to reflect the changes in the table.
-          // For simplicity, you can re-fetch the user list here.
           const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
           setUsers(updatedUsers.data);
         } else {
@@ -88,14 +85,12 @@ const AdminPage = () => {
   
       if (response.status === 200) {
         alert('User updated successfully!');
-        // Fetch the updated user list after the update to reflect changes in the table
         const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
         setUsers(updatedUsers.data);
       } else {
         alert('Failed to update user.');
       }
   
-      // Close the modal after updating
       handleUpdateModalClose();
     } catch (error) {
       console.error('Error updating user:', error.message);
@@ -141,9 +136,9 @@ const AdminPage = () => {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Full Name</th>
-                  <th>Building</th>
-                  <th>Purpose</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Purpose</th> {/* Include Purpose column in the table header */}
                   <th>Time in</th>
                   <th>Time out</th>
                 </tr>
@@ -154,8 +149,8 @@ const AdminPage = () => {
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.gender}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.email}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> {/* Display purpose field */}
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeInString}</td>
                     <td style={{ borderBottom: '1px solid #B06161', textAlign: 'right' }}>
                       <Button variant="info" style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleUpdate(user.id)}>Update</Button>
                       <Button variant="danger" style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleDelete(user.id)}>Delete</Button>
