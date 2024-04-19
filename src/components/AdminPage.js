@@ -142,6 +142,8 @@ const AdminPage = () => {
                   <th>Purpose</th> {/* Include Purpose column in the table header */}
                   <th>Time in</th>
                   <th>Time out</th>
+                  <th>Building Visited</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody style={{ color: 'black' }}>
@@ -152,7 +154,9 @@ const AdminPage = () => {
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> {/* Display purpose field */}
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeInString}</td>
-                    <td style={{ borderBottom: '1px solid #B06161', textAlign: 'right' }}>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOutString}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
+                    <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
                       <Button variant="info" style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleUpdate(user.id)}>Update</Button>
                       <Button variant="danger" style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }} onClick={() => handleDelete(user.id)}>Delete</Button>
                     </td>
