@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -10,6 +11,8 @@ const SignUp = () => {
   const [timeInString, setTimeInString] = useState('');
   const [buildingToVisit, setBuildingToVisit] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleSignUp = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -82,6 +85,16 @@ const SignUp = () => {
     fontFamily: 'Roboto, sans-serif', // Set the font family to Roboto
     width: '100%', // Adjust the width as needed
     // Other input styles
+  };
+
+  const handleViewMap = () => {
+    // Navigate to the map page
+    navigate('/visitor-navigation'); // Assuming '/map' is the route for your map page
+  };
+
+  const handleExit = () => {
+    // Navigate back to the home page
+    navigate('/'); // Assuming '/home' is the route for your home page
   };
   
   return (
@@ -218,9 +231,12 @@ const SignUp = () => {
             <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
           </div>
         </Modal.Body>
-        <Modal.Footer style={{ borderTop: '2px solid maroon' }}>
-          <Button variant="primary" onClick={handleConfirm} style={{ background: 'maroon' }}>
-            Confirm
+        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
+          <Button variant="primary" onClick={handleViewMap} style={{ background: 'maroon', width: '150px' }}>
+          View Map
+          </Button>
+          <Button variant="primary" onClick={handleExit} style={{ background: 'maroon', width: '150px' }}>
+          Exit
           </Button>
         </Modal.Footer>
       </Modal>
