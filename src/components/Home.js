@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
- 
+
 const Home = () => {
   const containerStyle = {
     backgroundImage: `url('/images/Menu.png')`,
@@ -13,7 +13,7 @@ const Home = () => {
     alignItems: 'center',
     justifyContent: 'center',
   };
- 
+
   const buttonStyle = {
     width: '400px',
     height: '70px',
@@ -26,39 +26,52 @@ const Home = () => {
     color: 'black', // Set text color to black
     fontSize: '30px', // Set font size
     marginTop: '50px',
-   
+    transition: 'background-color 0.3s ease', // Add transition for smoother hover effect
   };
- 
+
   const loginButtonStyle = {
     ...buttonStyle,
     background: '#FFF9EB',
     border: '2px solid black', // Set border color to black
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)', // Add box-shadow here
-   
   };
- 
+
   const signupButtonStyle = {
     ...buttonStyle,
     background: '#FFF9EB',
     border: '2px solid black', // Set border color to black
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)', // Add box-shadow here
   };
- 
+
+  const hoverEffect = {
+    backgroundColor: '#FFD700', // Change background color on hover
+  };
+
   return (
     <div style={containerStyle}>
-        <Link to="/signup" className="btn btn-primary btn-lg rounded-pill mx-2" style={loginButtonStyle}>
+      <Link
+        to="/signup"
+        className="btn btn-primary btn-lg rounded-pill mx-2"
+        style={loginButtonStyle}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#7D0A0A'} // Change color on mouse enter
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#FFF9EB'} // Restore color on mouse leave
+      >
         <span style={{ marginRight: '8px' }}>Time In</span>
         <svg className="bi" width="24" height="24">
           <use xlinkHref="#arrow-right-short"></use>
         </svg>
       </Link>
-      <Link to="/visitorout" className="btn btn-outline-secondary btn-lg rounded-pill mx-2" style={signupButtonStyle}>
+      <Link
+        to="/visitorout"
+        className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
+        style={signupButtonStyle}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#7D0A0A'} // Change color on mouse enter
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#FFF9EB'} // Restore color on mouse leave
+      >
         <span style={{ marginRight: '8px' }}>Time Out</span>
       </Link>
     </div>
   );
 };
- 
+
 export default Home;

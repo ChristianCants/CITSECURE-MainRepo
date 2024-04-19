@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown, Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,23 @@ const AdminPage = () => {
       });
   }, []);
 
+  const navBarStyles = {
+    backgroundColor: '#B06161',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px',
+    justifyContent: 'space-between',
+  };
+
+  const citNaviGoStyles = {
+    color: 'white',
+    marginLeft: '10px',
+    position: 'relative',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  };
+
   const handleUpdate = (userId) => {
     setSelectedUserId(userId);
     setShowUpdateModal(true);
@@ -46,7 +64,6 @@ const AdminPage = () => {
         const response = await axios.delete(`http://localhost:8080/admin/deleteUser/${userId}`);
         if (response.status === 200) {
           alert('User deleted successfully!');
-          // Fetch the updated user list after deletion
           const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
           setUsers(updatedUsers.data);
         } else {
@@ -64,17 +81,15 @@ const AdminPage = () => {
         firstName: updatedUserData.firstName,
         lastName: updatedUserData.lastName,
       });
-  
+
       if (response.status === 200) {
         alert('User updated successfully!');
-        // Fetch the updated user list after the update
         const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
         setUsers(updatedUsers.data);
       } else {
         alert('Failed to update user.');
       }
-  
-      // Close the modal after updating
+
       handleUpdateModalClose();
     } catch (error) {
       console.error('Error updating user:', error.message);
@@ -83,61 +98,87 @@ const AdminPage = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" className="mb-4">
-        <Navbar.Brand href="#home">CIT Secure</Navbar.Brand>
-        <Nav className="mr-auto">
-          {/* Add your navigation links here */}
-          {/* <Nav.Link href="#home">Home</Nav.Link> */}
-          {/* <Nav.Link href="#features">Features</Nav.Link> */}
-          {/* Dropdown Button */}
-          {/* <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Dropdown
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#action/1">Action</Dropdown.Item>
-                <Dropdown.Item href="#action/2">Another action</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown> */}
-        </Nav>
-        <Button variant="outline-light" onClick={() => navigate('/')}>Logout</Button>
-      </Navbar>
+      <header
+        className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+        style={{
+          backgroundColor: 'maroon',
+          padding: '10px',
+          fontSize: '20px',
+        }}
+      >
+        <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="56" height="40" viewBox="0 0 56 54" fill="none">
+            <path
+              d="M2.91855 24.6698L53.7146 2.74497L28.2999 51.8879L23.7747 30.6645L2.91855 24.6698Z"
+              stroke="white"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span style={{ width: '2px', height: '30px', backgroundColor: 'white', margin: '0 5px' }}></span>
+          <span>CITSecure</span>
+        </div>
+        <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+          <li className="nav-item">
+            <Link to="/menu" className="nav-link" style={{ color: 'white' }}>
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
+              Visitor Navigation
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/about" className="nav-link" style={{ color: 'white' }}>
+              About us
+            </Link>
+          </li>
+        </ul>
+      </header>
 
-      <Container>
+      <Container fluid className="py-5">
         <Row>
-          <Col>
-            <h2>User Management</h2>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
+          <Col lg={12}>
             <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>First Name</th>
                   <th>Last Name</th>
-                  <th>Purpose</th>
+                  <th>Purpose</th> {/* Include Purpose column in the table header */}
                   <th>Time in</th>
                   <th>Time out</th>
                   <th>Building Visited</th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody style={{ color: 'black' }}>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.purpose}</td>
-                    <td>{user.timeInString}</td>
-                    <td>{user.timeOutString}</td>
-                    <td>{user.buildingToVisit}</td>
-                    <td>
-                      <Button variant="info" onClick={() => handleUpdate(user.id)}>Update</Button>
-                      <Button variant="danger" onClick={() => handleDelete(user.id)}>Delete</Button>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> {/* Display purpose field */}
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeInString}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOutString}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
+                    <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
+                      <Button
+                        variant="info"
+                        style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
+                        onClick={() => handleUpdate(user.id)}
+                      >
+                        Update
+                      </Button>
+                      <Button
+                        variant="danger"
+                        style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
+                        onClick={() => handleDelete(user.id)}
+                      >
+                        Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}
