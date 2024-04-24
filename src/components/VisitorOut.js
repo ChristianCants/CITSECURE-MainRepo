@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,6 +9,29 @@ const VisitorOut = () => {
   const [ampm, setAmPm] = useState('AM'); // Default AM/PM is 'AM'
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Function to get current system time in a formatted string
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours() % 12 || 12; // Convert 24-hour format to 12-hour format
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+    const formattedTime = `${hours}:${minutes} ${ampm}`;
+    return formattedTime;
+  };
+
+  useEffect(() => {
+    // Set the initial time when the component mounts
+    setInitialTime();
+  }, []);
+
+  const setInitialTime = () => {
+    const currentTime = getCurrentTime();
+    const [hour, minute, period] = currentTime.split(/:|\s/); // Split the time string
+    setHours(hour);
+    setMinutes(minute);
+    setAmPm(period);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -57,13 +80,6 @@ const VisitorOut = () => {
     borderRadius: '8px',
   };
 
-  const dropdownStyle = {
-    borderColor: '#A43F3F', // Border color for dropdown menu
-    borderRadius: '8px',
-    width: '80px',
-    marginLeft: '10px', // Adjust the margin to move it a little bit to the right
-  };
-
   const loginButtonStyle = {
     backgroundColor: '#A43F3F',
     color: '#FFFFFF',
@@ -104,20 +120,16 @@ const VisitorOut = () => {
                 </div>
 
                 <div className="form-outline mb-4">
-                  <label className="form-label" htmlFor="timeIn">
+                  <label className="form-label" htmlFor="timeOut">
                     Time Out
                   </label>
                   <input
-                    type="time"
-                    id="timeIn"
+                    type="text"
+                    id="timeOut"
                     className="form-control custom-input"
                     style={inputStyle}
-                    value={hours + ':' + minutes}
-                    onChange={(e) => {
-                      const [hour, minute] = e.target.value.split(':');
-                      setHours(hour);
-                      setMinutes(minute);
-                    }}
+                    value={`${hours.padStart(2, '0')}:${minutes.padStart(2, '0')} ${ampm}`}
+                    readOnly // Make the input read-only
                     required
                   />
                 </div>
