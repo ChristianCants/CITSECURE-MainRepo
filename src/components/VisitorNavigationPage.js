@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './VisitorNavigationPage.css';
+
 
 const VisitorNavigationPage = () => {
     const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
@@ -45,7 +47,7 @@ const VisitorNavigationPage = () => {
                 }}
             >
                 <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-                    <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="100" height="60" />
+                    <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
                     <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
                     <span>CITSecure</span>
                 </div>
