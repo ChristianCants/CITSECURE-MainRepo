@@ -1,8 +1,121 @@
-import React from 'react';
+import React, { useState } from 'react'; // Import React and useState once
 import { NavLink } from 'react-router-dom';
-import "./About.css";// Import CSS module
+import { useNavigate } from 'react-router-dom';
+import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
+import './About.css';
 
-const AboutPage = () => {
+
+const Aboutpage = () => {
+  const [activeLink, setActiveLink] = useState('home');
+  const styles = {
+    backgroundImage: 'url("images/GLE.2.png")',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    minHeight: '80vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+    overflowY: 'hidden',
+  };
+  const teamMembers = [
+    { name: '', imageSrc: './images/' },
+    { name: '', imageSrc: './images/' },
+    { name: '', imageSrc: './images/' },
+    { name: '', imageSrc: './images/' },
+  ];
+  const welcomeRectangleStyles = {
+    width: '421px',
+    height: '121px',
+    flexShrink: 0,
+    borderRadius: '8px',
+    background: '#A43F3F',
+    marginTop: '20px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    lineHeight: '121px',
+  };
+  
+  const handleLogout = () => {
+    const shouldLogout = window.confirm('Are you sure you want to log out?');
+    if (shouldLogout) {
+      // Add any logout logic here
+      // For example, clear user session, cookies, or perform API logout
+      // After the logout logic, navigate to the login page or any other desired page
+      navigate('/');
+    }
+  };
+  const handleSettingsClick = () => {
+    // Add logic to handle settings click
+    console.log('Settings clicked');
+  };
+  const handleProfileClick = () => {
+    // Add logic to handle profile click
+    navigate('/user-profile'); // Navigate to the user profile page
+  };
+  const navigate = useNavigate();
+  const handleLogoClick = () => {
+    // setActiveLink('home');
+    // navigate('/');
+  };
+  const navBarStyles = {
+    backgroundColor: 'maroon',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px',
+    justifyContent: 'space-between',
+  };
+  const lineStylesCITNaviGO = {
+    content: '""',
+    height: '2px',
+    width: '100%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: '-4px',
+    left: '-10px', // Adjust the left position to move the underline to the left
+    display: 'none', // Hide the underline
+    transition: '0.3s',
+  };
+  const citNaviGoStyles = {
+    color: 'white',
+    marginLeft: '10px',
+    position: 'relative',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+  };
+  
+  const iconStyles = {
+    marginRight: '5px', // Adjust the spacing between the icon and text
+  };
+  
+  const lineStyles = {
+    content: '""',
+    height: '2px',
+    width: '100%',
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: '-4px',
+    left: '0',
+    display: 'none', // Hide the underline
+    transition: '0.3s',
+  };
+  const navLinkStyles = {
+    color: 'white',
+    margin: '0 80px',
+    textDecoration: 'none', // Remove underline
+  };
+  const navLinks = [
+    { label: 'Home', href: '/', id: 'home' },
+    { label: 'View Map', href: '/view-map', id: 'view-map' },
+    { label: 'Building', href: '/building', id: 'building' },
+  ];
   return (
     <>
       <header
@@ -25,59 +138,108 @@ const AboutPage = () => {
           
         </ul>
       </header>
-
-      <div className="about-container">
-        <header className="about-header">
-          <h1 className="about-title">Welcome to CITU-Secure</h1>
-          <p className="about-description">
-          CITU-Secure aims to develop and implement an integrated system for visitor database monitoring and navigation within the CIT-U campus premises
-          </p>
-        </header>
-
-        <section className="about-features">
-          <h2 className="section-title">Key Features</h2>
-          <div className="feature-grid">
-            <div className="feature-card">
-              <i className="fas fa-user-check feature-icon"></i>
-              <h3 className="feature-title">Visitor Login</h3>
-              <p className="feature-description">
-                Streamlined visitor registration and authentication process.
-              </p>
-            </div>
-            <div className="feature-card">
-              <i className="fas fa-map-marked-alt feature-icon"></i>
-              <h3 className="feature-title">Campus Navigation</h3>
-              <p className="feature-description">
-                Interactive campus map and step-by-step navigation for visitors.
-              </p>
-            </div>
-            <div className="feature-card">
-              <i className="fas fa-shield-alt feature-icon"></i>
-              <h3 className="feature-title">Robust Security</h3>
-              <p className="feature-description">
-                Comprehensive security measures to protect the campus community.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section className="about-commitment">
-          <h2 className="section-title">Our Commitment</h2>
-          <p className="commitment-description">
-            At CITU-Secure, we are dedicated to providing a secure and efficient visitor management solution that enhances the overall experience of the CIT-U campus community. By combining cutting-edge technology, robust security protocols, and user-centric design, we strive to create a safe and welcoming environment for all visitors to the CIT-U campus.
-          </p>
-          <div className="commitment-actions">
-            <a href="https://citu-secure.com" className="commitment-link">
-              Visit our website
-            </a>
-            <a href="mailto:info@citu-secure.com" className="commitment-link">
-              Contact us
-            </a>
-          </div>
-        </section>
+      <Container fluid style={styles}>
+        <div style={welcomeRectangleStyles}>
+          <h1>Welcome CIT-Secure </h1>
+        </div>
+      </Container>
+      <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.5em', padding: '10px 100px' }}>
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '20px',
+            fontSize: '1.5em',
+            marginBottom: '20px',
+            color: '#8E0018',
+          }}
+        >
+          EXPLORE CIT-U BUILDINGS
+        </div>
+        <img src="./images/MapBuilding.png" alt="MapBuilding" style={{ width: '85%', height: '100%' }} />
       </div>
-    </>
-  );
+      <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '2em', padding: '10px 100px' }}>
+  <div
+    style={{
+      textAlign: 'left',
+      marginTop: '20px',
+      fontSize: '2em',
+      fontWeight: 'bold',
+      marginBottom: '-44px',
+      color: '#8E0018',
+      borderBottom: '3px solid #F8BD00', // Adjust the width and color of the underline
+      display: 'left',
+    }}
+  >
+    ABOUT US
+  </div>
+</div>
+      <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.5em', padding: '10px 100px',  }}>
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '20px',
+            fontSize: '1.5em',
+            marginBottom: '20px',
+            color: '#8E0018',
+          }}
+        >
+          CITU-Secure aims to develop and implement an integrated system for visitor database monitoring and navigation within the CIT-U campus premises
+        </div>
+      </div>
+      <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '2em', padding: '10px 100px' }}>
+      <div
+      
+        style={{
+          textAlign: 'center',
+          marginTop: '20px',
+          fontSize: '2em',
+          fontWeight: 'bold',
+          marginBottom: '40px',
+          color: '#8E0018',
+          textDecoration: 'underline',
+          textDecorationThickness: '5px', // Adjust the stroke thickness as needed
+          textDecorationWidth: '0.1em', // Adjust the width of the underline
+          textDecorationColor: '#F8BD00', // Set the color of the underline
+        }}
+      >
+        OUR TEAM
+      </div>
+      <Row>
+        {teamMembers.map((member, index) => (
+          <Col key={index} xs={6} md={3}>
+            <Card style={{ width: '18rem', marginBottom: '20px' }}>
+              <Card.Img variant="top" src={member.imageSrc} alt={member.name} />
+              <Card.Body>
+                {/* Apply font size style here */}
+                <Card.Title style={{ fontSize: '25px' }}>{member.name}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </div>
+    <section style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  <div style={{ backgroundColor: '#FFEFBA', width: '1100px', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
+    <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+      <span style={{ width: '1px', height: '35px', backgroundColor: 'black', margin: '0 5px' }}></span>
+      <span>CIT NaviGO</span>
+    </div>
+    <div style={{ marginTop: '20px', textAlign: 'center' }}>
+      <p style={{ color: 'maroon' }}>Contact Us</p>
+      <p>Natalio B. Bacalso Ave, Cebu City, 6000 Cebu</p>
+      <p>(032) 261 7741</p>
+    </div>
+    <div style={lineStyles}></div>
+  </div>
+</section>
+<div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '80%' }}></div>
+
+<div style={{ textAlign: 'center', color: 'maroon', marginBottom: '20px' }}>
+  2023 CIT NaviGo. All rights reserved.
+</div>
+  </>
+);
 };
 
-export default AboutPage;
+export default Aboutpage;
