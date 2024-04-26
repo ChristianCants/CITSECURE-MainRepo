@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-import { SearchBar } from './SearchBar'; 
 import Carousel from 'react-bootstrap/Carousel';
 import Dropdown from 'react-bootstrap/Dropdown';
 
@@ -68,9 +67,6 @@ const ViewMap = () => {
     border: '5px solid maroon', // Updated to maroon
   };
  
-  const iconStyles = {
-    marginRight: '5px', // Adjust the margin as needed
-  };
  
   const lineStyles = {
     content: '""',
@@ -96,9 +92,9 @@ const ViewMap = () => {
     { label: 'Building', href: '/building', id: 'building' },
   ];
  
-  const handleSearchResults = (results) => {
-    setSearchResults(results);
-  };
+  // const handleSearchResults = (results) => {
+  //   setSearchResults(results);
+  // };
  
   
 
@@ -130,11 +126,6 @@ const ViewMap = () => {
       // After the logout logic, navigate to the login page or any other desired page
       navigate('/');
     }
-  };
- 
-  const handleSettingsClick = () => {
-    // Add logic to handle settings click
-    console.log('Settings clicked');
   };
  
   const handleProfileClick = () => {

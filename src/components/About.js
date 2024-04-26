@@ -1,13 +1,11 @@
-import React, { useState } from 'react'; // Import React and useState once
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Card, Row, Col } from 'react-bootstrap';
 import './About.css';
 
 
 const Aboutpage = () => {
-  const [activeLink, setActiveLink] = useState('home');
+
   const styles = {
     backgroundImage: 'url("images/GLE.2.png")',
     backgroundSize: 'cover',
@@ -42,58 +40,37 @@ const Aboutpage = () => {
     lineHeight: '121px',
   };
   
-  const handleLogout = () => {
-    const shouldLogout = window.confirm('Are you sure you want to log out?');
-    if (shouldLogout) {
-      // Add any logout logic here
-      // For example, clear user session, cookies, or perform API logout
-      // After the logout logic, navigate to the login page or any other desired page
-      navigate('/');
-    }
-  };
-  const handleSettingsClick = () => {
-    // Add logic to handle settings click
-    console.log('Settings clicked');
-  };
-  const handleProfileClick = () => {
-    // Add logic to handle profile click
-    navigate('/user-profile'); // Navigate to the user profile page
-  };
-  const navigate = useNavigate();
-  const handleLogoClick = () => {
-    // setActiveLink('home');
-    // navigate('/');
-  };
-  const navBarStyles = {
-    backgroundColor: 'maroon',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px',
-    justifyContent: 'space-between',
-  };
-  const lineStylesCITNaviGO = {
-    content: '""',
-    height: '2px',
-    width: '100%',
-    backgroundColor: 'white',
-    position: 'absolute',
-    bottom: '-4px',
-    left: '-10px', // Adjust the left position to move the underline to the left
-    display: 'none', // Hide the underline
-    transition: '0.3s',
-  };
-  const citNaviGoStyles = {
-    color: 'white',
-    marginLeft: '10px',
-    position: 'relative',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-  };
+
+  // const navBarStyles = {
+  //   backgroundColor: 'maroon',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   padding: '10px',
+  //   justifyContent: 'space-between',
+  // };
+  // const lineStylesCITNaviGO = {
+  //   content: '""',
+  //   height: '2px',
+  //   width: '100%',
+  //   backgroundColor: 'white',
+  //   position: 'absolute',
+  //   bottom: '-4px',
+  //   left: '-10px', 
+  //   display: 'none',
+  //   transition: '0.3s',
+  // };
+  // const citNaviGoStyles = {
+  //   color: 'white',
+  //   marginLeft: '10px',
+  //   position: 'relative',
+  //   cursor: 'pointer',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  // };
   
-  const iconStyles = {
-    marginRight: '5px', // Adjust the spacing between the icon and text
-  };
+  // const iconStyles = {
+  //   marginRight: '5px', 
+  // };
   
   const lineStyles = {
     content: '""',
@@ -106,16 +83,16 @@ const Aboutpage = () => {
     display: 'none', // Hide the underline
     transition: '0.3s',
   };
-  const navLinkStyles = {
-    color: 'white',
-    margin: '0 80px',
-    textDecoration: 'none', // Remove underline
-  };
-  const navLinks = [
-    { label: 'Home', href: '/', id: 'home' },
-    { label: 'View Map', href: '/view-map', id: 'view-map' },
-    { label: 'Building', href: '/building', id: 'building' },
-  ];
+  // const navLinkStyles = {
+  //   color: 'white',
+  //   margin: '0 80px',
+  //   textDecoration: 'none', // Remove underline
+  // };
+  // const navLinks = [
+  //   { label: 'Home', href: '/', id: 'home' },
+  //   { label: 'View Map', href: '/view-map', id: 'view-map' },
+  //   { label: 'Building', href: '/building', id: 'building' },
+  // ];
   return (
     <>
       <header

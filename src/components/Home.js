@@ -40,12 +40,12 @@ const Home = () => {
     ...buttonStyle,
     background: '#FFF9EB',
     border: '2px solid black', // Set border color to black
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)', // Add box-shadow here
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)'
   };
 
-  const hoverEffect = {
-    backgroundColor: '#FFD700', // Change background color on hover
-  };
+  // const hoverEffect = {
+  //   backgroundColor: '#FFD700', 
+  // };
 
   return (
     <div style={containerStyle}>

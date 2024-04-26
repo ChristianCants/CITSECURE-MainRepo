@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Nav, Dropdown, Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
+import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 const AdminPage = () => {
@@ -13,7 +12,6 @@ const AdminPage = () => {
     lastName: '',
   });
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -26,22 +24,22 @@ const AdminPage = () => {
       });
   }, []);
 
-  const navBarStyles = {
-    backgroundColor: '#B06161',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px',
-    justifyContent: 'space-between',
-  };
+  // const navBarStyles = {
+  //   backgroundColor: '#B06161',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   padding: '10px',
+  //   justifyContent: 'space-between',
+  // };
 
-  const citNaviGoStyles = {
-    color: 'white',
-    marginLeft: '10px',
-    position: 'relative',
-    cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-  };
+  // const citNaviGoStyles = {
+  //   color: 'white',
+  //   marginLeft: '10px',
+  //   position: 'relative',
+  //   cursor: 'pointer',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  // };
 
   const handleUpdate = (userId) => {
     setSelectedUserId(userId);

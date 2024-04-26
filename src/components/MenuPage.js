@@ -1,20 +1,14 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import VisitorNavigationPage from './VisitorNavigationPage'; // Make sure this import is correct
-
-import { Container, Nav, Navbar, Dropdown } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { Card, Row, Col } from 'react-bootstrap';
 import './MenuPage.css';
 
 const MenuPage = () => {
-  const [activeLink, setActiveLink] = useState('home');
-  const navigate = useNavigate();
 
-  const navLinks = [
-    { label: 'View Map', href: '/view-map', id: 'view-map' },
-    { label: 'Exit', href: '/', id: '' },
-  ];
+  // const navLinks = [
+  //   { label: 'View Map', href: '/view-map', id: 'view-map' },
+  //   { label: 'Exit', href: '/', id: '' },
+  // ];
 
   // Array containing all campus locations
   const campusLocations = [
