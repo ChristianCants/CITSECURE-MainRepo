@@ -179,7 +179,7 @@ const Aboutpage = () => {
           textDecorationColor: '#F8BD00', // Set the color of the underline
         }}
       >
-        OUR TEAM
+        THE TEAM
       </div>
       <Row>
         {teamMembers.map((member, index) => (
