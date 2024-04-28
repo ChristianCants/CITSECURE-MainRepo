@@ -23,10 +23,11 @@ const Aboutpage = () => {
     { name: 'Alegarbes, Adrian', title: 'Project Manager'},
     { name: 'Abanid, Breshly', title: 'Developer'},
     { name: 'Cabante, Jaimes Edward', title: 'Developer'},
-    { name: 'Cantiveros, Christian Benedict', title: 'UI/UX Designer'},
+    { name: 'Cantiveros, Christian Benedict', title: 'Developer'},
     { name: 'Ilosorio, Anne Jenel', title: 'Quality Assurance'},
     { name: 'Dumo, Kevin Zeldwyn', title: 'Quality Assurance'},
     { name: 'Cabanes, John Michael', title: 'UI/UX Designer'},
+    { name: 'Hans, Hans Werner', title: 'Developer'},
   ];
 
   const welcomeRectangleStyles = {
