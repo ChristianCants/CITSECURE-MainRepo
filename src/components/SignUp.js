@@ -95,10 +95,7 @@ const SignUp = () => {
   };
   
 
-  const handleConfirm = () => {
-    handleClose();
-    navigate('/visitor-navigation');
-  };
+  
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/TIME IN.png")',
