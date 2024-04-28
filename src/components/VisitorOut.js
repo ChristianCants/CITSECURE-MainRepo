@@ -108,15 +108,23 @@ const VisitorOut = () => {
                   <label className="form-label" htmlFor="formCardNo">
                     Enter Card No.
                   </label>
+                 
                   <input
                     type="number"
                     id="formCardNo"
                     className="form-control custom-input"
                     style={inputStyle}
                     value={cardNo}
-                    onChange={(e) => setCardNo(e.target.value)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      // Check if the value is not negative before updating state
+                      if (value >= 0) {
+                        setCardNo(value);
+                      }
+                    }}
                     required
                   />
+
                 </div>
 
                 <div className="form-outline mb-4">
