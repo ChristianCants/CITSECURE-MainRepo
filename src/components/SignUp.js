@@ -232,7 +232,7 @@ const SignUp = () => {
                         backgroundPosition: 'right center',
                       }}
                     >
-                      <option value="">Select Building</option>
+                      <option value="">Select Buildings</option>
                       <option value="NGE">NGE</option>
                       <option value="GLE">GLE</option>
                       <option value="RTL">RTL</option>
@@ -272,7 +272,7 @@ const SignUp = () => {
         </Modal.Body>
         <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
           <Button variant="primary" onClick={handleViewMap} style={{ background: 'maroon', width: '150px' }}>
-            View Map
+            View Maps
           </Button>
           <Button variant="primary" onClick={handleExit} style={{ background: 'maroon', width: '150px' }}>
             Exit
