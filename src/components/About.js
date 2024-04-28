@@ -181,7 +181,7 @@ const Aboutpage = () => {
             textDecorationColor: '#F8BD00', // Set the color of the underline
           }}
         >
-          THE TEAM
+          MEET THE TEAM
         </div>
         <Row style={{ justifyContent: 'center' }}>
           {teamMembers.map((member, index) => (
@@ -201,7 +201,7 @@ const Aboutpage = () => {
           <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
             <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
             <span style={{ width: '1px', height: '35px', backgroundColor: 'black', margin: '0 5px' }}></span>
-            <span>CIT NaviGO</span>
+            <span>CITU- Secure</span>
           </div>
           <div style={{ marginTop: '20px', textAlign: 'center' }}>
             <p style={{ color: 'maroon' }}>Contact Us</p>
