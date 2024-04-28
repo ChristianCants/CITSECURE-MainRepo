@@ -2,6 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
+import pdfMake from 'pdfmake/build/pdfmake';  // Import pdfmake here
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+
+// Register fonts with pdfMake
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+// Styles for the PDF document
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'row',
+    backgroundColor: '#E4E4E4',
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+  table: {
+    display: 'table',
+    width: '100%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
+  },
+  tableRow: { margin: 'auto', flexDirection: 'row' },
+  tableCol: { width: '25%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderTopWidth: 0 },
+  tableCell: { margin: 'auto', marginTop: 5, fontSize: 12, padding: 5 },
+});
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +41,6 @@ const AdminPage = () => {
     firstName: '',
     lastName: '',
   });
-
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -24,22 +53,55 @@ const AdminPage = () => {
       });
   }, []);
 
-  // const navBarStyles = {
-  //   backgroundColor: '#B06161',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   padding: '10px',
-  //   justifyContent: 'space-between',
-  // };
-
-  // const citNaviGoStyles = {
-  //   color: 'white',
-  //   marginLeft: '10px',
-  //   position: 'relative',
-  //   cursor: 'pointer',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  // };
+  const handleExportPDF = () => {
+    const docDefinition = {
+      content: [
+        { text: 'List of Visitors', style: 'header' },
+        {
+          style: 'table',
+          table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: [
+              ['ID', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited'],
+              ...users.map((user) => [
+                user.id,
+                user.firstName,
+                user.lastName,
+                user.purpose,
+                user.timeInString,
+                user.timeOutString,
+                user.buildingToVisit,
+              ]),
+            ],
+          },
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 20,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        table: {
+          margin: [0, 5, 0, 15],
+        },
+      },
+    };
+  
+    // Create PDF document
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+  
+    // Generate PDF blob and download
+    pdfDocGenerator.getBlob((blob) => {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'visitor_list.pdf';
+      downloadLink.click();
+    });
+  };
+  
 
   const handleUpdate = (userId) => {
     setSelectedUserId(userId);
@@ -185,6 +247,9 @@ const AdminPage = () => {
           </Col>
         </Row>
       </Container>
+
+      {/* PDF Viewer */}
+      <Button onClick={handleExportPDF}>Export PDF</Button>
 
       {/* Update Modal */}
       <Modal show={showUpdateModal} onHide={handleUpdateModalClose}>
