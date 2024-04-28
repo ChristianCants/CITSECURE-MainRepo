@@ -27,7 +27,7 @@ const Aboutpage = () => {
     { name: 'Ilosorio, Anne Jenel', title: 'Quality Assurance'},
     { name: 'Dumo, Kevin Zeldwyn', title: 'Quality Assurance'},
     { name: 'Cabanes, John Michael', title: 'UI/UX Designer'},
-    { name: 'Hans, Hans Werner', title: 'Developer'},
+    //{ name: 'Huyo, Hans Werner', title: 'Developer'}, for capstone 1
   ];
 
   const welcomeRectangleStyles = {
