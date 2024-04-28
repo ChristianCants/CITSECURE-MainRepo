@@ -10,6 +10,7 @@ import UserProfile from './UserProfile';
 import AdminPage from './AdminPage'; // Import the AdminPage component
 import VisitorNavigationPage from './VisitorNavigationPage';
 import About from './About'; 
+import AdminLogin from './AdminLogin';
 
 
 const AppRouter = () => {
@@ -34,6 +35,8 @@ const AppRouter = () => {
         <Route path="/view-map" element={<ViewMap />} />
         <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
         <Route path="/About" element={<About />} />
+        <Route path="/AdminLogin" element={<AdminLogin />} />
+        
 
         
         
