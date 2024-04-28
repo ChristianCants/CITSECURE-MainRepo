@@ -68,6 +68,16 @@ const SignUp = () => {
     }
   };
 
+  const resetFormInputs = () => {
+    setFirstName('');
+    setLastName('');
+    setPurpose('');
+    setCardNo('');
+    setBuildingToVisit('');
+  };
+  
+
+  
   const handleViewMap = () => {
     // Navigate to the map page
     navigate('/visitor-navigation'); // Assuming '/visitor-navigation' is the route for your map page
@@ -81,7 +91,9 @@ const SignUp = () => {
 
   const handleClose = () => {
     setShowModal(false);
+    resetFormInputs();
   };
+  
 
   const handleConfirm = () => {
     handleClose();
