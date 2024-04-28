@@ -211,10 +211,11 @@ const Aboutpage = () => {
           <div style={lineStyles}></div>
         </div>
       </section>
-      <div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '80%' }}></div>
+      <div style={{ borderTop: '3px solid maroon', margin: '20px auto 30px', width: '90%' }}></div>
       <div style={{ textAlign: 'center', color: 'maroon', marginBottom: '20px' }}>
-        2024 CIT NaviGo. All rights reserved.
+      2024 CITU - Secure. All rights reserved™.
       </div>
+
     </>
   );
 };
