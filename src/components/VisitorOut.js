@@ -33,30 +33,37 @@ const VisitorOut = () => {
     setAmPm(period);
   };
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const formattedTime = `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')} ${ampm}`;
+      if (!cardNo ) {
+        alert('Please fill out all fields');
+        return;
+      }
+
+      const formData = {
+        
+        cardNo
+        
+      };
+
       const response = await axios.post(
-        `http://localhost:8080/admin/updateVisitorTimeOut/${cardNo}`,
-        null,
+        'http://localhost:8080/out/addtimeout',
+        formData,
         {
-          params: {
-            cardNo: cardNo,
-            timeOut: formattedTime,
+          headers: {
+            'Content-Type': 'application/json',
           },
         }
       );
 
-      if (response.status === 200) {
-        navigate('/menu');
-      } else {
-        setError('Submit failed. Please try again.');
-      }
+      console.log('Signup successful:', response.data);
+      //  setShowModal(true);
     } catch (error) {
-      console.error('Submit failed:', error.message);
-      setError('Submit failed. Please try again.');
+      console.error('Signup failed:', error.message);
+      alert('Signup failed. Please check the console for details.');
     }
   };
 
@@ -90,12 +97,6 @@ const VisitorOut = () => {
     marginBottom: '10px',
   };
 
-  const titleStyle = {
-    color: '#A43F3F',
-    fontWeight: 'bold',
-    marginBottom: '20px',
-  };
-
   return (
     <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
       <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 d-flex justify-content-end align-items-center">
@@ -124,7 +125,6 @@ const VisitorOut = () => {
                     }}
                     required
                   />
-
                 </div>
 
                 <div className="form-outline mb-4">
