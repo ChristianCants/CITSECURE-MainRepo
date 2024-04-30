@@ -59,11 +59,11 @@ const VisitorOut = () => {
         }
       );
 
-      console.log('Signup successful:', response.data);
+      console.log('Verified entry', response.data);
       //  setShowModal(true);
     } catch (error) {
       console.error('Signup failed:', error.message);
-      alert('Signup failed. Please check the console for details.');
+      alert('Verified failed. Please check the console for details.');
     }
   };
 

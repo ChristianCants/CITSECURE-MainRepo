@@ -193,7 +193,7 @@ const AdminPage = () => {
     </li>
     <li className="nav-item">
       <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
-        
+        Admin Dashboard
       </Link>
     </li>
     <li className="nav-item">
