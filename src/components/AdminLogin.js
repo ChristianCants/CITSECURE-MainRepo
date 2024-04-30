@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
-  const [adminUsername, setAdminUsername] = useState('');
-  const [adminPassword, setAdminPassword] = useState('');
+  const [adminUsername, setAdminUsername] = useState('Admin'); // Set default admin username
+  const [adminPassword, setAdminPassword] = useState('1234'); // Set default admin password
   const navigate = useNavigate();
 
   const handleAdminLogin = async (e) => {
@@ -11,9 +11,9 @@ const AdminLogin = () => {
 
     try {
       // Check adminUsername and adminPassword against valid credentials
-      if (adminUsername === 'admin' && adminPassword === 'adminpassword') {
+      if (adminUsername === 'Admin' && adminPassword === '1234') { // Check against default values
         // Redirect to admin page upon successful login
-        navigate('/admin');
+        navigate('/Admin');
       } else {
         // Show error message for invalid credentials
         alert('Invalid admin credentials');
