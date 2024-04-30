@@ -69,8 +69,8 @@ const AdminPage = () => {
                 user.firstName,
                 user.lastName,
                 user.purpose,
-                user.timeInString,
-                user.timeOutString,
+                user.timeIn,
+                user.timeOut,
                 user.buildingToVisit,
               ]),
             ],
@@ -241,8 +241,8 @@ const AdminPage = () => {
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> 
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeInString}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOutString}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
                     <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
                       <Button
