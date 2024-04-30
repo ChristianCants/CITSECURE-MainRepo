@@ -104,9 +104,17 @@ const AdminPage = () => {
   
 
   const handleUpdate = (userId) => {
-    setSelectedUserId(userId);
-    setShowUpdateModal(true);
+    const userToUpdate = users.find((user) => user.id === userId);
+    if (userToUpdate) {
+      setSelectedUserId(userId);
+      setShowUpdateModal(true);
+      setUpdatedUserData({
+        firstName: userToUpdate.firstName,
+        lastName: userToUpdate.lastName,
+      });
+    }
   };
+  
 
   const handleUpdateModalClose = () => {
     setShowUpdateModal(false);
@@ -138,13 +146,14 @@ const AdminPage = () => {
     }
   };
 
+  
   const handleUpdateModalSave = async () => {
     try {
-      const response = await axios.put(`http://localhost:8080/User/updateUser/${selectedUserId}`, {
+      const response = await axios.put(`http://localhost:8080/admin/updateVisitor/${selectedUserId}`, {
         firstName: updatedUserData.firstName,
         lastName: updatedUserData.lastName,
       });
-
+  
       if (response.status === 200) {
         alert('User updated successfully!');
         const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
@@ -152,12 +161,13 @@ const AdminPage = () => {
       } else {
         alert('Failed to update user.');
       }
-
+  
       handleUpdateModalClose();
     } catch (error) {
       console.error('Error updating user:', error.message);
     }
   };
+  
 
   return (
     <>
@@ -264,26 +274,26 @@ const AdminPage = () => {
           <Modal.Title>Update User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group controlId="formFirstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter first name"
-                value={updatedUserData.firstName}
-                onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group controlId="formLastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter last name"
-                value={updatedUserData.lastName}
-                onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
-              />
-            </Form.Group>
-          </Form>
+        <Form.Group controlId="formFirstName">
+  <Form.Label>First Name</Form.Label>
+  <Form.Control
+    type="text"
+    placeholder="Enter first name"
+    value={updatedUserData.firstName}
+    onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
+    />  
+  
+  </Form.Group>
+  <Form.Group controlId="formLastName">
+  <Form.Label>Last Name</Form.Label>
+  <Form.Control
+    type="text"
+    placeholder="Enter last name"
+    value={updatedUserData.lastName}
+    onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
+      />
+    </Form.Group>
+
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleUpdateModalClose}>
