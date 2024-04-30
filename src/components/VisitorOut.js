@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const VisitorOut = () => {
@@ -7,47 +6,40 @@ const VisitorOut = () => {
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [ampm, setAmPm] = useState('AM'); // Default AM/PM is 'AM'
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   // Function to get current system time in a formatted string
-  const getCurrentTime = () => {
+  const getCurrentTime = useCallback(() => {
     const now = new Date();
     const hours = now.getHours() % 12 || 12; // Convert 24-hour format to 12-hour format
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
     const formattedTime = `${hours}:${minutes} ${ampm}`;
     return formattedTime;
-  };
+  }, []);
 
   useEffect(() => {
     // Set the initial time when the component mounts
+    const setInitialTime = () => {
+      const currentTime = getCurrentTime();
+      const [hour, minute, period] = currentTime.split(/:|\s/); // Split the time string
+      setHours(hour);
+      setMinutes(minute);
+      setAmPm(period);
+    };
+
     setInitialTime();
-  }, []);
-
-  const setInitialTime = () => {
-    const currentTime = getCurrentTime();
-    const [hour, minute, period] = currentTime.split(/:|\s/); // Split the time string
-    setHours(hour);
-    setMinutes(minute);
-    setAmPm(period);
-  };
-
+  }, [getCurrentTime]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      if (!cardNo ) {
+      if (!cardNo) {
         alert('Please fill out all fields');
         return;
       }
 
-      const formData = {
-        
-        cardNo
-        
-      };
+      const formData = { cardNo };
 
       const response = await axios.post(
         'http://localhost:8080/out/addtimeout',
@@ -104,12 +96,10 @@ const VisitorOut = () => {
           <div className="card bg-glass" style={formStyle}>
             <div className="card-body px-4 py-5 px-md-5">
               <form onSubmit={handleLogin}>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <div className="form-outline mb-4">
                   <label className="form-label" htmlFor="formCardNo">
                     Enter Card No.
                   </label>
-                 
                   <input
                     type="number"
                     id="formCardNo"
@@ -149,10 +139,6 @@ const VisitorOut = () => {
                 >
                   Submit
                 </button>
-
-                <div className="text-center">
-                  {/* Remove the social media buttons */}
-                </div>
               </form>
             </div>
           </div>
