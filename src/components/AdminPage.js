@@ -41,6 +41,12 @@ const AdminPage = () => {
     firstName: '',
     lastName: '',
   });
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    cardNumber: '',
+  });
+  
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -213,6 +219,7 @@ const AdminPage = () => {
               <thead>
                 <tr>
                   <th>ID</th>
+                  <th>Card Number</th>
                   <th>First Name</th>
                   <th>Last Name</th>
                   <th>Purpose</th> {/* Include Purpose column in the table header */}
@@ -226,6 +233,7 @@ const AdminPage = () => {
                 {users.map((user) => (
                   <tr key={user.id}>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.CardNumber}</td>  
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> {/* Display purpose field */}
@@ -263,6 +271,18 @@ const AdminPage = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+
+          <Form.Group controlId="formCardNumber">
+          <Form.Label>Card Number</Form.Label>
+          <Form.Control
+           type="text"
+          placeholder="Enter card number"
+          value={userData.cardNumber}
+          onChange={(e) => setUserData({ ...userData, cardNumber: e.target.value })}
+          />
+          </Form.Group>
+
+
             <Form.Group controlId="formFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
