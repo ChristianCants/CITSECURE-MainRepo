@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Chip from '@mui/material/Chip';
+
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -76,8 +78,6 @@ const SignUp = () => {
     setBuildingToVisit('');
   };
   
-
-  
   const handleViewMap = () => {
     // Navigate to the map page
     navigate('/visitor-navigation'); // Assuming '/visitor-navigation' is the route for your map page
@@ -129,9 +129,19 @@ const SignUp = () => {
           <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
           </div>
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <Alert key="danger" variant="danger" style={{textAlign: "center"}}>
-            To access the school map, users are required to submit a Time-In form.
-          </Alert>
+          
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Chip
+            label="Access Campus Map after Time In"
+              style={{
+              textAlign: 'center',
+              borderRadius: '100px',
+              marginBottom: '5px',
+              color: 'white',
+              }}
+              />
+              </div>
+
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
                 <form onSubmit={handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
