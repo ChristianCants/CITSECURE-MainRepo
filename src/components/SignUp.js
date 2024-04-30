@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -128,8 +128,10 @@ const SignUp = () => {
         <div className="row gx-lg-5 align-items-center mb-5">
           <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
           </div>
-
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <Alert key="danger" variant="danger" style={{textAlign: "center"}}>
+            To access the school map, users are required to submit a Time-In form.
+          </Alert>
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
                 <form onSubmit={handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
