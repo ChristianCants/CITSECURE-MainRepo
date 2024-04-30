@@ -41,12 +41,6 @@ const AdminPage = () => {
     firstName: '',
     lastName: '',
   });
-  const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    cardNumber: '',
-  });
-  
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -202,8 +196,8 @@ const AdminPage = () => {
   </Button>
 
 </header>
- 
- <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
+
+<div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
     <input
       type="date"
       value={filterDateTimeIn}
@@ -222,7 +216,7 @@ const AdminPage = () => {
                   <th>Card Number</th>
                   <th>First Name</th>
                   <th>Last Name</th>
-                  <th>Purpose</th> {/* Include Purpose column in the table header */}
+                  <th>Purpose</th> 
                   <th>Time in</th>
                   <th>Time out</th>
                   <th>Building Visited</th>
@@ -233,10 +227,10 @@ const AdminPage = () => {
                 {users.map((user) => (
                   <tr key={user.id}>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.CardNumber}</td>  
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> {/* Display purpose field */}
+                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> 
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeInString}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOutString}</td>
                     <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
@@ -271,18 +265,6 @@ const AdminPage = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-
-          <Form.Group controlId="formCardNumber">
-          <Form.Label>Card Number</Form.Label>
-          <Form.Control
-           type="text"
-          placeholder="Enter card number"
-          value={userData.cardNumber}
-          onChange={(e) => setUserData({ ...userData, cardNumber: e.target.value })}
-          />
-          </Form.Group>
-
-
             <Form.Group controlId="formFirstName">
               <Form.Label>First Name</Form.Label>
               <Form.Control
