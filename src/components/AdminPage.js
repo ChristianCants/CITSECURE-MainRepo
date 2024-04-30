@@ -234,7 +234,7 @@ const AdminPage = () => {
                         style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
                         onClick={() => handleUpdate(user.id)}
                       >
-                        Update
+                        Edit
                       </Button>
                       <Button
                         variant="danger"
