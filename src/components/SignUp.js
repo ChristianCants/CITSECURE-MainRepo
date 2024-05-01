@@ -43,6 +43,12 @@ const SignUp = () => {
         return;
       }
 
+       // Check if card number is not 0, limits to 100 only
+       if (cardNo <= 0 || cardNo > 100) {
+        alert('Invalid card number!');
+        return;
+      }
+
       const formData = {
         firstName,
         lastName,
