@@ -39,6 +39,11 @@ const VisitorOut = () => {
         return;
       }
 
+      if (!cardNo || cardNo <= 0 || cardNo > 100) {
+        alert('Invalid card number.');
+        return;
+      }
+
       const formData = { cardNo };
 
       const response = await axios.post(
@@ -51,13 +56,14 @@ const VisitorOut = () => {
         }
       );
 
-      console.log('Verified entry', response.data);
-      //  setShowModal(true);
+      // Notif
+      console.log(`Card Number ${cardNo} has been successfully timed out`, response.data);
     } catch (error) {
-      console.error('Signup failed:', error.message);
-      alert('Verified failed. Please check the console for details.');
+      console.error('Time-out failed! Reason:', error.message);
+      alert('Unsuccessful. Please try again.');
     }
   };
+
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/TIME OUT.png")',

@@ -213,7 +213,8 @@ const SignUp = () => {
                       style={inputStyle}
                       value={cardNo}
                       onChange={(e) => setCardNo(e.target.value)}
-                      min={0}
+                      min={1}
+                      max={100}
                       step={1}
                       required
                     />
