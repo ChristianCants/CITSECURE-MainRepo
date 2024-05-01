@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { Modal, Button, } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const VisitorOut = () => {
   const [cardNo, setCardNo] = useState('');
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
   const [ampm, setAmPm] = useState('AM'); // Default AM/PM is 'AM'
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   // Function to get current system time in a formatted string
   const getCurrentTime = useCallback(() => {
@@ -16,6 +20,20 @@ const VisitorOut = () => {
     const formattedTime = `${hours}:${minutes} ${ampm}`;
     return formattedTime;
   }, []);
+
+  const handleExit = () => {
+    // Navigate back to the home page or perform any other action
+    navigate('/'); // Assuming '/' is the route for your home page
+  };
+  
+  const resetFormInputs = () => {
+    setCardNo('');
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+    resetFormInputs();
+  };
 
   useEffect(() => {
     // Set the initial time when the component mounts
@@ -57,7 +75,8 @@ const VisitorOut = () => {
       );
 
       // Notif
-      console.log(`Card Number ${cardNo} has been successfully timed out`, response.data);
+      console.log(`Card Number ${cardNo} Has Been Successfully Timed Out`, response.data);
+      setShowModal(true);
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
       alert('Unsuccessful. Please try again.');
@@ -142,6 +161,7 @@ const VisitorOut = () => {
                   type="submit"
                   className="btn btn-primary btn-block mb-4"
                   style={loginButtonStyle}
+
                 >
                   Submit
                 </button>
@@ -150,6 +170,27 @@ const VisitorOut = () => {
           </div>
         </div>
       </div>
+
+
+      {/* kani na add */}
+      <Modal show={showModal} onHide={handleClose} centered>
+      <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Title>Notification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex justify-content-center align-items-center">
+            <p style={{ marginRight: '10px' }}>Card Number {cardNo} Has Been Successfully Timed Out!</p>
+            <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+          </div>
+        </Modal.Body>
+        
+        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+          <Button variant="primary" onClick={handleExit} style={{ background: 'maroon', width: '150px' }}>
+            Exit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
     </section>
   );
 };
