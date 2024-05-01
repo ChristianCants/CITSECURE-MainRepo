@@ -11,12 +11,13 @@ import Chip from '@mui/material/Chip';
 
 export default function SimplePaper() {
     const handleArrowClick = () => {
-        //func
+        // Add your functionality here
         console.log('Arrow clicked');
     };
     
     const currentDate = new Date();
     const formattedDate = currentDate.toLocaleDateString();
+    const userAction = "updated the first name"; // This can be dynamically set based on user actions
 
     return (
         <Box
@@ -42,8 +43,7 @@ export default function SimplePaper() {
                             {formattedDate}
                         </AccordionSummary>
                         <AccordionDetails>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                            malesuada lacus ex, sit amet blandit leo lobortis eget.
+                            {`User ${userAction}`} {/* Dynamically set the user action here */}
                         </AccordionDetails>
                     </Accordion>
                 </div>
