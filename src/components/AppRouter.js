@@ -11,6 +11,7 @@ import AdminPage from './AdminPage'; // Import the AdminPage component
 import VisitorNavigationPage from './VisitorNavigationPage';
 import About from './About'; 
 import AdminLogin from './AdminLogin';
+import History from './History'
 
 
 const AppRouter = () => {
@@ -36,6 +37,7 @@ const AppRouter = () => {
         <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
+        <Route path="/apphistory" element={<History />} />
         
 
         
