@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom';
 import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
 import pdfMake from 'pdfmake/build/pdfmake';  // Import pdfmake here
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import HistoryIcon from '@mui/icons-material/History'; 
+import History from './History'; 
+
 
 // Register fonts with pdfMake
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -33,6 +36,7 @@ const styles = StyleSheet.create({
   tableCell: { margin: 'auto', marginTop: 5, fontSize: 12, padding: 5 },
 });
 
+
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -41,6 +45,8 @@ const AdminPage = () => {
     firstName: '',
     lastName: '',
   });
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
+  
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -102,6 +108,28 @@ const AdminPage = () => {
     });
   };
   
+  const handleHistoryButtonClick = () => {
+    setShowHistoryModal(true);
+  };
+
+  const closeHistoryModal = () => {
+    setShowHistoryModal(false);
+  };
+
+  const backdropStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    zIndex: 999, // Ensure the backdrop is on top
+    backdropFilter: 'blur(5px)', // Apply blur effect
+  };
+
+  const handleArrowClick = () => {
+    setShowHistoryModal(false); // Close the History component
+  };
 
   const handleUpdate = (userId) => {
     const userToUpdate = users.find((user) => user.id === userId);
@@ -207,6 +235,12 @@ const AdminPage = () => {
     Export PDF
   </Button>
 
+  {/* History button */}
+  <Button onClick={handleHistoryButtonClick} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+          <HistoryIcon />
+          History
+        </Button>
+
 </header>
 
 <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
@@ -236,35 +270,42 @@ const AdminPage = () => {
                 </tr>
               </thead>
               <tbody style={{ color: 'black' }}>
-                {users.map((user) => (
-                  <tr key={user.id}>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> 
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
-                    <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
-                    <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
-                      <Button
-                        variant="info"
-                        style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
-                        onClick={() => handleUpdate(user.id)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
-                        onClick={() => handleDelete(user.id)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+    {users.map((user) => (
+        <tr key={user.id}>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> 
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
+            <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
+            <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
+                {user.status === 1 ? (
+                    <span style={{ color: 'red' }}>Card in use</span>
+                ) : (
+                    <>
+                        <Button
+                            variant="info"
+                            style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
+                            onClick={() => handleUpdate(user.id)}
+                        >
+                            Edit
+                        </Button>
+                        <Button
+                            variant="danger"
+                            style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
+                            onClick={() => handleDelete(user.id)}
+                        >
+                            Delete
+                        </Button>
+                    </>
+                )}
+            </td>
+        </tr>
+    ))}
+</tbody>
+
             </Table>
           </Col>
         </Row>
@@ -306,6 +347,20 @@ const AdminPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+       {/* History component */}
+       {showHistoryModal && (
+  <>
+    {/* Backdrop with blur effect */}
+    <div style={backdropStyle}></div>
+
+    {/* History component */}
+    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
+      <History onClose={closeHistoryModal} /> {/* Pass onClose function as a prop */}
+    </div>
+  </>
+)}
+
     </>
   );
 };
