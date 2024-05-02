@@ -10,6 +10,8 @@ const SignUp = () => {
   const [lastName, setLastName] = useState('');
   const [purpose, setPurpose] = useState('');
   const [cardNo, setCardNo] = useState('');
+  const [status, setStatus] = useState('');
+
   const [buildingToVisit, setBuildingToVisit] = useState('');
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const SignUp = () => {
   const [systemTime, setSystemTime] = useState('');
 
   const handleSignUp = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -44,7 +47,7 @@ const SignUp = () => {
       }
 
        // Check if card number is not 0, limits to 100 only
-       if (cardNo <= 0 || cardNo > 100) {
+       if (!cardNo < 1 && cardNo > 100) {
         alert('Invalid card number!');
         return;
       }
@@ -53,10 +56,12 @@ const SignUp = () => {
         firstName,
         lastName,
         purpose,
+        status: 1,
         cardNo,
-        timeInString: systemTime,
+        timeIn: systemTime,
         buildingToVisit,
       };
+      
 
       const response = await axios.post(
         'http://localhost:8080/admin/addvisitor',
@@ -81,6 +86,7 @@ const SignUp = () => {
     setLastName('');
     setPurpose('');
     setCardNo('');
+    setStatus('');
     setBuildingToVisit('');
   };
   
