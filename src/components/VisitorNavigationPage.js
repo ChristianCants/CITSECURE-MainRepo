@@ -3,6 +3,9 @@ import { NavLink } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './VisitorNavigationPage.css';
+import Button from '@mui/material/Button'; // Import MUI Button
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 
 
 const VisitorNavigationPage = () => {
@@ -57,6 +60,25 @@ const VisitorNavigationPage = () => {
                     <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white', marginRight: '10px' }}>Visitor Navigation</NavLink></li>
                     <li className="nav-item"><NavLink to="/about" className="nav-link" style={{ color: 'white', marginRight: '10px' }}>About us</NavLink></li>
                 </ul>
+
+                <Button
+                variant="contained"
+                startIcon={<ChevronLeftIcon />}
+                onClick={() => {
+               // Handle back button click
+           }}
+  style={{
+    position: 'absolute',
+    top: '30px',
+    right: '30px',
+    backgroundColor: 'white', // Maroon
+    color: 'maroon', // White text for better contrast
+  }}
+>
+Return
+</Button>
+
+                
             </header>
       <div>
         
