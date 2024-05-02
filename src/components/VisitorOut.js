@@ -50,30 +50,30 @@ const VisitorOut = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       if (!cardNo) {
         alert('Please fill out all fields');
         return;
       }
-
+  
       if (!cardNo || cardNo <= 0 || cardNo > 100) {
         alert('Invalid card number.');
         return;
       }
-
+  
       const formData = { cardNo };
-
-      const response = await axios.post(
-        'http://localhost:8080/out/addtimeout',
-        formData,
+  
+      const response = await axios.put(
+        `http://localhost:8080/admin/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
+        {}, // Pass empty object as request body since you are using path variable and query parameter
         {
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-
+  
       // Notif
       console.log(`Card Number ${cardNo} Has Been Successfully Timed Out`, response.data);
       setShowModal(true);
@@ -82,6 +82,7 @@ const VisitorOut = () => {
       alert('Unsuccessful. Please try again.');
     }
   };
+  
 
 
   const backgroundImageStyle = {
