@@ -1,9 +1,17 @@
 import { NavLink } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Card, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button'; // Import MUI Button
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import './About.css';
 
 const Aboutpage = () => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate('/'); // Navigate to the home page ("/")
+};
 
   const styles = {
     backgroundImage: 'url("images/GLE.2.png")',
@@ -117,6 +125,20 @@ const Aboutpage = () => {
           <li className="nav-item"><NavLink to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</NavLink></li>
           <li className="nav-item"><NavLink to="/about" className="nav-link" activeClassName="active" style={{ color: 'maroon', backgroundColor: 'white' }}>About Us</NavLink></li>
         </ul>
+        <Button
+                    variant="contained"
+                    startIcon={<ChevronLeftIcon />}
+                    onClick={handleGoBack} // Call the handleGoBack function
+                    style={{
+                        position: 'absolute',
+                        top: '30px',
+                        right: '30px',
+                        backgroundColor: 'white', // Maroon
+                        color: 'maroon', // White text for better contrast
+                    }}
+                >
+                    Return
+                </Button>
       </header>
       <Container fluid style={styles}>
         <div style={welcomeRectangleStyles}>

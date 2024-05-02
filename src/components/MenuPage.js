@@ -1,9 +1,18 @@
 import { Link } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { Card, Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button'; // Import MUI Button
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import './MenuPage.css';
 
 const MenuPage = () => {
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate('/'); // Navigate to the home page ("/")
+};
+
 
   // const navLinks = [
   //   { label: 'View Map', href: '/view-map', id: 'view-map' },
@@ -74,6 +83,20 @@ return (
                 <li className="nav-item"><Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Visitor Navigation</Link></li>
                  <li className="nav-item"><Link to="/about" className="nav-link" style={{ color: 'white' }}>About us</Link></li>
         </ul>
+        <Button
+                    variant="contained"
+                    startIcon={<ChevronLeftIcon />}
+                    onClick={handleGoBack} // Call the handleGoBack function
+                    style={{
+                        position: 'absolute',
+                        top: '30px',
+                        right: '30px',
+                        backgroundColor: 'white', // Maroon
+                        color: 'maroon', // White text for better contrast
+                    }}
+                >
+                    Return
+                </Button>
         
       </header>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './VisitorNavigationPage.css';
@@ -11,12 +11,15 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 const VisitorNavigationPage = () => {
     const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
     const [showMapImage, setShowMapImage] = useState(false);
+    const navigate = useNavigate();
 
     const handleGetDirections = (direction, index) => {
         console.log('Get directions clicked:', direction, index);
         // Implement the logic to navigate or display directions
     };
-
+    const handleGoBack = () => {
+      navigate('/'); // Navigate to the home page ("/")
+  };
     const carouselCaptionStyle = {
         position: 'absolute',
         bottom: 0,
@@ -62,21 +65,19 @@ const VisitorNavigationPage = () => {
                 </ul>
 
                 <Button
-                variant="contained"
-                startIcon={<ChevronLeftIcon />}
-                onClick={() => {
-               // Handle back button click
-           }}
-  style={{
-    position: 'absolute',
-    top: '30px',
-    right: '30px',
-    backgroundColor: 'white', // Maroon
-    color: 'maroon', // White text for better contrast
-  }}
->
-Return
-</Button>
+                    variant="contained"
+                    startIcon={<ChevronLeftIcon />}
+                    onClick={handleGoBack} // Call the handleGoBack function
+                    style={{
+                        position: 'absolute',
+                        top: '30px',
+                        right: '30px',
+                        backgroundColor: 'white', // Maroon
+                        color: 'maroon', // White text for better contrast
+                    }}
+                >
+                    Return
+                </Button>
 
                 
             </header>
