@@ -304,13 +304,13 @@ const AdminPage = () => {
                         >
                             Edit
                         </Button>
-                        <Button
+                        {/* <Button
                             variant="danger"
                             style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
                             onClick={() => handleDelete(user.id)}
                         >
                             Delete
-                        </Button>
+                        </Button> */}
                     </>
                 )}
             </td>
