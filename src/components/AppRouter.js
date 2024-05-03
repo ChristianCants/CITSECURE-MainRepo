@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import VisitorOut from './VisitorOut'; // Import the VisitorOut component
 import SignUp from './SignUp';
-import SignUpp from './SignUpp';
+
 import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
 import UserProfile from './UserProfile';
@@ -31,7 +31,7 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/VisitorOut" element={<VisitorOut />} /> {/* Use VisitorOut component here */}
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/signupp" element={<SignUpp />} />
+        
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
         <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
