@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { Modal, Button, } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 const VisitorOut = () => {
   const [cardNo, setCardNo] = useState('');
@@ -166,6 +166,8 @@ const VisitorOut = () => {
                 >
                   Submit
                 </button>
+                <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
+                <NavLink to="/signup" style={{ color: 'maroon', textAlign: 'center', display: 'block', marginTop: '10px', textDecoration: 'none' }}>Time in</NavLink>
               </form>
             </div>
           </div>

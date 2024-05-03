@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 
 
@@ -278,6 +278,13 @@ const SignUp = () => {
                   >
                     Submit
                   </button>
+                  <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
+                  <NavLink to="/visitorout" style={{ color: 'maroon', textAlign: 'center', display: 'block', marginTop: '10px', textDecoration: 'none' }}>Time Out</NavLink>
+
+
+
+
+                  
                 </form>
               </div>
             </div>
