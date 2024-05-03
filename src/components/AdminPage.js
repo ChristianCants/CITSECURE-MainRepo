@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
 import pdfMake from 'pdfmake/build/pdfmake';  // Import pdfmake here
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import HistoryIcon from '@mui/icons-material/History'; 
 import History from './History'; 
+import AdminLogin from './AdminLogin';
 
 
 // Register fonts with pdfMake
@@ -46,7 +47,7 @@ const AdminPage = () => {
     lastName: '',
   });
   const [showHistoryModal, setShowHistoryModal] = useState(false);
-  
+  const navigate = useNavigate();  
 
   useEffect(() => {
     // Fetch users from the backend when the component mounts
@@ -195,18 +196,27 @@ const AdminPage = () => {
       console.error('Error updating user:', error.message);
     }
   };
-  
-
+  const handleLogout = async (e) => {
+      localStorage.removeItem('uname');
+      localStorage.removeItem('password');
+      navigate('/AdminLogin')
+  }
+  useEffect(() => {
+    if(localStorage.getItem("uname")==null || localStorage.getItem("uname")!="Admin"){
+      navigate('/AdminLogin')
+    }
+  });
   return (
     <>
-      <header
-  className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
-  style={{
-    backgroundColor: 'maroon',
-    padding: '10px',
-    fontSize: '20px',
-  }}
->
+    
+    <header
+      className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+      style={{
+        backgroundColor: 'maroon',
+        padding: '10px',
+        fontSize: '20px',
+      }}
+    >
 <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
                     <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
                     <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
@@ -240,7 +250,9 @@ const AdminPage = () => {
           <HistoryIcon />
           History
         </Button>
-
+  <Button onClick={handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+    Logout
+  </Button>
 </header>
 
 <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>

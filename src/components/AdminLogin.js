@@ -13,6 +13,8 @@ const AdminLogin = () => {
       // Check adminUsername and adminPassword against valid credentials
       if (adminUsername === 'Admin' && adminPassword === '1234') { // Check against default values
         // Redirect to admin page upon successful login
+        localStorage.setItem('uname', adminUsername)
+        localStorage.setItem('password', adminPassword)
         navigate('/Admin');
       } else {
         // Show error message for invalid credentials
