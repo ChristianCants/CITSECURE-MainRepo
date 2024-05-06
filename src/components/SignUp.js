@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate, NavLink } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
-
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [purpose, setPurpose] = useState('');
   const [cardNo, setCardNo] = useState('');
-  const [status, setStatus] = useState('');
-
   const [buildingToVisit, setBuildingToVisit] = useState('');
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -26,28 +23,25 @@ const SignUp = () => {
   };
 
   useEffect(() => {
+    const setInitialTime = () => {
+      const currentTime = getCurrentTime();
+      setSystemTime(currentTime);
+    };
     setInitialTime();
   }, []);
-
-  const setInitialTime = () => {
-    const currentTime = getCurrentTime();
-    setSystemTime(currentTime);
-  };
 
   const [systemTime, setSystemTime] = useState('');
 
   const handleSignUp = async (e) => {
-
     e.preventDefault();
-
     try {
       if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit) {
         alert('Please fill out all fields');
         return;
       }
 
-       // Check if card number is not 0, limits to 100 only
-       if (!cardNo < 1 && cardNo > 100) {
+      // Check if card number is not 0, limits to 100 only
+      if (cardNo < 1 || cardNo > 100) {
         alert('Invalid card number!');
         return;
       }
@@ -61,7 +55,6 @@ const SignUp = () => {
         timeIn: systemTime,
         buildingToVisit,
       };
-      
 
       const response = await axios.post(
         'http://localhost:8080/admin/addvisitor',
@@ -86,28 +79,21 @@ const SignUp = () => {
     setLastName('');
     setPurpose('');
     setCardNo('');
-    setStatus('');
     setBuildingToVisit('');
   };
-  
+
   const handleViewMap = () => {
-    // Navigate to the map page
-    navigate('/visitor-navigation'); // Assuming '/visitor-navigation' is the route for your map page
+    navigate('/visitor-navigation');
   };
-  
+
   const handleExit = () => {
-    // Navigate back to the home page or perform any other action
-    navigate('/'); // Assuming '/' is the route for your home page
+    navigate('/');
   };
-  
 
   const handleClose = () => {
     setShowModal(false);
     resetFormInputs();
   };
-  
-
-  
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/TIME IN.png")',
@@ -124,7 +110,7 @@ const SignUp = () => {
     backgroundColor: '#FFF9EB',
     fontFamily: 'Roboto, sans-serif',
   };
-  
+
   const inputStyle = {
     borderColor: 'maroon',
     borderRadius: '8px',
@@ -141,18 +127,18 @@ const SignUp = () => {
           <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
           </div>
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-          
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Chip
-            label="Access Campus Map after Time In"
-              style={{
-              textAlign: 'center',
-              borderRadius: '100px',
-              marginBottom: '5px',
-              color: 'white',
-              }}
+
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <Chip
+                label="Access Campus Map after Time In"
+                style={{
+                  textAlign: 'center',
+                  borderRadius: '100px',
+                  marginBottom: '5px',
+                  color: 'white',
+                }}
               />
-              </div>
+            </div>
 
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
@@ -194,34 +180,46 @@ const SignUp = () => {
                   </div>
 
                   <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="purpose">
-                      Purpose
-                    </label>
-                    <input
-                      type="text"
-                      id="purpose"
-                      className="form-control custom-input"
-                      style={inputStyle}
-                      value={purpose}
-                      onChange={(e) => setPurpose(e.target.value)}
-                      required
-                    />
-                  </div>
+                  <label className="form-label" htmlFor="purpose">
+                        Purpose
+                  </label>
+                  <input
+                  type="text"
+                  id="purpose"
+                  className="form-control custom-input"
+                  style={inputStyle}
+                  value={purpose}
+                  onChange={(e) => {
+                   const inputValue = e.target.value;
+                    //  Use a regular expression to allow only letters, spaces, and special characters like hyphen or apostrophe
+                  const regex = /^[a-zA-Z\s'-]*$/;
+                  if (regex.test(inputValue)) {
+                  setPurpose(inputValue);
+                 }
+                 }}
+                pattern="[a-zA-Z\s'-]*"
+                 required
+                  />
+                </div>
+
 
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="cardNo">
                       Card Number
                     </label>
                     <input
-                      type="number"
+                      type="text" // Changed type from "number" to "text"
                       id="cardNo"
                       className="form-control custom-input"
                       style={inputStyle}
                       value={cardNo}
-                      onChange={(e) => setCardNo(e.target.value)}
-                      min={1}
-                      max={100}
-                      step={1}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
+                          setCardNo(inputValue);
+                        }
+                      }}
+                      pattern="[1-9][0-9]?" // Pattern to allow only numbers from 1 to 100
                       required
                     />
                   </div>
@@ -280,11 +278,6 @@ const SignUp = () => {
                   </button>
                   <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
                   <NavLink to="/visitorout" style={{ color: 'maroon', textAlign: 'center', display: 'block', marginTop: '10px', textDecoration: 'none' }}>Time Out</NavLink>
-
-
-
-
-                  
                 </form>
               </div>
             </div>

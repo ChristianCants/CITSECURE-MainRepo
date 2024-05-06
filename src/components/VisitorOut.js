@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Modal, Button, } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 import { useNavigate, NavLink } from 'react-router-dom';
 
 const VisitorOut = () => {
   const [cardNo, setCardNo] = useState('');
   const [hours, setHours] = useState('');
   const [minutes, setMinutes] = useState('');
-  const [ampm, setAmPm] = useState('AM'); // Default AM/PM is 'AM'
+  const [ampm, setAmPm] = useState('AM');
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
-  // Function to get current system time in a formatted string
   const getCurrentTime = useCallback(() => {
     const now = new Date();
-    const hours = now.getHours() % 12 || 12; // Convert 24-hour format to 12-hour format
+    const hours = now.getHours() % 12 || 12;
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
     const formattedTime = `${hours}:${minutes} ${ampm}`;
@@ -22,10 +21,9 @@ const VisitorOut = () => {
   }, []);
 
   const handleExit = () => {
-    // Navigate back to the home page or perform any other action
-    navigate('/'); // Assuming '/' is the route for your home page
+    navigate('/');
   };
-  
+
   const resetFormInputs = () => {
     setCardNo('');
   };
@@ -36,10 +34,9 @@ const VisitorOut = () => {
   };
 
   useEffect(() => {
-    // Set the initial time when the component mounts
     const setInitialTime = () => {
       const currentTime = getCurrentTime();
-      const [hour, minute, period] = currentTime.split(/:|\s/); // Split the time string
+      const [hour, minute, period] = currentTime.split(/:|\s/);
       setHours(hour);
       setMinutes(minute);
       setAmPm(period);
@@ -50,40 +47,34 @@ const VisitorOut = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
+
     try {
       if (!cardNo) {
         alert('Please fill out all fields');
         return;
       }
-  
+
       if (!cardNo || cardNo <= 0 || cardNo > 100) {
         alert('Invalid card number.');
         return;
       }
-  
-      const formData = { cardNo };
-  
-      const response = await axios.put(
+
+      await axios.put(
         `http://localhost:8080/admin/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
-        {}, // Pass empty object as request body since you are using path variable and query parameter
+        {},
         {
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-  
-      // Notif
-      console.log(`Card Number ${cardNo} Has Been Successfully Timed Out`, response.data);
+
       setShowModal(true);
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
       alert('Unsuccessful. Please try again.');
     }
   };
-  
-
 
   const backgroundImageStyle = {
     backgroundImage: 'url("images/TIME OUT.png")',
@@ -123,22 +114,22 @@ const VisitorOut = () => {
             <div className="card-body px-4 py-5 px-md-5">
               <form onSubmit={handleLogin}>
                 <div className="form-outline mb-4">
-                  <label className="form-label" htmlFor="formCardNo">
-                    Enter Card No.
+                  <label className="form-label" htmlFor="cardNo">
+                    Card Number
                   </label>
                   <input
-                    type="number"
-                    id="formCardNo"
+                    type="text"
+                    id="cardNo"
                     className="form-control custom-input"
                     style={inputStyle}
                     value={cardNo}
                     onChange={(e) => {
-                      const value = e.target.value;
-                      // Check if the value is not negative before updating state
-                      if (value >= 0) {
-                        setCardNo(value);
+                      const inputValue = e.target.value;
+                      if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
+                        setCardNo(inputValue);
                       }
                     }}
+                    pattern="[1-9][0-9]?"
                     required
                   />
                 </div>
@@ -153,7 +144,7 @@ const VisitorOut = () => {
                     className="form-control custom-input"
                     style={inputStyle}
                     value={`${hours.padStart(2, '0')}:${minutes.padStart(2, '0')} ${ampm}`}
-                    readOnly // Make the input read-only
+                    readOnly
                     required
                   />
                 </div>
@@ -162,22 +153,21 @@ const VisitorOut = () => {
                   type="submit"
                   className="btn btn-primary btn-block mb-4"
                   style={loginButtonStyle}
-
                 >
                   Submit
                 </button>
                 <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
-                <NavLink to="/signup" style={{ color: 'maroon', textAlign: 'center', display: 'block', marginTop: '10px', textDecoration: 'none' }}>Time in</NavLink>
+                <NavLink to="/signup" style={{ color: 'maroon', textAlign: 'center', display: 'block', marginTop: '10px', textDecoration: 'none' }}>
+                  Time in
+                </NavLink>
               </form>
             </div>
           </div>
         </div>
       </div>
 
-
-      {/* kani na add */}
       <Modal show={showModal} onHide={handleClose} centered>
-      <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+        <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
           <Modal.Title>Notification</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -193,7 +183,6 @@ const VisitorOut = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-
     </section>
   );
 };
