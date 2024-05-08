@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 
@@ -28,7 +29,8 @@ class VisitorOut extends Component {
   };
 
   handleExit = () => {
-    this.props.history.push('/');
+    const navigate = useNavigate();
+    navigate('/');
   };
 
   resetFormInputs = () => {
@@ -195,7 +197,7 @@ class VisitorOut extends Component {
           >
             <Button
               variant="primary"
-              onClick={this.handleExit}
+              onClick={() => window.location.href = '/'}
               style={{ background: 'maroon', width: '150px' }}
             >
               Exit
