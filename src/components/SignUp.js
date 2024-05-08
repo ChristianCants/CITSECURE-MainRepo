@@ -4,6 +4,7 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -279,10 +280,10 @@ class SignUp extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
+            <Button variant="primary" onClick={() => window.location.href = '/visitor-navigation'} style={{ background: 'maroon', width: '150px' }}>
               View Maps
             </Button>
-            <Button variant="primary" onClick={this.handleExit} style={{ background: 'maroon', width: '150px' }}>
+            <Button variant="primary"onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
               Exit
             </Button>
           </Modal.Footer>
