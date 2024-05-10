@@ -6,7 +6,6 @@ import SignUp from './SignUp';
 
 import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
-import UserProfile from './UserProfile';
 import AdminPage from './AdminPage'; // Import the AdminPage component
 import VisitorNavigationPage from './VisitorNavigationPage';
 import About from './About'; 
@@ -53,7 +52,6 @@ const AppRouter = () => {
           <Route path="/admin" element={<AdminPage />} />
         )}
 
-        <Route path="/user-profile" element={<UserProfile />} />
       </Routes>
     </Router>
   );
