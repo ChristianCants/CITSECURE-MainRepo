@@ -163,6 +163,12 @@ const AdminPage = () => {
     }
   };
   
+  const handleLogout = async (e) => {
+    localStorage.removeItem('uname');
+    localStorage.removeItem('password');
+    navigate('/AdminLogin')
+}
+  
   useEffect(() => {
     if (localStorage.getItem("uname") == null || localStorage.getItem("uname") !== "Admin") {
       navigate('/AdminLogin');
@@ -213,10 +219,11 @@ const AdminPage = () => {
             <HistoryIcon />
             History
           </Button>
+    */}     
     <Button onClick={handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
       Logout
     </Button>
-    */}
+    
     
 </header>
 
