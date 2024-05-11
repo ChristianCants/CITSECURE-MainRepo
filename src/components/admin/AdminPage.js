@@ -1,41 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Link, useNavigate } from 'react-router-dom';
+//import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
 import pdfMake from 'pdfmake/build/pdfmake';  // Import pdfmake here
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import HistoryIcon from '@mui/icons-material/History'; 
-import History from './History'; 
-import AdminLogin from './AdminLogin';
+//import HistoryIcon from '@mui/icons-material/History'; 
+import History from './History'; // Assuming History.js is in the same directory as AdminPage.js
+
 
 
 // Register fonts with pdfMake
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 // Styles for the PDF document
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: 'row',
-    backgroundColor: '#E4E4E4',
-  },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
-  },
-  table: {
-    display: 'table',
-    width: '100%',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderRightWidth: 0,
-    borderBottomWidth: 0,
-  },
-  tableRow: { margin: 'auto', flexDirection: 'row' },
-  tableCol: { width: '25%', borderStyle: 'solid', borderWidth: 1, borderLeftWidth: 0, borderTopWidth: 0 },
-  tableCell: { margin: 'auto', marginTop: 5, fontSize: 12, padding: 5 },
-});
 
 
 const AdminPage = () => {
@@ -109,9 +87,10 @@ const AdminPage = () => {
     });
   };
   
-  const handleHistoryButtonClick = () => {
-    setShowHistoryModal(true);
-  };
+   /* const handleHistoryButtonClick = () => {
+      setShowHistoryModal(true);
+    };
+    */
 
   const closeHistoryModal = () => {
     setShowHistoryModal(false);
@@ -128,9 +107,12 @@ const AdminPage = () => {
     backdropFilter: 'blur(5px)', // Apply blur effect
   };
 
+  /*
   const handleArrowClick = () => {
     setShowHistoryModal(false); // Close the History component
   };
+  */
+
 
   const handleUpdate = (userId) => {
     const userToUpdate = users.find((user) => user.id === userId);
@@ -157,23 +139,7 @@ const AdminPage = () => {
   const [filterDateTimeIn, setFilterDateTimeIn] = useState('');
 
 
-  const handleDelete = async (userId) => {
-    try {
-      const confirmDelete = window.confirm('Are you sure you want to delete this user?');
-      if (confirmDelete) {
-        const response = await axios.delete(`http://localhost:8080/admin/deleteUser/${userId}`);
-        if (response.status === 200) {
-          alert('User deleted successfully!');
-          const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
-          setUsers(updatedUsers.data);
-        } else {
-          alert('Failed to delete user.');
-        }
-      }
-    } catch (error) {
-      console.error('Error deleting user:', error.message);
-    }
-  };
+  
 
   
   const handleUpdateModalSave = async () => {
@@ -196,16 +162,13 @@ const AdminPage = () => {
       console.error('Error updating user:', error.message);
     }
   };
-  const handleLogout = async (e) => {
-      localStorage.removeItem('uname');
-      localStorage.removeItem('password');
-      navigate('/AdminLogin')
-  }
+  
   useEffect(() => {
-    if(localStorage.getItem("uname")==null || localStorage.getItem("uname")!="Admin"){
-      navigate('/AdminLogin')
+    if (localStorage.getItem("uname") == null || localStorage.getItem("uname") !== "Admin") {
+      navigate('/AdminLogin');
     }
   });
+   
   return (
     <>
     
@@ -245,14 +208,16 @@ const AdminPage = () => {
     Export PDF
   </Button>
 
-  {/* History button */}
-  <Button onClick={handleHistoryButtonClick} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-          <HistoryIcon />
-          History
-        </Button>
-  <Button onClick={handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-    Logout
-  </Button>
+   {/*
+    <Button onClick={handleHistoryButtonClick} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+            <HistoryIcon />
+            History
+          </Button>
+    <Button onClick={handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+      Logout
+    </Button>
+    */}
+    
 </header>
 
 <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
@@ -362,6 +327,7 @@ const AdminPage = () => {
 
        {/* History component */}
        {showHistoryModal && (
+        
   <>
     {/* Backdrop with blur effect */}
     <div style={backdropStyle}></div>

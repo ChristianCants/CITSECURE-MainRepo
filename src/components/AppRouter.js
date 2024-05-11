@@ -1,35 +1,28 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
-import VisitorOut from './VisitorOut'; // Import the VisitorOut component
-import SignUp from './SignUp';
+import VisitorOut from './user/VisitorOut';  
+import SignUp from './user/SignUp';
 
 import MenuPage from './MenuPage';
 import ViewMap from './ViewMap';
-import AdminPage from './AdminPage'; // Import the AdminPage component
-import VisitorNavigationPage from './VisitorNavigationPage';
+import AdminPage from './admin/AdminPage'; 
+import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';  // Corrected Path
 import About from './About'; 
-import AdminLogin from './AdminLogin';
-import History from './History'
-
+import AdminLogin from './LoginControl Class/AdminLogin';  // Corrected Path
+import History from './admin/History';
 
 const AppRouter = () => {
   // Assume you have a function to get the user role, you can replace this with your actual logic
-  const getUserRole = () => {
-    // Replace this with your actual logic to get the user role
-    // For example, you might get it from the authentication token or API response
-    return 'Admin'; // Replace 'admin' with the actual user role
-  };
   
-  const userRole = getUserRole();
-  console.log('User Role:', userRole); // Log the user role to the console
   
   return (      
     <Router>
       <Routes>  
         <Route path="/" element={<Home />} />
-        <Route path="/VisitorOut" element={<VisitorOut />} /> {/* Use VisitorOut component here */}
+        <Route path="/VisitorOut" element={<VisitorOut />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/admin/adminpage" element={<AdminPage />} />
         
         <Route path="/menu" element={<MenuPage />} />
         <Route path="/view-map" element={<ViewMap />} />
@@ -37,20 +30,10 @@ const AppRouter = () => {
         <Route path="/About" element={<About />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
         <Route path="/apphistory" element={<History />} />
-        
-
-        
-        
-
-          
 
         {/* Add more routes for other components as needed */}
 
-      
-
-        {userRole === 'Admin' && (
-          <Route path="/admin" element={<AdminPage />} />
-        )}
+        
 
       </Routes>
     </Router>
