@@ -1,44 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-//import { PDFDownloadLink, Page, Document, Text, View, StyleSheet } from '@react-pdf/renderer';
-import pdfMake from 'pdfmake/build/pdfmake';  // Import pdfmake here
+import { Link } from 'react-router-dom';
+import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-//import HistoryIcon from '@mui/icons-material/History'; 
-import History from './History'; // Assuming History.js is in the same directory as AdminPage.js
+import History from './History';
 
-
-
-// Register fonts with pdfMake
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-// Styles for the PDF document
+class AdminPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      showUpdateModal: false,
+      selectedUserId: null,
+      updatedUserData: { firstName: '', lastName: '' },
+      showHistoryModal: false,
+      filterDateTimeIn: '',
+    };
 
+    // Binding methods to make `this` work in the callback
+    this.handleExportPDF = this.handleExportPDF.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
+    this.handleUpdateModalSave = this.handleUpdateModalSave.bind(this);
+    this.closeHistoryModal = this.closeHistoryModal.bind(this);
+  }
 
-const AdminPage = () => {
-  const [users, setUsers] = useState([]);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  const [updatedUserData, setUpdatedUserData] = useState({
-    firstName: '',
-    lastName: '',
-  });
-  const [showHistoryModal, setShowHistoryModal] = useState(false);
-  const navigate = useNavigate();  
+  componentDidMount() {
+    this.fetchUsers();
+    if (!localStorage.getItem("uname") || localStorage.getItem("uname") !== "Admin") {
+      this.props.navigate('/AdminLogin');
+    }
+  }
 
-  useEffect(() => {
-    // Fetch users from the backend when the component mounts
+  fetchUsers = () => {
     axios.get('http://localhost:8080/admin/getAllVisitors')
       .then(response => {
-        setUsers(response.data);
+        this.setState({ users: response.data });
       })
       .catch(error => {
         console.error('Error fetching users:', error.message);
       });
-  }, []);
+  }
 
-  const handleExportPDF = () => {
+  handleExportPDF = () => {
+    const { users } = this.state;
     const docDefinition = {
       content: [
         { text: 'List of Visitors', style: 'header' },
@@ -75,10 +84,7 @@ const AdminPage = () => {
       },
     };
   
-    // Create PDF document
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-  
-    // Generate PDF blob and download
     pdfDocGenerator.getBlob((blob) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
@@ -86,63 +92,29 @@ const AdminPage = () => {
       downloadLink.click();
     });
   };
-  
-   /* const handleHistoryButtonClick = () => {
-      setShowHistoryModal(true);
-    };
-    */
 
-  const closeHistoryModal = () => {
-    setShowHistoryModal(false);
+  handleLogout = async () => {
+    localStorage.removeItem('uname');
+    localStorage.removeItem('password');
+    this.props.navigate('/AdminLogin');
   };
 
-  const backdropStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-    zIndex: 999, // Ensure the backdrop is on top
-    backdropFilter: 'blur(5px)', // Apply blur effect
-  };
-
-  /*
-  const handleArrowClick = () => {
-    setShowHistoryModal(false); // Close the History component
-  };
-  */
-
-
-  const handleUpdate = (userId) => {
-    const userToUpdate = users.find((user) => user.id === userId);
+  handleUpdate = (userId) => {
+    const userToUpdate = this.state.users.find((user) => user.id === userId);
     if (userToUpdate) {
-      setSelectedUserId(userId);
-      setShowUpdateModal(true);
-      setUpdatedUserData({
-        firstName: userToUpdate.firstName,
-        lastName: userToUpdate.lastName,
+      this.setState({
+        selectedUserId: userId,
+        showUpdateModal: true,
+        updatedUserData: {
+          firstName: userToUpdate.firstName,
+          lastName: userToUpdate.lastName,
+        },
       });
     }
   };
-  
 
-  const handleUpdateModalClose = () => {
-    setShowUpdateModal(false);
-    setSelectedUserId(null);
-    setUpdatedUserData({
-      firstName: '',
-      lastName: '',
-    });
-  };
-
-  const [filterDateTimeIn, setFilterDateTimeIn] = useState('');
-
-
-  
-
-  
-  const handleUpdateModalSave = async () => {
+  handleUpdateModalSave = async () => {
+    const { selectedUserId, updatedUserData } = this.state;
     try {
       const response = await axios.put(`http://localhost:8080/admin/updateVisitor/${selectedUserId}`, {
         firstName: updatedUserData.firstName,
@@ -151,203 +123,194 @@ const AdminPage = () => {
   
       if (response.status === 200) {
         alert('User updated successfully!');
-        const updatedUsers = await axios.get('http://localhost:8080/admin/getAllVisitors');
-        setUsers(updatedUsers.data);
+        this.fetchUsers();
       } else {
         alert('Failed to update user.');
       }
   
-      handleUpdateModalClose();
+      this.handleUpdateModalClose();
     } catch (error) {
       console.error('Error updating user:', error.message);
     }
   };
-  
-  const handleLogout = async (e) => {
-    localStorage.removeItem('uname');
-    localStorage.removeItem('password');
-    navigate('/AdminLogin')
+
+  handleUpdateModalClose = () => {
+    this.setState({
+      showUpdateModal: false,
+      selectedUserId: null,
+      updatedUserData: { firstName: '', lastName: '' },
+    });
+  };
+
+  closeHistoryModal = () => {
+    this.setState({ showHistoryModal: false });
+  };
+
+  render() {
+    const { users, showUpdateModal, updatedUserData, showHistoryModal, filterDateTimeIn } = this.state;
+
+    const backdropStyle = {
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+      zIndex: 999, // Ensure the backdrop is on top
+      backdropFilter: 'blur(5px)', // Apply blur effect
+    };
+
+    return (
+      <>
+        <header
+          className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+          style={{
+            backgroundColor: 'maroon',
+            padding: '10px',
+            fontSize: '20px',
+          }}
+        >
+          <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+            <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+            <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
+            <span>CITSecure</span>
+          </div>
+          <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+            <li className="nav-item">
+              <Link to="/menu" className="nav-link" style={{ color: 'white' }}>
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
+                Admin Dashboard
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about" className="nav-link" style={{ color: 'white' }}>
+                About Us
+              </Link>
+            </li>
+          </ul>
+          <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+            Export PDF
+          </Button>
+          <Button onClick={this.handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+            Logout
+          </Button>
+        </header>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
+          <input
+            type="date"
+            value={filterDateTimeIn}
+            onChange={(e) => this.setState({ filterDateTimeIn: e.target.value })}
+          />
+        </div>
+        <Container fluid className="py-5">
+          <Row>
+            <Col lg={12}>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Card Number</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Purpose</th>
+                    <th>Time in</th>
+                    <th>Time out</th>
+                    <th>Building Visited</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody style={{ color: 'black' }}>
+                  {users.map((user) => (
+                    <tr key={user.id}>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
+                      <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
+                        {user.status === 1 ? (
+                          <span style={{ color: 'red' }}>Card in use</span>
+                        ) : (
+                          <>
+                            <Button
+                              variant="info"
+                              style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
+                              onClick={() => this.handleUpdate(user.id)}
+                            >
+                              Edit
+                            </Button>
+                            {/* <Button
+                                variant="danger"
+                                style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
+                                onClick={() => handleDelete(user.id)}
+                            >
+                                Delete
+                            </Button> */}
+                          </>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </Container>
+        {/* Update Modal */}
+        <Modal show={showUpdateModal} onHide={this.handleUpdateModalClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Update User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form.Group controlId="formFirstName">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter first name"
+                value={updatedUserData.firstName}
+                onChange={(e) => this.setState({ updatedUserData: { ...updatedUserData, firstName: e.target.value } })}
+              />
+            </Form.Group>
+            <Form.Group controlId="formLastName">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter last name"
+                value={updatedUserData.lastName}
+                onChange={(e) => this.setState({ updatedUserData: { ...updatedUserData, lastName: e.target.value } })}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleUpdateModalClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.handleUpdateModalSave}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* History component */}
+        {showHistoryModal && (
+          <>
+            {/* Backdrop with blur effect */}
+            <div style={backdropStyle}></div>
+            {/* History component */}
+            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
+              <History onClose={this.closeHistoryModal} /> {/* Pass onClose function as a prop */}
+            </div>
+          </>
+        )}
+      </>
+    );
+  }
 }
-  
-  useEffect(() => {
-    if (localStorage.getItem("uname") == null || localStorage.getItem("uname") !== "Admin") {
-      navigate('/AdminLogin');
-    }
-  });
-   
-  return (
-    <>
-    
-    <header
-      className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
-      style={{
-        backgroundColor: 'maroon',
-        padding: '10px',
-        fontSize: '20px',
-      }}
-    >
-<div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-                    <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
-                    <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
-                    <span>CITSecure</span>
-                </div>
-
-  <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-    <li className="nav-item">
-      <Link to="/menu" className="nav-link" style={{ color: 'white' }}>
-        
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
-        Admin Dashboard
-      </Link>
-    </li>
-    <li className="nav-item">
-      <Link to="/about" className="nav-link" style={{ color: 'white' }}>
-    
-      </Link>
-    </li>
-  </ul>
-  
-  <Button onClick={handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-    Export PDF
-  </Button>
-
-   {/*
-    <Button onClick={handleHistoryButtonClick} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            <HistoryIcon />
-            History
-          </Button>
-    */}     
-    <Button onClick={handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-      Logout
-    </Button>
-    
-    
-</header>
-
-<div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
-    <input
-      type="date"
-      value={filterDateTimeIn}
-      onChange={(e) => setFilterDateTimeIn(e.target.value)}
-    />
-  </div>
-
-
-      <Container fluid className="py-5">
-        <Row>
-          <Col lg={12}>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Card Number</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Purpose</th> 
-                  <th>Time in</th>
-                  <th>Time out</th>
-                  <th>Building Visited</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody style={{ color: 'black' }}>
-    {users.map((user) => (
-        <tr key={user.id}>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td> 
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
-            <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
-            <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
-                {user.status === 1 ? (
-                    <span style={{ color: 'red' }}>Card in use</span>
-                ) : (
-                    <>
-                        <Button
-                            variant="info"
-                            style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
-                            onClick={() => handleUpdate(user.id)}
-                        >
-                            Edit
-                        </Button>
-                        {/* <Button
-                            variant="danger"
-                            style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
-                            onClick={() => handleDelete(user.id)}
-                        >
-                            Delete
-                        </Button> */}
-                    </>
-                )}
-            </td>
-        </tr>
-    ))}
-</tbody>
-
-            </Table>
-          </Col>
-        </Row>
-      </Container>
-
-      {/* Update Modal */}
-      <Modal show={showUpdateModal} onHide={handleUpdateModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Update User</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <Form.Group controlId="formFirstName">
-  <Form.Label>First Name</Form.Label>
-  <Form.Control
-    type="text"
-    placeholder="Enter first name"
-    value={updatedUserData.firstName}
-    onChange={(e) => setUpdatedUserData({ ...updatedUserData, firstName: e.target.value })}
-    />  
-  
-  </Form.Group>
-  <Form.Group controlId="formLastName">
-  <Form.Label>Last Name</Form.Label>
-  <Form.Control
-    type="text"
-    placeholder="Enter last name"
-    value={updatedUserData.lastName}
-    onChange={(e) => setUpdatedUserData({ ...updatedUserData, lastName: e.target.value })}
-      />
-    </Form.Group>
-
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleUpdateModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleUpdateModalSave}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-       {/* History component */}
-       {showHistoryModal && (
-        
-  <>
-    {/* Backdrop with blur effect */}
-    <div style={backdropStyle}></div>
-
-    {/* History component */}
-    <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
-      <History onClose={closeHistoryModal} /> {/* Pass onClose function as a prop */}
-    </div>
-  </>
-)}
-
-    </>
-  );
-};
 
 export default AdminPage;
