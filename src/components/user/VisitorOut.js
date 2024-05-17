@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 class VisitorOut extends Component {
   constructor(props) {
@@ -116,6 +118,7 @@ class VisitorOut extends Component {
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
             <div className="card bg-glass" style={formStyle}>
               <div className="card-body px-4 py-5 px-md-5">
+                <Link to="/">back</Link>
                 <form onSubmit={this.handleLogin}>
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="cardNo">

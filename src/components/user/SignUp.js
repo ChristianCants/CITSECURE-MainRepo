@@ -163,6 +163,7 @@ class SignUp extends Component {
 
               <div className="card bg-glass" style={formStyle}>
                 <div className="card-body px-4 py-5 px-md-5">
+                  <NavLink to="/">Go Back</NavLink>
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Form</h2>
                     <div className="row">
