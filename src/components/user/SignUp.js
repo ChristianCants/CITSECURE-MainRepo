@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import axios from 'axios';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
+import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 class SignUp extends Component {
   constructor(props) {
@@ -99,18 +102,16 @@ class SignUp extends Component {
   };
 
   handleViewMap = () => {
-    const navigate = useNavigate();
-    navigate('/visitor-navigation');
-  };
-
-  handleExit = () => {
-    const navigate = useNavigate();
-    navigate('/');
+    window.location.href = '/visitor-navigation';
   };
 
   handleClose = () => {
     this.setState({ showModal: false });
     this.resetFormInputs();
+  };
+
+  handleGoBack = () => {
+    this.props.navigate('/'); // Navigate to the home page ("/")
   };
 
   render() {
@@ -130,6 +131,7 @@ class SignUp extends Component {
       padding: '15px',
       backgroundColor: '#FFF9EB',
       fontFamily: 'Roboto, sans-serif',
+      position: 'relative', // Add this for positioning the button
     };
 
     const inputStyle = {
@@ -148,7 +150,7 @@ class SignUp extends Component {
             <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
             </div>
             <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-
+              
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Chip
                   label="Access Campus Map after Time In"
@@ -162,8 +164,22 @@ class SignUp extends Component {
               </div>
 
               <div className="card bg-glass" style={formStyle}>
+                <Button
+                  variant="contained"
+                  startIcon={<ChevronLeftIcon />}
+                  onClick={this.handleGoBack} // Call the handleGoBack function
+                  style={{
+                    position: 'absolute',
+                    top: '10px',
+                    right: '10px',
+                    backgroundColor: 'transparent', // No background color
+                    color: 'maroon', // Maroon text for better contrast
+                    boxShadow: 'none', // Remove box shadow
+                  }}
+                >
+                  Go Back
+                </Button>
                 <div className="card-body px-4 py-5 px-md-5">
-                  <NavLink to="/">Go Back</NavLink>
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Form</h2>
                     <div className="row">
@@ -296,12 +312,12 @@ class SignUp extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="primary" onClick={() => window.location.href = '/visitor-navigation'} style={{ background: 'maroon', width: '150px' }}>
+            <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
               View Maps
-            </Button>
-            <Button variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
+            </BootstrapButton>
+            <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
               Exit
-            </Button>
+            </BootstrapButton>
           </Modal.Footer>
         </Modal>
       </section>
@@ -309,4 +325,7 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default function SignUpWithNavigate(props) {
+  const navigate = useNavigate();
+  return <SignUp {...props} navigate={navigate} />;
+}

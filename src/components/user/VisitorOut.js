@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-
+import Button from '@mui/material/Button';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 class VisitorOut extends Component {
   constructor(props) {
@@ -76,6 +76,10 @@ class VisitorOut extends Component {
     }
   };
 
+  handleGoBack = () => {
+    this.props.navigate('/'); // Navigate to the home page ("/")
+  };
+
   render() {
     const { cardNo, hours, minutes, ampm, showModal } = this.state;
 
@@ -92,6 +96,7 @@ class VisitorOut extends Component {
       borderRadius: '8px',
       padding: '20px',
       backgroundColor: '#FFF9EB',
+      position: 'relative', // Add this for positioning the button
     };
 
     const inputStyle = {
@@ -117,8 +122,22 @@ class VisitorOut extends Component {
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 d-flex justify-content-end align-items-center">
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
             <div className="card bg-glass" style={formStyle}>
+              <Button
+                variant="contained"
+                startIcon={<ChevronLeftIcon />}
+                onClick={this.handleGoBack} // Call the handleGoBack function
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  backgroundColor: 'transparent', // No background color
+                  color: 'maroon', // Maroon text for better contrast
+                  boxShadow: 'none', // Remove box shadow
+                }}
+              >
+                Go Back
+              </Button>
               <div className="card-body px-4 py-5 px-md-5">
-                <Link to="/">back</Link>
                 <form onSubmit={this.handleLogin}>
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="cardNo">
@@ -198,13 +217,13 @@ class VisitorOut extends Component {
           <Modal.Footer
             style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}
           >
-            <Button
+            <BootstrapButton
               variant="primary"
               onClick={() => window.location.href = '/'}
               style={{ background: 'maroon', width: '150px' }}
             >
               Exit
-            </Button>
+            </BootstrapButton>
           </Modal.Footer>
         </Modal>
       </section>
@@ -212,4 +231,7 @@ class VisitorOut extends Component {
   }
 }
 
-export default VisitorOut;
+export default function VisitorOutWithNavigate(props) {
+  const navigate = useNavigate();
+  return <VisitorOut {...props} navigate={navigate} />;
+}
