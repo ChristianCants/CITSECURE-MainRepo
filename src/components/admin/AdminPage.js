@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import History from './History';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -16,7 +15,6 @@ class AdminPage extends Component {
       showUpdateModal: false,
       selectedUserId: null,
       updatedUserData: { firstName: '', lastName: '' },
-      showHistoryModal: false,
       filterDateTimeIn: '',
     };
 
@@ -26,7 +24,6 @@ class AdminPage extends Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
     this.handleUpdateModalSave = this.handleUpdateModalSave.bind(this);
-    this.closeHistoryModal = this.closeHistoryModal.bind(this);
   }
 
   componentDidMount() {
@@ -142,12 +139,9 @@ class AdminPage extends Component {
     });
   };
 
-  closeHistoryModal = () => {
-    this.setState({ showHistoryModal: false });
-  };
 
   render() {
-    const { users, showUpdateModal, updatedUserData, showHistoryModal, filterDateTimeIn } = this.state;
+    const { users, showUpdateModal, updatedUserData, filterDateTimeIn } = this.state;
 
     const backdropStyle = {
       position: 'fixed',
@@ -177,18 +171,8 @@ class AdminPage extends Component {
           </div>
           <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
             <li className="nav-item">
-              <Link to="/menu" className="nav-link" style={{ color: 'white' }}>
-                Home
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
                 Admin Dashboard
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-link" style={{ color: 'white' }}>
-                About Us
               </Link>
             </li>
           </ul>
@@ -297,17 +281,6 @@ class AdminPage extends Component {
             </Button>
           </Modal.Footer>
         </Modal>
-        {/* History component */}
-        {showHistoryModal && (
-          <>
-            {/* Backdrop with blur effect */}
-            <div style={backdropStyle}></div>
-            {/* History component */}
-            <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
-              <History onClose={this.closeHistoryModal} /> {/* Pass onClose function as a prop */}
-            </div>
-          </>
-        )}
       </>
     );
   }
