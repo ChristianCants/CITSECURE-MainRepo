@@ -4,7 +4,6 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 
-
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -33,9 +32,20 @@ class SignUp extends Component {
     this.setState({ systemTime: currentTime });
   }
 
+  checkCardUsage = async (cardNo) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/admin/checkcard/${cardNo}`);
+      return response.data.isUsed;
+    } catch (error) {
+      console.error('Failed to check card usage:', error.message);
+      return false; // Assuming the card is not used in case of an error
+    }
+  };
+
   handleSignUp = async (e) => {
     e.preventDefault();
     const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime } = this.state;
+    
     try {
       if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit) {
         alert('Please fill out all fields');
@@ -44,6 +54,13 @@ class SignUp extends Component {
 
       if (cardNo < 1 || cardNo > 100) {
         alert('Invalid card number!');
+        return;
+      }
+
+      const isCardUsed = await this.checkCardUsage(cardNo);
+      if (isCardUsed) {
+        console.log('Card already used, Check your card again');
+        alert('Card already used, Check your card again');
         return;
       }
 
@@ -67,7 +84,7 @@ class SignUp extends Component {
       this.setState({ showModal: true });
     } catch (error) {
       console.error('Signup failed:', error.message);
-      alert('Signup failed. Please check the console for details.');
+      alert('Card already used, Check your card again');
     }
   };
 
@@ -82,13 +99,11 @@ class SignUp extends Component {
   };
 
   handleViewMap = () => {
-    // Navigate to the map page
     const navigate = useNavigate();
     navigate('/visitor-navigation');
   };
 
   handleExit = () => {
-    // Handle exit action
     const navigate = useNavigate();
     navigate('/');
   };
@@ -283,7 +298,7 @@ class SignUp extends Component {
             <Button variant="primary" onClick={() => window.location.href = '/visitor-navigation'} style={{ background: 'maroon', width: '150px' }}>
               View Maps
             </Button>
-            <Button variant="primary"onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
+            <Button variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
               Exit
             </Button>
           </Modal.Footer>

@@ -70,7 +70,7 @@ class VisitorOut extends Component {
       this.setState({ showModal: true });
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
-      alert('Unsuccessful. Please try again.');
+      alert('Card is not available');
     }
   };
 
