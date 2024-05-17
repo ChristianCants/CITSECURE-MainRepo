@@ -182,13 +182,13 @@ class AdminPage extends Component {
             Logout
           </Button>
         </header>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
+        {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
           <input
             type="date"
             value={filterDateTimeIn}
             onChange={(e) => this.setState({ filterDateTimeIn: e.target.value })}
           />
-        </div>
+        </div> */}
         <Container fluid className="py-5">
           <Row>
             <Col lg={12}>
