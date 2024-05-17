@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -18,7 +18,6 @@ class AdminPage extends Component {
       filterDateTimeIn: '',
     };
 
-    // Binding methods to make `this` work in the callback
     this.handleExportPDF = this.handleExportPDF.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -149,9 +148,9 @@ class AdminPage extends Component {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-      zIndex: 999, // Ensure the backdrop is on top
-      backdropFilter: 'blur(5px)', // Apply blur effect
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      zIndex: 999,
+      backdropFilter: 'blur(5px)',
     };
 
     return (
@@ -230,13 +229,6 @@ class AdminPage extends Component {
                             >
                               Edit
                             </Button>
-                            {/* <Button
-                                variant="danger"
-                                style={{ marginLeft: '5px', fontWeight: 'bold', color: 'black' }}
-                                onClick={() => handleDelete(user.id)}
-                            >
-                                Delete
-                            </Button> */}
                           </>
                         )}
                       </td>
@@ -247,7 +239,6 @@ class AdminPage extends Component {
             </Col>
           </Row>
         </Container>
-        {/* Update Modal */}
         <Modal show={showUpdateModal} onHide={this.handleUpdateModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update User</Modal.Title>
@@ -286,4 +277,9 @@ class AdminPage extends Component {
   }
 }
 
-export default AdminPage;
+const AdminPageWrapper = (props) => {
+  const navigate = useNavigate();
+  return <AdminPage {...props} navigate={navigate} />;
+};
+
+export default AdminPageWrapper;
