@@ -15,7 +15,7 @@ const AdminLogin = () => {
         // Redirect to admin page upon successful login
         localStorage.setItem('uname', adminUsername)
         localStorage.setItem('password', adminPassword)
-        navigate('/Admin');
+        navigate('/admin/adminpage');
       } else {
         // Show error message for invalid credentials
         alert('Invalid admin credentials');
