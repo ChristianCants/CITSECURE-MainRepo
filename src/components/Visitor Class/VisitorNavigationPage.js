@@ -97,12 +97,12 @@ class VisitorNavigationPage extends React.Component {
                     >
                         {/* First Carousel Item */}
                         <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="https://scontent.xx.fbcdn.net/v/t1.15752-9/385551382_1325420938165319_6667272040145660917_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeGpwubzOh00dKBwQPpYB13ho7O72xtBMXSjs7vbG0ExdEyxmkMJs_WTf62quFtc0Rh8eYEaEWIUsWwT9Rh-XYl0&_nc_ohc=VNyd_UBsT0AQ7kNvgF81jhu&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_Q7cD1QGbMDmnBSkTRnd2kCrd8wWzpA4HGwgSd6HOS7JkyV_LaQ&oe=666593D4"
-                                alt="ACAD Building"
-                                style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-                            />
+                        <img
+                          className="d-block w-100"
+                          src="images/Academic Building.jpg"
+                          alt="Academic Building"
+                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                        />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                                     <h5>Academic Building</h5>
@@ -125,9 +125,9 @@ class VisitorNavigationPage extends React.Component {
                       <Carousel.Item>
                         <img
                           className="d-block w-100"
-                          src="https://cit.edu/wp-content/uploads/2023/07/SAL-Building.jpg"
-                          alt="Second slide"
-                          style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                          src="images/High School Building.jpg"
+                          alt="High School Building"
+                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                         />
                         <Carousel.Caption style={carouselCaptionStyle}>
                           <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -149,11 +149,11 @@ class VisitorNavigationPage extends React.Component {
                       {/* Third Carousel Item */}
                       {/* Content for the third slide */}
                       <Carousel.Item>
-                        <img
+                      <img
                           className="d-block w-100"
-                          src="https://cit.edu/wp-content/uploads/2023/07/Elementary-Building.jpg"
-                          alt="Third slide"
-                          style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                          src="images/Elementary Building.jpg"
+                          alt="Elementary Building"
+                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                         />
                         <Carousel.Caption style={carouselCaptionStyle}>
                           <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -176,9 +176,9 @@ class VisitorNavigationPage extends React.Component {
                       <Carousel.Item>
                         <img
                           className="d-block w-100"
-                          src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/384549675_1028090461807314_3470518651785484799_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_ohc=UG28_pPHEHoAb4pPdkK&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QGTcdRiWEyUVPgOhvIyY5NfpqDz45cMusK_IGQV6FabjQ&oe=664875FF"
+                          src="images/GLE Building.jpg"
                           alt="GLE Building"
-                          style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                         />
                         <Carousel.Caption style={carouselCaptionStyle}>
                           <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -200,11 +200,11 @@ class VisitorNavigationPage extends React.Component {
                       {/* Main Canteen Carousel Item */}
                       
                   <Carousel.Item>
-                    <img
+                  <img
                       className="d-block w-100"
-                      src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/404324525_1484226729085275_1644542747142881475_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=7jEXOQk76IcAb72RgTf&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QF3b4b0BXkCUcVyayuYGaLlG034vB6gtZeeQMmTnfyB2g&oe=664873F3"
-                      alt="Canteen"
-                      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                      src="images/Main Canteen.jpg"
+                      alt="Main Canteen"
+                      style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                     />
                     <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -226,15 +226,15 @@ class VisitorNavigationPage extends React.Component {
                   
                     {/* RTL Building Carousel Item */}
                           <Carousel.Item>
-                            <img
-                              className="d-block w-100"
-                              src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/405387925_366884246001992_5093631182942274981_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=uT_Og12BfXEAb5EsMdi&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QHnBmkJwvjPG9k4mnizEugYCA3er3yN_q47PaJfKCoF4w&oe=6648871B"
-                              alt="RTL"
-                              style={{ height: '600px', width: '100%', objectFit: 'cover' }}
-                            />
+                          <img
+                          className="d-block w-100"
+                          src="images/RTL Building.jpg"
+                          alt="RTL Building"
+                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                        />
                             <Carousel.Caption style={carouselCaptionStyle}>
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                <h5>RTL BUILDING</h5>
+                                <h5>RTL Building</h5>
                                 <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
@@ -253,14 +253,13 @@ class VisitorNavigationPage extends React.Component {
                           <Carousel.Item>
                             <img
                               className="d-block w-100"
-                              
-                              src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/405163005_300960122904581_3254547494294859463_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=iHLpvncIWCEAb4iFxxO&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QHg0kpBAawIE6DlqKhIXDt9t6ZcDEd7PJthHMGsQCxg-Q&oe=66488759"
-                              alt="NGE"
-                              style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                              src="images/NGE Building.jpg"
+                              alt="NGE Building"
+                              style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                <h5>NGE BUILDING</h5>
+                                <h5>NGE Building</h5>
                                 <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
@@ -279,13 +278,13 @@ class VisitorNavigationPage extends React.Component {
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
-                      src="https://scontent.fdvo1-2.fna.fbcdn.net/v/t1.15752-9/370076161_1262911477846419_8408329714752699598_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=M4twlOvOM0YAb52AUOx&_nc_ht=scontent.fdvo1-2.fna&oh=03_Q7cD1QH7-pwxVKBqFlyNbzKsmvaK1HsZI7WtP44xypwdaPD9gQ&oe=66488B8C"
-                      alt="LIB"
-                      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                      src="images/Library Building.jpg"
+                      alt="Library Building"
+                      style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                     />
                     <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                        <h5>LIBRARY BUILDING</h5>
+                        <h5>Library Building</h5>
                         <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
@@ -304,14 +303,14 @@ class VisitorNavigationPage extends React.Component {
                           {/* ALLIED Building Carousel Item */}
                           <Carousel.Item>
                             <img
-                              className="d-block w-100"
-                              src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/370207209_1952851695116256_2470887601798806799_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=5f2048&_nc_ohc=hMs94LPtQ1cAb6zl3bb&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QG2cdQg9u0usZxDcdayDRHLTzx6XPNNqTgzUluyrAQFzg&oe=66488A33"
-                              alt="ALLIED"
-                              style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                              claclassName="d-block w-100"
+                              src="images/Allied Building.jpg"
+                              alt="Allied Building"
+                              style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                <h5>ALLIED BUILDING </h5>
+                                <h5>Allied Building</h5>
                                 <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
@@ -330,13 +329,13 @@ class VisitorNavigationPage extends React.Component {
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
-                      src="https://scontent.fdvo1-1.fna.fbcdn.net/v/t1.15752-9/385551399_732608838901279_8380616811116167146_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=3L9gxlzQ8rcAb6R1poB&_nc_ht=scontent.fdvo1-1.fna&oh=03_Q7cD1QEytycguDGr_ExOIPiTv0oFO9B-rBBLIiDa_sN2Eqrq6A&oe=66487C5C"
-                      alt="HS CANTEEN"
-                      style={{ height: '600px', width: '100%', objectFit: 'cover' }}
+                      src="images/High School Canteen.jpg"
+                      alt="High School Canteen"
+                      style={{ height: '700px', width: '100%', objectFit: 'cover' }}
                     />
                     <Carousel.Caption style={{ ...carouselCaptionStyle, justifyContent: 'center' }}>
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                        <h5>HIGH-SCHOOL CANTEEN</h5>
+                        <h5>High School Canteen</h5>
                         <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
