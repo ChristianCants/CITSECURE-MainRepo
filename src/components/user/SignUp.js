@@ -6,6 +6,7 @@ import Chip from '@mui/material/Chip';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { FaTimesCircle } from 'react-icons/fa';
 
 class SignUp extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class SignUp extends Component {
       cardNo: '',
       buildingToVisit: '',
       showModal: false,
+      showErrorModal: false,
       systemTime: '',
     };
   }
@@ -63,7 +65,7 @@ class SignUp extends Component {
       const isCardUsed = await this.checkCardUsage(cardNo);
       if (isCardUsed) {
         console.log('Card already used, Check your card again');
-        alert('Card already used, Check your card again');
+        this.setState({ showErrorModal: true });
         return;
       }
 
@@ -87,7 +89,7 @@ class SignUp extends Component {
       this.setState({ showModal: true });
     } catch (error) {
       console.error('Signup failed:', error.message);
-      alert('Card already used, Check your card again');
+      this.setState({ showErrorModal: true });
     }
   };
 
@@ -110,12 +112,16 @@ class SignUp extends Component {
     this.resetFormInputs();
   };
 
+  handleErrorClose = () => {
+    this.setState({ showErrorModal: false });
+  };
+
   handleGoBack = () => {
     this.props.navigate('/'); // Navigate to the home page ("/")
   };
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, systemTime } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -317,6 +323,25 @@ class SignUp extends Component {
             </BootstrapButton>
             <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
               Exit
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Notification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
+                Card already used, Check your card again
+              </p>
+              <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '150px' }}>
+              OK
             </BootstrapButton>
           </Modal.Footer>
         </Modal>

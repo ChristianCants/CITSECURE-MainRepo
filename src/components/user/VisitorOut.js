@@ -5,6 +5,8 @@ import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { FaTimesCircle } from 'react-icons/fa';
+
 
 class VisitorOut extends Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class VisitorOut extends Component {
       minutes: '',
       ampm: 'AM',
       showModal: false,
+      showErrorModal: false,
     };
   }
 
@@ -42,6 +45,10 @@ class VisitorOut extends Component {
   handleClose = () => {
     this.setState({ showModal: false });
     this.resetFormInputs();
+  };
+
+  handleErrorClose = () => {
+    this.setState({ showErrorModal: false });
   };
 
   handleLogin = async (e) => {
@@ -72,7 +79,7 @@ class VisitorOut extends Component {
       this.setState({ showModal: true });
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
-      alert('Card is not available');
+      this.setState({ showErrorModal: true });
     }
   };
 
@@ -81,7 +88,7 @@ class VisitorOut extends Component {
   };
 
   render() {
-    const { cardNo, hours, minutes, ampm, showModal } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -223,6 +230,33 @@ class VisitorOut extends Component {
               style={{ background: 'maroon', width: '150px' }}
             >
               Exit
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Notification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex align-items-center">
+                <p style={{ marginRight: '10px', marginBottom: '0' }}>
+                  Card is not available
+                </p>
+                <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer
+            style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}
+          >
+            <BootstrapButton
+              variant="primary"
+              onClick={this.handleErrorClose}
+              style={{ background: 'maroon', width: '150px' }}
+            >
+              OK
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
