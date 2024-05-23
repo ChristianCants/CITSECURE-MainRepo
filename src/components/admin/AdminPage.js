@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 
@@ -140,19 +140,9 @@ class AdminPage extends Component {
 
 
   render() {
-    const { users, showUpdateModal, updatedUserData, filterDateTimeIn } = this.state;
+    const { users, showUpdateModal, updatedUserData,  } = this.state;
 
-    const backdropStyle = {
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-      zIndex: 999,
-      backdropFilter: 'blur(5px)',
-    };
-
+  
     return (
       <>
         <header
