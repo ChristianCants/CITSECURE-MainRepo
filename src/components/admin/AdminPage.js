@@ -222,13 +222,6 @@ class AdminPage extends Component {
                           <span style={{ color: 'red' }}>Card in use</span>
                         ) : (
                           <>
-                            <Button
-                              variant="info"
-                              style={{ marginRight: '5px', fontWeight: 'bold', color: 'black' }}
-                              onClick={() => this.handleUpdate(user.id)}
-                            >
-                              Edit
-                            </Button>
                           </>
                         )}
                       </td>
