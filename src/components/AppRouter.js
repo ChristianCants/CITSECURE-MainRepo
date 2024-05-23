@@ -5,7 +5,7 @@ import VisitorOut from './user/VisitorOut';
 import SignUp from './user/SignUp';
 
 import MenuPage from './MenuPage';
-import ViewMap from './ViewMap';
+
 import AdminPage from './admin/AdminPage'; 
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';  // Corrected Path
 import About from './About'; 
@@ -25,7 +25,6 @@ const AppRouter = () => {
         <Route path="/admin/adminpage" element={<AdminPage />} />
         
         <Route path="/menu" element={<MenuPage />} />
-        <Route path="/view-map" element={<ViewMap />} />
         <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />

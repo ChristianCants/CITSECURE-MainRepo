@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
 
-
 class VisitorNavigationPage extends React.Component {
     constructor(props) {
         super(props);
@@ -17,14 +16,16 @@ class VisitorNavigationPage extends React.Component {
         };
     }
 
-    handleGetDirections = (direction, index) => {
-      console.log('Get directions clicked:', direction, index);
-      // Logic to navigate or display directions could go here
-  }
+    handleGetDirections = () => {
+        const origin = 'Cebu Institute of Technology, Cebu City, Philippines;'; // Set your starting point
+        const destination = 'CIT-U College Library, Auditorium or College Library Building, Natalio B. Bacalso Ave, Cebu City, 6000 Cebu'; // Destination address
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&destination_place_id=ChIJiUVpuU59qTQR7E3MI8j7pj4`; // You can include destination_place_id if available
+        window.open(googleMapsUrl, '_blank');
+    };
 
     handleGoBack = () => {
-      const navigate = useNavigate();
-      navigate('/');
+        const navigate = useNavigate();
+        navigate('/');
     };
 
     render() {
