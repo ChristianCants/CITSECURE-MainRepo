@@ -10,7 +10,7 @@ import AdminPage from './admin/AdminPage';
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';  // Corrected Path
 import About from './About'; 
 import AdminLogin from './LoginControl Class/AdminLogin';  // Corrected Path
-import History from './admin/History';
+
 
 const AppRouter = () => {
   // Assume you have a function to get the user role, you can replace this with your actual logic
@@ -28,7 +28,7 @@ const AppRouter = () => {
         <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
         <Route path="/About" element={<About />} />
         <Route path="/AdminLogin" element={<AdminLogin />} />
-        <Route path="/apphistory" element={<History />} />
+        
 
         {/* Add more routes for other components as needed */}
 
