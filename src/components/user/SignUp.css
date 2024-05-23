@@ -1,29 +1,54 @@
-  .gradient-custom-2 {
-    /* fallback for old browsers */
-    background: #fccb90;
+/* styles.css */
 
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+/* General styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
 
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+/* Form and container styles */
+.container {
+  padding: 15px;
+}
+
+.form-outline {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.custom-input {
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+  .form-outline {
+    width: 100%;
   }
 
-  @media (min-width: 1000px) {
-    .gradient-custom-2 {
-      border-top-right-radius: 0.3rem;
-      border-bottom-right-radius: 0.3rem;
-    }
+  .btn-block {
+    width: 100%;
   }
-  
-  
-  .signup-wrapper {
-    border-width: 2px;
-    border-style: solid;
-    border-color: black;
-    padding: 0px;
-    margin: 50px auto; /* Adjust top and bottom margin */
-    max-width: 1000px; /* Adjust maximum width as needed */
-    background-color: white; /* Add a white background to make the content readable */
+
+  .container {
+    padding: 15px;
   }
-  
+
+  .card {
+    margin: 0 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .btn-block {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+}

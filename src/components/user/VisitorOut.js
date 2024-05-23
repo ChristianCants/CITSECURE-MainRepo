@@ -191,17 +191,19 @@ class VisitorOut extends Component {
                   </button>
                   <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
                   <NavLink
-                    to="/signup"
-                    style={{
-                      color: 'maroon',
-                      textAlign: 'center',
-                      display: 'block',
-                      marginTop: '10px',
-                      textDecoration: 'none',
+                  to="/signup"
+                  style={{
+                  color: 'maroon',
+                   textAlign: 'center',
+                   display: 'block',
+                   marginTop: '10px',
+                    textDecoration: 'none',
+                   fontSize: '20px',  // Adjust the font size as needed
                     }}
-                  >
-                    Time in
-                  </NavLink>
+                    >
+                Time in
+              </NavLink>
+
                 </form>
               </div>
             </div>
@@ -254,7 +256,7 @@ class VisitorOut extends Component {
             <BootstrapButton
               variant="primary"
               onClick={this.handleErrorClose}
-              style={{ background: 'maroon', width: '150px' }}
+              style={{ background: 'maroon', width: '200px' }}
             >
               OK
             </BootstrapButton>
