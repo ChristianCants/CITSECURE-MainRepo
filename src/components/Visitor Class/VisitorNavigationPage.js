@@ -361,7 +361,7 @@ class VisitorNavigationPage extends React.Component {
                         />
                     )}
                     {/* Line at the bottom of the page */}
-                    <div style={{ borderTop: '2px solid maroon', margin: '20px auto', width: '90%' }}></div>
+                    <div style={{ borderTop: '2px solid maroon', margin: '10px auto', width: '95%' }}></div>
 
                     {/* Copyright Information */}
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: 'maroon', marginBottom: '20px', padding: '0 30px' }}>
