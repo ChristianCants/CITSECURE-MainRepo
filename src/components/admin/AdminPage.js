@@ -170,9 +170,9 @@ class AdminPage extends Component {
           </div>
           <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
             <li className="nav-item">
-              <Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>
+              <span className="nav-link" style={{ color: 'white' }}>
                 Admin Dashboard
-              </Link>
+              </span>
             </li>
           </ul>
           <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
