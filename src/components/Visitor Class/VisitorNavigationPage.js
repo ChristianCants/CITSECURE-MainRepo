@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './VisitorNavigationPage.css';
@@ -17,10 +17,10 @@ class VisitorNavigationPage extends React.Component {
     }
 
     handleGetDirections = () => {
-        const origin = 'Cebu Institute of Technology, Cebu City, Philippines;'; // Set your starting point
-        const destination = 'CIT-U College Library, Auditorium or College Library Building, Natalio B. Bacalso Ave, Cebu City, 6000 Cebu'; // Destination address
-        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&destination_place_id=ChIJiUVpuU59qTQR7E3MI8j7pj4`; // You can include destination_place_id if available
-        window.open(googleMapsUrl, '_blank');
+        //const origin = 'Cebu Institute of Technology, Cebu City, Philippines;'; // Set your starting point
+        //const destination = 'CIT-U College Library, Auditorium or College Library Building, Natalio B. Bacalso Ave, Cebu City, 6000 Cebu'; // Destination address
+        //const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&destination_place_id=ChIJiUVpuU59qTQR7E3MI8j7pj4`; // You can include destination_place_id if available
+        //window.open(googleMapsUrl, '_blank');
     };
 
     handleGoBack = () => {
@@ -110,12 +110,11 @@ class VisitorNavigationPage extends React.Component {
                                     <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         {/* Get Directions Button (centered) */}
-                                        <button
-                                            style={directionButtonStyles}
-                                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                                        >
-                                            View Location
-                                        </button>
+                            <Link to="/acad-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                                     </div>
                                 </div>
                             </Carousel.Caption>
@@ -136,12 +135,11 @@ class VisitorNavigationPage extends React.Component {
                             <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                              style={directionButtonStyles}
-                              onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                              View Location
-                          </button>
+                          <Link to="/high-school" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                           </div>
                         </Carousel.Caption>
@@ -162,12 +160,11 @@ class VisitorNavigationPage extends React.Component {
                             <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/elementary" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                           </div>
                         </Carousel.Caption>
