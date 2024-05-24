@@ -184,12 +184,11 @@ class VisitorNavigationPage extends React.Component {
                             <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/gle-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                           </div>
                         </Carousel.Caption>
@@ -210,12 +209,11 @@ class VisitorNavigationPage extends React.Component {
                         <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/main-canteen" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                       </div>
                     </Carousel.Caption>
@@ -236,12 +234,11 @@ class VisitorNavigationPage extends React.Component {
                                 <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                           style={directionButtonStyles}
-                           onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/rtl-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                               </div>
                             </Carousel.Caption>
@@ -261,12 +258,11 @@ class VisitorNavigationPage extends React.Component {
                                 <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/nge-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                               </div>
                             </Carousel.Caption>
@@ -286,12 +282,11 @@ class VisitorNavigationPage extends React.Component {
                         <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/library-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                       </div>
                     </Carousel.Caption>
@@ -312,12 +307,11 @@ class VisitorNavigationPage extends React.Component {
                                 <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/allied-building" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                               </div>
                             </Carousel.Caption>
@@ -337,12 +331,11 @@ class VisitorNavigationPage extends React.Component {
                         <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {/* Get Directions Button (centered) */}
-                          <button
-                            style={directionButtonStyles}
-                            onClick={() => this.handleGetDirections('main-canteen-direction', 0)}
-                          >
-                            View Location
-                          </button>
+                          <Link to="/high-school-canteen" style={{ textDecoration: 'none' }}>
+                                <button style={directionButtonStyles}>
+                                    View Location
+                                </button>
+                            </Link>
                         </div>
                       </div>
                     </Carousel.Caption>

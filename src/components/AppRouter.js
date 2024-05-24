@@ -10,7 +10,14 @@ import About from './About';
 import AdminLogin from './LoginControl Class/AdminLogin';
 import AcadBuilding from './Visitor Class/AcadBuilding';
 import HighSchool from './Visitor Class/HighSchool';
-import Elementary from './Visitor Class/Elementary'; // Import Elementary component
+import Elementary from './Visitor Class/Elementary';
+import GLEBuilding from './Visitor Class/GLEBuilding';
+import MainCanteen from './Visitor Class/MainCanteen';
+import RTLBuilding from './Visitor Class/RTLBuilding';
+import NGEBuilding from './Visitor Class/NGEBuilding';
+import LibraryBuilding from './Visitor Class/LibraryBuilding';
+import AlliedBuilding from './Visitor Class/AlliedBuilding';
+import HighSchoolCanteen from './Visitor Class/HighSchoolCanteen';
 
 const AppRouter = () => {
     return (
@@ -25,8 +32,16 @@ const AppRouter = () => {
                 <Route path="/About" element={<About />} />
                 <Route path="/AdminLogin" element={<AdminLogin />} />
                 <Route path="/acad-building" element={<AcadBuilding />} />
-                <Route path="/high-school" element={<HighSchool />} /> {/* Add route for HighSchool */}
-                <Route path="/elementary" element={<Elementary />} /> {/* Add route for Elementary */}
+                <Route path="/high-school" element={<HighSchool />} /> 
+                <Route path="/elementary" element={<Elementary />} /> 
+                <Route path="/gle-building" element={<GLEBuilding />} />
+                <Route path="/main-canteen" element={<MainCanteen />} />
+                <Route path="/rtl-building" element={<RTLBuilding/>} />
+                <Route path="/nge-building" element={<NGEBuilding/>} />
+                <Route path="/library-building" element={<LibraryBuilding/>} />
+                <Route path="/allied-building" element={<AlliedBuilding/>} />
+                <Route path="/high-school-canteen" element={<HighSchoolCanteen/>} />
+
             </Routes>
         </Router>
     );
