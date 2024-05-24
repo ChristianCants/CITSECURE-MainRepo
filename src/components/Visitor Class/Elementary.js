@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Card, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button'; // Import MUI Button
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
