@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
-import './SignUp.css';  // Import the CSS file
+import './SignUp.css'; // Import the CSS file
 
 class SignUp extends Component {
   constructor(props) {
@@ -58,12 +58,13 @@ class SignUp extends Component {
         return;
       }
 
-      if (cardNo < 1 || cardNo > 100) {
-        alert('Invalid card number!');
+      const cardNumber = parseInt(cardNo, 10);
+      if (isNaN(cardNumber) || cardNumber < 1 || cardNumber > 100) {
+        alert('Invalid card number! Card number must be between 1 and 100.');
         return;
       }
 
-      const isCardUsed = await this.checkCardUsage(cardNo);
+      const isCardUsed = await this.checkCardUsage(cardNumber);
       if (isCardUsed) {
         console.log('Card already used, Check your card again');
         this.setState({ showErrorModal: true });
@@ -75,7 +76,7 @@ class SignUp extends Component {
         lastName,
         purpose,
         status: 1,
-        cardNo,
+        cardNo: cardNumber,
         timeIn: systemTime,
         buildingToVisit,
       };
@@ -303,18 +304,18 @@ class SignUp extends Component {
                     </button>
                     <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
                     <NavLink
-                  to="/visitorout "
-                  style={{
-                  color: 'maroon',
-                   textAlign: 'center',
-                   display: 'block',
-                   marginTop: '10px',
-                    textDecoration: 'none',
-                   fontSize: '20px',  // Adjust the font size as needed
-                    }}
+                      to="/visitorout"
+                      style={{
+                        color: 'maroon',
+                        textAlign: 'center',
+                        display: 'block',
+                        marginTop: '10px',
+                        textDecoration: 'none',
+                        fontSize: '20px', // Adjust the font size as needed
+                      }}
                     >
-                Time Out
-              </NavLink>
+                      Time Out
+                    </NavLink>
                   </form>
                 </div>
               </div>
