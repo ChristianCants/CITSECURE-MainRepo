@@ -242,19 +242,25 @@ class SignUp extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">
-                        Card Number
-                      </label>
-                      <input
-                        type="text"
-                        id="cardNo"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={cardNo}
-                        onChange={(e) => this.setState({ cardNo: e.target.value })}
-                        required
-                      />
-                    </div>
+                    <label className="form-label" htmlFor="cardNo">
+                      Card Number
+                    </label>
+                    <input
+                      type="text"
+                      id="cardNo"
+                      className="form-control custom-input"
+                      style={inputStyle}
+                      value={cardNo}
+                      onChange={(e) => {
+                        const inputValue = e.target.value;
+                        if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
+                          this.setState({ cardNo: inputValue });
+                        }
+                      }}
+                      pattern="[1-9][0-9]?"
+                      required
+                    />
+                  </div>
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="timeIn">
