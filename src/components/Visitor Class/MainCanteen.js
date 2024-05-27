@@ -54,7 +54,7 @@ const MainCanteen = () => {
                             src="/images/MainCanteenMap.png"
                             alt="Acad Map"
                             style={{
-                                width: '60%',
+                                width: '1000%',
                                 height: 'auto',
                             }}
                         />
