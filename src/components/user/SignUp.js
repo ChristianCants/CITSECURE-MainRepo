@@ -40,7 +40,7 @@ class SignUp extends Component {
 
   checkCardUsage = async (cardNo) => {
     try {
-      const response = await axios.get(`http://localhost:8080/admin/checkcard/${cardNo}`);
+      const response = await axios.get(`http://localhost:8080/visitor/checkcard/${cardNo}`);
       return response.data.isUsed;
     } catch (error) {
       console.error('Failed to check card usage:', error.message);

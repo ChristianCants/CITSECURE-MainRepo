@@ -67,7 +67,7 @@ class VisitorOut extends Component {
       }
 
       await axios.put(
-        `http://localhost:8080/admin/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
+        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
         {},
         {
           headers: {

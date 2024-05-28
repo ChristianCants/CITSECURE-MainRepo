@@ -33,7 +33,7 @@ class AdminPage extends Component {
   }
 
   fetchUsers = () => {
-    axios.get('http://localhost:8080/admin/getAllVisitors')
+    axios.get('http://localhost:8080/visitor/getAllVisitors')
       .then(response => {
         this.setState({ users: response.data });
       })
