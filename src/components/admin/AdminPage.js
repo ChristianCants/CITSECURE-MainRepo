@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { FaTimesCircle } from 'react-icons/fa';
+import BootstrapButton from 'react-bootstrap/Button';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -13,6 +15,7 @@ class AdminPage extends Component {
     this.state = {
       users: [],
       showUpdateModal: false,
+      showErrorModal: false,
       selectedUserId: null,
       updatedUserData: { firstName: '', lastName: '' },
       filterDateTimeIn: '',
@@ -23,12 +26,18 @@ class AdminPage extends Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
     this.handleUpdateModalSave = this.handleUpdateModalSave.bind(this);
+    this.handleErrorClose = this.handleErrorClose.bind(this);
   }
 
   componentDidMount() {
+    this.checkLogin();
     this.fetchUsers();
-    if (!localStorage.getItem("uname") || localStorage.getItem("uname") !== "Admin") {
-      this.props.navigate('/AdminLogin');
+  }
+
+  checkLogin = () => {
+    const username = localStorage.getItem('uname');
+    if (!username || username !== 'Admin') {
+      this.setState({ showErrorModal: true });
     }
   }
 
@@ -138,11 +147,14 @@ class AdminPage extends Component {
     });
   };
 
+  handleErrorClose = () => {
+    this.setState({ showErrorModal: false }, () => {
+      this.props.navigate('/AdminLogin');
+    });
+  };
 
   render() {
-    const { users, showUpdateModal, updatedUserData,  } = this.state;
-
-  
+    const { users, showUpdateModal, updatedUserData, showErrorModal } = this.state;
     return (
       <>
         <header
@@ -172,13 +184,6 @@ class AdminPage extends Component {
             Logout
           </Button>
         </header>
-        {/* <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
-          <input
-            type="date"
-            value={filterDateTimeIn}
-            onChange={(e) => this.setState({ filterDateTimeIn: e.target.value })}
-          />
-        </div> */}
         <Container fluid className="py-5">
           <Row>
             <Col lg={12}>
@@ -253,6 +258,26 @@ class AdminPage extends Component {
             <Button variant="primary" onClick={this.handleUpdateModalSave}>
               Save Changes
             </Button>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered style={{ backgroundColor: 'white' }}>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Access Denied</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex align-items-center">
+                <p style={{ marginRight: '10px', marginBottom: '0' }}>
+                  Admin Dashboard is for Authorized personnel only.
+                </p>
+                <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
+              OK
+            </BootstrapButton>
           </Modal.Footer>
         </Modal>
       </>
