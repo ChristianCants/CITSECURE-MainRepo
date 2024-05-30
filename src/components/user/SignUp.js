@@ -1,26 +1,26 @@
 import React, { Component } from 'react';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-import Chip from '@mui/material/Chip';
 import { useNavigate } from 'react-router-dom';
+import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
+import Webcam from 'react-webcam';
 import './SignUp.css'; // Import the CSS file
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
       showModal: false,
       showErrorModal: false,
       systemTime: '',
+      showCamera: false,
+      screenshot: null,
     };
   }
 
@@ -50,11 +50,11 @@ class SignUp extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime } = this.state;
-    
+    const { purpose, cardNo, buildingToVisit, systemTime, screenshot } = this.state;
+
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit) {
-        alert('Please fill out all fields');
+      if (!purpose || !cardNo || !buildingToVisit || !screenshot) {
+        alert('Please fill out all fields and capture a photo');
         return;
       }
 
@@ -72,16 +72,15 @@ class SignUp extends Component {
       }
 
       const formData = {
-        firstName,
-        lastName,
         purpose,
         status: 1,
         cardNo: cardNumber,
         timeIn: systemTime,
         buildingToVisit,
+        screenshot, // Include the screenshot in the form data
       };
 
-      const response = await axios.post('http://localhost:8080/admin/addvisitor', formData, {
+      const response = await axios.post('http://localhost:8080/visitor/addvisitor', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -97,11 +96,10 @@ class SignUp extends Component {
 
   resetFormInputs = () => {
     this.setState({
-      firstName: '',
-      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
+      screenshot: null,
     });
   };
 
@@ -122,8 +120,21 @@ class SignUp extends Component {
     this.props.navigate('/'); // Navigate to the home page ("/")
   };
 
+  handleCameraOpen = () => {
+    this.setState({ showCamera: true });
+  };
+
+  handleCapture = () => {
+    const screenshot = this.webcam.getScreenshot();
+    this.setState({ screenshot, showCamera: false });
+  };
+
+  handleRetake = () => {
+    this.setState({ screenshot: null, showCamera: true });
+  };
+
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime } = this.state;
+    const { purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, screenshot } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -191,40 +202,48 @@ class SignUp extends Component {
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Form</h2>
-                    <div className="row">
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <label className="form-label" htmlFor="firstName">
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            id="firstName"
-                            className="form-control custom-input"
-                            style={inputStyle}
-                            value={firstName}
-                            onChange={(e) => this.setState({ firstName: e.target.value })}
-                            required
-                          />
-                        </div>
+
+                    {/* Webcam Section */}
+                    {!showCamera && !screenshot && (
+                      <button
+                        className="btn btn-primary btn-block mb-4"
+                        onClick={this.handleCameraOpen}
+                        style={{ background: '#A43F3F', borderRadius: '17px', padding: '10px 20px', color: '#fff', border: 'none', cursor: 'pointer' }}
+                      >
+                        Open Camera
+                      </button>
+                    )}
+
+                    {showCamera && (
+                      <div>
+                        <Webcam
+                          audio={false}
+                          ref={(webcam) => (this.webcam = webcam)}
+                          screenshotFormat="image/jpeg"
+                          style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }}
+                        />
+                        <button
+                          className="btn btn-primary btn-block mb-4"
+                          onClick={this.handleCapture}
+                          style={{ background: '#A43F3F', borderRadius: '17px', padding: '10px 20px', color: '#fff', border: 'none', cursor: 'pointer' }}
+                        >
+                          Capture
+                        </button>
                       </div>
-                      <div className="col-md-6 mb-4">
-                        <div className="form-outline">
-                          <label className="form-label" htmlFor="lastName">
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            id="lastName"
-                            className="form-control custom-input"
-                            style={inputStyle}
-                            value={lastName}
-                            onChange={(e) => this.setState({ lastName: e.target.value })}
-                            required
-                          />
-                        </div>
+                    )}
+
+                    {screenshot && (
+                      <div>
+                        <img src={screenshot} alt="Screenshot" style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }} />
+                        <button
+                          className="btn btn-secondary btn-block mb-4"
+                          onClick={this.handleRetake}
+                          style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
+                        >
+                          Retake
+                        </button>
                       </div>
-                    </div>
+                    )}
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="purpose">
@@ -242,25 +261,25 @@ class SignUp extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="cardNo">
-                      Card Number
-                    </label>
-                    <input
-                      type="text"
-                      id="cardNo"
-                      className="form-control custom-input"
-                      style={inputStyle}
-                      value={cardNo}
-                      onChange={(e) => {
-                        const inputValue = e.target.value;
-                        if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
-                          this.setState({ cardNo: inputValue });
-                        }
-                      }}
-                      pattern="[1-9][0-9]?"
-                      required
-                    />
-                  </div>
+                      <label className="form-label" htmlFor="cardNo">
+                        Card Number
+                      </label>
+                      <input
+                        type="text"
+                        id="cardNo"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={cardNo}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+                          if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
+                            this.setState({ cardNo: inputValue });
+                          }
+                        }}
+                        pattern="[1-9][0-9]?"
+                        required
+                      />
+                    </div>
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="timeIn">
@@ -308,20 +327,6 @@ class SignUp extends Component {
                     >
                       Submit
                     </button>
-                    <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
-                    <NavLink
-                      to="/visitorout"
-                      style={{
-                        color: 'maroon',
-                        textAlign: 'center',
-                        display: 'block',
-                        marginTop: '10px',
-                        textDecoration: 'none',
-                        fontSize: '20px', // Adjust the font size as needed
-                      }}
-                    >
-                      Time Out
-                    </NavLink>
                   </form>
                 </div>
               </div>
