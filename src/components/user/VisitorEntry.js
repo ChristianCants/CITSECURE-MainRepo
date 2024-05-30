@@ -7,9 +7,9 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-import './SignUp.css'; // Import the CSS file
+import './VisitorEntry.css'; // Import the CSS file
 
-class SignUp extends Component {
+class VisitorEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -173,7 +173,7 @@ class SignUp extends Component {
               
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Chip
-                  label="Access Campus Map after Time In"
+                  label="Access Campus Map after Visitor Entry Form"
                   style={{
                     textAlign: 'center',
                     borderRadius: '100px',
@@ -201,7 +201,7 @@ class SignUp extends Component {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Form</h2>
+                    <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Entry Form</h2>
 
                     {/* Webcam Section */}
                     {!showCamera && !screenshot && (
@@ -379,5 +379,5 @@ class SignUp extends Component {
 
 export default function SignUpWithNavigate(props) {
   const navigate = useNavigate();
-  return <SignUp {...props} navigate={navigate} />;
+  return <VisitorEntry {...props} navigate={navigate} />;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import VisitorOut from './user/VisitorOut';
-import SignUp from './user/SignUp';
+import VisitorEntry from './user/VisitorEntry';
 import MenuPage from './MenuPage';
 import AdminPage from './admin/AdminPage';
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';
@@ -25,7 +25,7 @@ const AppRouter = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/VisitorOut" element={<VisitorOut />} />
-                <Route path="/signup" element={<SignUp />} />
+                <Route path="/VisitorEntry" element={<VisitorEntry />} />
                 <Route path="/admin/adminpage" element={<AdminPage />} />
                 <Route path="/menu" element={<MenuPage />} />
                 <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />

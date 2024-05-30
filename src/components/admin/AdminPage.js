@@ -199,6 +199,7 @@ class AdminPage extends Component {
                     <th>Time out</th>
                     <th>Building Visited</th>
                     <th>Status</th>
+                    <th>Photo</th>
                   </tr>
                 </thead>
                 <tbody style={{ color: 'black' }}>
@@ -216,8 +217,14 @@ class AdminPage extends Component {
                         {user.status === 1 ? (
                           <span style={{ color: 'red' }}>Card in use</span>
                         ) : (
-                          <>
-                          </>
+                          <></>
+                        )}
+                      </td>
+                      <td style={{ borderBottom: '1px solid #B06161' }}>
+                        {user.photo ? (
+                          <img src={user.photo} alt="Visitor" style={{ width: '50px', height: '50px', borderRadius: '5px' }} />
+                        ) : (
+                          'No Photo'
                         )}
                       </td>
                     </tr>
@@ -227,67 +234,73 @@ class AdminPage extends Component {
             </Col>
           </Row>
         </Container>
+
+        {/* Update User Modal */}
         <Modal show={showUpdateModal} onHide={this.handleUpdateModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update User</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group controlId="formFirstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter first name"
-                value={updatedUserData.firstName}
-                onChange={(e) => this.setState({ updatedUserData: { ...updatedUserData, firstName: e.target.value } })}
-              />
-            </Form.Group>
-            <Form.Group controlId="formLastName">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter last name"
-                value={updatedUserData.lastName}
-                onChange={(e) => this.setState({ updatedUserData: { ...updatedUserData, lastName: e.target.value } })}
-              />
-            </Form.Group>
+            <Form>
+              <Form.Group controlId="firstName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={updatedUserData.firstName}
+                  onChange={(e) =>
+                    this.setState({ updatedUserData: { ...updatedUserData, firstName: e.target.value } })
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="lastName">
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={updatedUserData.lastName}
+                  onChange={(e) =>
+                    this.setState({ updatedUserData: { ...updatedUserData, lastName: e.target.value } })
+                  }
+                />
+              </Form.Group>
+            </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleUpdateModalClose}>
+            <BootstrapButton variant="secondary" onClick={this.handleUpdateModalClose}>
               Close
-            </Button>
-            <Button variant="primary" onClick={this.handleUpdateModalSave}>
+            </BootstrapButton>
+            <BootstrapButton variant="primary" onClick={this.handleUpdateModalSave}>
               Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered style={{ backgroundColor: 'white' }}>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Access Denied</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="d-flex align-items-center">
-                <p style={{ marginRight: '10px', marginBottom: '0' }}>
-                  Admin Dashboard is for Authorized personnel only.
-                </p>
-                <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
-              OK
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
+
+        {/* Error Modal */}
+        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered style={{ backgroundColor: 'white' }}>
+  <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+    <Modal.Title>Access Denied</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex align-items-center">
+        <p style={{ marginRight: '10px', marginBottom: '0' }}>
+          Admin Dashboard is for Authorized personnel only.
+        </p>
+        <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
+      </div>
+    </div>
+  </Modal.Body>
+  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+    <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
+      OK
+    </BootstrapButton>
+  </Modal.Footer>
+</Modal>
       </>
     );
   }
 }
 
-const AdminPageWrapper = (props) => {
+export default function AdminPageWithNavigate(props) {
   const navigate = useNavigate();
   return <AdminPage {...props} navigate={navigate} />;
-};
-
-export default AdminPageWrapper;
+}

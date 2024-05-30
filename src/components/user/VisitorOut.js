@@ -2,11 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
-
 
 class VisitorOut extends Component {
   constructor(props) {
@@ -145,7 +143,8 @@ class VisitorOut extends Component {
                 Go Back
               </Button>
               <div className="card-body px-4 py-5 px-md-5">
-                <form onSubmit={this.handleLogin}>
+                <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Out</h2>
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="cardNo">
                       Card Number
@@ -189,21 +188,6 @@ class VisitorOut extends Component {
                   >
                     Submit
                   </button>
-                  <div style={{ color: 'maroon', textAlign: 'center' }}>or</div>
-                  <NavLink
-                  to="/signup"
-                  style={{
-                  color: 'maroon',
-                   textAlign: 'center',
-                   display: 'block',
-                   marginTop: '10px',
-                    textDecoration: 'none',
-                   fontSize: '20px',  // Adjust the font size as needed
-                    }}
-                    >
-                Time in
-              </NavLink>
-
                 </form>
               </div>
             </div>

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Home extends Component {
-  // Styles can be defined as class properties or inside the render method
   containerStyle = {
     backgroundImage: `url('/images/Menu.png')`,
     backgroundRepeat: 'no-repeat',
@@ -48,11 +47,11 @@ class Home extends Component {
     return (
       <div style={this.containerStyle}>
         <Link
-          to="/signup"
+          to="/visitorentry"
           className="btn btn-primary btn-lg rounded-pill mx-2"
           style={this.loginButtonStyle}
         >
-          <span style={{ marginRight: '8px' }}>Time In</span>
+          <span style={{ marginRight: '8px' }}>Visitor Entry</span>
           <svg className="bi" width="24" height="24">
             <use xlinkHref="#arrow-right-short"></use>
           </svg>
@@ -62,7 +61,7 @@ class Home extends Component {
           className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
           style={this.signupButtonStyle}
         >
-          <span style={{ marginRight: '8px' }}>Time Out</span>
+          <span style={{ marginRight: '8px' }}>Visitor Out</span>
         </Link>
       </div>
     );
