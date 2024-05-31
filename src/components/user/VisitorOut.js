@@ -18,6 +18,7 @@ class VisitorOut extends Component {
       showErrorModal: false,
       showConfirmModal: false,
       userDetails: null,
+      errorMessage: '',
     };
   }
 
@@ -71,10 +72,14 @@ class VisitorOut extends Component {
 
     try {
       const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
-      this.setState({ userDetails: response.data, showConfirmModal: true });
+      if (response.data) {
+        this.setState({ userDetails: response.data, showConfirmModal: true });
+      } else {
+        this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
+      }
     } catch (error) {
       console.error('Error fetching user details:', error.message);
-      this.setState({ showErrorModal: true });
+      this.setState({ errorMessage: 'Error fetching user details.', showErrorModal: true });
     }
   };
 
@@ -96,7 +101,7 @@ class VisitorOut extends Component {
       this.setState({ showModal: true, showConfirmModal: false });
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
-      this.setState({ showErrorModal: true, showConfirmModal: false });
+      this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
     }
   };
 
@@ -106,7 +111,7 @@ class VisitorOut extends Component {
   };
 
   render() {
-    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, userDetails } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, userDetails, errorMessage } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -214,32 +219,31 @@ class VisitorOut extends Component {
         </div>
 
         <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered>
-        <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-          <Modal.Title>Card Verification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {userDetails ? (
-            <div>
-              <p>Card Number: {userDetails.cardNo}</p>
-              <p>Purpose: {userDetails.purpose}</p>
-              <p>Building Visit: {userDetails.buildingToVisit}</p>
-              <p>Time In: {userDetails.timeIn}</p>
-              <p>Status: <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span></p>
-            </div>
-          ) : (
-            <p>Loading...</p>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
-            Back
-          </BootstrapButton>
-          <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
-            Confirm Exit
-          </BootstrapButton>
-        </Modal.Footer>
-      </Modal>
-
+  <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+    <Modal.Title>Card Verification</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {userDetails ? (
+      <div>
+        <p>Card Number: {userDetails.cardNo}</p>
+        <p>Purpose: {userDetails.purpose}</p>
+        <p>Building Visit: {userDetails.buildingToVisit}</p>
+        <p>Time In: {userDetails.timeIn}</p>
+        <p>Status: <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span></p>
+      </div>
+    ) : (
+      <p>Loading...</p>
+    )}
+  </Modal.Body>
+  <Modal.Footer>
+    <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
+      Back
+    </BootstrapButton>
+    <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
+      Confirm Exit
+    </BootstrapButton>
+  </Modal.Footer>
+</Modal>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
@@ -274,7 +278,7 @@ class VisitorOut extends Component {
             <div className="d-flex justify-content-center align-items-center">
               <div className="d-flex align-items-center">
                 <p style={{ marginRight: '10px', marginBottom: '0' }}>
-                  Card is not available
+                  {errorMessage}
                 </p>
                 <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
               </div>
