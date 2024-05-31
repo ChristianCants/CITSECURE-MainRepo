@@ -57,11 +57,11 @@ class Home extends Component {
           </svg>
         </Link>
         <Link
-          to="/visitorout"
+          to="/visitorexit"
           className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
           style={this.signupButtonStyle}
         >
-          <span style={{ marginRight: '8px' }}>Visitor Out</span>
+          <span style={{ marginRight: '8px' }}>Visitor Exit</span>
         </Link>
       </div>
     );

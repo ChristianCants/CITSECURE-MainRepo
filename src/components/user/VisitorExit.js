@@ -5,8 +5,9 @@ import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
+import './VisitorExit.css';  // Assuming you have a CSS file for custom styles
 
-class VisitorOut extends Component {
+class VisitorExit extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -168,7 +169,7 @@ class VisitorOut extends Component {
               </Button>
               <div className="card-body px-4 py-5 px-md-5">
                 <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Out</h2>
+                  <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Exit</h2>
                   <div className="form-outline mb-4">
                     <label className="form-label" htmlFor="cardNo">
                       Card Number
@@ -218,32 +219,69 @@ class VisitorOut extends Component {
           </div>
         </div>
 
-        <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered>
-  <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-    <Modal.Title>Card Verification</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {userDetails ? (
-      <div>
-        <p>Card Number: {userDetails.cardNo}</p>
-        <p>Purpose: {userDetails.purpose}</p>
-        <p>Building Visit: {userDetails.buildingToVisit}</p>
-        <p>Time In: {userDetails.timeIn}</p>
-        <p>Status: <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span></p>
+        <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered size="lg">
+        <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
+        <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
+      </Modal.Header>
+          <Modal.Body>
+  {userDetails ? (
+    <>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '200px',
+        backgroundColor: '#e0e0e0',
+        marginBottom: '20px',
+        border: '2px solid maroon'
+      }}>
+        <span style={{ fontSize: '24px', color: 'maroon' }}>Photo</span>
       </div>
-    ) : (
-      <p>Loading...</p>
-    )}
-  </Modal.Body>
-  <Modal.Footer>
-    <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
-      Back
-    </BootstrapButton>
-    <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
-      Confirm Exit
-    </BootstrapButton>
-  </Modal.Footer>
-</Modal>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+  <div style={{ display: 'flex', gap: '20px' }}>
+    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+        <strong>Status:</strong> <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span>
+      </p>
+    </div>
+    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+        <strong>Card Number:</strong> {userDetails.cardNo}
+      </p>
+    </div>
+  </div>
+  <div style={{ display: 'flex', gap: '20px' }}>
+    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+        <strong>Purpose:</strong> {userDetails.purpose}
+      </p>
+    </div>
+    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+        <strong>Building Visit:</strong> {userDetails.buildingToVisit}
+      </p>
+    </div>
+  </div>
+  <div style={{ display: 'flex', gap: '20px' }}>
+    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '300px', margin: 'auto' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+        <strong>Time In:</strong> {userDetails.timeIn}
+      </p>
+    </div>
+  </div>
+</div>
+    </>
+  ) : (
+    <p>Loading...</p>
+  )}
+</Modal.Body>
+
+          <Modal.Footer>
+          <Button variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon', border: 'none', color: 'white' }}>
+            Confirm Exit
+          </Button>
+        </Modal.Footer>
+        </Modal>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
@@ -303,5 +341,5 @@ class VisitorOut extends Component {
 
 export default function VisitorOutWithNavigate(props) {
   const navigate = useNavigate();
-  return <VisitorOut {...props} navigate={navigate} />;
+  return <VisitorExit {...props} navigate={navigate} />;
 }

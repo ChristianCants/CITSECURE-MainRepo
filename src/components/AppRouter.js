@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
-import VisitorOut from './user/VisitorOut';
+import VisitorExit from './user/VisitorExit';
 import VisitorEntry from './user/VisitorEntry';
 import MenuPage from './MenuPage';
 import AdminPage from './admin/AdminPage';
@@ -24,7 +24,7 @@ const AppRouter = () => {
         <Router>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/VisitorOut" element={<VisitorOut />} />
+                <Route path="/VisitorExit" element={<VisitorExit />} />
                 <Route path="/VisitorEntry" element={<VisitorEntry />} />
                 <Route path="/admin/adminpage" element={<AdminPage />} />
                 <Route path="/menu" element={<MenuPage />} />
