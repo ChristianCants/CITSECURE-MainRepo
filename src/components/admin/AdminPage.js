@@ -217,7 +217,7 @@ class AdminPage extends Component {
                         {user.status === 1 ? (
                           <span style={{ color: 'red' }}>Card in use</span>
                         ) : (
-                          <></>
+                          <span style={{ color: 'green' }}>Available</span>
                         )}
                       </td>
                       <td style={{ borderBottom: '1px solid #B06161' }}>
@@ -234,7 +234,7 @@ class AdminPage extends Component {
             </Col>
           </Row>
         </Container>
-
+  
         {/* Update User Modal */}
         <Modal show={showUpdateModal} onHide={this.handleUpdateModalClose}>
           <Modal.Header closeButton>
@@ -273,31 +273,32 @@ class AdminPage extends Component {
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
-
+  
         {/* Error Modal */}
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered style={{ backgroundColor: 'white' }}>
-  <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-    <Modal.Title>Access Denied</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <div className="d-flex justify-content-center align-items-center">
-      <div className="d-flex align-items-center">
-        <p style={{ marginRight: '10px', marginBottom: '0' }}>
-          Admin Dashboard is for Authorized personnel only.
-        </p>
-        <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
-      </div>
-    </div>
-  </Modal.Body>
-  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-    <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
-      OK
-    </BootstrapButton>
-  </Modal.Footer>
-</Modal>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Access Denied</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="d-flex align-items-center">
+                <p style={{ marginRight: '10px', marginBottom: '0' }}>
+                  Admin Dashboard is for Authorized personnel only.
+                </p>
+                <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
+              OK
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
       </>
     );
   }
+  
 }
 
 export default function AdminPageWithNavigate(props) {
