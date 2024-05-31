@@ -214,31 +214,32 @@ class VisitorOut extends Component {
         </div>
 
         <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Card Verification</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {userDetails ? (
-              <div>
-                <p>Card Number: {userDetails.cardNo}</p>
-                <p>Purpose: {userDetails.purpose}</p>
-                <p>Building Visit: {userDetails.buildingToVisit}</p>
-                <p>Time In: {userDetails.timeIn}</p>
-                <p>Status: {userDetails.status === 1 ? 'Card in use' : 'Available'}</p>
-              </div>
-            ) : (
-              <p>Loading...</p>
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
-              Back
-            </BootstrapButton>
-            <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
-              Confirm Exit
-            </BootstrapButton>
-          </Modal.Footer>
-        </Modal>
+        <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Title>Card Verification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {userDetails ? (
+            <div>
+              <p>Card Number: {userDetails.cardNo}</p>
+              <p>Purpose: {userDetails.purpose}</p>
+              <p>Building Visit: {userDetails.buildingToVisit}</p>
+              <p>Time In: {userDetails.timeIn}</p>
+              <p>Status: <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span></p>
+            </div>
+          ) : (
+            <p>Loading...</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
+            Back
+          </BootstrapButton>
+          <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
+            Confirm Exit
+          </BootstrapButton>
+        </Modal.Footer>
+      </Modal>
+
 
         <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
