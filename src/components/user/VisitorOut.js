@@ -17,6 +17,7 @@ class VisitorOut extends Component {
       showModal: false,
       showErrorModal: false,
       showConfirmModal: false,
+      userDetails: null,
     };
   }
 
@@ -26,8 +27,8 @@ class VisitorOut extends Component {
 
   setInitialTime = () => {
     const now = new Date();
-    const hours = String(now.getHours() % 12 || 12); // Ensure hours is a string
-    const minutes = String(now.getMinutes()).padStart(2, '0'); // Ensure minutes is a string
+    const hours = String(now.getHours() % 12 || 12);
+    const minutes = String(now.getMinutes()).padStart(2, '0');
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
     this.setState({ hours, minutes, ampm });
   };
@@ -54,7 +55,7 @@ class VisitorOut extends Component {
     this.setState({ showConfirmModal: false });
   };
 
-  handleLogin = (e) => {
+  handleLogin = async (e) => {
     e.preventDefault();
     const { cardNo } = this.state;
 
@@ -68,7 +69,13 @@ class VisitorOut extends Component {
       return;
     }
 
-    this.setState({ showConfirmModal: true });
+    try {
+      const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
+      this.setState({ userDetails: response.data, showConfirmModal: true });
+    } catch (error) {
+      console.error('Error fetching user details:', error.message);
+      this.setState({ showErrorModal: true });
+    }
   };
 
   handleConfirmExit = async () => {
@@ -85,7 +92,7 @@ class VisitorOut extends Component {
         }
       );
 
-      console.log('API Response:', response.data); // Log the response
+      console.log('API Response:', response.data);
       this.setState({ showModal: true, showConfirmModal: false });
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
@@ -99,7 +106,7 @@ class VisitorOut extends Component {
   };
 
   render() {
-    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, userDetails } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -114,7 +121,7 @@ class VisitorOut extends Component {
       borderRadius: '8px',
       padding: '20px',
       backgroundColor: '#FFF9EB',
-      position: 'relative', // Add this for positioning the button
+      position: 'relative',
     };
 
     const inputStyle = {
@@ -132,7 +139,6 @@ class VisitorOut extends Component {
       marginBottom: '10px',
     };
 
-    // Convert hours and minutes to strings before using padStart
     const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
 
     return (
@@ -143,14 +149,14 @@ class VisitorOut extends Component {
               <Button
                 variant="contained"
                 startIcon={<ChevronLeftIcon />}
-                onClick={this.handleGoBack} // Call the handleGoBack function
+                onClick={this.handleGoBack}
                 style={{
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  backgroundColor: 'transparent', // No background color
-                  color: 'maroon', // Maroon text for better contrast
-                  boxShadow: 'none', // Remove box shadow
+                  backgroundColor: 'transparent',
+                  color: 'maroon',
+                  boxShadow: 'none',
                 }}
               >
                 Go Back
@@ -212,13 +218,17 @@ class VisitorOut extends Component {
             <Modal.Title>Card Verification</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div>
-              <p>Card Number: {cardNo}</p>
-              <p>Purpose:</p>
-              <p>Building Visit:</p>
-              <p>Time In:</p>
-              <p>Status: </p>
-            </div>
+            {userDetails ? (
+              <div>
+                <p>Card Number: {userDetails.cardNo}</p>
+                <p>Purpose: {userDetails.purpose}</p>
+                <p>Building Visit: {userDetails.buildingToVisit}</p>
+                <p>Time In: {userDetails.timeIn}</p>
+                <p>Status: {userDetails.status === 1 ? 'Card in use' : 'Available'}</p>
+              </div>
+            ) : (
+              <p>Loading...</p>
+            )}
           </Modal.Body>
           <Modal.Footer>
             <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
