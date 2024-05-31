@@ -16,6 +16,7 @@ class VisitorOut extends Component {
       ampm: 'AM',
       showModal: false,
       showErrorModal: false,
+      showConfirmModal: false,
     };
   }
 
@@ -32,7 +33,7 @@ class VisitorOut extends Component {
   };
 
   handleExit = () => {
-    const navigate = useNavigate();
+    const { navigate } = this.props;
     navigate('/');
   };
 
@@ -49,22 +50,32 @@ class VisitorOut extends Component {
     this.setState({ showErrorModal: false });
   };
 
-  handleLogin = async (e) => {
+  handleConfirmClose = () => {
+    this.setState({ showConfirmModal: false });
+  };
+
+  handleLogin = (e) => {
     e.preventDefault();
+    const { cardNo } = this.state;
+
+    if (!cardNo) {
+      alert('Please fill out all fields');
+      return;
+    }
+
+    if (cardNo <= 0 || cardNo > 100) {
+      alert('Invalid card number.');
+      return;
+    }
+
+    this.setState({ showConfirmModal: true });
+  };
+
+  handleConfirmExit = async () => {
     const { cardNo, hours, minutes, ampm } = this.state;
 
     try {
-      if (!cardNo) {
-        alert('Please fill out all fields');
-        return;
-      }
-
-      if (cardNo <= 0 || cardNo > 100) {
-        alert('Invalid card number.');
-        return;
-      }
-
-      await axios.put(
+      const response = await axios.put(
         `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
         {},
         {
@@ -74,19 +85,21 @@ class VisitorOut extends Component {
         }
       );
 
-      this.setState({ showModal: true });
+      console.log('API Response:', response.data); // Log the response
+      this.setState({ showModal: true, showConfirmModal: false });
     } catch (error) {
       console.error('Time-out failed! Reason:', error.message);
-      this.setState({ showErrorModal: true });
+      this.setState({ showErrorModal: true, showConfirmModal: false });
     }
   };
 
   handleGoBack = () => {
-    this.props.navigate('/'); // Navigate to the home page ("/")
+    const { navigate } = this.props;
+    navigate('/');
   };
 
   render() {
-    const { cardNo, hours, minutes, ampm, showModal, showErrorModal } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -194,6 +207,29 @@ class VisitorOut extends Component {
           </div>
         </div>
 
+        <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Card Verification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div>
+              <p>Card Number: {cardNo}</p>
+              <p>Purpose:</p>
+              <p>Building Visit:</p>
+              <p>Time In:</p>
+              <p>Status: </p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
+              Back
+            </BootstrapButton>
+            <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon' }}>
+              Confirm Exit
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
+
         <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
             <Modal.Title>Notification</Modal.Title>
@@ -206,7 +242,6 @@ class VisitorOut extends Component {
               <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
             </div>
           </Modal.Body>
-
           <Modal.Footer
             style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}
           >
