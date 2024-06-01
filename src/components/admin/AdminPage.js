@@ -6,6 +6,9 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { FaTimesCircle } from 'react-icons/fa';
 import BootstrapButton from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { format, parse } from 'date-fns';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -18,7 +21,7 @@ class AdminPage extends Component {
       showErrorModal: false,
       selectedUserId: null,
       updatedUserData: { firstName: '', lastName: '' },
-      filterDateTimeIn: '',
+      filterDateTimeIn: null,
     };
 
     this.handleExportPDF = this.handleExportPDF.bind(this);
@@ -27,6 +30,7 @@ class AdminPage extends Component {
     this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
     this.handleUpdateModalSave = this.handleUpdateModalSave.bind(this);
     this.handleErrorClose = this.handleErrorClose.bind(this);
+    this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
   }
 
   componentDidMount() {
@@ -153,8 +157,26 @@ class AdminPage extends Component {
     });
   };
 
+  handleDateFilterChange = (date) => {
+    this.setState({ filterDateTimeIn: date });
+  };
+
+  formatDate = (date) => {
+    return format(date, 'dd/MM/yyyy');
+  };
+
   render() {
-    const { users, showUpdateModal, updatedUserData, showErrorModal } = this.state;
+    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn } = this.state;
+
+    const filteredUsers = users.filter(user => {
+      if (!filterDateTimeIn) return true;
+      const userDate = parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
+      const filterDate = filterDateTimeIn;
+      return userDate.getDate() === filterDate.getDate() &&
+             userDate.getMonth() === filterDate.getMonth() &&
+             userDate.getFullYear() === filterDate.getFullYear();
+    });
+
     return (
       <>
         <header
@@ -184,6 +206,16 @@ class AdminPage extends Component {
             Logout
           </Button>
         </header>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
+          <DatePicker
+            selected={filterDateTimeIn}
+            onChange={this.handleDateFilterChange}
+            dateFormat="dd/MM/yyyy"
+            placeholderText="dd/mm/yyyy"
+          />
+        </div>
+
         <Container fluid className="py-5">
           <Row>
             <Col lg={12}>
@@ -203,30 +235,18 @@ class AdminPage extends Component {
                   </tr>
                 </thead>
                 <tbody style={{ color: 'black' }}>
-                  {users.map((user) => (
+                  {filteredUsers.map((user) => (
                     <tr key={user.id}>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.id}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.cardNo}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.firstName}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.lastName}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.purpose}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeIn}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.timeOut}</td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>{user.buildingToVisit}</td>
-                      <td style={{ borderBottom: '1px solid #B06161', textAlign: 'left' }}>
-                        {user.status === 1 ? (
-                          <span style={{ color: 'red' }}>Card in use</span>
-                        ) : (
-                          <span style={{ color: 'green' }}>Available</span>
-                        )}
-                      </td>
-                      <td style={{ borderBottom: '1px solid #B06161' }}>
-                        {user.photo ? (
-                          <img src={user.photo} alt="Visitor" style={{ width: '50px', height: '50px', borderRadius: '5px' }} />
-                        ) : (
-                          'No Photo'
-                        )}
-                      </td>
+                      <td>{user.id}</td>
+                      <td>{user.cardNo}</td>
+                      <td>{user.firstName}</td>
+                      <td>{user.lastName}</td>
+                      <td>{user.purpose}</td>
+                      <td>{user.timeIn}</td>
+                      <td>{user.timeOut}</td>
+                      <td>{user.buildingToVisit}</td>
+                      <td>{user.status === 1 ? 'Card in use' : 'Available'}</td>
+                      <td>{user.photo ? <img src={user.photo} alt="Visitor" style={{ width: '50px', height: '50px', borderRadius: '5px' }} /> : 'No Photo'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -234,8 +254,7 @@ class AdminPage extends Component {
             </Col>
           </Row>
         </Container>
-  
-        {/* Update User Modal */}
+
         <Modal show={showUpdateModal} onHide={this.handleUpdateModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update User</Modal.Title>
@@ -273,8 +292,7 @@ class AdminPage extends Component {
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
-  
-        {/* Error Modal */}
+
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered style={{ backgroundColor: 'white' }}>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
             <Modal.Title>Access Denied</Modal.Title>
@@ -298,7 +316,6 @@ class AdminPage extends Component {
       </>
     );
   }
-  
 }
 
 export default function AdminPageWithNavigate(props) {
