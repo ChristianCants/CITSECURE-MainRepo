@@ -22,6 +22,8 @@ class AdminPage extends Component {
       selectedUserId: null,
       updatedUserData: { firstName: '', lastName: '' },
       filterDateTimeIn: null,
+      filterCardNumber: '',
+      filterBuilding: '',
     };
 
     this.handleExportPDF = this.handleExportPDF.bind(this);
@@ -31,6 +33,8 @@ class AdminPage extends Component {
     this.handleUpdateModalSave = this.handleUpdateModalSave.bind(this);
     this.handleErrorClose = this.handleErrorClose.bind(this);
     this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
+    this.handleCardNumberFilterChange = this.handleCardNumberFilterChange.bind(this);
+    this.handleBuildingFilterChange = this.handleBuildingFilterChange.bind(this);
   }
 
   componentDidMount() {
@@ -161,24 +165,30 @@ class AdminPage extends Component {
     this.setState({ filterDateTimeIn: date });
   };
 
+  handleCardNumberFilterChange = (event) => {
+    this.setState({ filterCardNumber: event.target.value });
+  };
+
+  handleBuildingFilterChange = (event) => {
+    this.setState({ filterBuilding: event.target.value });
+  };
+
   formatDate = (date) => {
     return format(date, 'dd/MM/yyyy');
   };
 
   render() {
-    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn } = this.state;
+    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding } = this.state;
 
     const filteredUsers = users.filter(user => {
-      if (!filterDateTimeIn) return true;
-      const userDate = parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
-      const filterDate = filterDateTimeIn;
-      return userDate.getDate() === filterDate.getDate() &&
-             userDate.getMonth() === filterDate.getMonth() &&
-             userDate.getFullYear() === filterDate.getFullYear();
+      const matchesDate = !filterDateTimeIn || (parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString());
+      const matchesCardNumber = !filterCardNumber || (user.cardNo && user.cardNo.toString().includes(filterCardNumber));
+      const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
+      return matchesDate && matchesCardNumber && matchesBuilding;
     });
 
     return (
-      <>
+      <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
         <header
           className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
           style={{
@@ -194,9 +204,9 @@ class AdminPage extends Component {
           </div>
           <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
             <li className="nav-item">
-              <span className="nav-link" style={{ color: 'white' }}>
-                Admin Dashboard
-              </span>
+            <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
+              Admin Dashboard
+            </span>
             </li>
           </ul>
           <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
@@ -207,19 +217,64 @@ class AdminPage extends Component {
           </Button>
         </header>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '20px' }}>
-          <DatePicker
-            selected={filterDateTimeIn}
-            onChange={this.handleDateFilterChange}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="dd/mm/yyyy"
-          />
-        </div>
-
-        <Container fluid className="py-5">
+        <Container style={{ marginBottom:''}}>
+        <Row className="mb-3">
+          <Col>
+            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
+              <DatePicker
+                selected={filterDateTimeIn}
+                onChange={this.handleDateFilterChange}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="form-control"
+                style={{ width: '100%' }}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Card Number"
+                value={filterCardNumber}
+                onChange={this.handleCardNumberFilterChange}
+                className="form-control"
+                style={{ width: '60%' }}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
+              <Form.Control
+                as="select"
+                value={filterBuilding}
+                onChange={this.handleBuildingFilterChange}
+                className="form-control"
+                style={{ width: '60%' }}
+              >
+                <option value="">All Buildings</option>
+                <option value="NGE">NGE</option>
+                <option value="GLE">GLE</option>
+                <option value="RTL">RTL</option>
+                <option value="ALLIED">ALLIED</option>
+                <option value="ACAD">ACAD</option>
+                <option value="SAL">SAL</option>
+                <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+                <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+                <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+                <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Container>
+        <Container fluid className="pt-0">
           <Row>
             <Col lg={12}>
-              <Table striped bordered hover>
+              <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -245,7 +300,9 @@ class AdminPage extends Component {
                       <td>{user.timeIn}</td>
                       <td>{user.timeOut}</td>
                       <td>{user.buildingToVisit}</td>
-                      <td>{user.status === 1 ? 'Card in use' : 'Available'}</td>
+                      <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
+                        {user.status === 1 ? 'Card in use' : 'Available'}
+                      </td>
                       <td>{user.photo ? <img src={user.photo} alt="Visitor" style={{ width: '50px', height: '50px', borderRadius: '5px' }} /> : 'No Photo'}</td>
                     </tr>
                   ))}
@@ -313,7 +370,7 @@ class AdminPage extends Component {
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
-      </>
+      </div>
     );
   }
 }
