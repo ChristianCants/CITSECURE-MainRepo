@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Home extends Component {
   containerStyle = {
-    backgroundImage: `url('/images/Menuu.png')`,
+    backgroundImage: `url('/images/Menu5.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -12,36 +12,25 @@ class Home extends Component {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: '150px'
+    paddingTop: '150px',
   };
 
   buttonStyle = {
-    width: '400px',
-    height: '70px',
-    flexShrink: 0,
-    borderRadius: '100px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    width: '350px', // Increased width
+    height: '90px', // Increased height
+    borderRadius: '40px', // Adjusted border-radius to maintain proportional roundness
+    border: '2.5px solid #000',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    color: 'black',
-    fontSize: '30px',
-    marginTop: '50px',
-    transition: 'background-color 0.3s ease',
-  };
-
-  loginButtonStyle = {
-    ...this.buttonStyle,
-    background: '#FFF9EB',
-    border: '2px solid black',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)',
-  };
-
-  signupButtonStyle = {
-    ...this.buttonStyle,
-    background: '#FFF9EB',
-    border: '2px solid black',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 50), 0 8px 16px rgba(0, 0, 0, 91)'
+    color: '#000',
+    fontSize: '24px', // Increased font size
+    fontWeight: 'bold',
+    margin: '30px', // Adjust the margin if needed
+    textDecoration: 'none',
+    backgroundColor: '#EAF4F4', // Changed background color
+    boxShadow: '0 10px 20px rgba(0, 0, 0, 0.25)',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
   };
 
   render() {
@@ -49,20 +38,15 @@ class Home extends Component {
       <div style={this.containerStyle}>
         <Link
           to="/visitorentry"
-          className="btn btn-primary btn-lg rounded-pill mx-2"
-          style={this.loginButtonStyle}
+          style={this.buttonStyle}
         >
-          <span style={{ marginRight: '8px', fontWeight: 'bold' }}>Visitor Entry</span>
-          <svg className="bi" width="24" height="24">
-            <use xlinkHref="#arrow-right-short"></use>
-          </svg>
+          Visitor Entry
         </Link>
         <Link
           to="/visitorexit"
-          className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
-          style={this.signupButtonStyle}
+          style={this.buttonStyle}
         >
-          <span style={{ marginRight: '8px',fontWeight: 'bold' }}>Visitor Exit</span>
+          Visitor Exit
         </Link>
       </div>
     );
