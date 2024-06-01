@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 class Home extends Component {
   containerStyle = {
-    backgroundImage: `url('/images/Menu.png')`,
+    backgroundImage: `url('/images/Menuu.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -12,6 +12,7 @@ class Home extends Component {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: '150px'
   };
 
   buttonStyle = {
@@ -51,7 +52,7 @@ class Home extends Component {
           className="btn btn-primary btn-lg rounded-pill mx-2"
           style={this.loginButtonStyle}
         >
-          <span style={{ marginRight: '8px' }}>Visitor Entry</span>
+          <span style={{ marginRight: '8px', fontWeight: 'bold' }}>Visitor Entry</span>
           <svg className="bi" width="24" height="24">
             <use xlinkHref="#arrow-right-short"></use>
           </svg>
@@ -61,7 +62,7 @@ class Home extends Component {
           className="btn btn-outline-secondary btn-lg rounded-pill mx-2"
           style={this.signupButtonStyle}
         >
-          <span style={{ marginRight: '8px' }}>Visitor Exit</span>
+          <span style={{ marginRight: '8px',fontWeight: 'bold' }}>Visitor Exit</span>
         </Link>
       </div>
     );

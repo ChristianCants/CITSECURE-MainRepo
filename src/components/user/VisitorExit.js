@@ -80,7 +80,7 @@ class VisitorExit extends Component {
       }
     } catch (error) {
       console.error('Error fetching user details:', error.message);
-      this.setState({ errorMessage: 'Error fetching user details.', showErrorModal: true });
+      this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
   };
 
@@ -240,7 +240,7 @@ class VisitorExit extends Component {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
   <div style={{ display: 'flex', gap: '20px' }}>
     <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0',fontWeight: 'bold' }}>
         <strong>Status:</strong> <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span>
       </p>
     </div>
