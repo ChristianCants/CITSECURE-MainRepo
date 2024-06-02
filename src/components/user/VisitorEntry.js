@@ -13,6 +13,8 @@ class VisitorEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstName: '',
+      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
@@ -48,11 +50,12 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleImageUpload = async () => {
+  handleImageUpload = async (cardNo) => {
     const { visitorimage } = this.state;
     const blob = this.dataURItoBlob(visitorimage);
     const formData = new FormData();
     formData.append('file', blob, 'visitorimage.jpg');
+    formData.append('cardNo', cardNo);
 
     try {
       const response = await axios.post('http://localhost:8080/visitor/uploadImage', formData, {
@@ -81,10 +84,10 @@ class VisitorEntry extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { purpose, cardNo, buildingToVisit, systemTime } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime } = this.state;
 
     try {
-      if (!purpose || !cardNo || !buildingToVisit || !this.state.visitorimage) {
+      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !this.state.visitorimage) {
         alert('Please fill out all fields and capture a photo');
         return;
       }
@@ -103,9 +106,11 @@ class VisitorEntry extends Component {
       }
 
       // Upload the image and get the file path
-      const imagePath = await this.handleImageUpload();
+      const imagePath = await this.handleImageUpload(cardNo);
 
       const formData = {
+        firstName,
+        lastName,
         purpose,
         status: 1,
         cardNo: cardNumber,
@@ -130,6 +135,8 @@ class VisitorEntry extends Component {
 
   resetFormInputs = () => {
     this.setState({
+      firstName: '',
+      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
@@ -168,7 +175,7 @@ class VisitorEntry extends Component {
   };
 
   render() {
-    const { purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -278,6 +285,36 @@ class VisitorEntry extends Component {
                         </button>
                       </div>
                     )}
+
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="firstName">
+                        First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="firstName"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={firstName}
+                        onChange={(e) => this.setState({ firstName: e.target.value })}
+                        required
+                      />
+                    </div>
+
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="lastName">
+                        Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="lastName"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={lastName}
+                        onChange={(e) => this.setState({ lastName: e.target.value })}
+                        required
+                      />
+                    </div>
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="purpose">
