@@ -286,7 +286,7 @@ class AdminPage extends Component {
                     <th>Time out</th>
                     <th>Building Visited</th>
                     <th>Status</th>
-                    <th>Photo</th>
+                    
                   </tr>
                 </thead>
                 <tbody style={{ color: 'black' }}>

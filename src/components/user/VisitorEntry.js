@@ -249,7 +249,15 @@ class VisitorEntry extends Component {
                       <button
                         className="btn btn-primary btn-block mb-4"
                         onClick={this.handleCameraOpen}
-                        style={{ background: '#A43F3F', borderRadius: '17px', padding: '10px 20px', color: '#fff', border: 'none', cursor: 'pointer' }}
+                        style={{ 
+                          background: '#A43F3F', 
+                          borderRadius: '20px', 
+                          padding: '15px 25px', 
+                          color: '#fff', 
+                          border: 'none', 
+                          cursor: 'pointer',
+                          margin: '0 20px' // Adjusted margin
+                        }}
                       >
                         Open Camera
                       </button>
