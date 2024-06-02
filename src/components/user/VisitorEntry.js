@@ -139,6 +139,16 @@ class VisitorEntry extends Component {
     this.setState({ screenshot: null, showCamera: true });
   };
 
+  downloadImage = () => {
+    const { screenshot } = this.state;
+    const link = document.createElement('a');
+    link.href = screenshot;
+    link.download = 'captured_image.jpg';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   render() {
     const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, screenshot } = this.state;
 
@@ -241,13 +251,22 @@ class VisitorEntry extends Component {
                     {screenshot && (
                       <div>
                         <img src={screenshot} alt="Screenshot" style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }} />
-                        <button
-                          className="btn btn-secondary btn-block mb-4"
-                          onClick={this.handleRetake}
-                          style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
-                        >
-                          Retake
-                        </button>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <button
+                            className="btn btn-secondary mb-4"
+                            onClick={this.handleRetake}
+                            style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
+                          >
+                            Retake
+                          </button>
+                          <button
+                            className="btn btn-success mb-4"
+                            onClick={this.downloadImage}
+                            style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: 'green', border: 'none', cursor: 'pointer' }}
+                          >
+                            Download
+                          </button>
+                        </div>
                       </div>
                     )}
 
