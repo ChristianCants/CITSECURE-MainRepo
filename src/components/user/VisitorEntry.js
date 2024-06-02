@@ -92,6 +92,10 @@ class VisitorEntry extends Component {
 
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
+
+      // Trigger the download of the image
+      this.downloadImage(cardNumber);
+
     } catch (error) {
       console.error('Signup failed:', error.message);
       this.setState({ showErrorModal: true });
@@ -139,11 +143,11 @@ class VisitorEntry extends Component {
     this.setState({ screenshot: null, showCamera: true });
   };
 
-  downloadImage = () => {
+  downloadImage = (cardNumber) => {
     const { screenshot } = this.state;
     const link = document.createElement('a');
     link.href = screenshot;
-    link.download = 'captured_image.jpg';
+    link.download = `captured_image_card_${cardNumber}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -261,7 +265,7 @@ class VisitorEntry extends Component {
                           </button>
                           <button
                             className="btn btn-success mb-4"
-                            onClick={this.downloadImage}
+                            onClick={() => this.downloadImage(cardNo)}
                             style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: 'green', border: 'none', cursor: 'pointer' }}
                           >
                             Download
