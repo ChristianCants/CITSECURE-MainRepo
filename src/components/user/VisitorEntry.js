@@ -263,13 +263,6 @@ class VisitorEntry extends Component {
                           >
                             Retake
                           </button>
-                          <button
-                            className="btn btn-success mb-4"
-                            onClick={() => this.downloadImage(cardNo)}
-                            style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: 'green', border: 'none', cursor: 'pointer' }}
-                          >
-                            Download
-                          </button>
                         </div>
                       </div>
                     )}
