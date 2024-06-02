@@ -20,6 +20,8 @@ class VisitorExit extends Component {
       showConfirmModal: false,
       userDetails: null,
       errorMessage: '',
+      firstName: '',
+      lastName: ''
     };
   }
 
@@ -74,7 +76,12 @@ class VisitorExit extends Component {
     try {
       const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
       if (response.data) {
-        this.setState({ userDetails: response.data, showConfirmModal: true });
+        this.setState({
+          userDetails: response.data,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          showConfirmModal: true
+        });
       } else {
         this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
       }
@@ -82,6 +89,7 @@ class VisitorExit extends Component {
       console.error('Error fetching user details:', error.message);
       this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
+    
   };
 
   handleConfirmExit = async () => {
@@ -224,55 +232,67 @@ class VisitorExit extends Component {
         <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
       </Modal.Header>
           <Modal.Body>
-  {userDetails ? (
-    <>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '200px',
-        backgroundColor: '#e0e0e0',
-        marginBottom: '20px',
-        border: '2px solid maroon'
-      }}>
-        <span style={{ fontSize: '24px', color: 'maroon' }}>Photo</span>
+          {userDetails ? (
+  <>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '200px',
+      backgroundColor: '#e0e0e0',
+      marginBottom: '20px',
+      border: '2px solid maroon'
+    }}>
+      <span style={{ fontSize: '24px', color: 'maroon' }}>Photo</span>
+    </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+          <p style={{ fontSize: '25px', textAlign: 'center', margin: '0', fontWeight: 'bold' }}>
+            <strong>Status:</strong> <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span>
+          </p>
+        </div>
+        <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+          <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+            <strong>Card Number:</strong> {userDetails.cardNo}
+          </p>
+        </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-  <div style={{ display: 'flex', gap: '20px' }}>
-    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0',fontWeight: 'bold' }}>
-        <strong>Status:</strong> <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span>
-      </p>
-    </div>
-    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-        <strong>Card Number:</strong> {userDetails.cardNo}
-      </p>
-    </div>
+      <div style={{ display: 'flex', gap: '20px' }}>
+  <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+    <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+      <strong>First Name:</strong> {this.state.firstName}
+    </p>
   </div>
-  <div style={{ display: 'flex', gap: '20px' }}>
-    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-        <strong>Purpose:</strong> {userDetails.purpose}
-      </p>
-    </div>
-    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-        <strong>Building Visit:</strong> {userDetails.buildingToVisit}
-      </p>
-    </div>
-  </div>
-  <div style={{ display: 'flex', gap: '20px' }}>
-    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '300px', margin: 'auto' }}>
-      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-        <strong>Time In:</strong> {userDetails.timeIn}
-      </p>
-    </div>
+  <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+    <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+      <strong>Last Name:</strong> {this.state.lastName}
+    </p>
   </div>
 </div>
-    </>
-  ) : (
-    <p>Loading...</p>
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+          <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+            <strong>Purpose:</strong> {userDetails.purpose}
+          </p>
+        </div>
+        <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
+          <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+            <strong>Building Visit:</strong> {userDetails.buildingToVisit}
+          </p>
+        </div>
+      </div>
+      <div style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '300px', margin: 'auto' }}>
+          <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
+            <strong>Time In:</strong> {userDetails.timeIn}
+          </p>
+        </div>
+      </div>
+    </div>
+  </>
+) : (
+  <p>Loading...</p>
   )}
 </Modal.Body>
 
