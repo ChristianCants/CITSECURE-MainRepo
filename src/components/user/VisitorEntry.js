@@ -13,8 +13,6 @@ class VisitorEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
@@ -22,7 +20,7 @@ class VisitorEntry extends Component {
       showErrorModal: false,
       systemTime: '',
       showCamera: false,
-      screenshot: null,
+      visitorimage: null,
     };
   }
 
@@ -50,12 +48,43 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleSignUp = async (e) => {
-    e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime, screenshot } = this.state;
+  handleImageUpload = async () => {
+    const { visitorimage } = this.state;
+    const blob = this.dataURItoBlob(visitorimage);
+    const formData = new FormData();
+    formData.append('file', blob, 'visitorimage.jpg');
 
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !screenshot) {
+      const response = await axios.post('http://localhost:8080/visitor/uploadImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Image upload successful:', response.data);
+      return response.data.replace('Image saved at: ', '');
+    } catch (error) {
+      console.error('Image upload failed:', error.response ? error.response.data : error.message);
+      throw error;
+    }
+  };
+
+  dataURItoBlob(dataURI) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeString });
+  }
+
+  handleSignUp = async (e) => {
+    e.preventDefault();
+    const { purpose, cardNo, buildingToVisit, systemTime } = this.state;
+
+    try {
+      if (!purpose || !cardNo || !buildingToVisit || !this.state.visitorimage) {
         alert('Please fill out all fields and capture a photo');
         return;
       }
@@ -73,15 +102,16 @@ class VisitorEntry extends Component {
         return;
       }
 
+      // Upload the image and get the file path
+      const imagePath = await this.handleImageUpload();
+
       const formData = {
-        firstName,
-        lastName,
         purpose,
         status: 1,
         cardNo: cardNumber,
         timeIn: systemTime,
         buildingToVisit,
-        screenshot, // Include the screenshot in the form data
+        visitorimage: imagePath, // Use the image path returned from the upload
       };
 
       const response = await axios.post('http://localhost:8080/visitor/addvisitor', formData, {
@@ -92,24 +122,18 @@ class VisitorEntry extends Component {
 
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
-
-      // Trigger the download of the image
-      this.downloadImage(cardNumber);
-
     } catch (error) {
-      console.error('Signup failed:', error.message);
+      console.error('Signup failed:', error.response ? error.response.data : error.message);
       this.setState({ showErrorModal: true });
     }
   };
 
   resetFormInputs = () => {
     this.setState({
-      firstName: '',
-      lastName: '',
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
-      screenshot: null,
+      visitorimage: null,
     });
   };
 
@@ -135,26 +159,16 @@ class VisitorEntry extends Component {
   };
 
   handleCapture = () => {
-    const screenshot = this.webcam.getScreenshot();
-    this.setState({ screenshot, showCamera: false });
+    const visitorimage = this.webcam.getScreenshot();
+    this.setState({ visitorimage, showCamera: false });
   };
 
   handleRetake = () => {
-    this.setState({ screenshot: null, showCamera: true });
-  };
-
-  downloadImage = (cardNumber) => {
-    const { screenshot } = this.state;
-    const link = document.createElement('a');
-    link.href = screenshot;
-    link.download = `captured_image_card_${cardNumber}.jpg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    this.setState({ visitorimage: null, showCamera: true });
   };
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, screenshot } = this.state;
+    const { purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -224,7 +238,7 @@ class VisitorEntry extends Component {
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Entry Form</h2>
 
                     {/* Webcam Section */}
-                    {!showCamera && !screenshot && (
+                    {!showCamera && !visitorimage && (
                       <button
                         className="btn btn-primary btn-block mb-4"
                         onClick={this.handleCameraOpen}
@@ -252,50 +266,18 @@ class VisitorEntry extends Component {
                       </div>
                     )}
 
-                    {screenshot && (
+                    {visitorimage && (
                       <div>
-                        <img src={screenshot} alt="Screenshot" style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }} />
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <button
-                            className="btn btn-secondary mb-4"
-                            onClick={this.handleRetake}
-                            style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
-                          >
-                            Retake
-                          </button>
-                        </div>
+                        <img src={visitorimage} alt="visitorimage" style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }} />
+                        <button
+                          className="btn btn-secondary btn-block mb-4"
+                          onClick={this.handleRetake}
+                          style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
+                        >
+                          Retake
+                        </button>
                       </div>
                     )}
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="firstName">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={firstName}
-                        onChange={(e) => this.setState({ firstName: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="lastName">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={lastName}
-                        onChange={(e) => this.setState({ lastName: e.target.value })}
-                        required
-                      />
-                    </div>
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="purpose">
