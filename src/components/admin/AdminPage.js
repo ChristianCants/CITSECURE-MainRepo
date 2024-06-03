@@ -286,7 +286,7 @@ class AdminPage extends Component {
                     <th>Time out</th>
                     <th>Building Visited</th>
                     <th>Status</th>
-                    <th>Photo</th>
+                    
                   </tr>
                 </thead>
                 <tbody style={{ color: 'black' }}>
@@ -303,7 +303,7 @@ class AdminPage extends Component {
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
                         {user.status === 1 ? 'Card in use' : 'Available'}
                       </td>
-                      <td>{user.photo ? <img src={user.photo} alt="Visitor" style={{ width: '50px', height: '50px', borderRadius: '5px' }} /> : 'No Photo'}</td>
+                      
                     </tr>
                   ))}
                 </tbody>
