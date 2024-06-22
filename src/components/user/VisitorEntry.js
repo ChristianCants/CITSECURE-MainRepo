@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
 import Webcam from 'react-webcam';
+import { FaCamera } from 'react-icons/fa';
+
 import './VisitorEntry.css'; // Import the CSS file
 
 class VisitorEntry extends Component {
@@ -259,22 +261,31 @@ class VisitorEntry extends Component {
                           margin: '0 20px' // Adjusted margin
                         }}
                       >
+                        <FaCamera style={{ marginRight: '8px' }} /> {/* Added camera icon */}
                         Open Camera
                       </button>
                     )}
-
+                    
                     {showCamera && (
                       <div>
                         <Webcam
                           audio={false}
                           ref={(webcam) => (this.webcam = webcam)}
                           screenshotFormat="image/jpeg"
-                          style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }}
+                          width="100%"
                         />
                         <button
                           className="btn btn-primary btn-block mb-4"
                           onClick={this.handleCapture}
-                          style={{ background: '#A43F3F', borderRadius: '17px', padding: '10px 20px', color: '#fff', border: 'none', cursor: 'pointer' }}
+                          style={{ 
+                            background: '#A43F3F', 
+                            borderRadius: '20px', 
+                            padding: '15px 25px', 
+                            color: '#fff', 
+                            border: 'none', 
+                            cursor: 'pointer',
+                            margin: '0 20px' // Adjusted margin
+                          }}
                         >
                           Capture
                         </button>
@@ -283,11 +294,19 @@ class VisitorEntry extends Component {
 
                     {visitorimage && (
                       <div>
-                        <img src={visitorimage} alt="visitorimage" style={{ width: '100%', height: 'auto', marginBottom: '10px', borderRadius: '10px', border: '1px solid #ddd' }} />
+                        <img src={visitorimage} alt="Captured" width="100%" />
                         <button
-                          className="btn btn-secondary btn-block mb-4"
+                          className="btn btn-primary btn-block mb-4"
                           onClick={this.handleRetake}
-                          style={{ borderRadius: '17px', padding: '10px 20px', color: '#fff', background: '#ccc', border: 'none', cursor: 'pointer', marginRight: '10px' }}
+                          style={{ 
+                            background: '#A43F3F', 
+                            borderRadius: '20px', 
+                            padding: '15px 25px', 
+                            color: '#fff', 
+                            border: 'none', 
+                            cursor: 'pointer',
+                            margin: '0 20px' // Adjusted margin
+                          }}
                         >
                           Retake
                         </button>
