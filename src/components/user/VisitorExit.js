@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import SendIcon from '@mui/icons-material/Send'; // Import SendIcon
 import { FaTimesCircle } from 'react-icons/fa';
-import './VisitorExit.css';  // Assuming you have a CSS file for custom styles
+import './VisitorExit.css'; // Assuming you have a CSS file for custom styles
 
 class VisitorExit extends Component {
   constructor(props) {
@@ -87,7 +88,7 @@ class VisitorExit extends Component {
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           visitorImage: imageURL,
-          showConfirmModal: true
+          showConfirmModal: true,
         });
       } else {
         this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
@@ -137,10 +138,11 @@ class VisitorExit extends Component {
     };
 
     const formStyle = {
-      border: '3px solid #A43F3F',
+      border: '3px solid maroon',
       borderRadius: '8px',
-      padding: '20px',
-      backgroundColor: '#FFF9EB',
+      padding: '15px',
+      backgroundColor: '#FFFFFF', // Change this to the desired background color
+      fontFamily: 'Roboto, sans-serif',
       position: 'relative',
     };
 
@@ -220,13 +222,19 @@ class VisitorExit extends Component {
                     />
                   </div>
 
-                  <button
+                  {/* Updated Submit Button */}
+                  <Button
                     type="submit"
                     className="btn btn-primary btn-block mb-4"
-                    style={loginButtonStyle}
+                    style={{
+                      ...loginButtonStyle,
+                      width: '130px', // Match the width of your "Next" button
+                      height: '50px', // Match the height of your "Next" button
+                    }}
+                    endIcon={<SendIcon />} // Add SendIcon as endIcon
                   >
                     Submit
-                  </button>
+                  </Button>
                 </form>
               </div>
             </div>

@@ -8,6 +8,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle } from 'react-icons/fa';
 import Webcam from 'react-webcam';
 import { FaCamera } from 'react-icons/fa';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 
 import './VisitorEntry.css'; // Import the CSS file
 
@@ -192,22 +194,34 @@ class VisitorEntry extends Component {
       border: '3px solid maroon',
       borderRadius: '8px',
       padding: '15px',
-      backgroundColor: '#FFF9EB',
+      backgroundColor: '#FFFFFF', // Change this to the desired background color
       fontFamily: 'Roboto, sans-serif',
       position: 'relative',
     };
 
     const inputStyle = {
       borderColor: 'maroon',
-      borderRadius: '8px',
+      borderRadius: '10px',
       color: 'black',
       backgroundColor: 'white',
       fontFamily: 'Roboto, sans-serif',
       width: '100%',
     };
+    const timeInInputStyle = {
+      ...inputStyle,
+      border: 'none', // Remove border specifically for "Time In"
+    };
+    
 
     return (
-      <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>
+      <section
+      className="background-radial-gradient overflow-hidden"
+      style={{ 
+        ...backgroundImageStyle, 
+        backgroundColor: 'rgba(0, 0, 0, 0)' // Set to transparent
+      }}
+    >
+      
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
           <div className="row gx-lg-5 align-items-center mb-5">
             <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
@@ -248,23 +262,29 @@ class VisitorEntry extends Component {
 
                     {/* Webcam Section */}
                     {!showCamera && !visitorimage && (
-                      <button
-                        className="btn btn-primary btn-block mb-4"
-                        onClick={this.handleCameraOpen}
-                        style={{ 
-                          background: '#A43F3F', 
-                          borderRadius: '20px', 
-                          padding: '15px 25px', 
-                          color: '#fff', 
-                          border: 'none', 
-                          cursor: 'pointer',
-                          margin: '0 20px' // Adjusted margin
-                        }}
-                      >
-                        <FaCamera style={{ marginRight: '8px' }} /> {/* Added camera icon */}
-                        Open Camera
-                      </button>
-                    )}
+
+<button
+          className="btn btn-primary btn-block mb-4"
+          onClick={this.handleCameraOpen}
+          style={{
+            background: '#800000',
+            borderColor: '#800000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px 15px',
+            fontSize: '16px',
+            borderRadius: '15px',
+            width: '130px',
+            height: '50px',
+            color: '#ffffff', // Text color
+          }}
+        >
+          Capture ID <FaCamera style={{ marginLeft: '7px' }} /> {/* Adjusted marginLeft */}
+        </button>
+                    
+                    
+                   )}
                     
                     {showCamera && (
                       <div>
@@ -384,14 +404,15 @@ class VisitorEntry extends Component {
                         Time In
                       </label>
                       <input
-                        type="text"
+                       type="text"
                         id="timeIn"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={systemTime}
-                        readOnly
-                        required
-                      />
+                         className="form-control custom-input"
+                          style={inputStyle.id === 'timeIn' ? timeInInputStyle : inputStyle}
+                           value={systemTime}
+                           readOnly
+                           required
+                        />
+
                     </div>
 
                     <div className="form-group">
@@ -419,12 +440,21 @@ class VisitorEntry extends Component {
                     </div>
 
                     <button
-                      type="submit"
-                      className="btn btn-primary btn-block mb-4"
-                      style={{ background: '#A43F3F', borderRadius: '17px' }}
-                    >
-                      Submit
-                    </button>
+                  type="Next  "
+                  className="btn btn-primary btn-block mb-4"
+                style={{ 
+                background: '#800000',
+                borderRadius: '15px',
+                borderColor: '#800000',
+                marginTop: '30px', // Adjusted margin top
+                width: '130px', // Adjust the width as needed
+              height: '50px'  // Adjust the height as needed
+              }}
+              >
+             Next <ChevronRightIcon style={{ marginLeft: '8px' }} />
+            </button>
+
+
                   </form>
                 </div>
               </div>
