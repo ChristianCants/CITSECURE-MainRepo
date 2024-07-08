@@ -280,7 +280,7 @@ class VisitorEntry extends Component {
             color: '#ffffff', // Text color
           }}
         >
-          Capture ID <FaCamera style={{ marginLeft: '7px' }} /> {/* Adjusted marginLeft */}
+          Photo ID <FaCamera style={{ marginLeft: '7px' }} /> {/* Adjusted marginLeft */}
         </button>
                     
                     
@@ -294,21 +294,24 @@ class VisitorEntry extends Component {
                           screenshotFormat="image/jpeg"
                           width="100%"
                         />
-                        <button
-                          className="btn btn-primary btn-block mb-4"
-                          onClick={this.handleCapture}
-                          style={{ 
-                            background: '#A43F3F', 
-                            borderRadius: '20px', 
-                            padding: '15px 25px', 
-                            color: '#fff', 
-                            border: 'none', 
-                            cursor: 'pointer',
-                            margin: '0 20px' // Adjusted margin
-                          }}
-                        >
-                          Capture
-                        </button>
+                       <button
+  className="btn btn-primary btn-block mb-4"
+  onClick={this.handleCapture}
+  style={{
+    background: '#A43F3F',
+    borderRadius: '15px', // Adjusted border radius to match
+    padding: '10px 20px', // Adjusted padding for smaller size
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
+    width: '130px', // Matched width with other buttons
+    height: '50px', // Matched height with other buttons
+    margin: '0 20px', // Adjusted margin as needed
+  }}
+>
+  Capture
+</button>
+
                       </div>
                     )}
 
@@ -316,20 +319,23 @@ class VisitorEntry extends Component {
                       <div>
                         <img src={visitorimage} alt="Captured" width="100%" />
                         <button
-                          className="btn btn-primary btn-block mb-4"
-                          onClick={this.handleRetake}
-                          style={{ 
-                            background: '#A43F3F', 
-                            borderRadius: '20px', 
-                            padding: '15px 25px', 
-                            color: '#fff', 
-                            border: 'none', 
-                            cursor: 'pointer',
-                            margin: '0 20px' // Adjusted margin
-                          }}
-                        >
-                          Retake
-                        </button>
+  className="btn btn-primary btn-block mb-4"
+  onClick={this.handleRetake}
+  style={{
+    background: '#A43F3F',
+    borderRadius: '15px', // Adjusted border radius to match
+    padding: '10px 15px', // Adjusted padding for smaller size
+    color: '#fff',
+    border: 'none',
+    cursor: 'pointer',
+    width: '130px', // Matched width with Capture ID button
+    height: '50px', // Matched height with Capture ID button
+    margin: '0 20px', // Adjusted margin as needed
+  }}
+>
+  Retake
+</button>
+
                       </div>
                     )}
 
