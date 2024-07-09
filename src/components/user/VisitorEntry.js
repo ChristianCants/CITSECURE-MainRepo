@@ -5,12 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FaTimesCircle } from 'react-icons/fa';
+import { FaTimesCircle, FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-import { FaCamera } from 'react-icons/fa';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-
 import './VisitorEntry.css'; // Import the CSS file
 
 class VisitorEntry extends Component {
@@ -27,6 +24,8 @@ class VisitorEntry extends Component {
       systemTime: '',
       showCamera: false,
       visitorimage: null,
+      visitorimage2: null,
+      showCamera2: false,
     };
   }
 
@@ -59,6 +58,27 @@ class VisitorEntry extends Component {
     const blob = this.dataURItoBlob(visitorimage);
     const formData = new FormData();
     formData.append('file', blob, 'visitorimage.jpg');
+    formData.append('cardNo', cardNo);
+
+    try {
+      const response = await axios.post('http://localhost:8080/visitor/uploadImage', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Image upload successful:', response.data);
+      return response.data.replace('Image saved at: ', '');
+    } catch (error) {
+      console.error('Image upload failed:', error.response ? error.response.data : error.message);
+      throw error;
+    }
+  };
+
+  handleImageUpload2 = async (cardNo) => {
+    const { visitorimage2 } = this.state;
+    const blob = this.dataURItoBlob(visitorimage2);
+    const formData = new FormData();
+    formData.append('file', blob, 'visitorimage2.jpg');
     formData.append('cardNo', cardNo);
 
     try {
@@ -111,6 +131,7 @@ class VisitorEntry extends Component {
 
       // Upload the image and get the file path
       const imagePath = await this.handleImageUpload(cardNo);
+      const imagePath2 = this.state.visitorimage2 ? await this.handleImageUpload2(cardNo) : '';
 
       const formData = {
         firstName,
@@ -121,6 +142,7 @@ class VisitorEntry extends Component {
         timeIn: systemTime,
         buildingToVisit,
         visitorimage: imagePath, // Use the image path returned from the upload
+        visitorimage2: imagePath2,
       };
 
       const response = await axios.post('http://localhost:8080/visitor/addvisitor', formData, {
@@ -145,6 +167,7 @@ class VisitorEntry extends Component {
       cardNo: '',
       buildingToVisit: '',
       visitorimage: null,
+      visitorimage2: null,
     });
   };
 
@@ -169,17 +192,30 @@ class VisitorEntry extends Component {
     this.setState({ showCamera: true });
   };
 
+  handleCameraOpen2 = () => {
+    this.setState({ showCamera2: true });
+  };
+
   handleCapture = () => {
     const visitorimage = this.webcam.getScreenshot();
     this.setState({ visitorimage, showCamera: false });
+  };
+
+  handleCapture2 = () => {
+    const visitorimage2 = this.webcam2.getScreenshot();
+    this.setState({ visitorimage2, showCamera2: false });
   };
 
   handleRetake = () => {
     this.setState({ visitorimage: null, showCamera: true });
   };
 
+  handleRetake2 = () => {
+    this.setState({ visitorimage2: null, showCamera2: true });
+  };
+
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage, showCamera2, visitorimage2 } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -260,84 +296,192 @@ class VisitorEntry extends Component {
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Entry Form</h2>
 
-                    {/* Webcam Section */}
-                    {!showCamera && !visitorimage && (
+                    {/* Webcam Section for Photo ID */}
+        <div style={{ border: '2px solid black', padding: '10px', marginBottom: '10px' }}>
+          <h3 style={{ marginBottom: '10px' }}>Visitor Photo</h3>
+          {!showCamera && !visitorimage && (
+            <button
+              className="btn btn-primary btn-block mb-4"
+              onClick={this.handleCameraOpen}
+              style={{
+                background: '#800000',
+                borderColor: '#800000',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px 15px',
+                fontSize: '16px',
+                borderRadius: '15px',
+                width: '130px',
+                height: '50px',
+                color: '#ffffff', // Text color
+              }}
+            >
+              Capture Photo <FaCamera style={{ marginLeft: '7px' }} />
+            </button>
+          )}
 
-<button
-          className="btn btn-primary btn-block mb-4"
-          onClick={this.handleCameraOpen}
-          style={{
-            background: '#800000',
-            borderColor: '#800000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px 15px',
-            fontSize: '16px',
-            borderRadius: '15px',
-            width: '130px',
-            height: '50px',
-            color: '#ffffff', // Text color
-          }}
-        >
-          Photo ID <FaCamera style={{ marginLeft: '7px' }} /> {/* Adjusted marginLeft */}
-        </button>
-                    
-                    
-                   )}
-                    
-                    {showCamera && (
-                      <div>
-                        <Webcam
-                          audio={false}
-                          ref={(webcam) => (this.webcam = webcam)}
-                          screenshotFormat="image/jpeg"
-                          width="100%"
-                        />
-                       <button
-  className="btn btn-primary btn-block mb-4"
-  onClick={this.handleCapture}
-  style={{
-    background: '#A43F3F',
-    borderRadius: '15px', // Adjusted border radius to match
-    padding: '10px 20px', // Adjusted padding for smaller size
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-    width: '130px', // Matched width with other buttons
-    height: '50px', // Matched height with other buttons
-    margin: '0 20px', // Adjusted margin as needed
-  }}
->
-  Capture
-</button>
+{visitorimage && (
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+              <img src={visitorimage} alt="Captured" style={{ maxWidth: '100%', height: 'auto' }} />
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                <button
+                  className="btn btn-primary btn-block mb-4"
+                  onClick={this.handleRetake}
+                  style={{
+                    background: '#A43F3F',
+                    borderRadius: '15px',
+                    padding: '10px 20px',
+                    color: '#fff',
+                    border: 'none',
+                    cursor: 'pointer',
+                    width: '130px',
+                    height: '50px',
+                    margin: '0 10px',
+                  }}
+                >
+                  Retake
+                </button>
+              </div>
+            </div>
+          )}
+          
+                  {/* Modal for Photo ID capture */}
+                  <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
+                    <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
+                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '120px' }}>VISITOR</span>
+                        <span style={{ color: 'gold', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>PHOTO</span>
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Webcam
+                        audio={false}
+                        ref={(webcam) => (this.webcam = webcam)}
+                        screenshotFormat="image/jpeg"
+                        width="100%"
+                      />
+                    </Modal.Body>
+                    <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
+                      <button
+                        className="btn btn-primary"
+                        onClick={this.handleCapture}
+                        style={{
+                          background: '#FFF9EB',
+                          border: '2px solid #A43F3F',
+                          color: '#000000',
+                          borderRadius: '5px',
+                          padding: '10px 20px',
+                          fontSize: '1.2em',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Capture
+                      </button>
+                      {visitorimage && (
+                        <Button variant="secondary" onClick={this.handleRetake}>
+                          Retake
+                        </Button>
+                      )}
+                    </Modal.Footer>
+                  </Modal>
+                          </div>
 
+
+
+                  {/* Second Webcam Section for Photo Card */}
+                  <div style={{ border: '2px solid black', padding: '10px', marginBottom: '10px' }}>
+                            <h3 style={{ marginBottom: '10px' }}>Visitor ID</h3>
+                            {!showCamera2 && !visitorimage2 && (
+                              <button
+                                className="btn btn-primary btn-block mb-4"
+                                onClick={this.handleCameraOpen2}
+                                style={{
+                                  background: '#800000',
+                                  borderColor: '#800000',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  padding: '20px 15px',
+                                  fontSize: '16px',
+                                  borderRadius: '15px',
+                                  width: '130px',
+                                  height: '50px',
+                                  color: '#ffffff', // Text color
+                                }}
+                              >
+                                Capture Photo <FaCamera style={{ marginLeft: '7px' }} />
+                              </button>
+                            )}
+
+
+                  {visitorimage2 && (
+                              <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                                <img src={visitorimage2} alt="Captured" width="100%" />
+                                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
+                                  <button
+                                    className="btn btn-primary btn-block mb-4"
+                                    onClick={this.handleRetake2}
+                                    style={{
+                                      background: '#A43F3F',
+                                      borderRadius: '15px',
+                                      padding: '10px 20px',
+                                      color: '#fff',
+                                      border: 'none',
+                                      cursor: 'pointer',
+                                      width: '130px',
+                                      height: '50px',
+                                      margin: '0 10px',
+                                    }}
+                                  >
+                                    Retake
+                                  </button>
+                                </div>
+                              </div>
+                            )}
                       </div>
-                    )}
+                      {/* Modal for Photo Card capture */}
+                      <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
+                    <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
+                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '150px' }}>VISITOR</span>
+                        <span style={{ color: 'gold', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>ID</span>
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Webcam
+                        audio={false}
+                        ref={(webcam) => (this.webcam2 = webcam)}
+                        screenshotFormat="image/jpeg"
+                        width="100%"
+                      />
+                    </Modal.Body>
+                    <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
+                      <button
+                        className="btn btn-primary"
+                        onClick={this.handleCapture2}
+                        style={{
+                          background: '#FFF9EB',
+                          border: '2px solid #A43F3F',
+                          color: '#000000',
+                          borderRadius: '5px',
+                          padding: '10px 20px',
+                          fontSize: '1.2em',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        Capture
+                      </button>
+                      {visitorimage2 && (
+                        <Button variant="secondary" onClick={this.handleRetake2}>
+                          Retake
+                        </Button>
+                      )}
+                    </Modal.Footer>
+                  </Modal>
 
-                    {visitorimage && (
-                      <div>
-                        <img src={visitorimage} alt="Captured" width="100%" />
-                        <button
-  className="btn btn-primary btn-block mb-4"
-  onClick={this.handleRetake}
-  style={{
-    background: '#A43F3F',
-    borderRadius: '15px', // Adjusted border radius to match
-    padding: '10px 15px', // Adjusted padding for smaller size
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-    width: '130px', // Matched width with Capture ID button
-    height: '50px', // Matched height with Capture ID button
-    margin: '0 20px', // Adjusted margin as needed
-  }}
->
-  Retake
-</button>
-
-                      </div>
-                    )}
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="firstName">
@@ -410,15 +554,14 @@ class VisitorEntry extends Component {
                         Time In
                       </label>
                       <input
-                       type="text"
+                        type="text"
                         id="timeIn"
-                         className="form-control custom-input"
-                          style={inputStyle.id === 'timeIn' ? timeInInputStyle : inputStyle}
-                           value={systemTime}
-                           readOnly
-                           required
-                        />
-
+                        className="form-control custom-input"
+                        style={inputStyle.id === 'timeIn' ? timeInInputStyle : inputStyle}
+                        value={systemTime}
+                        readOnly
+                        required
+                      />
                     </div>
 
                     <div className="form-group">
@@ -446,27 +589,26 @@ class VisitorEntry extends Component {
                     </div>
 
                     <button
-                  type="Next  "
-                  className="btn btn-primary btn-block mb-4"
-                style={{ 
-                background: '#800000',
-                borderRadius: '15px',
-                borderColor: '#800000',
-                marginTop: '30px', // Adjusted margin top
-                width: '130px', // Adjust the width as needed
-              height: '50px'  // Adjust the height as needed
-              }}
-              >
-             Next <ChevronRightIcon style={{ marginLeft: '8px' }} />
-            </button>
-
-
+                      type="Next"
+                      className="btn btn-primary btn-block mb-4"
+                      style={{ 
+                        background: '#800000',
+                        borderRadius: '15px',
+                        borderColor: '#800000',
+                        marginTop: '30px', // Adjusted margin top
+                        width: '130px', // Adjust the width as needed
+                        height: '50px'  // Adjust the height as needed
+                      }}
+                    >
+                      Next <ChevronRightIcon style={{ marginLeft: '8px' }} />
+                    </button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
 
         <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
