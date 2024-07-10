@@ -297,7 +297,7 @@ class VisitorEntry extends Component {
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Entry Form</h2>
 
                     {/* Webcam Section for Photo ID */}
-        <div style={{ border: '2px solid black', padding: '10px', marginBottom: '10px' }}>
+        <div style={{ border: '2px solid maroon', padding: '10px', marginBottom: '10px' }}>
           <h3 style={{ marginBottom: '10px' }}>Visitor Photo</h3>
           {!showCamera && !visitorimage && (
             <button
@@ -312,12 +312,12 @@ class VisitorEntry extends Component {
                 padding: '20px 15px',
                 fontSize: '16px',
                 borderRadius: '15px',
-                width: '130px',
+                width: '160px',
                 height: '50px',
                 color: '#ffffff', // Text color
               }}
             >
-              Capture Photo <FaCamera style={{ marginLeft: '7px' }} />
+              Capture Photo <FaCamera style={{ marginLeft: '6px' }} />
             </button>
           )}
 
@@ -391,7 +391,7 @@ class VisitorEntry extends Component {
 
 
                   {/* Second Webcam Section for Photo Card */}
-                  <div style={{ border: '2px solid black', padding: '10px', marginBottom: '10px' }}>
+                  <div style={{ border: '2px solid maroon', padding: '10px', marginBottom: '10px' }}>
                             <h3 style={{ marginBottom: '10px' }}>Visitor ID</h3>
                             {!showCamera2 && !visitorimage2 && (
                               <button
@@ -411,7 +411,7 @@ class VisitorEntry extends Component {
                                   color: '#ffffff', // Text color
                                 }}
                               >
-                                Capture Photo <FaCamera style={{ marginLeft: '7px' }} />
+                                Capture  ID <FaCamera style={{ marginLeft: '7px' }} />
                               </button>
                             )}
 
