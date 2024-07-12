@@ -31,16 +31,16 @@ const AppRouter = () => {
                 <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/AdminLogin" element={<AdminLogin />} />
-                <Route path="/acad-building" element={<AcadBuilding />} />
-                <Route path="/high-school" element={<HighSchool />} /> 
+                <Route path="/acadbuilding" element={<AcadBuilding />} />
+                <Route path="/highschool" element={<HighSchool />} /> 
                 <Route path="/elementary" element={<Elementary />} /> 
-                <Route path="/gle-building" element={<GLEBuilding />} />
-                <Route path="/main-canteen" element={<MainCanteen />} />
-                <Route path="/rtl-building" element={<RTLBuilding/>} />
-                <Route path="/nge-building" element={<NGEBuilding/>} />
-                <Route path="/library-building" element={<LibraryBuilding/>} />
-                <Route path="/allied-building" element={<AlliedBuilding/>} />
-                <Route path="/high-school-canteen" element={<HighSchoolCanteen/>} />
+                <Route path="/glebuilding" element={<GLEBuilding />} />
+                <Route path="/maincanteen" element={<MainCanteen />} />
+                <Route path="/rtlbuilding" element={<RTLBuilding/>} />
+                <Route path="/ngebuilding" element={<NGEBuilding/>} />
+                <Route path="/librarybuilding" element={<LibraryBuilding/>} />
+                <Route path="/alliedbuilding" element={<AlliedBuilding/>} />
+                <Route path="/high-schoolcanteen" element={<HighSchoolCanteen/>} />
 
             </Routes>
         </Router>

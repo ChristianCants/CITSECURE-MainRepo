@@ -20,6 +20,7 @@ class VisitorEntry extends Component {
       cardNo: '',
       buildingToVisit: '',
       showModal: false,
+      showNotification: false,
       showErrorModal: false,
       systemTime: '',
       showCamera: false,
@@ -108,31 +109,30 @@ class VisitorEntry extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime } = this.state;
-
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime, visitorimage, visitorimage2 } = this.state;
+  
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !this.state.visitorimage) {
-        alert('Please fill out all fields and capture a photo');
+      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !visitorimage || !visitorimage2) {
+        this.setState({ showNotification: true });
         return;
       }
-
+  
       const cardNumber = parseInt(cardNo, 10);
       if (isNaN(cardNumber) || cardNumber < 1 || cardNumber > 100) {
         alert('Invalid card number! Card number must be between 1 and 100.');
         return;
       }
-
+  
       const isCardUsed = await this.checkCardUsage(cardNumber);
       if (isCardUsed) {
         console.log('Card already used, Check your card again');
         this.setState({ showErrorModal: true });
         return;
       }
-
-      // Upload the image and get the file path
+  
       const imagePath = await this.handleImageUpload(cardNo);
-      const imagePath2 = this.state.visitorimage2 ? await this.handleImageUpload2(cardNo) : '';
-
+      const imagePath2 = await this.handleImageUpload2(cardNo);
+  
       const formData = {
         firstName,
         lastName,
@@ -141,16 +141,18 @@ class VisitorEntry extends Component {
         cardNo: cardNumber,
         timeIn: systemTime,
         buildingToVisit,
-        visitorimage: imagePath, // Use the image path returned from the upload
+        visitorimage: imagePath,
         visitorimage2: imagePath2,
       };
-
+  
+      console.log('Sending data to server:', formData); // Add this line for debugging
+  
       const response = await axios.post('http://localhost:8080/visitor/addvisitor', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+  
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
     } catch (error) {
@@ -176,7 +178,11 @@ class VisitorEntry extends Component {
   };
 
   handleNext = () => {
-    this.setState({ showModal: true });
+    if (this.state.visitorimage2) {
+      this.setState({ showCamera: true });
+    } else {
+      this.setState({ showNotification: true });
+    }
   };
 
   handleClose = () => {
@@ -223,7 +229,9 @@ class VisitorEntry extends Component {
   };
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage, showCamera2, visitorimage2 } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage, showCamera2, visitorimage2,  showNotification } = this.state;
+
+    const isFormFilled = firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME IN.png")',
@@ -544,26 +552,28 @@ class VisitorEntry extends Component {
                     </div>
 
                     <button
-            type="button"
-            onClick={this.handleCameraOpen}
-            className="btn btn-primary btn-block mb-4"
-            style={{ 
-              background: '#800000',
-              borderRadius: '15px',
-              borderColor: '#800000',
-              marginTop: '30px', // Adjusted margin top
-              width: '130px', // Adjust the width as needed
-              height: '50px',  // Adjust the height as needed
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '10px',
-              fontSize: '16px',
-              color: '#ffffff', // Text color
-            }}
-          >
-            Next <FaCamera style={{ marginLeft: '8px' }} />
-          </button>
+  type="button"
+  onClick={this.handleNext}
+  className="btn btn-primary btn-block mb-4"
+  disabled={!isFormFilled}
+  style={{ 
+    background: isFormFilled ? '#800000' : '#cccccc',
+    borderRadius: '15px',
+    borderColor: isFormFilled ? '#800000' : '#cccccc',
+    marginTop: '30px',
+    width: '130px',
+    height: '50px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '10px',
+    fontSize: '16px',
+    color: '#ffffff',
+    cursor: isFormFilled ? 'pointer' : 'not-allowed',
+  }}
+>
+  Next <FaCamera style={{ marginLeft: '8px' }} />
+</button> 
                   </form>
                 </div>
               </div>
@@ -610,6 +620,21 @@ class VisitorEntry extends Component {
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
+
+        <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
+  <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+    <Modal.Title>Notification</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <p>Please fill out all fields and capture the visitor ID before proceeding.</p>
+  </Modal.Body>
+  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+    <BootstrapButton variant="primary" onClick={() => this.setState({ showNotification: false })} style={{ background: 'maroon', width: '150px' }}>
+      OK
+    </BootstrapButton>
+  </Modal.Footer>
+</Modal>
+
       </section>
     );
   }

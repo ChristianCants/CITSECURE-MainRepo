@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-class AlliedBuilding extends Component{
+class AlliedBuilding extends Component {
     handleGoBack = () => {
-        const navigate = useNavigate();
-        navigate('/visitor-navigation');
-    }
+        window.location.href = '/visitor-navigation';
+    };
 
     render() {
         return (
@@ -27,20 +25,20 @@ class AlliedBuilding extends Component{
                         <span>CITSecure</span>
                     </div>
                     <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-                        <li className="nav-item"><Link to="/visitor-navigation" className="nav-link" style={{ color: 'white' }}>Home</Link></li>
-                        <li className="nav-item"><Link to="/menu" className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white' }}>Visitor Navigation</Link></li>
-                        <li className="nav-item"><Link to="/about" className="nav-link" style={{ color: 'white' }}>About us</Link></li>
+                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Front Gate</span></li>
+                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>Allied Building</span></li>
+                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}> Direction</span></li>
                     </ul>
                     <Button
                         variant="contained"
                         startIcon={<ChevronLeftIcon />}
-                        onClick={() => window.location.href = 'visitor-navigation'} 
+                        onClick={this.handleGoBack}
                         style={{
                             position: 'absolute',
                             top: '30px',
                             right: '30px',
                             backgroundColor: 'white',
-                            color: 'maroon', 
+                            color: 'maroon',
                         }}
                     >
                         Return
@@ -51,7 +49,7 @@ class AlliedBuilding extends Component{
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/AlliedMap.png"
+                                src="/images/AlliedMap (front).png"
                                 alt="Allied Map"
                                 style={{
                                     width: '60%',
