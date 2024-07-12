@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle, FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+
 import './VisitorEntry.css'; // Import the CSS file
 
 class VisitorEntry extends Component {

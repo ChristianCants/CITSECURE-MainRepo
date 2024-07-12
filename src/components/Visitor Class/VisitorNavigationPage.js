@@ -6,6 +6,7 @@ import './VisitorNavigationPage.css';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
+import DoorFrontIcon from '@mui/icons-material/DoorFront';  
 
 class VisitorNavigationPage extends React.Component {
     constructor(props) {
@@ -45,10 +46,10 @@ class VisitorNavigationPage extends React.Component {
             color: 'white',
             borderRadius: '30px',
             cursor: 'pointer',
-            width: '323px',
+            width: '150px',
             height: '45px',
             flexShrink: 0,
-            margin: '0 auto',
+            margin: '10px',
         };
 
         return (
@@ -81,8 +82,8 @@ class VisitorNavigationPage extends React.Component {
                             position: 'absolute',
                             top: '30px',
                             right: '30px',
-                            backgroundColor: 'white', // Maroon
-                            color: 'maroon', // White text for better contrast
+                            backgroundColor: 'white',
+                            color: 'maroon',
                         }}
                     >
                         Return
@@ -98,77 +99,93 @@ class VisitorNavigationPage extends React.Component {
                     >
                         {/* First Carousel Item */}
                         <Carousel.Item>
-                        <img
-                          className="d-block w-100"
-                          src="images/Academic Building.jpg"
-                          alt="Academic Building"
-                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
-                        />
+                            <img
+                                className="d-block w-100"
+                                src="images/Academic Building.jpg"
+                                alt="Academic Building"
+                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                            />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                                     <h5>Academic Building</h5>
                                     <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        {/* Get Directions Button (centered) */}
-                            <Link to="/acad-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
 
                         {/* Second Carousel Item */}
-                      {/* Content for the second slide */}
-                      <Carousel.Item>
-                        <img
-                          className="d-block w-100"
-                          src="images/High School Building.jpg"
-                          alt="High School Building"
-                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
-                        />
-                        <Carousel.Caption style={carouselCaptionStyle}>
-                          <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                            <h5>High School Building</h5>
-                            <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/high-school" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
-                          </div>
-                        </Carousel.Caption>
-                      </Carousel.Item>
-                  
-                      {/* Third Carousel Item */}
-                      {/* Content for the third slide */}
-                      <Carousel.Item>
-                      <img
-                          className="d-block w-100"
-                          src="images/Elementary Building.jpg"
-                          alt="Elementary Building"
-                          style={{ height: '700px', width: '100%', objectFit: 'cover' }}
-                        />
-                        <Carousel.Caption style={carouselCaptionStyle}>
-                          <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                            <h5>Elementary Building</h5>
-                            <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/elementary" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
-                          </div>
-                        </Carousel.Caption>
-                      </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/High School Building.jpg"
+                                alt="High School Building"
+                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>High School Building</h5>
+                                    <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Third Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/Elementary Building.jpg"
+                                alt="Elementary Building"
+                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Elementary Building</h5>
+                                    <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
+                                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
                   
                       {/* GLE Building Carousel Item */}
                       <Carousel.Item>
@@ -182,14 +199,20 @@ class VisitorNavigationPage extends React.Component {
                           <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                             <h5>GLE Building</h5>
                             <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/gle-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                           </div>
                         </Carousel.Caption>
                       </Carousel.Item>
@@ -207,14 +230,20 @@ class VisitorNavigationPage extends React.Component {
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                         <h5>Main Canteen</h5>
                         <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/main-canteen" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                       </div>
                     </Carousel.Caption>
                   </Carousel.Item>
@@ -232,14 +261,20 @@ class VisitorNavigationPage extends React.Component {
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                                 <h5>RTL Building</h5>
                                 <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/rtl-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                               </div>
                             </Carousel.Caption>
                           </Carousel.Item>
@@ -256,14 +291,20 @@ class VisitorNavigationPage extends React.Component {
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                                 <h5>NGE Building</h5>
                                 <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/nge-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                               </div>
                             </Carousel.Caption>
                           </Carousel.Item>
@@ -280,14 +321,20 @@ class VisitorNavigationPage extends React.Component {
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                         <h5>Library Building</h5>
                         <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/library-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                       </div>
                     </Carousel.Caption>
                   </Carousel.Item>
@@ -305,14 +352,20 @@ class VisitorNavigationPage extends React.Component {
                               <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                                 <h5>Allied Building</h5>
                                 <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/allied-building" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                               </div>
                             </Carousel.Caption>
                           </Carousel.Item>
@@ -329,14 +382,20 @@ class VisitorNavigationPage extends React.Component {
                       <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
                         <h5>High School Canteen</h5>
                         <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          {/* Get Directions Button (centered) */}
-                          <Link to="/high-school-canteen" style={{ textDecoration: 'none' }}>
-                                <button style={directionButtonStyles}>
-                                    View Location
-                                </button>
-                            </Link>
-                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+    {/* Front Gate Button */}
+    <Link to="/front-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Back Gate Button */}
+    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+        <button style={directionButtonStyles}>
+            Back Gate <DoorFrontIcon />
+        </button>
+    </Link>
+</div>
                       </div>
                     </Carousel.Caption>
                   </Carousel.Item>
