@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import VisitorExit from './user/VisitorExit';
 import VisitorEntry from './user/VisitorEntry';
+import VisitorPhoto from './user/VisitorPhoto'; // Add this import
 import MenuPage from './MenuPage';
 import AdminPage from './admin/AdminPage';
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';
@@ -26,6 +27,7 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/VisitorExit" element={<VisitorExit />} />
                 <Route path="/VisitorEntry" element={<VisitorEntry />} />
+                <Route path="/VisitorPhoto" element={<VisitorPhoto />} /> {/* Add this line */}
                 <Route path="/admin/adminpage" element={<AdminPage />} />
                 <Route path="/menu" element={<MenuPage />} />
                 <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
@@ -41,7 +43,6 @@ const AppRouter = () => {
                 <Route path="/librarybuilding" element={<LibraryBuilding/>} />
                 <Route path="/alliedbuilding" element={<AlliedBuilding/>} />
                 <Route path="/high-schoolcanteen" element={<HighSchoolCanteen/>} />
-
             </Routes>
         </Router>
     );

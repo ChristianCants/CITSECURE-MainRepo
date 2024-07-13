@@ -181,7 +181,7 @@ handleImageUpload2 = async (cardNo, timeIn) => {
 
   handleNext = () => {
     if (this.state.visitorimage2) {
-      this.setState({ showCamera: true });
+      this.props.navigate('/VisitorPhoto');
     } else {
       this.setState({ showNotification: true });
     }
@@ -312,7 +312,8 @@ handleImageUpload2 = async (cardNo, timeIn) => {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Entry Form</h2>
+                  <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
+
 
                   {/* Modal for Visitor  */}
                   <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
@@ -554,28 +555,28 @@ handleImageUpload2 = async (cardNo, timeIn) => {
                     </div>
 
                     <button
-  type="button"
-  onClick={this.handleNext}
-  className="btn btn-primary btn-block mb-4"
-  disabled={!isFormFilled}
-  style={{ 
-    background: isFormFilled ? '#800000' : '#cccccc',
-    borderRadius: '15px',
-    borderColor: isFormFilled ? '#800000' : '#cccccc',
-    marginTop: '30px',
-    width: '130px',
-    height: '50px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '10px',
-    fontSize: '16px',
-    color: '#ffffff',
-    cursor: isFormFilled ? 'pointer' : 'not-allowed',
-  }}
->
-  Next <FaCamera style={{ marginLeft: '8px' }} />
-</button> 
+                    type="button"
+                    onClick={this.handleNext}
+                    className="btn btn-primary btn-block mb-4"
+                    disabled={!isFormFilled}
+                    style={{ 
+                      background: isFormFilled ? '#800000' : '#cccccc',
+                      borderRadius: '15px',
+                      borderColor: isFormFilled ? '#800000' : '#cccccc',
+                      marginTop: '30px',
+                      width: '130px',
+                      height: '50px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '10px',
+                      fontSize: '16px',
+                      color: '#ffffff',
+                      cursor: isFormFilled ? 'pointer' : 'not-allowed',
+                    }}
+                  >
+                    Next <FaCamera style={{ marginLeft: '8px' }} />
+                  </button> 
                   </form>
                 </div>
               </div>
