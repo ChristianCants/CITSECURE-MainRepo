@@ -54,15 +54,16 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleImageUpload = async (cardNo) => {
+  handleImageUpload = async (cardNo, timeIn) => {
     const { visitorimage } = this.state;
     const blob = this.dataURItoBlob(visitorimage);
     const formData = new FormData();
     formData.append('file', blob, 'visitorimage.jpg');
     formData.append('cardNo', cardNo);
+    formData.append('timeIn', timeIn);
 
     try {
-      const response = await axios.post('http://localhost:8080/visitor/uploadImage', formData, {
+      const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -73,29 +74,30 @@ class VisitorEntry extends Component {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
       throw error;
     }
-  };
+};
 
-  handleImageUpload2 = async (cardNo) => {
-    const { visitorimage2 } = this.state;
-    const blob = this.dataURItoBlob(visitorimage2);
-    const formData = new FormData();
-    formData.append('file', blob, 'visitorimage2.jpg');
-    formData.append('cardNo', cardNo);
 
-    try {
-      const response = await axios.post('http://localhost:8080/visitor/uploadImage', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Image upload successful:', response.data);
-      return response.data.replace('Image saved at: ', '');
-    } catch (error) {
-      console.error('Image upload failed:', error.response ? error.response.data : error.message);
-      throw error;
-    }
-  };
+handleImageUpload2 = async (cardNo, timeIn) => {
+  const { visitorimage2 } = this.state;
+  const blob = this.dataURItoBlob(visitorimage2);
+  const formData = new FormData();
+  formData.append('file', blob, 'visitorimage2.jpg');
+  formData.append('cardNo', cardNo);
+  formData.append('timeIn', timeIn);
 
+  try {
+    const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('Image upload successful:', response.data);
+    return response.data.replace('Image saved at: ', '');
+  } catch (error) {
+    console.error('Image upload failed:', error.response ? error.response.data : error.message);
+    throw error;
+  }
+};
   dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];

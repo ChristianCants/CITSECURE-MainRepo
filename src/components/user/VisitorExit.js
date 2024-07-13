@@ -78,7 +78,7 @@ class VisitorExit extends Component {
     try {
       const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
       if (response.data) {
-        const imageResponse = await axios.get(`http://localhost:8080/visitor/getImage/${cardNo}`, {
+        const imageResponse = await axios.get(`http://localhost:8080/image/getVisitorImg/${cardNo}/${response.data.timeIn}`, {
           responseType: 'blob',
         });
         const imageURL = URL.createObjectURL(imageResponse.data);
@@ -250,125 +250,74 @@ class VisitorExit extends Component {
               <>
                 <div style={{
                   display: 'flex',
-                  justifyContent: 'center',
+                  flexDirection: 'column',
                   alignItems: 'center',
-                  height: '200px',
-                  backgroundColor: '#e0e0e0',
-                  marginBottom: '20px',
-                  border: '2px solid maroon'
+                  textAlign: 'center',
                 }}>
-                  {visitorImage ? (
-                    <img src={visitorImage} alt="Visitor" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                  ) : (
-                    <span style={{ fontSize: '24px', color: 'maroon' }}>Photo</span>
-                  )}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0', fontWeight: 'bold' }}>
-                        <strong>Status:</strong> <span style={{ color: userDetails.status === 1 ? 'red' : 'green' }}>{userDetails.status === 1 ? 'Card in use' : 'Available'}</span>
-                      </p>
-                    </div>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>Card Number:</strong> {userDetails.cardNo}
-                      </p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>First Name:</strong> {this.state.firstName}
-                      </p>
-                    </div>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>Last Name:</strong> {this.state.lastName}
-                      </p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>Purpose:</strong> {userDetails.purpose}
-                      </p>
-                    </div>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '350px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>Building Visit:</strong> {userDetails.buildingToVisit}
-                      </p>
-                    </div>
-                  </div>
-                  <div style={{ display: 'flex', gap: '20px' }}>
-                    <div style={{ flex: 1, border: '2px solid maroon', padding: '10px', borderRadius: '8px', maxWidth: '300px', margin: 'auto' }}>
-                      <p style={{ fontSize: '25px', textAlign: 'center', margin: '0' }}>
-                        <strong>Time In:</strong> {userDetails.timeIn}
-                      </p>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}>
+                    {visitorImage && (
+                      <div style={{ marginBottom: '20px' }}>
+                        <img
+                          src={visitorImage}
+                          alt="Visitor"
+                          style={{ width: '200px', height: '200px', borderRadius: '50%', border: '5px solid maroon' }}
+                        />
+                      </div>
+                    )}
+                    <div>
+                      <h5 style={{ marginBottom: '10px', color: 'maroon' }}>First Name: {userDetails.firstName}</h5>
+                      <h5 style={{ marginBottom: '10px', color: 'maroon' }}>Last Name: {userDetails.lastName}</h5>
+                      <h5 style={{ marginBottom: '10px', color: 'maroon' }}>Card No: {userDetails.cardNo}</h5>
+                      <h5 style={{ marginBottom: '10px', color: 'maroon' }}>Time In: {userDetails.timeIn}</h5>
                     </div>
                   </div>
                 </div>
               </>
             ) : (
-              <p>Loading...</p>
+              <p>No user details available.</p>
             )}
           </Modal.Body>
-
           <Modal.Footer>
-            <Button variant="primary" onClick={this.handleConfirmExit} style={{ background: 'maroon', border: 'none', color: 'white' }}>
-              Confirm Exit
-            </Button>
+            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose}>
+              Cancel
+            </BootstrapButton>
+            <BootstrapButton variant="primary" onClick={this.handleConfirmExit}>
+              Confirm
+            </BootstrapButton>
           </Modal.Footer>
         </Modal>
 
-        <Modal show={showModal} onHide={this.handleClose} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Notification</Modal.Title>
+        <Modal show={showModal} onHide={this.handleClose} centered size="lg">
+          <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
+            <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="d-flex justify-content-center align-items-center">
-              <p style={{ marginRight: '10px' }}>
-                Card Number {cardNo} Has Been Successfully Timed Out!
-              </p>
-              <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
+              <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
             </div>
           </Modal.Body>
-          <Modal.Footer
-            style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}
-          >
-            <BootstrapButton
-              variant="primary"
-              onClick={() => window.location.href = '/'}
-              style={{ background: 'maroon', width: '150px' }}
-            >
-              Exit
+          <Modal.Footer>
+            <BootstrapButton variant="primary" onClick={this.handleClose}>
+              Close
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Notification</Modal.Title>
+          <Modal.Header closeButton>
+            <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="d-flex align-items-center">
-                <p style={{ marginRight: '10px', marginBottom: '0' }}>
-                  {errorMessage}
-                </p>
-                <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
-              </div>
-            </div>
+            <p>{errorMessage}</p>
           </Modal.Body>
-          <Modal.Footer
-            style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}
-          >
-            <BootstrapButton
-              variant="primary"
-              onClick={this.handleErrorClose}
-              style={{ background: 'maroon', width: '200px' }}
-            >
-              OK
+          <Modal.Footer>
+            <BootstrapButton variant="danger" onClick={this.handleErrorClose}>
+              Close
             </BootstrapButton>
           </Modal.Footer>
         </Modal>
@@ -377,7 +326,9 @@ class VisitorExit extends Component {
   }
 }
 
-export default function VisitorOutWithNavigate(props) {
+const VisitorExitWithNavigate = (props) => {
   const navigate = useNavigate();
   return <VisitorExit {...props} navigate={navigate} />;
-}
+};
+
+export default VisitorExitWithNavigate;
