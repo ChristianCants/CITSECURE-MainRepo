@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { FaCamera } from 'react-icons/fa';
+import { FaCamera, FaTimesCircle } from 'react-icons/fa';
+import { MdSend } from 'react-icons/md'; // Import the submit icon
 import Webcam from 'react-webcam';
 
 import './VisitorEntry.css'; // Import the CSS file
@@ -15,14 +15,13 @@ class VisitorPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        showCamera2: false,
-        visitorimage2: null,
-        showModal: false,
-        showErrorModal: false,
-        showNotificationModal: false, // Correctly named state variable for notification modal
-        systemTime: '',
-      };
-      
+      showCamera2: false,
+      visitorimage2: null,
+      showModal: false,
+      showErrorModal: false,
+      showNotificationModal: false,
+      systemTime: '',
+    };
   }
 
   getCurrentTime = () => {
@@ -74,25 +73,29 @@ class VisitorPhoto extends Component {
     this.setState({ showCamera2: true });
   };
 
-  handleNext = (event) => {
-    event.preventDefault(); // Prevent form submission
+  handleSubmit = async (event) => {
+    event.preventDefault();
     const { visitorimage2 } = this.state;
-  
+
     if (visitorimage2) {
-      this.setState({ showModal: true }); // Show the success notification modal
+      try {
+        await this.handleImageUpload2();
+        this.setState({ showModal: true });
+      } catch (error) {
+        console.error('Error during form submission:', error);
+        this.setState({ showErrorModal: true });
+      }
     } else {
-      this.setState({ showNotification: true }); // Show the notification to capture ID
+      this.setState({ showNotificationModal: true });
     }
   };
-  
-  
 
   handleErrorClose = () => {
     this.setState({ showErrorModal: false });
   };
 
   handleGoBack = () => {
-    this.props.navigate('/visitorentry'); // Navigate to the home page ("/")
+    this.props.navigate('/visitorentry');
   };
 
   handleCloseNotification = () => {
@@ -103,9 +106,8 @@ class VisitorPhoto extends Component {
     window.location.href = '/visitor-navigation';
   };
 
-
   render() {
-    const { showModal, showErrorModal, systemTime, showCamera2, visitorimage2, showNotificationModal } = this.state;
+    const { showModal, showErrorModal, showCamera2, visitorimage2, showNotificationModal } = this.state;
 
     const isFormFilled = visitorimage2;
 
@@ -113,7 +115,7 @@ class VisitorPhoto extends Component {
       background: 'url("images/TIME IN.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      minHeight: '100vh', // Ensure minimum height covers the viewport
+      minHeight: '100vh', 
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -131,27 +133,17 @@ class VisitorPhoto extends Component {
       margin: '0 auto',
     };
 
-    const inputStyle = {
-      borderColor: 'maroon',
-      borderRadius: '10px',
-      color: 'black',
-      backgroundColor: 'white',
-      fontFamily: 'Roboto, sans-serif',
-      width: '100%',
-    };
-
     return (
       <section
         className="background-radial-gradient overflow-hidden"
         style={{
           ...backgroundImageStyle,
-          backgroundColor: 'rgba(0, 0, 0, 0)', // Set to transparent
+          backgroundColor: 'rgba(0, 0, 0, 0)',
         }}
       >
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
           <div className="row gx-lg-5 align-items-center mb-5">
-            <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
-            </div>
+            <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}></div>
             <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Chip
@@ -181,7 +173,7 @@ class VisitorPhoto extends Component {
                   Go Back
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
-                  <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
 
                     <div style={{ border: '2px solid maroon', padding: '10px', marginBottom: '10px' }}>
@@ -275,28 +267,45 @@ class VisitorPhoto extends Component {
                     </Modal>
 
                     <button
-  type="submit"
-  className="btn btn-primary btn-block mb-4"
-  disabled={!isFormFilled}
-  style={{
-    background: '#800000',
-    borderColor: '#800000',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '20px 15px',
-    fontSize: '16px',
-    borderRadius: '15px',
-    width: '450px',
-    height: '50px',
-    color: '#ffffff',
-    margin: '0 auto',
-  }}
-  onClick={this.handleNext}
->
-  Next <ChevronRightIcon style={{ marginLeft: '7px' }} />
-</button>
+                      type="submit"
+                      className="btn btn-primary btn-block mb-4"
+                      disabled={!isFormFilled}
+                      style={{
+                        background: '#800000',
+                        borderColor: '#800000',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '20px 15px',
+                        fontSize: '16px',
+                        borderRadius: '15px',
+                        width: '450px',
+                        height: '50px',
+                        color: '#ffffff',
+                        margin: '0 auto',
+                      }}
+                    >
+                      Submit <MdSend style={{ marginLeft: '7px' }} />
+                    </button>
 
+                    <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
+                      <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+                        <Modal.Title>Notification</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <div className="d-flex justify-content-center align-items-center">
+                          <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
+                            Need to Capture A Photo Before submitting
+                          </p>
+                          <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
+                        </div>
+                      </Modal.Body>
+                      <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+                        <BootstrapButton variant="primary" onClick={this.handleCloseNotification} style={{ background: 'maroon', width: '150px' }}>
+                          OK
+                        </BootstrapButton>
+                      </Modal.Footer>
+                    </Modal>
 
                     <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
                       <Modal.Header closeButton>
