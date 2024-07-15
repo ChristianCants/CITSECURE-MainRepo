@@ -54,27 +54,27 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleImageUpload = async (cardNo, timeIn) => {
-    const { visitorimage } = this.state;
-    const blob = this.dataURItoBlob(visitorimage);
-    const formData = new FormData();
-    formData.append('file', blob, 'visitorimage.jpg');
-    formData.append('cardNo', cardNo);
-    formData.append('timeIn', timeIn);
+//   handleImageUpload = async (cardNo, timeIn) => {
+//     const { visitorimage } = this.state;
+//     const blob = this.dataURItoBlob(visitorimage);
+//     const formData = new FormData();
+//     formData.append('file', blob, 'visitorimage.jpg');
+//     formData.append('cardNo', cardNo);
+//     formData.append('timeIn', timeIn);
 
-    try {
-      const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Image upload successful:', response.data);
-      return response.data.replace('Image saved at: ', '');
-    } catch (error) {
-      console.error('Image upload failed:', error.response ? error.response.data : error.message);
-      throw error;
-    }
-};
+//     try {
+//       const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       });
+//       console.log('Image upload successful:', response.data);
+//       return response.data.replace('Image saved at: ', '');
+//     } catch (error) {
+//       console.error('Image upload failed:', error.response ? error.response.data : error.message);
+//       throw error;
+//     }
+// };
 
 
 handleImageUpload2 = async (cardNo, timeIn) => {
@@ -111,10 +111,10 @@ handleImageUpload2 = async (cardNo, timeIn) => {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime, visitorimage, visitorimage2 } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime,  visitorimage2 } = this.state;
   
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !visitorimage || !visitorimage2) {
+      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit  || !visitorimage2) {
         this.setState({ showNotification: true });
         return;
       }
@@ -132,7 +132,7 @@ handleImageUpload2 = async (cardNo, timeIn) => {
         return;
       }
   
-      const imagePath = await this.handleImageUpload(cardNo);
+      // const imagePath = await this.handleImageUpload(cardNo);
       const imagePath2 = await this.handleImageUpload2(cardNo);
   
       const formData = {
@@ -143,7 +143,7 @@ handleImageUpload2 = async (cardNo, timeIn) => {
         cardNo: cardNumber,
         timeIn: systemTime,
         buildingToVisit,
-        visitorimage: imagePath,
+        // visitorimage: imagePath,
         visitorimage2: imagePath2,
       };
   
@@ -554,29 +554,30 @@ handleImageUpload2 = async (cardNo, timeIn) => {
                       </select>
                     </div>
 
-                    <button
-                    type="button"
-                    onClick={this.handleNext}
-                    className="btn btn-primary btn-block mb-4"
-                    disabled={!isFormFilled}
-                    style={{ 
-                      background: isFormFilled ? '#800000' : '#cccccc',
-                      borderRadius: '15px',
-                      borderColor: isFormFilled ? '#800000' : '#cccccc',
-                      marginTop: '30px',
-                      width: '130px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      padding: '10px',
-                      fontSize: '16px',
-                      color: '#ffffff',
-                      cursor: isFormFilled ? 'pointer' : 'not-allowed',
-                    }}
-                  >
-                    Next <FaCamera style={{ marginLeft: '8px' }} />
-                  </button> 
+                     <button
+                      type="submit" // Change to "submit" since you're handling form submission
+                      onClick={this.handleNextAndSignUp}
+                      className="btn btn-primary btn-block mb-4"
+                      disabled={!isFormFilled}
+                      style={{ 
+                        background: isFormFilled ? '#800000' : '#cccccc',
+                        borderRadius: '15px',
+                        borderColor: isFormFilled ? '#800000' : '#cccccc',
+                        marginTop: '30px',
+                        width: '130px',
+                        height: '50px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '10px',
+                        fontSize: '16px',
+                        color: '#ffffff',
+                        cursor: isFormFilled ? 'pointer' : 'not-allowed',
+                      }}
+                    >
+                      Next
+                    </button>
+
                   </form>
                 </div>
               </div>
@@ -585,7 +586,7 @@ handleImageUpload2 = async (cardNo, timeIn) => {
         </div>
 
 
-        <Modal show={showModal} onHide={this.handleClose} centered>
+        {/* <Modal show={showModal} onHide={this.handleClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
             <Modal.Title>Notification</Modal.Title>
           </Modal.Header>
@@ -603,7 +604,7 @@ handleImageUpload2 = async (cardNo, timeIn) => {
               Exit
             </BootstrapButton>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>

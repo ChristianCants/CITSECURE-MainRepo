@@ -63,26 +63,26 @@ class VisitorExit extends Component {
 
   handleLogin = async (e) => {
     e.preventDefault();
-    const { cardNo } = this.state;
-
+    const { cardNo, timeIn } = this.state;
+  
     if (!cardNo) {
       alert('Please fill out all fields');
       return;
     }
-
+  
     if (cardNo <= 0 || cardNo > 100) {
       alert('Invalid card number.');
       return;
     }
-
+  
     try {
       const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
       if (response.data) {
-        const imageResponse = await axios.get(`http://localhost:8080/image/getVisitorImg/${cardNo}/${response.data.timeIn}`, {
+        const imageResponse = await axios.get(`http://localhost:8080/image/getIDImg/${cardNo}/${timeIn}`, {
           responseType: 'blob',
         });
         const imageURL = URL.createObjectURL(imageResponse.data);
-
+  
         this.setState({
           userDetails: response.data,
           firstName: response.data.firstName,
@@ -98,6 +98,7 @@ class VisitorExit extends Component {
       this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
   };
+  
 
   handleConfirmExit = async () => {
     const { cardNo, hours, minutes, ampm } = this.state;
