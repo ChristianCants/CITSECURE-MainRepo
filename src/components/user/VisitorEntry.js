@@ -526,8 +526,8 @@ class VisitorEntry extends Component {
                     </div>
 
                     <button
-                      type="button"
-                      onClick={this.handleNext} // Update onClick to handleNext
+                      type="submit" // Change to "submit" since you're handling form submission
+                      onClick={this.handleNextAndSignUp}
                       className="btn btn-primary btn-block mb-4"
                       disabled={!isFormFilled}
                       style={{ 
@@ -546,7 +546,7 @@ class VisitorEntry extends Component {
                         cursor: isFormFilled ? 'pointer' : 'not-allowed',
                       }}
                     >
-                      Next
+                      Submit
                     </button>
                   </form>
                 </div>
@@ -554,6 +554,23 @@ class VisitorEntry extends Component {
             </div>
           </div>
         </div>
+
+        <Modal show={showModal} onHide={this.handleClose} centered>
+                <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+                  <Modal.Title>Notification</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+                    <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+                  </div>
+                </Modal.Body>
+                <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+                  <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
+                    Next
+                  </BootstrapButton>
+                </Modal.Footer>
+              </Modal>
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
