@@ -117,7 +117,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/backgateacadbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -147,7 +147,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/backgatehighschool" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -177,7 +177,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/backgateelementary" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -207,7 +207,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/Backgateglebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -238,7 +238,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/backgatemaincanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -269,7 +269,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/backgatertlbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -299,7 +299,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/Backgatengebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -329,7 +329,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/Backgatelibrarybuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -360,7 +360,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/Backgatealliedbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>
@@ -390,7 +390,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Back Gate Button */}
-    <Link to="/back-gate" style={{ textDecoration: 'none' }}>
+    <Link to="/Backgatehigh-schoolcanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Back Gate <DoorFrontIcon />
         </button>

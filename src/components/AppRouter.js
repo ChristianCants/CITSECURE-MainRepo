@@ -9,6 +9,7 @@ import AdminPage from './admin/AdminPage';
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';
 import About from './About';
 import AdminLogin from './LoginControl Class/AdminLogin';
+
 import AcadBuilding from './Visitor Class/AcadBuilding';
 import HighSchool from './Visitor Class/HighSchool';
 import Elementary from './Visitor Class/Elementary';
@@ -19,6 +20,19 @@ import NGEBuilding from './Visitor Class/NGEBuilding';
 import LibraryBuilding from './Visitor Class/LibraryBuilding';
 import AlliedBuilding from './Visitor Class/AlliedBuilding';
 import HighSchoolCanteen from './Visitor Class/HighSchoolCanteen';
+
+import BackgateAcadBuilding from './Visitor Class/BackgateAcadBuilding';
+import BackgateHighSchool from './Visitor Class/BackgateHighSchool';
+import BackgateElementary from './Visitor Class/BackgateElementary';
+import BackgateGLEBuilding from './Visitor Class/BackGLEBuilding';
+import BackgateMainCanteen from './Visitor Class/BackgateMainCanteen';
+import BackgateRTLBuilding from './Visitor Class/BackgateRTLBuilding';
+import BackgateNGEBuilding from './Visitor Class/BackgateNGEBuilding';
+import BackgateLibraryBuilding from './Visitor Class/BackgateLibraryBuilding';
+import BackgateAlliedBuilding from './Visitor Class/BackgateAlliedBuilding';
+import BackgateHighSchoolCanteen from './Visitor Class/BackgateHighSchoolCanteen';
+
+
 
 const AppRouter = () => {
     return (
@@ -33,6 +47,9 @@ const AppRouter = () => {
                 <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/AdminLogin" element={<AdminLogin />} />
+
+                
+                {/* Frontgate Navigation for All buildingToVisit */}
                 <Route path="/acadbuilding" element={<AcadBuilding />} />
                 <Route path="/highschool" element={<HighSchool />} /> 
                 <Route path="/elementary" element={<Elementary />} /> 
@@ -43,6 +60,21 @@ const AppRouter = () => {
                 <Route path="/librarybuilding" element={<LibraryBuilding/>} />
                 <Route path="/alliedbuilding" element={<AlliedBuilding/>} />
                 <Route path="/high-schoolcanteen" element={<HighSchoolCanteen/>} />
+
+                
+                {/* Backgate navigation for All buildingToVisit */}
+
+                <Route path="/backgateacadbuilding" element={<BackgateAcadBuilding />} />
+                <Route path="/backgatehighschool" element={<BackgateHighSchool />} /> 
+                <Route path="/backgateelementary" element={<BackgateElementary />} /> 
+                <Route path="/Backgateglebuilding" element={<BackgateGLEBuilding />} />
+                <Route path="/backgatemaincanteen" element={<BackgateMainCanteen />} />
+                <Route path="/backgatertlbuilding" element={<BackgateRTLBuilding/>} />
+                <Route path="/Backgatengebuilding" element={<BackgateNGEBuilding/>} />
+                <Route path="/Backgatelibrarybuilding" element={<BackgateLibraryBuilding/>} />
+                <Route path="/Backgatealliedbuilding" element={<BackgateAlliedBuilding/>} />
+                <Route path="/Backgatehigh-schoolcanteen" element={<BackgateHighSchoolCanteen/>} />
+
             </Routes>
         </Router>
     );
