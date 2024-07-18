@@ -54,11 +54,10 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleImageUpload2 = async (cardNo) => {
-    const { visitorimage2,  } = this.state;
+  handleImageUpload2 = async (cardNo, timeIn) => {
+    const { visitorimage2 } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
 
-    // Get the current date and time for the filename
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -68,7 +67,7 @@ class VisitorEntry extends Component {
 
     const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
     const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
-    const filename = `${sanitizedCardNo}_${formattedTime}.jpg`;
+    const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
 
     const formData = new FormData();
     formData.append('file', blob, filename);
@@ -87,14 +86,7 @@ class VisitorEntry extends Component {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
       throw error;
     }
-};
-
-
-
-
-
-
-
+  };
 
   dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -109,7 +101,7 @@ class VisitorEntry extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, visitorimage2 } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, timeIn, visitorimage2 } = this.state;
 
     try {
       if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !visitorimage2) {
@@ -138,7 +130,7 @@ class VisitorEntry extends Component {
         purpose,
         status: 1,
         cardNo: cardNumber,
-        timeIn: this.state.timeIn, // Ensure timeIn is included here
+        timeIn: timeIn,
         buildingToVisit,
         visitorimage2: imagePath2,
       };
@@ -176,11 +168,8 @@ class VisitorEntry extends Component {
   };
 
   handleNext = () => {
-    if (this.state.visitorimage2) {
-      this.props.navigate('/VisitorPhoto');
-    } else {
-      this.setState({ showNotification: true });
-    }
+    const { cardNo } = this.state;
+    this.props.navigate('/VisitorPhoto', { state: { cardNo } });
   };
 
   handleClose = () => {
@@ -223,7 +212,7 @@ class VisitorEntry extends Component {
   };
 
   handleCloseNotification = () => {
-    this.setState({ showModal: false });
+    this.setState({ showNotification: false });
   };
 
   render() {
@@ -546,7 +535,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <button
-                      type="submit" // Change to "submit" since you're handling form submission
+                      type="submit"
                       className="btn btn-primary btn-block mb-4"
                       disabled={!isFormFilled}
                       style={{ 
@@ -575,21 +564,21 @@ class VisitorEntry extends Component {
         </div>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
-                <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-                  <Modal.Title>Notification</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-                    <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-                  <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
-                    Next
-                  </BootstrapButton>
-                </Modal.Footer>
-              </Modal>
+          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Notification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+              <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
+              Next
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>

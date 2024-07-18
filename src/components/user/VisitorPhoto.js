@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FaCamera} from 'react-icons/fa';
+import { FaCamera } from 'react-icons/fa';
 import { MdSend } from 'react-icons/md'; // Import the submit icon
 import Webcam from 'react-webcam';
 
@@ -14,6 +14,7 @@ import './VisitorEntry.css'; // Import the CSS file
 class VisitorPhoto extends Component {
   constructor(props) {
     super(props);
+    const { state } = this.props.location;
     this.state = {
       showCamera2: false,
       visitorimage2: null,
@@ -21,6 +22,7 @@ class VisitorPhoto extends Component {
       showErrorModal: false,
       showNotificationModal: false,
       systemTime: '',
+      cardNo: state?.cardNo || '', // Retrieve cardNo from location state or set to empty string
     };
   }
 
@@ -53,7 +55,6 @@ class VisitorPhoto extends Component {
     const { visitorimage2 } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
 
-    // Get the current date and time for the filename
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
@@ -63,7 +64,7 @@ class VisitorPhoto extends Component {
 
     const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
     const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
-    const filename = `${sanitizedCardNo}_${formattedTime}.jpg`;
+    const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
 
     const formData = new FormData();
     formData.append('file', blob, filename);
@@ -71,7 +72,7 @@ class VisitorPhoto extends Component {
     formData.append('timeIn', formattedTime); // Use formattedTime
 
     try {
-      const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
+      const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -82,7 +83,7 @@ class VisitorPhoto extends Component {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
       throw error;
     }
-};
+  };
 
   handleCapture2 = () => {
     const visitorimage2 = this.webcam2.getScreenshot();
@@ -99,11 +100,11 @@ class VisitorPhoto extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { visitorimage2 } = this.state;
+    const { visitorimage2, cardNo } = this.state;
 
     if (visitorimage2) {
       try {
-        await this.handleImageUpload2();
+        await this.handleImageUpload2(cardNo);
         this.setState({ showModal: true });
       } catch (error) {
         console.error('Error during form submission:', error);
@@ -139,7 +140,7 @@ class VisitorPhoto extends Component {
       background: 'url("images/TIME IN.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      minHeight: '100vh', 
+      minHeight: '100vh',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -359,5 +360,6 @@ class VisitorPhoto extends Component {
 
 export default function VisitorPhotoWithNavigate(props) {
   const navigate = useNavigate();
-  return <VisitorPhoto {...props} navigate={navigate} />;
+  const location = useLocation();
+  return <VisitorPhoto {...props} navigate={navigate} location={location} />;
 }
