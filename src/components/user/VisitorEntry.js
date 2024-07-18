@@ -22,7 +22,7 @@ class VisitorEntry extends Component {
       showModal: false,
       showNotification: false,
       showErrorModal: false,
-      systemTime: '',
+      timeIn: '',
       showCamera: false,
       visitorimage: null,
       visitorimage2: null,
@@ -41,7 +41,7 @@ class VisitorEntry extends Component {
 
   componentDidMount() {
     const currentTime = this.getCurrentTime();
-    this.setState({ systemTime: currentTime });
+    this.setState({ timeIn: currentTime });
   }
 
   checkCardUsage = async (cardNo) => {
@@ -54,13 +54,26 @@ class VisitorEntry extends Component {
     }
   };
 
-  handleImageUpload2 = async (cardNo, timeIn) => {
-    const { visitorimage2 } = this.state;
+  handleImageUpload2 = async (cardNo) => {
+    const { visitorimage2,  } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
+
+    // Get the current date and time for the filename
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const year = now.getFullYear();
+
+    const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
+    const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
+    const filename = `${sanitizedCardNo}_${formattedTime}.jpg`;
+
     const formData = new FormData();
-    formData.append('file', blob, 'visitorimage2.jpg');
-    formData.append('cardNo', cardNo);
-    formData.append('timeIn', timeIn);
+    formData.append('file', blob, filename);
+    formData.append('cardNo', sanitizedCardNo);
+    formData.append('timeIn', formattedTime); // Use formattedTime
 
     try {
       const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
@@ -74,7 +87,14 @@ class VisitorEntry extends Component {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
       throw error;
     }
-  };
+};
+
+
+
+
+
+
+
 
   dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -89,7 +109,7 @@ class VisitorEntry extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, systemTime, visitorimage2 } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, visitorimage2 } = this.state;
 
     try {
       if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !visitorimage2) {
@@ -118,7 +138,7 @@ class VisitorEntry extends Component {
         purpose,
         status: 1,
         cardNo: cardNumber,
-        timeIn: systemTime,
+        timeIn: this.state.timeIn, // Ensure timeIn is included here
         buildingToVisit,
         visitorimage2: imagePath2,
       };
@@ -207,7 +227,7 @@ class VisitorEntry extends Component {
   };
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, systemTime, showCamera, visitorimage, showCamera2, visitorimage2, showNotification } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification } = this.state;
 
     const isFormFilled = firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
 
@@ -495,7 +515,7 @@ class VisitorEntry extends Component {
                         id="timeIn"
                         className="form-control custom-input"
                         style={inputStyle.id === 'timeIn' ? timeInInputStyle : inputStyle}
-                        value={systemTime}
+                        value={timeIn}
                         readOnly
                         required
                       />
@@ -527,7 +547,6 @@ class VisitorEntry extends Component {
 
                     <button
                       type="submit" // Change to "submit" since you're handling form submission
-                      onClick={this.handleNextAndSignUp}
                       className="btn btn-primary btn-block mb-4"
                       disabled={!isFormFilled}
                       style={{ 

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FaCamera, FaTimesCircle } from 'react-icons/fa';
+import { FaCamera} from 'react-icons/fa';
 import { MdSend } from 'react-icons/md'; // Import the submit icon
 import Webcam from 'react-webcam';
 
@@ -49,16 +49,29 @@ class VisitorPhoto extends Component {
     return new Blob([ab], { type: mimeString });
   };
 
-  handleImageUpload2 = async (cardNo, timeIn) => {
+  handleImageUpload2 = async (cardNo) => {
     const { visitorimage2 } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
+
+    // Get the current date and time for the filename
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const year = now.getFullYear();
+
+    const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
+    const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
+    const filename = `${sanitizedCardNo}_${formattedTime}.jpg`;
+
     const formData = new FormData();
-    formData.append('file', blob, 'visitorimage2.jpg');
-    formData.append('cardNo', cardNo);
-    formData.append('timeIn', timeIn);
+    formData.append('file', blob, filename);
+    formData.append('cardNo', sanitizedCardNo);
+    formData.append('timeIn', formattedTime); // Use formattedTime
 
     try {
-      const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
+      const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -69,7 +82,7 @@ class VisitorPhoto extends Component {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
       throw error;
     }
-  };
+};
 
   handleCapture2 = () => {
     const visitorimage2 = this.webcam2.getScreenshot();
