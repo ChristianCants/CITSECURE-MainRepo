@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-class HighSchool extends Component {
+class FrontgateAlliedBuilding extends Component {
     handleGoBack = () => {
         window.location.href = '/visitor-navigation';
     };
@@ -26,8 +26,8 @@ class HighSchool extends Component {
                     </div>
                     <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
                         <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Front Gate</span></li>
-                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>HighSchool Building</span></li>
-                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Direction</span></li>
+                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>Allied Building</span></li>
+                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}> Direction</span></li>
                     </ul>
                     <Button
                         variant="contained"
@@ -49,8 +49,8 @@ class HighSchool extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/HighSchoolMap (front).png"
-                                alt="High School Map"
+                                src="/images/AlliedMap (front).png"
+                                alt="Allied Map"
                                 style={{
                                     width: '60%',
                                     height: 'auto',
@@ -64,4 +64,4 @@ class HighSchool extends Component {
     }
 }
 
-export default HighSchool;
+export default FrontgateAlliedBuilding;

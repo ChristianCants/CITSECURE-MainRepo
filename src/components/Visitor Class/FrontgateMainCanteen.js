@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-class MainCanteen extends Component {
+class FrontgateMainCanteen extends Component {
     handleGoBack = () => {
         window.location.href = '/visitor-navigation';
     };
@@ -64,4 +64,4 @@ class MainCanteen extends Component {
     }
 }
 
-export default MainCanteen;
+export default FrontgateMainCanteen;

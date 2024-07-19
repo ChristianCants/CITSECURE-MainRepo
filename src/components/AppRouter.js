@@ -10,16 +10,16 @@ import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';
 import About from './About';
 import AdminLogin from './LoginControl Class/AdminLogin';
 
-import AcadBuilding from './Visitor Class/AcadBuilding';
-import HighSchool from './Visitor Class/HighSchool';
-import Elementary from './Visitor Class/Elementary';
-import GLEBuilding from './Visitor Class/GLEBuilding';
-import MainCanteen from './Visitor Class/MainCanteen';
-import RTLBuilding from './Visitor Class/RTLBuilding';
-import NGEBuilding from './Visitor Class/NGEBuilding';
-import LibraryBuilding from './Visitor Class/LibraryBuilding';
-import AlliedBuilding from './Visitor Class/AlliedBuilding';
-import HighSchoolCanteen from './Visitor Class/HighSchoolCanteen';
+import FrontgateAcadBuilding from './Visitor Class/FrontgateAcadBuilding';
+import FrontgateHighSchool from './Visitor Class/FrontgateHighSchool';
+import FrontgateElementary from './Visitor Class/FrontgateElementary';
+import FrontgateGLEBuilding from './Visitor Class/FrontgateGLEBuilding';
+import FrontgateMainCanteen from './Visitor Class/FrontgateMainCanteen';
+import FrontgateRTLBuilding from './Visitor Class/FrontgateRTLBuilding';
+import FrontgateNGEBuilding from './Visitor Class/FrontgateNGEBuilding';
+import FrontgateLibraryBuilding from './Visitor Class/FrontgateLibraryBuilding';
+import FrontgateAlliedBuilding from './Visitor Class/FrontgateAlliedBuilding';
+import FrontgateHighSchoolCanteen from './Visitor Class/FrontgateHighSchoolCanteen';
 
 import BackgateAcadBuilding from './Visitor Class/BackgateAcadBuilding';
 import BackgateHighSchool from './Visitor Class/BackgateHighSchool';
@@ -31,6 +31,7 @@ import BackgateNGEBuilding from './Visitor Class/BackgateNGEBuilding';
 import BackgateLibraryBuilding from './Visitor Class/BackgateLibraryBuilding';
 import BackgateAlliedBuilding from './Visitor Class/BackgateAlliedBuilding';
 import BackgateHighSchoolCanteen from './Visitor Class/BackgateHighSchoolCanteen';
+
 
 
 
@@ -50,16 +51,16 @@ const AppRouter = () => {
 
                 
                 {/* Frontgate Navigation for All buildingToVisit */}
-                <Route path="/acadbuilding" element={<AcadBuilding />} />
-                <Route path="/highschool" element={<HighSchool />} /> 
-                <Route path="/elementary" element={<Elementary />} /> 
-                <Route path="/glebuilding" element={<GLEBuilding />} />
-                <Route path="/maincanteen" element={<MainCanteen />} />
-                <Route path="/rtlbuilding" element={<RTLBuilding/>} />
-                <Route path="/ngebuilding" element={<NGEBuilding/>} />
-                <Route path="/librarybuilding" element={<LibraryBuilding/>} />
-                <Route path="/alliedbuilding" element={<AlliedBuilding/>} />
-                <Route path="/high-schoolcanteen" element={<HighSchoolCanteen/>} />
+                <Route path="/frontgateacadbuilding" element={<FrontgateAcadBuilding />} />
+                <Route path="/frontgatehighschool" element={<FrontgateHighSchool />} /> 
+                <Route path="/frontgateelementary" element={<FrontgateElementary/>} /> 
+                <Route path="/frontgateglebuilding" element={<FrontgateGLEBuilding />} />
+                <Route path="/frontgatemaincanteen" element={<FrontgateMainCanteen />} />
+                <Route path="/frontgatertlbuilding" element={<FrontgateRTLBuilding/>} />
+                <Route path="/frontgatengebuilding" element={<FrontgateNGEBuilding/>} />
+                <Route path="/frontgatelibrarybuilding" element={<FrontgateLibraryBuilding/>} />
+                <Route path="/frontgatealliedbuilding" element={<FrontgateAlliedBuilding/>} />
+                <Route path="/frontgatehigh-schoolcanteen" element={<FrontgateHighSchoolCanteen/>} />
 
                 
                 {/* Backgate navigation for All buildingToVisit */}

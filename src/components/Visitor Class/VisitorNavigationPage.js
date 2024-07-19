@@ -111,7 +111,7 @@ class VisitorNavigationPage extends React.Component {
                                     <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office. It offers design studios, specialized classrooms, labs, and a secure environment for students. The building serves as a hub for learning, innovation, and community building, fostering a dynamic learning environment.</p>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/acadbuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgateacadbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -141,7 +141,7 @@ class VisitorNavigationPage extends React.Component {
                                     <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life. The high school facility creates a suitable atmosphere for study and personal growth by providing well-equipped classrooms, contemporary amenities, and collaboration spaces.</p>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/highschool" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatehighschool" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -171,7 +171,7 @@ class VisitorNavigationPage extends React.Component {
                                     <p>Step inside the heart of our elementary building, a dynamic and loving environment designed for early childhood education.</p>
                                     <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/elementary" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgateelementary" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -201,7 +201,7 @@ class VisitorNavigationPage extends React.Component {
                             <p>The educational complex is a hub for academic and administrative functions, encompassing the Human Resources office, Computer Engineering department, diverse classrooms, and a VPAA office. It promotes interdisciplinary collaboration and serves as a hub for administrative functions, technological education, and diverse academic disciplines.</p>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/glebuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgateglebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -232,7 +232,7 @@ class VisitorNavigationPage extends React.Component {
                         <p>Immerse yourself in a culinary journey at the Main Canteen, where an assortment of delightful aromas and diverse flavors unite.</p>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/maincanteen" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatemaincanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -263,7 +263,7 @@ class VisitorNavigationPage extends React.Component {
                                 <p>The administrative center is a multifunctional building that houses various functions such as Accounting, Finance, Enrollment, Technical, and Executive. It ensures financial accuracy, compliance, and streamlines operations across various departments, ensuring smooth functioning and efficient operations across the institution.</p>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/rtlbuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatertlbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -293,7 +293,7 @@ class VisitorNavigationPage extends React.Component {
                                 <p>Enter our specialized building, a fusion of innovation and care, where the realms of Computer Studies and Nursing seamlessly coexist.</p>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/ngebuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatengebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -323,7 +323,7 @@ class VisitorNavigationPage extends React.Component {
                         <p>Begin a literary adventure within the walls of our library, a haven for knowledge and discovery.</p>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/librarybuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatelibrarybuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -354,7 +354,7 @@ class VisitorNavigationPage extends React.Component {
                                 <p>Our engineering hub is a comprehensive facility for students specializing in electrical, chemical, mining, civil, and mechanical engineering. It features specialized laboratories, classrooms, and collaborative spaces, fostering hands-on learning and innovation to shape the future.</p>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/alliedbuilding" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatealliedbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>
@@ -384,7 +384,7 @@ class VisitorNavigationPage extends React.Component {
                         <p>Discover a vibrant dining experience at the high school canteen, where a lively atmosphere meets diverse culinary offerings.</p>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
     {/* Front Gate Button */}
-    <Link to="/high-schoolcanteen" style={{ textDecoration: 'none' }}>
+    <Link to="/frontgatehigh-schoolcanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
         </button>

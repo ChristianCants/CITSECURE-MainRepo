@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-class Elementary extends Component {
+class FrontgateNGEBuilding extends Component {
     handleGoBack = () => {
         window.location.href = '/visitor-navigation';
     };
@@ -26,7 +26,7 @@ class Elementary extends Component {
                     </div>
                     <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
                         <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Front Gate</span></li>
-                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>Elementary Building</span></li>
+                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>NGE Building</span></li>
                         <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Direction</span></li>
                     </ul>
                     <Button
@@ -49,8 +49,8 @@ class Elementary extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/ElementaryMap (front).png"
-                                alt="Elementary Map"
+                                src="/images/NGEMap (front).png"
+                                alt="NGE Map"
                                 style={{
                                     width: '60%',
                                     height: 'auto',
@@ -64,4 +64,4 @@ class Elementary extends Component {
     }
 }
 
-export default Elementary;
+export default FrontgateNGEBuilding;

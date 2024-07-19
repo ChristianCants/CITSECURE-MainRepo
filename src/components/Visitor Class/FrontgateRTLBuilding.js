@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-class LibraryBuilding extends Component {
+class FrontgateRTLBuilding extends Component {
     handleGoBack = () => {
         window.location.href = '/visitor-navigation';
     };
@@ -26,7 +26,7 @@ class LibraryBuilding extends Component {
                     </div>
                     <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
                         <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Front Gate</span></li>
-                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>Library Building</span></li>
+                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>RTL Building</span></li>
                         <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Direction</span></li>
                     </ul>
                     <Button
@@ -49,8 +49,8 @@ class LibraryBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/LibraryMap (front).png"
-                                alt="Library Map"
+                                src="/images/RTLMap (front).png"
+                                alt="Acad Map"
                                 style={{
                                     width: '60%',
                                     height: 'auto',
@@ -64,4 +64,4 @@ class LibraryBuilding extends Component {
     }
 }
 
-export default LibraryBuilding;
+export default FrontgateRTLBuilding;
