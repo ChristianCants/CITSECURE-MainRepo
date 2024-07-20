@@ -27,16 +27,16 @@ class VisitorEntry extends Component {
       visitorimage: null,
       visitorimage2: null,
       showCamera2: false,
+      isVisitorIdCaptured: false, // Add this state
     };
   }
 
   getCurrentTime = () => {
     const now = new Date();
     const hours = now.getHours() % 12 || 12;
-    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    const formattedTime = `${hours}:${minutes} ${ampm}`;
-    return formattedTime;
+    return `${hours}:${minutes} ${ampm}`;
   };
 
   componentDidMount() {
@@ -46,7 +46,9 @@ class VisitorEntry extends Component {
 
   checkCardUsage = async (cardNo) => {
     try {
+      console.log(`Checking card usage for card number: ${cardNo}`);
       const response = await axios.get(`http://localhost:8080/visitor/checkcard/${cardNo}`);
+      console.log('Card usage response:', response.data);
       return response.data.isUsed;
     } catch (error) {
       console.error('Failed to check card usage:', error.message);
@@ -190,7 +192,7 @@ class VisitorEntry extends Component {
   };
 
   handleCameraOpen2 = () => {
-    this.setState({ showCamera2: true });
+    this.setState({ showCamera2: true, isVisitorIdCaptured: true }); // Set state to indicate Visitor ID is captured
   };
 
   handleCapture = () => {
@@ -216,7 +218,7 @@ class VisitorEntry extends Component {
   };
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification } = this.state;
+    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification, isVisitorIdCaptured } = this.state;
 
     const isFormFilled = firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
 
@@ -246,23 +248,35 @@ class VisitorEntry extends Component {
       fontFamily: 'Roboto, sans-serif',
       width: '100%',
     };
+
     const timeInInputStyle = {
       ...inputStyle,
       border: 'none', // Remove border specifically for "Time In"
     };
 
+    const visitorIdSectionStyle = isVisitorIdCaptured
+      ? { border: '2px solid maroon', padding: '10px', marginBottom: '10px' }
+      : { padding: '10px', marginBottom: '10px' };
+
+    const buildingToVisitStyle = {
+      borderColor: 'maroon',
+      borderRadius: '10px',
+      color: 'maroon',
+      backgroundColor: 'white',
+      fontFamily: 'Roboto, sans-serif',
+    };
+
     return (
       <section
         className="background-radial-gradient overflow-hidden"
-        style={{ 
-          ...backgroundImageStyle, 
-          backgroundColor: 'rgba(0, 0, 0, 0)' // Set to transparent
+        style={{
+          ...backgroundImageStyle,
+          backgroundColor: 'rgba(0, 0, 0, 0)', // Set to transparent
         }}
       >
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
           <div className="row gx-lg-5 align-items-center mb-5">
-            <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}>
-            </div>
+            <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}></div>
             <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
               <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                 <Chip
@@ -305,12 +319,7 @@ class VisitorEntry extends Component {
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        <Webcam
-                          audio={false}
-                          ref={(webcam) => (this.webcam = webcam)}
-                          screenshotFormat="image/jpeg"
-                          width="100%"
-                        />
+                        <Webcam audio={false} ref={(webcam) => (this.webcam = webcam)} screenshotFormat="image/jpeg" width="100%" />
                       </Modal.Body>
                       <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
                         <button
@@ -329,16 +338,12 @@ class VisitorEntry extends Component {
                         >
                           Capture
                         </button>
-                        {visitorimage && (
-                          <Button variant="secondary" onClick={this.handleRetake}>
-                            Retake
-                          </Button>
-                        )}
+                        {visitorimage && <Button variant="secondary" onClick={this.handleRetake}>Retake</Button>}
                       </Modal.Footer>
                     </Modal>
 
                     {/* Second section for Visitor ID */}
-                    <div style={{ border: '2px solid maroon', padding: '10px', marginBottom: '10px' }}>
+                    <div style={visitorIdSectionStyle}>
                       <h3 style={{ marginBottom: '10px' }}>Visitor ID</h3>
                       {!showCamera2 && !visitorimage2 && (
                         <button
@@ -397,12 +402,7 @@ class VisitorEntry extends Component {
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        <Webcam
-                          audio={false}
-                          ref={(webcam) => (this.webcam2 = webcam)}
-                          screenshotFormat="image/jpeg"
-                          width="100%"
-                        />
+                        <Webcam audio={false} ref={(webcam) => (this.webcam2 = webcam)} screenshotFormat="image/jpeg" width="100%" />
                       </Modal.Body>
                       <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
                         <button
@@ -421,18 +421,12 @@ class VisitorEntry extends Component {
                         >
                           Capture
                         </button>
-                        {visitorimage2 && (
-                          <Button variant="secondary" onClick={this.handleRetake2}>
-                            Retake
-                          </Button>
-                        )}
+                        {visitorimage2 && <Button variant="secondary" onClick={this.handleRetake2}>Retake</Button>}
                       </Modal.Footer>
                     </Modal>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="firstName">
-                        First Name
-                      </label>
+                      <label className="form-label" htmlFor="firstName">First Name</label>
                       <input
                         type="text"
                         id="firstName"
@@ -445,9 +439,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="lastName">
-                        Last Name
-                      </label>
+                      <label className="form-label" htmlFor="lastName">Last Name</label>
                       <input
                         type="text"
                         id="lastName"
@@ -460,9 +452,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="purpose">
-                        Purpose
-                      </label>
+                      <label className="form-label" htmlFor="purpose">Purpose</label>
                       <input
                         type="text"
                         id="purpose"
@@ -475,9 +465,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">
-                        Card Number
-                      </label>
+                      <label className="form-label" htmlFor="cardNo">Card Number</label>
                       <input
                         type="text"
                         id="cardNo"
@@ -496,9 +484,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="timeIn">
-                        Time In
-                      </label>
+                      <label className="form-label" htmlFor="timeIn">Time In</label>
                       <input
                         type="text"
                         id="timeIn"
@@ -515,7 +501,7 @@ class VisitorEntry extends Component {
                       <select
                         id="buildingToVisit"
                         className="form-control"
-                        style={{ color: 'maroon' }}
+                        style={buildingToVisitStyle}
                         value={buildingToVisit}
                         onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
                         required
@@ -538,7 +524,7 @@ class VisitorEntry extends Component {
                       type="submit"
                       className="btn btn-primary btn-block mb-4"
                       disabled={!isFormFilled}
-                      style={{ 
+                      style={{
                         background: isFormFilled ? '#800000' : '#cccccc',
                         borderRadius: '15px',
                         borderColor: isFormFilled ? '#800000' : '#cccccc',

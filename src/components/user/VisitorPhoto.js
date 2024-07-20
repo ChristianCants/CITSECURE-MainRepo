@@ -23,6 +23,7 @@ class VisitorPhoto extends Component {
       showNotificationModal: false,
       systemTime: '',
       cardNo: state?.cardNo || '', // Retrieve cardNo from location state or set to empty string
+      isVisitorPhotoCaptured: false, // State to manage border visibility
     };
   }
 
@@ -87,7 +88,7 @@ class VisitorPhoto extends Component {
 
   handleCapture2 = () => {
     const visitorimage2 = this.webcam2.getScreenshot();
-    this.setState({ visitorimage2, showCamera2: false });
+    this.setState({ visitorimage2, showCamera2: false, isVisitorPhotoCaptured: true });
   };
 
   handleRetake2 = () => {
@@ -132,7 +133,7 @@ class VisitorPhoto extends Component {
   };
 
   render() {
-    const { showModal, showErrorModal, showCamera2, visitorimage2, showNotificationModal } = this.state;
+    const { showModal, showErrorModal, showCamera2, visitorimage2, showNotificationModal, isVisitorPhotoCaptured } = this.state;
 
     const isFormFilled = visitorimage2;
 
@@ -157,6 +158,10 @@ class VisitorPhoto extends Component {
       height: '800px',
       margin: '0 auto',
     };
+
+    const visitorPhotoSectionStyle = isVisitorPhotoCaptured
+      ? { border: '2px solid maroon', padding: '10px', marginBottom: '10px' }
+      : { padding: '10px', marginBottom: '10px' };
 
     return (
       <section
@@ -201,7 +206,7 @@ class VisitorPhoto extends Component {
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
 
-                    <div style={{ border: '2px solid maroon', padding: '10px', marginBottom: '10px' }}>
+                    <div style={visitorPhotoSectionStyle}>
                       <h3 style={{ marginBottom: '10px' }}>Visitor Photo</h3>
                       {!showCamera2 && !visitorimage2 && (
                         <button
@@ -254,7 +259,7 @@ class VisitorPhoto extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ color: 'maroon' }}>ID Photo Capture</span>
+                          <span style={{ color: 'maroon' }}> Photo Capture</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
@@ -302,24 +307,24 @@ class VisitorPhoto extends Component {
                   </form>
 
                   <Modal show={showModal} onHide={this.handleClose} centered>
-                <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-                  <Modal.Title>Notification</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-                    <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-                  </div>
-                </Modal.Body>
-                <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
-                  <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
-                    View Maps
-                  </BootstrapButton>
-                  <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
-                    Exit
-                  </BootstrapButton>
-                </Modal.Footer>
-              </Modal>
+                    <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+                      <Modal.Title>Notification</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+                        <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
+                      <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
+                        View Maps
+                      </BootstrapButton>
+                      <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
+                        Exit
+                      </BootstrapButton>
+                    </Modal.Footer>
+                  </Modal>
 
                   <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
                     <Modal.Header closeButton>
