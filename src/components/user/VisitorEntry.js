@@ -61,13 +61,14 @@ class VisitorEntry extends Component {
     const blob = this.dataURItoBlob(visitorimage2);
 
     const now = new Date();
-    const hours = String(now.getHours()).padStart(2, '0');
+    const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
     const year = now.getFullYear();
 
-    const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
+    const formattedTime = `${hours}-${minutes}_${ampm}_${day}-${month}-${year}`;
     const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
     const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
 
