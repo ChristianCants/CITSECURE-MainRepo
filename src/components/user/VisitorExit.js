@@ -15,6 +15,7 @@ class VisitorExit extends Component {
       cardNo: '',
       hours: '',
       minutes: '',
+      ampm: '', // Add ampm to state
       showModal: false,
       showErrorModal: false,
       showConfirmModal: false,
@@ -33,9 +34,11 @@ class VisitorExit extends Component {
 
   setInitialTime = () => {
     const now = new Date();
-    const hours = String(now.getHours() % 12 || 12);
+    const hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    this.setState({ hours, minutes });
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const displayHours = String(hours % 12 || 12).padStart(2, '0'); // Adjust for 12-hour format
+    this.setState({ hours: displayHours, minutes, ampm });
   };
 
   handleExit = () => {
@@ -78,7 +81,7 @@ class VisitorExit extends Component {
 
   handleLogin = async (e) => {
     e.preventDefault();
-    const { cardNo, hours, minutes } = this.state;
+    const { cardNo, hours, minutes, ampm } = this.state;
 
     if (!cardNo) {
         alert('Please fill out all fields');
@@ -125,10 +128,9 @@ class VisitorExit extends Component {
   };
 
   handleConfirmExit = async () => {
-    const { cardNo, hours, minutes } = this.state;
+    const { cardNo, hours, minutes, ampm } = this.state;
 
     try {
-      const ampm = hours >= 12 ? 'PM' : 'AM';
       const response = await axios.put(
         `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
         {},
@@ -153,7 +155,7 @@ class VisitorExit extends Component {
   };
 
   render() {
-    const { cardNo, hours, minutes, showModal, showErrorModal, showConfirmModal, userDetails, errorMessage, visitorImage } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, userDetails, errorMessage, visitorImage } = this.state;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -187,7 +189,7 @@ class VisitorExit extends Component {
       marginBottom: '10px',
     };
 
-    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${hours >= 12 ? 'PM' : 'AM'}`;
+    const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
 
     return (
       <section className="background-radial-gradient overflow-hidden" style={backgroundImageStyle}>

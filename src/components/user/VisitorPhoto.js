@@ -187,7 +187,7 @@ class VisitorPhoto extends Component {
                 />
               </div>
               <div className="card bg-glass" style={formStyle}>
-                <Button
+                {/* <Button
                   variant="contained"
                   startIcon={<ChevronLeftIcon />}
                   onClick={this.handleGoBack}
@@ -201,7 +201,7 @@ class VisitorPhoto extends Component {
                   }}
                 >
                   Go Back
-                </Button>
+                </Button> */}
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
