@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import SendIcon from '@mui/icons-material/Send';
 import { FaTimesCircle } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
 import './VisitorExit.css';
 
 class VisitorExit extends Component {
@@ -24,7 +25,8 @@ class VisitorExit extends Component {
       firstName: '',
       lastName: '',
       visitorImage: null,
-      timeIn: '' // Add timeIn to state
+      timeIn: '', // Add timeIn to state
+      uniqueID: '' // Add uniqueID to state
     };
   }
 
@@ -64,11 +66,11 @@ class VisitorExit extends Component {
   };
 
   handleFetchVisitorImage = async (cardNo, timeIn) => {
-    const formattedTimeIn = timeIn.replace(/[:\s]/g, '_');
+    const formattedTimeIn = timeIn.replace(/[:\s]/g, '-').replace(/(AM|PM)/, '').replace(/-+$/, '');
     const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_');
     const imageUrl = `http://localhost:8080/image/getIDImg/${sanitizedCardNo}/${formattedTimeIn}`;
-    console.log(`Fetching image from URL: ${imageUrl}`);
-
+    console.log(`Fetching image from URL: ${imageUrl}`); // Log the URL to verify
+  
     try {
       const response = await axios.get(imageUrl, { responseType: 'blob' });
       const imageObjectURL = URL.createObjectURL(response.data);
@@ -78,6 +80,7 @@ class VisitorExit extends Component {
       this.setState({ errorMessage: 'Failed to load visitor image.', showErrorModal: true });
     }
   };
+  
 
   handleLogin = async (e) => {
     e.preventDefault();
@@ -101,6 +104,7 @@ class VisitorExit extends Component {
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}`;
+    const uniqueID = uuidv4(); // Generate a unique ID
 
     try {
         console.log(`Fetching details for cardNo: ${cardNo}`);
@@ -108,14 +112,15 @@ class VisitorExit extends Component {
 
         if (response.data) {
             console.log(`Fetching image for cardNo: ${cardNo} and timeIn: ${timeIn}`);
-            await this.handleFetchVisitorImage(cardNo, timeIn);
+            await this.handleFetchVisitorImage(cardNo, timeIn, uniqueID);
 
             this.setState({
                 userDetails: response.data,
                 firstName: response.data.firstName,
                 lastName: response.data.lastName,
                 showConfirmModal: true,
-                timeIn // Set timeIn in state
+                timeIn, // Set timeIn in state
+                uniqueID // Set uniqueID in state
             });
         } else {
             console.warn('No visitor currently using this card.');
@@ -288,33 +293,32 @@ class VisitorExit extends Component {
                     )}
                     <div>
                       <table style={{ margin: '0 auto', textAlign: 'left', fontSize: '16px' }}>
-                      <tbody>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>First Name:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.firstName}</td>
-  </tr>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>Last Name:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.lastName}</td>
-  </tr>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>Card No:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.cardNo}</td>
-  </tr>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>Time In:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.timeIn}</td>
-  </tr>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>Building to Visit:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.buildingToVisit}</td>
-  </tr>
-  <tr>
-    <td style={{ padding: '5px 15px', color: 'maroon' }}>Purpose:</td>
-    <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold' }}>{userDetails.purpose}</td>
-  </tr>
-</tbody>
-
+                        <tbody>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>First Name:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Last Name:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Card No:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Time In:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Building to Visit:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</td>
+                          </tr>
+                          <tr>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Purpose:</td>
+                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</td>
+                          </tr>
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -335,26 +339,25 @@ class VisitorExit extends Component {
         </Modal>
 
         <Modal show={showModal} onHide={this.handleClose} centered size="lg">
-  <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
-    <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
-      <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
-    </div>
-  </Modal.Body>
-  <Modal.Footer>
-    <BootstrapButton 
-      variant="primary" 
-      onClick={this.handleClose} 
-      style={{ backgroundColor: 'maroon', color: 'white', borderColor: 'maroon' }}
-    >
-      Close
-    </BootstrapButton>
-  </Modal.Footer>
-</Modal>
-
+          <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
+            <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+              <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
+              <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <BootstrapButton 
+              variant="primary" 
+              onClick={this.handleClose} 
+              style={{ backgroundColor: 'maroon', color: 'white', borderColor: 'maroon' }}
+            >
+              Close
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header closeButton>
