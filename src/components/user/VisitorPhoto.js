@@ -126,7 +126,7 @@ class VisitorPhoto extends Component {
   };
 
   handleViewMap = () => {
-    window.location.href = '/visitor-navigation';
+    window.location.href = '/menu';
   };
 
   render() {
