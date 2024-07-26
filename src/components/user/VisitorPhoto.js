@@ -239,9 +239,9 @@ class VisitorPhoto extends Component {
                     </div>
 
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
-                      <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ color: 'maroon' }}> Photo Capture</span>
+                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> Photo Capture</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
@@ -253,11 +253,21 @@ class VisitorPhoto extends Component {
                           height="100%"
                         />
                       </Modal.Body>
-                      <Modal.Footer>
+                      <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
                         <BootstrapButton
                           variant="primary"
                           onClick={this.handleCapture2}
-                          style={{ backgroundColor: 'maroon', borderColor: 'maroon' }}
+                          style={{
+                            backgroundColor: 'maroon',        
+                            borderColor: '#A43F3F',            
+                            color: '#FFFFFF',                  
+                            borderRadius: '5px',               
+                            padding: '10px 20px',              
+                            fontSize: '1.2em',                 
+                            fontWeight: 'normal',                
+                            cursor: 'pointer',                 
+                            border: '2px solid #A43F3F'        
+                          }}
                         >
                           Capture
                         </BootstrapButton>
@@ -309,32 +319,32 @@ class VisitorPhoto extends Component {
                 </Modal>
 
                   <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
-                    <Modal.Header closeButton>
-                      <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <p>There was an error during the form submission. Please try again.</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <BootstrapButton variant="secondary" onClick={this.handleErrorClose}>
-                        Close
-                      </BootstrapButton>
-                    </Modal.Footer>
-                  </Modal>
+                  <Modal.Header>
+                    <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>There was an error during the form submission. Please try again.</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <BootstrapButton variant="secondary" onClick={this.handleErrorClose}>
+                      Close
+                    </BootstrapButton>
+                  </Modal.Footer>
+                </Modal>
 
-                  <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
-                    <Modal.Header closeButton>
-                      <Modal.Title style={{ color: 'orange' }}>Notification</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <p>Please complete the Visitor Entry Form before submitting.</p>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
-                        Close
-                      </BootstrapButton>
-                    </Modal.Footer>
-                  </Modal>
+                <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
+                  <Modal.Header>
+                    <Modal.Title style={{ color: 'orange' }}>Notification</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Please complete the Visitor Entry Form before submitting.</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
+                      Close
+                    </BootstrapButton>
+                  </Modal.Footer>
+                </Modal>
                 </div>
               </div>
             </div>

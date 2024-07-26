@@ -316,7 +316,7 @@ class VisitorEntry extends Component {
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
                           <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '120px' }}>VISITOR</span>
-                          <span style={{ color: 'gold', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>PHOTO</span>
+                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>PHOTO</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
@@ -396,10 +396,9 @@ class VisitorEntry extends Component {
 
                     {/* Modal for Visitor ID capture */}
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
-                      <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '150px' }}>VISITOR</span>
-                          <span style={{ color: 'gold', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>ID</span>
+                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR ID</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
@@ -410,14 +409,15 @@ class VisitorEntry extends Component {
                           className="btn btn-primary"
                           onClick={this.handleCapture2}
                           style={{
-                            background: '#FFF9EB',
-                            border: '2px solid #A43F3F',
-                            color: '#000000',
-                            borderRadius: '5px',
-                            padding: '10px 20px',
-                            fontSize: '1.2em',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
+                            backgroundColor: 'maroon',        
+                            borderColor: '#A43F3F',            
+                            color: '#FFFFFF',                  
+                            borderRadius: '5px',               
+                            padding: '10px 20px',              
+                            fontSize: '1.2em',                 
+                            fontWeight: 'normal',                
+                            cursor: 'pointer',                 
+                            border: '2px solid #A43F3F'
                           }}
                         >
                           Capture
