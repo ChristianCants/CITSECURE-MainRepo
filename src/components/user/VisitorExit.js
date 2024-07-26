@@ -16,7 +16,6 @@ class VisitorExit extends Component {
       cardNo: '',
       hours: '',
       minutes: '',
-      ampm: '', // Add ampm to state
       showModal: false,
       showErrorModal: false,
       showConfirmModal: false,
@@ -36,11 +35,10 @@ class VisitorExit extends Component {
 
   setInitialTime = () => {
     const now = new Date();
-    const hours = now.getHours();
+    const hours = String(now.getHours() % 12 || 12).padStart(2, '0'); // Adjust for 12-hour format
     const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    const displayHours = String(hours % 12 || 12).padStart(2, '0'); // Adjust for 12-hour format
-    this.setState({ hours: displayHours, minutes, ampm });
+    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+    this.setState({ hours, minutes, ampm });
   };
 
   handleExit = () => {
@@ -65,10 +63,11 @@ class VisitorExit extends Component {
     this.setState({ showConfirmModal: false });
   };
 
-  handleFetchVisitorImage = async (cardNo, timeIn) => {
-    const formattedTimeIn = timeIn.replace(/[:\s]/g, '-').replace(/(AM|PM)/, '').replace(/-+$/, '');
+  handleFetchVisitorImage = async (cardNo) => {
+    const now = new Date();
+    const date = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}`;
     const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_');
-    const imageUrl = `http://localhost:8080/image/getIDImg/${sanitizedCardNo}/${formattedTimeIn}`;
+    const imageUrl = `http://localhost:8080/image/getIDImg/${sanitizedCardNo}/${date}`;
     console.log(`Fetching image from URL: ${imageUrl}`); // Log the URL to verify
   
     try {
@@ -80,20 +79,19 @@ class VisitorExit extends Component {
       this.setState({ errorMessage: 'Failed to load visitor image.', showErrorModal: true });
     }
   };
-  
 
   handleLogin = async (e) => {
     e.preventDefault();
     const { cardNo, hours, minutes, ampm } = this.state;
 
     if (!cardNo) {
-        alert('Please fill out all fields');
-        return;
+      alert('Please fill out all fields');
+      return;
     }
 
     if (cardNo <= 0 || cardNo > 100) {
-        alert('Invalid card number.');
-        return;
+      alert('Invalid card number.');
+      return;
     }
 
     // Construct timeIn from hours, minutes, and current date
@@ -103,32 +101,32 @@ class VisitorExit extends Component {
     const year = now.getFullYear();
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
-    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}`;
+    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;
     const uniqueID = uuidv4(); // Generate a unique ID
 
     try {
-        console.log(`Fetching details for cardNo: ${cardNo}`);
-        const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
+      console.log(`Fetching details for cardNo: ${cardNo}`);
+      const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
 
-        if (response.data) {
-            console.log(`Fetching image for cardNo: ${cardNo} and timeIn: ${timeIn}`);
-            await this.handleFetchVisitorImage(cardNo, timeIn, uniqueID);
+      if (response.data) {
+        console.log(`Fetching image for cardNo: ${cardNo}`);
+        await this.handleFetchVisitorImage(cardNo);
 
-            this.setState({
-                userDetails: response.data,
-                firstName: response.data.firstName,
-                lastName: response.data.lastName,
-                showConfirmModal: true,
-                timeIn, // Set timeIn in state
-                uniqueID // Set uniqueID in state
-            });
-        } else {
-            console.warn('No visitor currently using this card.');
-            this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
-        }
-    } catch (error) {
-        console.error('Error fetching user details:', error.message);
+        this.setState({
+          userDetails: response.data,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          showConfirmModal: true,
+          timeIn, // Set timeIn in state
+          uniqueID // Set uniqueID in state
+        });
+      } else {
+        console.warn('No visitor currently using this card.');
         this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error.message);
+      this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
   };
 
@@ -136,8 +134,12 @@ class VisitorExit extends Component {
     const { cardNo, hours, minutes, ampm } = this.state;
 
     try {
+      const formattedHours = String(hours).padStart(2, '0');
+      const formattedMinutes = String(minutes).padStart(2, '0');
+      const timeOut = `${formattedHours}:${formattedMinutes} ${ampm}`;
+
       const response = await axios.put(
-        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${hours}:${minutes} ${ampm}`,
+        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
         {},
         {
           headers: {

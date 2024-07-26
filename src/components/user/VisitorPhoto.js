@@ -3,12 +3,9 @@ import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
-import Button from '@mui/material/Button';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaCamera } from 'react-icons/fa';
 import { MdSend } from 'react-icons/md'; // Import the submit icon
 import Webcam from 'react-webcam';
-
 import './VisitorEntry.css'; // Import the CSS file
 
 class VisitorPhoto extends Component {
@@ -187,21 +184,6 @@ class VisitorPhoto extends Component {
                 />
               </div>
               <div className="card bg-glass" style={formStyle}>
-                {/* <Button
-                  variant="contained"
-                  startIcon={<ChevronLeftIcon />}
-                  onClick={this.handleGoBack}
-                  style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    backgroundColor: 'transparent',
-                    color: 'maroon',
-                    boxShadow: 'none',
-                  }}
-                >
-                  Go Back
-                </Button> */}
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
