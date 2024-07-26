@@ -289,24 +289,24 @@ class VisitorPhoto extends Component {
                   </form>
 
                   <Modal show={showModal} onHide={this.handleClose} centered>
-                    <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-                      <Modal.Title>Notification</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-                        <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
-                      <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
-                        View Maps
-                      </BootstrapButton>
-                      <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
-                        Exit
-                      </BootstrapButton>
-                    </Modal.Footer>
-                  </Modal>
+                  <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+                    <Modal.Title>Notification</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+                      <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+                    </div>
+                  </Modal.Body>
+                  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
+                    <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
+                      View Maps
+                    </BootstrapButton>
+                    <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
+                      Exit
+                    </BootstrapButton>
+                  </Modal.Footer>
+                </Modal>
 
                   <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
                     <Modal.Header closeButton>

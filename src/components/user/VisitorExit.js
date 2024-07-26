@@ -276,90 +276,91 @@ class VisitorExit extends Component {
         </div>
 
         <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered size="lg">
-          <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
-            <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            {userDetails ? (
-              <>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    {visitorImage && (
-                      <div style={{ marginBottom: '20px' }}>
-                        <img
-                          src={visitorImage}
-                          alt="Visitor"
-                          style={{ width: '200px', height: '200px', borderRadius: '5px', border: '2px solid maroon' }}
-                        />
-                      </div>
-                    )}
-                    <div>
-                      <table style={{ margin: '0 auto', textAlign: 'left', fontSize: '16px' }}>
-                        <tbody>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>First Name:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Last Name:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Card No:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Time In:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Building to Visit:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</td>
-                          </tr>
-                          <tr>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Purpose:</td>
-                            <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+        <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
+          <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {userDetails ? (
+            <>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  {visitorImage && (
+                    <div style={{ marginBottom: '20px' }}>
+                      <img
+                        src={visitorImage}
+                        alt="Visitor"
+                        style={{ width: '450px', height: '450px', borderRadius: '5px', border: '2px solid maroon' }}
+                      />
                     </div>
+                  )}
+                  <div>
+                    <table style={{ margin: '0 auto', textAlign: 'left', fontSize: '16px' }}>
+                      <tbody>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>First Name:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Last Name:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Card No:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Time In:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Building to Visit:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Purpose:</td>
+                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              </>
-            ) : (
-              <p>No user details available.</p>
-            )}
-          </Modal.Body>
-          <Modal.Footer>
-            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose} style={{ backgroundColor: 'maroon', color: 'white' }}>
-              Cancel
-            </BootstrapButton>
-            <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ backgroundColor: 'maroon', color: 'white' }}>
-              Confirm
-            </BootstrapButton>
-          </Modal.Footer>
-        </Modal>
+              </div>
+            </>
+          ) : (
+            <p>No user details available.</p>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <BootstrapButton variant="secondary" onClick={this.handleConfirmClose} style={{ backgroundColor: 'maroon', color: 'white' }}>
+            Cancel
+          </BootstrapButton>
+          <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ backgroundColor: 'maroon', color: 'white' }}>
+            Confirm
+          </BootstrapButton>
+        </Modal.Footer>
+      </Modal>
+
 
         <Modal show={showModal} onHide={this.handleClose} centered size="lg">
-          <Modal.Header closeButton style={{ borderBottom: '5px solid maroon' }}>
-            <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-              <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
-              <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <BootstrapButton 
-              variant="primary" 
-              onClick={this.handleClose} 
-              style={{ backgroundColor: 'maroon', color: 'white', borderColor: 'maroon' }}
-            >
-              Close
-            </BootstrapButton>
-          </Modal.Footer>
-        </Modal>
+        <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
+          <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
+            <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <BootstrapButton 
+            variant="primary" 
+            onClick={this.handleClose} 
+            style={{ backgroundColor: 'maroon', color: 'white', borderColor: 'maroon' }}
+          >
+            Close
+          </BootstrapButton>
+        </Modal.Footer>
+      </Modal>
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header closeButton>

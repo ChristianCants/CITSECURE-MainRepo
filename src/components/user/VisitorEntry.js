@@ -551,7 +551,7 @@ class VisitorEntry extends Component {
         </div>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
             <Modal.Title>Notification</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -567,38 +567,39 @@ class VisitorEntry extends Component {
           </Modal.Footer>
         </Modal>
 
-        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Notification</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="d-flex justify-content-center align-items-center">
-              <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
-                Card already used, Check your card again
-              </p>
-              <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
-            </div>
-          </Modal.Body>
-          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '150px' }}>
-              OK
-            </BootstrapButton>
-          </Modal.Footer>
-        </Modal>
 
-        <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
-          <Modal.Header closeButton style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Notification</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>Please fill out all fields and capture the visitor ID before proceeding.</p>
-          </Modal.Body>
-          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-            <BootstrapButton variant="primary" onClick={() => this.setState({ showNotification: false })} style={{ background: 'maroon', width: '150px' }}>
-              OK
-            </BootstrapButton>
-          </Modal.Footer>
-        </Modal>
+              <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
+        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Title>Notification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex justify-content-center align-items-center">
+            <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
+              Card already used, Check your card again
+            </p>
+            <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
+          </div>
+        </Modal.Body>
+        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+          <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '150px' }}>
+            OK
+          </BootstrapButton>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
+        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Title>Notification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Please fill out all fields and capture the visitor ID before proceeding.</p>
+        </Modal.Body>
+        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+          <BootstrapButton variant="primary" onClick={() => this.setState({ showNotification: false })} style={{ background: 'maroon', width: '150px' }}>
+            OK
+          </BootstrapButton>
+        </Modal.Footer>
+      </Modal>
       </section>
     );
   }
