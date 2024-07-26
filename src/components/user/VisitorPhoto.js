@@ -241,7 +241,7 @@ class VisitorPhoto extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> Photo Capture</span>
+                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> Visitor Photo</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
