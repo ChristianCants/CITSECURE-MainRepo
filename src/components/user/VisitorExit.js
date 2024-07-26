@@ -275,13 +275,12 @@ class VisitorExit extends Component {
           </div>
         </div>
 
-        <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered size="lg">
-        <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
-          <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {userDetails ? (
-            <>
+                <Modal show={showConfirmModal} onHide={this.handleConfirmClose} centered size="lg">
+          <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
+            <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {userDetails ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   {visitorImage && (
@@ -289,56 +288,51 @@ class VisitorExit extends Component {
                       <img
                         src={visitorImage}
                         alt="Visitor"
-                        style={{ width: '450px', height: '450px', borderRadius: '5px', border: '2px solid maroon' }}
+                        style={{ width: '400px', height: '300px', borderRadius: '5px', border: '2px solid maroon' }}
                       />
                     </div>
                   )}
-                  <div>
-                    <table style={{ margin: '0 auto', textAlign: 'left', fontSize: '16px' }}>
-                      <tbody>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>First Name:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Last Name:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Card No:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Time In:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Building to Visit:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</td>
-                        </tr>
-                        <tr>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontSize: '16px' }}>Purpose:</td>
-                          <td style={{ padding: '5px 15px', color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', width: '100%', maxWidth: '600px' }}>
+                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>FIRST NAME:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</div>
+                    </div>
+                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>LAST NAME:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</div>
+                    </div>
+                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>CARD NO:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</div>
+                    </div>
+                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>TIME IN:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</div>
+                    </div>
+                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>PURPOSE:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</div>
+                    </div>
+                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                      <strong>BUILDING TO VISIT:</strong>
+                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </>
-          ) : (
-            <p>No user details available.</p>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <BootstrapButton variant="secondary" onClick={this.handleConfirmClose} style={{ backgroundColor: 'maroon', color: 'white' }}>
-            Cancel
-          </BootstrapButton>
-          <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ backgroundColor: 'maroon', color: 'white' }}>
-            Confirm
-          </BootstrapButton>
-        </Modal.Footer>
-      </Modal>
+            ) : (
+              <p>No user details available.</p>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose} style={{ backgroundColor: 'maroon', color: 'white' }}>
+              Cancel
+            </BootstrapButton>
+            <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ backgroundColor: 'maroon', color: 'white' }}>
+              Confirm
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
 
 
         <Modal show={showModal} onHide={this.handleClose} centered size="lg">
