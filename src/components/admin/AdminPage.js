@@ -24,6 +24,7 @@ class AdminPage extends Component {
       filterDateTimeIn: null,
       filterCardNumber: '',
       filterBuilding: '',
+      filterPurpose: '',
     };
 
     this.handleExportPDF = this.handleExportPDF.bind(this);
@@ -35,6 +36,8 @@ class AdminPage extends Component {
     this.handleDateFilterChange = this.handleDateFilterChange.bind(this);
     this.handleCardNumberFilterChange = this.handleCardNumberFilterChange.bind(this);
     this.handleBuildingFilterChange = this.handleBuildingFilterChange.bind(this);
+    this.handlePurposeFilterChange = this.handlePurposeFilterChange.bind(this);
+    
   }
 
   componentDidMount() {
@@ -173,18 +176,24 @@ class AdminPage extends Component {
     this.setState({ filterBuilding: event.target.value });
   };
 
+  handlePurposeFilterChange = (event) => {  // Added purpose filter change handler
+    this.setState({ filterPurpose: event.target.value });
+  };
+
+
   formatDate = (date) => {
     return format(date, 'dd/MM/yyyy');
   };
 
   render() {
-    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding } = this.state;
+    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
 
     const filteredUsers = users.filter(user => {
       const matchesDate = !filterDateTimeIn || (parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString());
       const matchesCardNumber = !filterCardNumber || (user.cardNo && user.cardNo.toString().includes(filterCardNumber));
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
-      return matchesDate && matchesCardNumber && matchesBuilding;
+      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase()); // Added purpose filtering logic
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose
     });
 
     return (
@@ -218,59 +227,73 @@ class AdminPage extends Component {
         </header>
 
         <Container style={{ marginBottom:''}}>
-        <Row className="mb-3">
-          <Col>
-            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
-              <DatePicker
-                selected={filterDateTimeIn}
-                onChange={this.handleDateFilterChange}
-                dateFormat="dd/MM/yyyy"
-                placeholderText="dd/mm/yyyy"
-                className="form-control"
-                style={{ width: '100%' }}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Card Number"
-                value={filterCardNumber}
-                onChange={this.handleCardNumberFilterChange}
-                className="form-control"
-                style={{ width: '60%' }}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-              <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
-              <Form.Control
-                as="select"
-                value={filterBuilding}
-                onChange={this.handleBuildingFilterChange}
-                className="form-control"
-                style={{ width: '60%' }}
-              >
-                <option value="">All Buildings</option>
-                <option value="NGE">NGE</option>
-                <option value="GLE">GLE</option>
-                <option value="RTL">RTL</option>
-                <option value="ALLIED">ALLIED</option>
-                <option value="ACAD">ACAD</option>
-                <option value="SAL">SAL</option>
-                <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-                <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-                <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-                <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-      </Container>
+  <Row className="mb-3">
+    <Col>
+      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
+        <DatePicker
+          selected={filterDateTimeIn}
+          onChange={this.handleDateFilterChange}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="dd/mm/yyyy"
+          className="form-control"
+          style={{ width: '100%' }}
+        />
+      </Form.Group>
+    </Col>
+    <Col>
+      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Card Number"
+          value={filterCardNumber}
+          onChange={this.handleCardNumberFilterChange}
+          className="form-control"
+          style={{ width: '60%' }}
+        />
+      </Form.Group>
+    </Col>
+    <Col>
+      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
+        <Form.Control
+          as="select"
+          value={filterBuilding}
+          onChange={this.handleBuildingFilterChange}
+          className="form-control"
+          style={{ width: '60%' }}
+        >
+          <option value="">All Buildings</option>
+          <option value="NGE">NGE</option>
+          <option value="GLE">GLE</option>
+          <option value="RTL">RTL</option>
+          <option value="ALLIED">ALLIED</option>
+          <option value="ACAD">ACAD</option>
+          <option value="SAL">SAL</option>
+          <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+          <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+          <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+          <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+        </Form.Control>
+      </Form.Group>
+    </Col>
+    <Col>
+      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Purpose:</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Purpose"
+          value={filterPurpose}
+          onChange={this.handlePurposeFilterChange}
+          className="form-control"
+          style={{ width: '60%' }}
+        />
+      </Form.Group>
+    </Col>
+  </Row>
+</Container>
+
         <Container fluid className="pt-0">
           <Row>
             <Col lg={12}>

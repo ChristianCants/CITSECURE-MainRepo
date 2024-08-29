@@ -342,7 +342,7 @@ class VisitorExit extends Component {
         <Modal.Body>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
-            <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have been successfully logged out!</h4>
+            <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have already marked your exit!</h4>
           </div>
         </Modal.Body>
         <Modal.Footer>
