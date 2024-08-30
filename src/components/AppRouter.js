@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Home';
 import VisitorExit from './user/VisitorExit';
 import VisitorEntry from './user/VisitorEntry';
-import VisitorPhoto from './user/VisitorPhoto'; // Add this import
+import VisitorPhoto from './user/VisitorPhoto';
 import MenuPage from './MenuPage';
 import AdminPage from './admin/AdminPage';
 import VisitorNavigationPage from './Visitor Class/VisitorNavigationPage';
 import About from './About';
 import AdminLogin from './LoginControl Class/AdminLogin';
+import AdminStatistics from './admin/AdminStatistics';
 
 import FrontgateAcadBuilding from './Visitor Class/FrontgateAcadBuilding';
 import FrontgateHighSchool from './Visitor Class/FrontgateHighSchool';
@@ -33,8 +34,6 @@ import BackgateAlliedBuilding from './Visitor Class/BackgateAlliedBuilding';
 import BackgateHighSchoolCanteen from './Visitor Class/BackgateHighSchoolCanteen';
 
 
-
-
 const AppRouter = () => {
     return (
         <Router>
@@ -42,14 +41,14 @@ const AppRouter = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/VisitorExit" element={<VisitorExit />} />
                 <Route path="/VisitorEntry" element={<VisitorEntry />} />
-                <Route path="/VisitorPhoto" element={<VisitorPhoto />} /> {/* Add this line */}
+                <Route path="/VisitorPhoto" element={<VisitorPhoto />} />
                 <Route path="/admin/adminpage" element={<AdminPage />} />
                 <Route path="/menu" element={<MenuPage />} />
                 <Route path="/visitor-navigation" element={<VisitorNavigationPage />} />
                 <Route path="/About" element={<About />} />
                 <Route path="/AdminLogin" element={<AdminLogin />} />
+                <Route path="/admin/AdminStatistics" element={<AdminStatistics />} /> 
 
-                
                 {/* Frontgate Navigation for All buildingToVisit */}
                 <Route path="/frontgateacadbuilding" element={<FrontgateAcadBuilding />} />
                 <Route path="/frontgatehighschool" element={<FrontgateHighSchool />} /> 
@@ -62,20 +61,17 @@ const AppRouter = () => {
                 <Route path="/frontgatealliedbuilding" element={<FrontgateAlliedBuilding/>} />
                 <Route path="/frontgatehigh-schoolcanteen" element={<FrontgateHighSchoolCanteen/>} />
 
-                
-                {/* Backgate navigation for All buildingToVisit */}
-
+                {/* Backgate Navigation for All buildingToVisit */}
                 <Route path="/backgateacadbuilding" element={<BackgateAcadBuilding />} />
                 <Route path="/backgatehighschool" element={<BackgateHighSchool />} /> 
                 <Route path="/backgateelementary" element={<BackgateElementary />} /> 
-                <Route path="/Backgateglebuilding" element={<BackgateGLEBuilding />} />
+                <Route path="/backgateglebuilding" element={<BackgateGLEBuilding />} />
                 <Route path="/backgatemaincanteen" element={<BackgateMainCanteen />} />
                 <Route path="/backgatertlbuilding" element={<BackgateRTLBuilding/>} />
-                <Route path="/Backgatengebuilding" element={<BackgateNGEBuilding/>} />
-                <Route path="/Backgatelibrarybuilding" element={<BackgateLibraryBuilding/>} />
-                <Route path="/Backgatealliedbuilding" element={<BackgateAlliedBuilding/>} />
-                <Route path="/Backgatehigh-schoolcanteen" element={<BackgateHighSchoolCanteen/>} />
-
+                <Route path="/backgatengebuilding" element={<BackgateNGEBuilding/>} />
+                <Route path="/backgatelibrarybuilding" element={<BackgateLibraryBuilding/>} />
+                <Route path="/backgatealliedbuilding" element={<BackgateAlliedBuilding/>} />
+                <Route path="/backgatehigh-schoolcanteen" element={<BackgateHighSchoolCanteen/>} />
             </Routes>
         </Router>
     );

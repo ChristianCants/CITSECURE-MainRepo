@@ -115,6 +115,10 @@ class AdminPage extends Component {
     this.props.navigate('/AdminLogin');
   };
 
+  handleStatistics = () => {
+    this.props.navigate('/admin/AdminStatistics'); // Example navigation
+  };
+
   handleUpdate = (userId) => {
     const userToUpdate = this.state.users.find((user) => user.id === userId);
     if (userToUpdate) {
@@ -220,6 +224,9 @@ class AdminPage extends Component {
           </ul>
           <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
             Export PDF
+          </Button>
+          <Button onClick={this.handleStatistics} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+            Admin Statistics
           </Button>
           <Button onClick={this.handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
             Logout
