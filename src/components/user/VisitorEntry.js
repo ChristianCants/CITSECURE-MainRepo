@@ -236,7 +236,7 @@ class VisitorEntry extends Component {
       border: '3px solid maroon',
       borderRadius: '8px',
       padding: '15px',
-      backgroundColor: '#FFFFFF', // Change this to the desired background color
+      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Set to transparent
       fontFamily: 'Roboto, sans-serif',
       position: 'relative',
     };
@@ -309,14 +309,14 @@ class VisitorEntry extends Component {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
+                    <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px', borderRadius: '5px', marginBottom: '30px', textAlign: 'center', borderRadius: '20px' }}>Visitor Entry Form</h2>
 
-                    {/* Modal for Visitor  */}
+                    {/* Modal for Visitor */}
                     <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
                           <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '120px' }}>VISITOR</span>
-                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>PHOTO</span>
+                          <span style={{ color: '#F4C522', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '10px' }}>PHOTO</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
@@ -345,7 +345,7 @@ class VisitorEntry extends Component {
 
                     {/* Second section for Visitor ID */}
                     <div style={visitorIdSectionStyle}>
-                      <h3 style={{ marginBottom: '10px' }}>Visitor ID</h3>
+                      <h3 style={{ marginBottom: '10px', color: 'maroon' }}>Visitor ID</h3>
                       {!showCamera2 && !visitorimage2 && (
                         <button
                           className="btn btn-primary btn-block mb-4"
@@ -398,7 +398,8 @@ class VisitorEntry extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR ID</span>
+                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR</span>
+                          <span style={{ color: '#F4C522', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}>PHOTO</span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>

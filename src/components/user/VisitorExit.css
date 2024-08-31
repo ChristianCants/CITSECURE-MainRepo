@@ -52,4 +52,37 @@ body, html {
       font-size: 24px;
     }
   }
-  
+/* Custom class for maroon buttons (e.g., Cancel button) */
+.custom-button-maroon {
+  background-color: maroon !important;
+  color: white !important;
+  border-color: maroon !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 14px 30px; /* Adjust padding to change size */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 5px; /* Adjust border radius */
+}
+
+/* Custom class for gold buttons (e.g., Confirm button) */
+.custom-button-gold {
+  background-color: #F4C522 !important; /* Gold color */
+  color: black !important; /* Black text color */
+  border-color: #F4C522 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  padding: 12px 30px; /* Adjust padding to change size */
+  font-size: 16px; /* Adjust font size */
+  border-radius: 5px; /* Adjust border radius */
+}
+
+/* Hover effects */
+.custom-button-maroon:hover {
+  background-color: darkred !important;
+  border-color: darkred !important;
+}
+
+.custom-button-gold:hover {
+  background-color: #e0b21b !important; /* Slightly darker gold */
+  border-color: #e0b21b !important;
+}

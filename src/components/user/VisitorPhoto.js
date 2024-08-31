@@ -148,7 +148,7 @@ class VisitorPhoto extends Component {
       border: '3px solid maroon',
       borderRadius: '8px',
       padding: '15px',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Set to transparent
       fontFamily: 'Roboto, sans-serif',
       maxWidth: '600px',
       width: '1000px',
@@ -186,10 +186,14 @@ class VisitorPhoto extends Component {
               <div className="card bg-glass" style={formStyle}>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
+                  <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px', borderRadius: '20px', marginBottom: '30px', textAlign: 'center' }}>
+                Visitor Entry Form
+              </h2>
+
 
                     <div style={visitorPhotoSectionStyle}>
-                      <h3 style={{ marginBottom: '10px' }}>Visitor Photo</h3>
+                    <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span> <span style={{ color: 'gold' }}> Photo</span></h3>
+
                       {!showCamera2 && !visitorimage2 && (
                         <button
                           className="btn btn-primary btn-block mb-4"
@@ -241,7 +245,8 @@ class VisitorPhoto extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> Visitor Photo</span>
+                        <span style={{ fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span><span style={{ color: 'gold' }}> Photo</span></span>
+
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
@@ -299,52 +304,72 @@ class VisitorPhoto extends Component {
                   </form>
 
                   <Modal show={showModal} onHide={this.handleClose} centered>
-                  <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-                    <Modal.Title>Notification</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <div className="d-flex justify-content-center align-items-center">
-                      <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-                      <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-                    </div>
-                  </Modal.Body>
-                  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'space-between' }}>
-                    <BootstrapButton variant="primary" onClick={this.handleViewMap} style={{ background: 'maroon', width: '150px' }}>
-                      View Maps
-                    </BootstrapButton>
-                    <BootstrapButton variant="primary" onClick={() => window.location.href = '/'} style={{ background: 'maroon', width: '150px' }}>
-                      Exit
-                    </BootstrapButton>
-                  </Modal.Footer>
-                </Modal>
+                    <Modal.Header style={{ borderBottom: '2px solid #800000' }}>
+                      <Modal.Title>Notification</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="d-flex justify-content-center align-items-center">
+                        <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+                        <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer style={{ borderTop: '2px solid #800000', display: 'flex', justifyContent: 'space-between' }}>
+                      <BootstrapButton 
+                        variant="primary" 
+                        onClick={this.handleViewMap} 
+                        style={{ 
+                          background: '#F4C522',  // Yellow-Gold for View Maps
+                          borderColor: '#F4C522',
+                          width: '150px',
+                          color: '#000000',        // Text color set to black
+                          fontWeight: 'bold'       // Slightly bolder text for emphasis
+                        }}
+                      >
+                        View Maps
+                      </BootstrapButton>
+                      <BootstrapButton 
+                        variant="primary" 
+                        onClick={() => window.location.href = '/'} 
+                        style={{ 
+                          background: '#800000', // Deep Maroon for Exit
+                          borderColor: '#800000',
+                          width: '150px',
+                          color: '#fff',
+                          fontWeight: 'bold'   // Slightly bolder text for emphasis
+                        }}
+                      >
+                        Exit
+                      </BootstrapButton>
+                    </Modal.Footer>
+                  </Modal>
 
                   <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
-                  <Modal.Header>
-                    <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>There was an error during the form submission. Please try again.</p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <BootstrapButton variant="secondary" onClick={this.handleErrorClose}>
-                      Close
-                    </BootstrapButton>
-                  </Modal.Footer>
-                </Modal>
+                    <Modal.Header>
+                      <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>There was an error during the form submission. Please try again.</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <BootstrapButton variant="secondary" onClick={this.handleErrorClose}>
+                        Close
+                      </BootstrapButton>
+                    </Modal.Footer>
+                  </Modal>
 
-                <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
-                  <Modal.Header>
-                    <Modal.Title style={{ color: 'orange' }}>Notification</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>
-                    <p>Please complete the Visitor Entry Form before submitting.</p>
-                  </Modal.Body>
-                  <Modal.Footer>
-                    <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
-                      Close
-                    </BootstrapButton>
-                  </Modal.Footer>
-                </Modal>
+                  <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
+                    <Modal.Header>
+                      <Modal.Title style={{ color: 'orange' }}>Notification</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>Please complete the Visitor Entry Form before submitting.</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
+                        Close
+                      </BootstrapButton>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
               </div>
             </div>

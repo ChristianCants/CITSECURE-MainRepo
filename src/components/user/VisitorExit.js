@@ -176,7 +176,7 @@ class VisitorExit extends Component {
       border: '3px solid maroon',
       borderRadius: '8px',
       padding: '15px',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Transparent background
       fontFamily: 'Roboto, sans-serif',
       position: 'relative',
     };
@@ -325,13 +325,24 @@ class VisitorExit extends Component {
             )}
           </Modal.Body>
           <Modal.Footer>
-            <BootstrapButton variant="secondary" onClick={this.handleConfirmClose} style={{ backgroundColor: 'maroon', color: 'white' }}>
-              Cancel
-            </BootstrapButton>
-            <BootstrapButton variant="primary" onClick={this.handleConfirmExit} style={{ backgroundColor: 'maroon', color: 'white' }}>
-              Confirm
-            </BootstrapButton>
-          </Modal.Footer>
+    <BootstrapButton 
+        variant="secondary" 
+        onClick={this.handleConfirmClose} 
+        className="custom-button-maroon"
+    >
+        Cancel
+    </BootstrapButton>
+    <BootstrapButton 
+        variant="primary" 
+        onClick={this.handleConfirmExit} 
+        className="custom-button-gold"
+    >
+        Confirm
+    </BootstrapButton>
+</Modal.Footer>
+
+
+
         </Modal>
 
 
