@@ -62,28 +62,56 @@ class AdminPage extends Component {
       });
   }
 
+
   handleExportPDF = () => {
-    const { users } = this.state;
+    const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
+  
+    // Calculate filtered users based on current filters
+    const filteredUsers = users.filter(user => {
+      const matchesDate = !filterDateTimeIn || (parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString());
+      const matchesCardNumber = !filterCardNumber || (user.cardNo && user.cardNo.toString().includes(filterCardNumber));
+      const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
+      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
+    });
+  
+    if (!filteredUsers.length) {
+      alert('No data to export.');
+      return;
+    }
+  
     const docDefinition = {
+      pageOrientation: 'landscape', // Set the orientation to landscape
       content: [
-        { text: 'List of Visitors', style: 'header' },
+        { text: 'Visitor Records 2024', style: 'header' },
         {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
-              ['ID', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited'],
-              ...users.map((user) => [
-                user.id,
-                user.firstName,
-                user.lastName,
-                user.purpose,
-                user.timeIn,
-                user.timeOut,
-                user.buildingToVisit,
+              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
+              ...filteredUsers.map(user => [
+                user.id || '',
+                user.cardNo || '',
+                user.firstName || '',
+                user.lastName || '',
+                user.purpose || '',
+                user.timeIn || '',
+                user.timeOut || '',
+                user.buildingToVisit || '',
+                user.status === 1 ? 'Card in use' : 'Available',
               ]),
             ],
+          },
+          layout: {
+            fillColor: (rowIndex, node, columnIndex, row) => (rowIndex % 2 === 0 ? '#f2f2f2' : null), // Optional: alternate row colors
+            hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 2 : 1), // Header and footer lines
+            vLineWidth: () => 1, // Vertical lines
+            hLineColor: () => '#000000', // Horizontal line color
+            vLineColor: () => '#000000', // Vertical line color
+            paddingLeft: () => 4,
+            paddingRight: () => 4,
           },
         },
       ],
@@ -101,14 +129,14 @@ class AdminPage extends Component {
     };
   
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    pdfDocGenerator.getBlob((blob) => {
+    pdfDocGenerator.getBlob(blob => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'visitor_list.pdf';
       downloadLink.click();
     });
   };
-
+  
   handleLogout = async () => {
     localStorage.removeItem('uname');
     localStorage.removeItem('password');
