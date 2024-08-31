@@ -309,7 +309,7 @@ class VisitorEntry extends Component {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px', borderRadius: '5px', marginBottom: '30px', textAlign: 'center', borderRadius: '20px' }}>Visitor Entry Form</h2>
+                    <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px',  marginBottom: '30px', textAlign: 'center', borderRadius: '20px' }}>Visitor Entry Form</h2>
 
                     {/* Modal for Visitor */}
                     <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
