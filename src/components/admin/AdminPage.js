@@ -64,24 +64,18 @@ class AdminPage extends Component {
 
 
   handleExportPDF = () => {
-    const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
+    const { users } = this.state;
   
-    // Calculate filtered users based on current filters
-    const filteredUsers = users.filter(user => {
-      const matchesDate = !filterDateTimeIn || (parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString());
-      const matchesCardNumber = !filterCardNumber || (user.cardNo && user.cardNo.toString().includes(filterCardNumber));
-      const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
-      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
-      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
-    });
+    // Save all users' data to localStorage for use in AdminStatistics
+    localStorage.setItem('allVisitorData', JSON.stringify(users));
   
-    if (!filteredUsers.length) {
+    if (!users.length) {
       alert('No data to export.');
       return;
     }
   
     const docDefinition = {
-      pageOrientation: 'landscape', // Set the orientation to landscape
+      pageOrientation: 'landscape',
       content: [
         { text: 'Visitor Records 2024', style: 'header' },
         {
@@ -91,7 +85,7 @@ class AdminPage extends Component {
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
               ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
-              ...filteredUsers.map(user => [
+              ...users.map(user => [
                 user.id || '',
                 user.cardNo || '',
                 user.firstName || '',
@@ -105,11 +99,11 @@ class AdminPage extends Component {
             ],
           },
           layout: {
-            fillColor: (rowIndex, node, columnIndex, row) => (rowIndex % 2 === 0 ? '#f2f2f2' : null), // Optional: alternate row colors
-            hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 2 : 1), // Header and footer lines
-            vLineWidth: () => 1, // Vertical lines
-            hLineColor: () => '#000000', // Horizontal line color
-            vLineColor: () => '#000000', // Vertical line color
+            fillColor: (rowIndex) => (rowIndex % 2 === 0 ? '#f2f2f2' : null),
+            hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 2 : 1),
+            vLineWidth: () => 1,
+            hLineColor: () => '#000000',
+            vLineColor: () => '#000000',
             paddingLeft: () => 4,
             paddingRight: () => 4,
           },
@@ -136,6 +130,8 @@ class AdminPage extends Component {
       downloadLink.click();
     });
   };
+  
+  
   
   handleLogout = async () => {
     localStorage.removeItem('uname');

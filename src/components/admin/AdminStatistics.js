@@ -3,7 +3,7 @@ import { Button, Form, Container, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import { isWithinInterval, parse } from 'date-fns';
+import { parse, format } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -23,7 +23,8 @@ class AdminStatistics extends Component {
   }
 
   componentDidMount() {
-    this.filterData();
+    const allData = JSON.parse(localStorage.getItem('allVisitorData')) || [];
+    this.setState({ data: allData, filteredData: allData }, this.filterData);
   }
 
   handleLogout = () => {
@@ -54,43 +55,45 @@ class AdminStatistics extends Component {
 
   filterData = () => {
     const { data, fromDate, toDate, filterBuilding, filterMonth } = this.state;
-
+  
     let filteredData = data;
-
+  
     // Filter by date range if dates are provided
     if (fromDate && toDate) {
       filteredData = filteredData.filter((item) => {
-        if (!item.date || typeof item.date !== 'string') {
+        if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-
-        const parsedDate = parse(item.date, 'dd/MM/yyyy', new Date());
-
-        return isWithinInterval(parsedDate, { start: fromDate, end: toDate });
+  
+        const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
+  
+        // Check if the parsed date is within the selected date range
+        return parsedDate >= fromDate && parsedDate <= toDate;
       });
     }
-
+  
     // Filter by building
     if (filterBuilding) {
       filteredData = filteredData.filter((item) => item.buildingToVisit === filterBuilding);
     }
-
+  
     // Filter by specific month
     if (filterMonth) {
       filteredData = filteredData.filter((item) => {
-        if (!item.date || typeof item.date !== 'string') {
+        if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-
-        const parsedDate = parse(item.date, 'dd/MM/yyyy', new Date());
+  
+        const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
         const month = parsedDate.getMonth() + 1;
-
+  
         return String(month).padStart(2, '0') === filterMonth;
       });
     }
-
+  
     this.setState({ filteredData });
   };
+  
 
   getBuildingData = () => {
     const { filteredData } = this.state;
@@ -114,9 +117,40 @@ class AdminStatistics extends Component {
     };
   };
 
+  getMonthData = () => {
+    const { filteredData } = this.state;
+
+    const buildingCounts = filteredData.reduce((acc, item) => {
+      acc[item.buildingToVisit] = (acc[item.buildingToVisit] || 0) + 1;
+      return acc;
+    }, {});
+
+    return {
+      labels: Object.keys(buildingCounts),
+      datasets: [
+        {
+          label: `Number of Visits in the Month`,
+          data: Object.values(buildingCounts),
+          backgroundColor: 'rgba(153,102,255,0.2)',
+          borderColor: 'rgba(153,102,255,1)',
+          borderWidth: 2,
+        },
+      ],
+    };
+  };
+
+  formatDateRange = () => {
+    const { fromDate, toDate } = this.state;
+    if (!fromDate || !toDate) return '';
+    const from = format(fromDate, 'dd/MM/yyyy');
+    const to = format(toDate, 'dd/MM/yyyy');
+    return `Dates From: ${from} To: ${to}`;
+  };
+
   render() {
     const { filterBuilding, filterMonth, fromDate, toDate } = this.state;
     const chartData = this.getBuildingData();
+    const monthChartData = this.getMonthData();
 
     const chartOptions = {
       responsive: true,
@@ -288,9 +322,22 @@ class AdminStatistics extends Component {
           </Row>
           <Button onClick={this.clearFilters} variant="danger" className="mt-2">Clear Filters</Button>
         </Container>
+
         <Container style={{ height: '500px', marginBottom: '20px' }}>
+          <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
+            {this.formatDateRange()}
+          </h3>
           <Bar data={chartData} options={chartOptions} />
         </Container>
+
+        {filterMonth && (
+          <Container style={{ height: '500px', marginBottom: '20px' }}>
+            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
+              Number of Visits in the Month of {new Date(0, parseInt(filterMonth) - 1).toLocaleString('default', { month: 'long' })}
+            </h3>
+            <Bar data={monthChartData} options={chartOptions} />
+          </Container>
+        )}
       </div>
     );
   }
