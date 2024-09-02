@@ -186,13 +186,11 @@ class VisitorPhoto extends Component {
               <div className="card bg-glass" style={formStyle}>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px', borderRadius: '20px', marginBottom: '30px', textAlign: 'center' }}>
-                Visitor Entry Form
-              </h2>
+                  <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
 
 
                     <div style={visitorPhotoSectionStyle}>
-                    <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span> <span style={{ color: 'gold' }}> Photo</span></h3>
+                    <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor Photo</span> </h3>
 
                       {!showCamera2 && !visitorimage2 && (
                         <button
@@ -318,15 +316,16 @@ class VisitorPhoto extends Component {
                         variant="primary" 
                         onClick={this.handleViewMap} 
                         style={{ 
-                          background: '#F4C522',  // Yellow-Gold for View Maps
-                          borderColor: '#F4C522',
+                          background: '#800000',  // Yellow-Gold for View Maps
+                          borderColor: '#800000',
                           width: '150px',
-                          color: '#000000',        // Text color set to black
+                          color: '#F4C522',        // Text color set to black
                           fontWeight: 'bold'       // Slightly bolder text for emphasis
                         }}
                       >
                         View Maps
                       </BootstrapButton>
+
                       <BootstrapButton 
                         variant="primary" 
                         onClick={() => window.location.href = '/'} 

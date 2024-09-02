@@ -309,9 +309,10 @@ class VisitorEntry extends Component {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', background: '#F4C522', padding: '10px',  marginBottom: '30px', textAlign: 'center', borderRadius: '20px' }}>Visitor Entry Form</h2>
+                  <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
 
-                    {/* Modal for Visitor */}
+
+                  {/* Modal for Visitor */}
                     <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
@@ -345,7 +346,9 @@ class VisitorEntry extends Component {
 
                     {/* Second section for Visitor ID */}
                     <div style={visitorIdSectionStyle}>
-                      <h3 style={{ marginBottom: '10px', color: 'maroon' }}>Visitor ID</h3>
+                    <h3 style={{ marginBottom: '10px' }}>
+  <span style={{ color: 'maroon' }}> Visitor ID</span> </h3>
+
                       {!showCamera2 && !visitorimage2 && (
                         <button
                           className="btn btn-primary btn-block mb-4"
@@ -359,7 +362,7 @@ class VisitorEntry extends Component {
                             padding: '20px 15px',
                             fontSize: '16px',
                             borderRadius: '15px',
-                            width: '130px',
+                            width: '140px',
                             height: '50px',
                             color: '#ffffff', // Text color
                           }}

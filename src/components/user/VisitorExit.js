@@ -323,23 +323,43 @@ class VisitorExit extends Component {
             ) : (
               <p>No user details available.</p>
             )}
+
           </Modal.Body>
           <Modal.Footer>
     <BootstrapButton 
         variant="secondary" 
         onClick={this.handleConfirmClose} 
-        className="custom-button-maroon"
+        style={{ 
+            backgroundColor: 'maroon', 
+            color: 'white', 
+            borderColor: 'maroon',
+            padding: '10px 20px',   // Adjust padding for button size
+            fontSize: '18px',       // Adjust font size
+            width: '150px',         // Adjust button width
+            height: '50px',          // Adjust button height
+            marginRight: '15px'
+        }}
     >
         Cancel
     </BootstrapButton>
     <BootstrapButton 
         variant="primary" 
         onClick={this.handleConfirmExit} 
-        className="custom-button-gold"
+        style={{ 
+            backgroundColor: 'maroon', 
+            color: '#F4C522', 
+            borderColor: 'maroon',
+            padding: '10px 20px',   // Adjust padding for button size
+            fontSize: '18px',       // Adjust font size
+            width: '150px',         // Adjust button width
+            height: '50px'          // Adjust button height
+        }}
     >
         Confirm
     </BootstrapButton>
 </Modal.Footer>
+
+
 
 
 
@@ -357,13 +377,22 @@ class VisitorExit extends Component {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <BootstrapButton 
-            variant="primary" 
-            onClick={this.handleClose} 
-            style={{ backgroundColor: 'maroon', color: 'white', borderColor: 'maroon' }}
-          >
-            Close
-          </BootstrapButton>
+        <BootstrapButton 
+    variant="primary" 
+    onClick={this.handleClose} 
+    style={{ 
+        backgroundColor: 'maroon', 
+        color: 'white', 
+        borderColor: 'maroon',
+        padding: '10px 20px',   // Same padding as previous buttons
+        fontSize: '18px',       // Same font size as previous buttons
+        width: '150px',         // Same width as previous buttons
+        height: '50px'          // Same height as previous buttons
+    }}
+>
+    Close
+</BootstrapButton>
+
         </Modal.Footer>
       </Modal>
 
