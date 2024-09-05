@@ -25,9 +25,11 @@ class BackgateHighSchoolCanteen extends Component {
                         <span>CITSecure</span>
                     </div>
                     <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Back Gate</span></li>
-                        <li className="nav-item"><span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer' }}>HighSchoolCanteen</span></li>
-                        <li className="nav-item"><span className="nav-link" style={{ color: 'white', cursor: 'pointer' }}>Direction</span></li>
+                        <li className="nav-item">
+                            <span className="nav-link active" style={{ color: 'maroon', backgroundColor: 'white', cursor: 'pointer', marginLeft: '-150px' }}>
+                                High School Canteen
+                            </span>
+                        </li>
                     </ul>
                     <Button
                         variant="contained"
@@ -45,7 +47,10 @@ class BackgateHighSchoolCanteen extends Component {
                     </Button>
                 </header>
 
-                <Container fluid style={{ backgroundColor: '#ebebeb', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
+                <Container fluid style={{ backgroundColor: '#ebebeb', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100vh' }}>
+                    <h3 style={{ color: 'black', margin: '20px 0', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>
+                        BACK GATE DIRECTION
+                    </h3>
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img

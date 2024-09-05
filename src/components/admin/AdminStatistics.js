@@ -6,6 +6,8 @@ import { Chart, registerables } from 'chart.js';
 import { parse, format } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 Chart.register(...registerables);
 
@@ -55,45 +57,49 @@ class AdminStatistics extends Component {
 
   filterData = () => {
     const { data, fromDate, toDate, filterBuilding, filterMonth } = this.state;
-  
+
     let filteredData = data;
-  
+
     // Filter by date range if dates are provided
     if (fromDate && toDate) {
       filteredData = filteredData.filter((item) => {
         if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-  
+
         const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
-  
+
         // Check if the parsed date is within the selected date range
         return parsedDate >= fromDate && parsedDate <= toDate;
       });
     }
-  
+
     // Filter by building
     if (filterBuilding) {
       filteredData = filteredData.filter((item) => item.buildingToVisit === filterBuilding);
     }
-  
-    // Filter by specific month
-    if (filterMonth) {
+
+    // Filter by specific month, but skip if "All months" is selected
+    if (filterMonth && filterMonth !== "all") {
       filteredData = filteredData.filter((item) => {
         if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-  
+
         const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
         const month = parsedDate.getMonth() + 1;
-  
+
         return String(month).padStart(2, '0') === filterMonth;
       });
     }
-  
+
     this.setState({ filteredData });
   };
-  
+
+  getTotalVisits = () => {
+    const { filteredData } = this.state;
+    return filteredData.length; // Return the total count of filtered data
+  };
 
   getBuildingData = () => {
     const { filteredData } = this.state;
@@ -118,8 +124,40 @@ class AdminStatistics extends Component {
   };
 
   getMonthData = () => {
-    const { filteredData } = this.state;
+    const { filteredData, filterMonth } = this.state;
 
+    if (filterMonth === "all") {
+      const monthCounts = filteredData.reduce((acc, item) => {
+        if (!item.timeIn || typeof item.timeIn !== 'string') {
+          return acc;
+        }
+
+        const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
+        const month = parsedDate.getMonth() + 1; // Get month number (1-12)
+        const monthKey = String(month).padStart(2, '0'); // Format as '01', '02', etc.
+
+        acc[monthKey] = (acc[monthKey] || 0) + 1; // Increment the count for the month
+        return acc;
+      }, {});
+
+      return {
+        labels: [
+          'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
+          'September', 'October', 'November', 'December'
+        ],
+        datasets: [
+          {
+            label: 'Monthly Visit Statistics',
+            data: Array.from({ length: 12 }, (_, i) => monthCounts[String(i + 1).padStart(2, '0')] || 0), // Get count for each month
+            backgroundColor: 'rgba(153,102,255,0.2)',
+            borderColor: 'rgba(153,102,255,1)',
+            borderWidth: 2,
+          },
+        ],
+      };
+    }
+
+    // Existing logic for filtering by a single month
     const buildingCounts = filteredData.reduce((acc, item) => {
       acc[item.buildingToVisit] = (acc[item.buildingToVisit] || 0) + 1;
       return acc;
@@ -146,6 +184,49 @@ class AdminStatistics extends Component {
     const to = format(toDate, 'dd/MM/yyyy');
     return `Dates From: ${from} To: ${to}`;
   };
+
+  exportPDF = () => {
+    const input = document.getElementById('chart-content'); 
+  
+   
+    html2canvas(input, {
+      scale: 5, // Increase the scale to capture better resolution
+      scrollY: 0, 
+      useCORS: true, 
+    })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4'); 
+  
+        const imgWidth = 210; 
+        const pageHeight = 295; 
+        let imgHeight = (canvas.height * imgWidth) / canvas.width; 
+  
+        let heightLeft = imgHeight;
+        let position = 0;
+  
+        // Add the first part of the image to the PDF
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+  
+        // Add more pages if content overflows
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+  
+        // Save the generated PDF
+        pdf.save('AdminStatisticsCharts.pdf');
+      })
+      .catch((err) => {
+        console.error('Error exporting to PDF:', err);
+      });
+  };
+  
+  
+  
 
   render() {
     const { filterBuilding, filterMonth, fromDate, toDate } = this.state;
@@ -210,7 +291,7 @@ class AdminStatistics extends Component {
     };
 
     return (
-      <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
+      <div style={{ backgroundColor: '#FFF9EB', minHeight: '1000vh' }}>
         <header
           className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
           style={{
@@ -239,18 +320,32 @@ class AdminStatistics extends Component {
               </span>
             </li>
           </ul>
-          <Button
-            onClick={this.handleLogout}
-            style={{
-              color: 'white',
-              backgroundColor: 'transparent',
-              border: '1px solid white',
-              marginLeft: '10px',
-            }}
-          >
-            Logout
-          </Button>
+          <div>
+            <Button
+              onClick={this.exportPDF}
+              style={{
+                color: 'white',
+                backgroundColor: 'transparent',
+                border: '1px solid white',
+                marginLeft: '10px',
+              }}
+            >
+              Export to PDF
+            </Button>
+            <Button
+              onClick={this.handleLogout}
+              style={{
+                color: 'white',
+                backgroundColor: 'transparent',
+                border: '1px solid white',
+                marginLeft: '10px',
+              }}
+            >
+              Logout
+            </Button>
+          </div>
         </header>
+
         <Container style={{ marginBottom: '20px' }}>
           <Row>
             <Col>
@@ -304,6 +399,7 @@ class AdminStatistics extends Component {
                 <Form.Label>Month:</Form.Label>
                 <Form.Control as="select" name="filterMonth" value={filterMonth} onChange={this.handleFilterChange}>
                   <option value="">Select Month</option>
+                  <option value="all">All Months</option>
                   <option value="01">January</option>
                   <option value="02">February</option>
                   <option value="03">March</option>
@@ -323,21 +419,31 @@ class AdminStatistics extends Component {
           <Button onClick={this.clearFilters} variant="danger" className="mt-2">Clear Filters</Button>
         </Container>
 
-        <Container style={{ height: '500px', marginBottom: '20px' }}>
-          <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
-            {this.formatDateRange()}
-          </h3>
-          <Bar data={chartData} options={chartOptions} />
-        </Container>
-
-        {filterMonth && (
+        <div id="chart-content">
           <Container style={{ height: '500px', marginBottom: '20px' }}>
             <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
-              Number of Visits in the Month of {new Date(0, parseInt(filterMonth) - 1).toLocaleString('default', { month: 'long' })}
+              {this.formatDateRange()}
             </h3>
-            <Bar data={monthChartData} options={chartOptions} />
+            <Bar data={chartData} options={chartOptions} />
           </Container>
-        )}
+
+          {filterMonth && (
+            <Container style={{ height: '500px', marginBottom: '20px' }}>
+              <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
+                {filterMonth === "all" ? "Monthly Visit Statistics" : 
+                  `Number of Visits in the Month of ${new Date(0, parseInt(filterMonth) - 1).toLocaleString('default', { month: 'long' })}`}
+              </h3>
+
+              {filterMonth !== "all" && (
+                <h4 style={{ textAlign: 'center', color: 'black' }}>
+                  Total Visits = {this.getTotalVisits()}
+                </h4>
+              )}
+
+              <Bar data={monthChartData} options={chartOptions} />
+            </Container>
+          )}
+        </div>
       </div>
     );
   }
