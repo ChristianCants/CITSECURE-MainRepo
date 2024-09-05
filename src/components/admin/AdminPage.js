@@ -28,6 +28,7 @@ class AdminPage extends Component {
     };
 
     this.handleExportPDF = this.handleExportPDF.bind(this);
+    this.handleExportFilteredPDF = this.handleExportFilteredPDF.bind(this); // Added for filtered export
     this.handleLogout = this.handleLogout.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
@@ -37,7 +38,6 @@ class AdminPage extends Component {
     this.handleCardNumberFilterChange = this.handleCardNumberFilterChange.bind(this);
     this.handleBuildingFilterChange = this.handleBuildingFilterChange.bind(this);
     this.handlePurposeFilterChange = this.handlePurposeFilterChange.bind(this);
-    
   }
 
   componentDidMount() {
@@ -50,30 +50,28 @@ class AdminPage extends Component {
     if (!username || username !== 'Admin') {
       this.setState({ showErrorModal: true });
     }
-  }
+  };
 
   fetchUsers = () => {
     axios.get('http://localhost:8080/visitor/getAllVisitors')
-      .then(response => {
+      .then((response) => {
         this.setState({ users: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error fetching users:', error.message);
       });
-  }
-
+  };
 
   handleExportPDF = () => {
     const { users } = this.state;
-  
-    // Save all users' data to localStorage for use in AdminStatistics
+
     localStorage.setItem('allVisitorData', JSON.stringify(users));
-  
+
     if (!users.length) {
       alert('No data to export.');
       return;
     }
-  
+
     const docDefinition = {
       pageOrientation: 'landscape',
       content: [
@@ -85,7 +83,7 @@ class AdminPage extends Component {
             widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
               ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
-              ...users.map(user => [
+              ...users.map((user) => [
                 user.id || '',
                 user.cardNo || '',
                 user.firstName || '',
@@ -121,18 +119,91 @@ class AdminPage extends Component {
         },
       },
     };
-  
+
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    pdfDocGenerator.getBlob(blob => {
+    pdfDocGenerator.getBlob((blob) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
       downloadLink.download = 'visitor_list.pdf';
       downloadLink.click();
     });
   };
-  
-  
-  
+
+  handleExportFilteredPDF = () => {
+    const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
+
+    const filteredUsers = users.filter((user) => {
+      const matchesDate =
+        !filterDateTimeIn || parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString();
+      const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
+      const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
+      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
+
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
+    });
+
+    if (!filteredUsers.length) {
+      alert('No filtered data to export.');
+      return;
+    }
+
+    const docDefinition = {
+      pageOrientation: 'landscape',
+      content: [
+        { text: 'Filtered Visitor Records 2024', style: 'header' },
+        {
+          style: 'table',
+          table: {
+            headerRows: 1,
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            body: [
+              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
+              ...filteredUsers.map((user) => [
+                user.id || '',
+                user.cardNo || '',
+                user.firstName || '',
+                user.lastName || '',
+                user.purpose || '',
+                user.timeIn || '',
+                user.timeOut || '',
+                user.buildingToVisit || '',
+                user.status === 1 ? 'Card in use' : 'Available',
+              ]),
+            ],
+          },
+          layout: {
+            fillColor: (rowIndex) => (rowIndex % 2 === 0 ? '#f2f2f2' : null),
+            hLineWidth: (i, node) => (i === 0 || i === node.table.body.length ? 2 : 1),
+            vLineWidth: () => 1,
+            hLineColor: () => '#000000',
+            vLineColor: () => '#000000',
+            paddingLeft: () => 4,
+            paddingRight: () => 4,
+          },
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 20,
+          bold: true,
+          alignment: 'center',
+          margin: [0, 0, 0, 10],
+        },
+        table: {
+          margin: [0, 5, 0, 15],
+        },
+      },
+    };
+
+    const pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    pdfDocGenerator.getBlob((blob) => {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = 'filtered_visitor_list.pdf';
+      downloadLink.click();
+    });
+  };
+
   handleLogout = async () => {
     localStorage.removeItem('uname');
     localStorage.removeItem('password');
@@ -164,14 +235,14 @@ class AdminPage extends Component {
         firstName: updatedUserData.firstName,
         lastName: updatedUserData.lastName,
       });
-  
+
       if (response.status === 200) {
         alert('User updated successfully!');
         this.fetchUsers();
       } else {
         alert('Failed to update user.');
       }
-  
+
       this.handleUpdateModalClose();
     } catch (error) {
       console.error('Error updating user:', error.message);
@@ -204,10 +275,9 @@ class AdminPage extends Component {
     this.setState({ filterBuilding: event.target.value });
   };
 
-  handlePurposeFilterChange = (event) => {  // Added purpose filter change handler
+  handlePurposeFilterChange = (event) => {
     this.setState({ filterPurpose: event.target.value });
   };
-
 
   formatDate = (date) => {
     return format(date, 'dd/MM/yyyy');
@@ -216,12 +286,14 @@ class AdminPage extends Component {
   render() {
     const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
 
-    const filteredUsers = users.filter(user => {
-      const matchesDate = !filterDateTimeIn || (parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString());
-      const matchesCardNumber = !filterCardNumber || (user.cardNo && user.cardNo.toString().includes(filterCardNumber));
+    const filteredUsers = users.filter((user) => {
+      const matchesDate =
+        !filterDateTimeIn || parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString();
+      const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
-      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase()); // Added purpose filtering logic
-      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose
+      const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
+
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
     });
 
     return (
@@ -241,13 +313,16 @@ class AdminPage extends Component {
           </div>
           <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
             <li className="nav-item">
-            <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
-              Admin Dashboard
-            </span>
+              <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
+                Admin Dashboard
+              </span>
             </li>
           </ul>
           <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            Export PDF
+            Export Data
+          </Button>
+          <Button onClick={this.handleExportFilteredPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
+            Export Filtered Data
           </Button>
           <Button onClick={this.handleStatistics} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
             Admin Statistics
@@ -257,73 +332,73 @@ class AdminPage extends Component {
           </Button>
         </header>
 
-        <Container style={{ marginBottom:''}}>
-  <Row className="mb-3">
-    <Col>
-      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
-        <DatePicker
-          selected={filterDateTimeIn}
-          onChange={this.handleDateFilterChange}
-          dateFormat="dd/MM/yyyy"
-          placeholderText="dd/mm/yyyy"
-          className="form-control"
-          style={{ width: '100%' }}
-        />
-      </Form.Group>
-    </Col>
-    <Col>
-      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Card Number"
-          value={filterCardNumber}
-          onChange={this.handleCardNumberFilterChange}
-          className="form-control"
-          style={{ width: '60%' }}
-        />
-      </Form.Group>
-    </Col>
-    <Col>
-      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
-        <Form.Control
-          as="select"
-          value={filterBuilding}
-          onChange={this.handleBuildingFilterChange}
-          className="form-control"
-          style={{ width: '60%' }}
-        >
-          <option value="">All Buildings</option>
-          <option value="NGE">NGE</option>
-          <option value="GLE">GLE</option>
-          <option value="RTL">RTL</option>
-          <option value="ALLIED">ALLIED</option>
-          <option value="ACAD">ACAD</option>
-          <option value="SAL">SAL</option>
-          <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-          <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-          <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-          <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
-        </Form.Control>
-      </Form.Group>
-    </Col>
-    <Col>
-      <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-        <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Purpose:</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Purpose"
-          value={filterPurpose}
-          onChange={this.handlePurposeFilterChange}
-          className="form-control"
-          style={{ width: '60%' }}
-        />
-      </Form.Group>
-    </Col>
-  </Row>
-</Container>
+        <Container style={{ marginBottom: '' }}>
+          <Row className="mb-3">
+            <Col>
+              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
+                <DatePicker
+                  selected={filterDateTimeIn}
+                  onChange={this.handleDateFilterChange}
+                  dateFormat="dd/MM/yyyy"
+                  placeholderText="dd/mm/yyyy"
+                  className="form-control"
+                  style={{ width: '100%' }}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Card Number"
+                  value={filterCardNumber}
+                  onChange={this.handleCardNumberFilterChange}
+                  className="form-control"
+                  style={{ width: '60%' }}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={filterBuilding}
+                  onChange={this.handleBuildingFilterChange}
+                  className="form-control"
+                  style={{ width: '60%' }}
+                >
+                  <option value="">All Buildings</option>
+                  <option value="NGE">NGE</option>
+                  <option value="GLE">GLE</option>
+                  <option value="RTL">RTL</option>
+                  <option value="ALLIED">ALLIED</option>
+                  <option value="ACAD">ACAD</option>
+                  <option value="SAL">SAL</option>
+                  <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+                  <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+                  <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+                  <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
+                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Purpose:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Purpose"
+                  value={filterPurpose}
+                  onChange={this.handlePurposeFilterChange}
+                  className="form-control"
+                  style={{ width: '60%' }}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Container>
 
         <Container fluid className="pt-0">
           <Row>
@@ -340,7 +415,6 @@ class AdminPage extends Component {
                     <th>Time out</th>
                     <th>Building Visited</th>
                     <th>Status</th>
-                    
                   </tr>
                 </thead>
                 <tbody style={{ color: 'black' }}>
@@ -357,7 +431,6 @@ class AdminPage extends Component {
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
                         {user.status === 1 ? 'Card in use' : 'Available'}
                       </td>
-                      
                     </tr>
                   ))}
                 </tbody>

@@ -5,7 +5,7 @@ import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import SendIcon from '@mui/icons-material/Send';
-import { FaTimesCircle } from 'react-icons/fa';
+import { FaCheckCircle } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 import './VisitorExit.css';
 
@@ -24,8 +24,8 @@ class VisitorExit extends Component {
       firstName: '',
       lastName: '',
       visitorImage: null,
-      timeIn: '', // Add timeIn to state
-      uniqueID: '' // Add uniqueID to state
+      timeIn: '', 
+      uniqueID: '' 
     };
   }
 
@@ -333,10 +333,10 @@ class VisitorExit extends Component {
             backgroundColor: 'maroon', 
             color: 'white', 
             borderColor: 'maroon',
-            padding: '10px 20px',   // Adjust padding for button size
-            fontSize: '18px',       // Adjust font size
-            width: '150px',         // Adjust button width
-            height: '50px',          // Adjust button height
+            padding: '10px 20px',   
+            fontSize: '18px',       
+            width: '150px',         
+            height: '50px',          
             marginRight: '15px'
         }}
     >
@@ -349,10 +349,10 @@ class VisitorExit extends Component {
             backgroundColor: 'maroon', 
             color: '#F4C522', 
             borderColor: 'maroon',
-            padding: '10px 20px',   // Adjust padding for button size
-            fontSize: '18px',       // Adjust font size
-            width: '150px',         // Adjust button width
-            height: '50px'          // Adjust button height
+            padding: '10px 20px',   
+            fontSize: '18px',       
+            width: '150px',         
+            height: '50px'         
         }}
     >
         Confirm
@@ -364,18 +364,16 @@ class VisitorExit extends Component {
 
 
         </Modal>
-
-
         <Modal show={showModal} onHide={this.handleClose} centered size="lg">
         <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
-          <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Visitor Exit</Modal.Title>
+          <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Exit Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <FaTimesCircle size={80} style={{ marginBottom: '20px', color: 'maroon' }} />
-            <h4 style={{ marginBottom: '10px', color: 'maroon' }}>You have already marked your exit!</h4>
-          </div>
-        </Modal.Body>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <FaCheckCircle size={80} style={{ marginBottom: '20px', color: 'green' }} />
+        <h4 style={{ marginBottom: '10px', color: 'maroon' }}>Exit confirmed. Thank you for visiting our campus!</h4>
+      </div>
+      </Modal.Body>
         <Modal.Footer>
         <BootstrapButton 
     variant="primary" 
@@ -384,10 +382,10 @@ class VisitorExit extends Component {
         backgroundColor: 'maroon', 
         color: 'white', 
         borderColor: 'maroon',
-        padding: '10px 20px',   // Same padding as previous buttons
-        fontSize: '18px',       // Same font size as previous buttons
-        width: '150px',         // Same width as previous buttons
-        height: '50px'          // Same height as previous buttons
+        padding: '10px 20px',   
+        fontSize: '18px',       
+        width: '150px',         
+        height: '50px'          
     }}
 >
     Close
