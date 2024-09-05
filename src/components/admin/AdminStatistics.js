@@ -359,7 +359,7 @@ class AdminStatistics extends Component {
                     placeholderText="dd/MM/yyyy"
                     className="form-control"
                   />
-                </div>
+                </div> 
               </Form.Group>
             </Col>
             <Col>
