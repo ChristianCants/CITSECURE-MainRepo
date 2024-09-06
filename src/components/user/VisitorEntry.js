@@ -7,8 +7,7 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle, FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-
-import './VisitorEntry.css'; // Import the CSS file
+import './VisitorEntry.css';
 
 class VisitorEntry extends Component {
   constructor(props) {
@@ -27,55 +26,63 @@ class VisitorEntry extends Component {
       visitorimage: null,
       visitorimage2: null,
       showCamera2: false,
-      isVisitorIdCaptured: false, // Add this state
+      isVisitorIdCaptured: false,
     };
   }
+
+  // Fetch the next available card number from the backend
+  fetchNextCardNumber = async () => {
+    try {
+      const response = await axios.get('http://localhost:8080/visitor/nextCardNumber');
+      const nextCardNumber = response.data.nextCardNo;
+      this.setState({ cardNo: nextCardNumber });
+    } catch (error) {
+      console.error('Failed to fetch the next card number:', error);
+      this.setState({ cardNo: 'Error' });
+    }
+  };
 
   getCurrentTime = () => {
     const now = new Date();
     const hours = now.getHours() % 12 || 12;
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    return `${hours}:${minutes} ${ampm}`;
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    return `${hours}:${minutes} ${ampm} ${day}/${month}/${year}`;
   };
 
   componentDidMount() {
     const currentTime = this.getCurrentTime();
     this.setState({ timeIn: currentTime });
+
+    // Fetch the next card number from the server instead of generating it randomly
+    this.fetchNextCardNumber();
   }
 
   checkCardUsage = async (cardNo) => {
     try {
-      console.log(`Checking card usage for card number: ${cardNo}`);
       const response = await axios.get(`http://localhost:8080/visitor/checkcard/${cardNo}`);
-      console.log('Card usage response:', response.data);
       return response.data.isUsed;
     } catch (error) {
       console.error('Failed to check card usage:', error.message);
-      return false; // Assuming the card is not used in case of an error
+      return false;
     }
   };
 
-  handleImageUpload2 = async (cardNo, timeIn) => {
+  handleImageUpload2 = async (cardNo) => {
     const { visitorimage2 } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
 
-    const now = new Date();
-    const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-    const year = now.getFullYear();
-
-    const formattedTime = `${hours}-${minutes}_${ampm}_${day}-${month}-${year}`;
-    const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
+    const formattedTime = this.getCurrentTime().replace(/ /g, '_'); // Format with underscores for file name
+    const sanitizedCardNo = cardNo.toString().replace(/[^a-zA-Z0-9]/g, '_'); // Convert cardNo to string first
     const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
 
     const formData = new FormData();
     formData.append('file', blob, filename);
     formData.append('cardNo', sanitizedCardNo);
-    formData.append('timeIn', formattedTime); // Use formattedTime
+    formData.append('timeIn', formattedTime);
 
     try {
       const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
@@ -83,7 +90,6 @@ class VisitorEntry extends Component {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Image upload successful:', response.data);
       return response.data.replace('Image saved at: ', '');
     } catch (error) {
       console.error('Image upload failed:', error.response ? error.response.data : error.message);
@@ -113,11 +119,6 @@ class VisitorEntry extends Component {
       }
 
       const cardNumber = parseInt(cardNo, 10);
-      if (isNaN(cardNumber) || cardNumber < 1 || cardNumber > 100) {
-        alert('Invalid card number! Card number must be between 1 and 100.');
-        return;
-      }
-
       const isCardUsed = await this.checkCardUsage(cardNumber);
       if (isCardUsed) {
         console.log('Card already used, Check your card again');
@@ -131,16 +132,16 @@ class VisitorEntry extends Component {
         firstName,
         lastName,
         purpose,
-        status: 1,
+        status: 1, // Mark visitor as active
         cardNo: cardNumber,
-        timeIn: timeIn,
+        timeIn,
         buildingToVisit,
         visitorimage2: imagePath2,
       };
 
-      console.log('Sending data to server:', formData); // Add this line for debugging
+      console.log('Sending data to server:', formData);
 
-      const response = await axios.post('http://localhost:8080/visitor/addvisitor', formData, {
+      const response = await axios.post('http://localhost:8080/visitor/addVisitor', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -149,8 +150,13 @@ class VisitorEntry extends Component {
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
     } catch (error) {
-      console.error('Signup failed:', error.response ? error.response.data : error.message);
-      this.setState({ showErrorModal: true });
+      if (error.response && error.response.status === 409) {
+        console.error('Card is already in use');
+        this.setState({ showErrorModal: true, errorMessage: 'Card already used, check your card again' });
+      } else {
+        console.error('Signup failed:', error.response ? error.response.data : error.message);
+        this.setState({ showErrorModal: true });
+      }
     }
   };
 
@@ -159,11 +165,12 @@ class VisitorEntry extends Component {
       firstName: '',
       lastName: '',
       purpose: '',
-      cardNo: '',
       buildingToVisit: '',
       visitorimage: null,
       visitorimage2: null,
     });
+
+    this.fetchNextCardNumber(); // Fetch new card number on form reset
   };
 
   handleViewMap = () => {
@@ -193,7 +200,7 @@ class VisitorEntry extends Component {
   };
 
   handleCameraOpen2 = () => {
-    this.setState({ showCamera2: true, isVisitorIdCaptured: true }); // Set state to indicate Visitor ID is captured
+    this.setState({ showCamera2: true, isVisitorIdCaptured: true });
   };
 
   handleCapture = () => {
@@ -309,10 +316,11 @@ class VisitorEntry extends Component {
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
+                    <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>
+                      Visitor Entry Form
+                    </h2>
 
-
-                  {/* Modal for Visitor */}
+                    {/* Modal for Visitor */}
                     <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
@@ -346,8 +354,9 @@ class VisitorEntry extends Component {
 
                     {/* Second section for Visitor ID */}
                     <div style={visitorIdSectionStyle}>
-                    <h3 style={{ marginBottom: '10px' }}>
-  <span style={{ color: 'maroon' }}> Visitor ID</span> </h3>
+                      <h3 style={{ marginBottom: '10px' }}>
+                        <span style={{ color: 'maroon' }}> Visitor ID</span>
+                      </h3>
 
                       {!showCamera2 && !visitorimage2 && (
                         <button
@@ -401,7 +410,7 @@ class VisitorEntry extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                        <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR</span>
+                          <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR</span>
                           <span style={{ color: '#F4C522', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}>PHOTO</span>
                         </Modal.Title>
                       </Modal.Header>
@@ -413,15 +422,15 @@ class VisitorEntry extends Component {
                           className="btn btn-primary"
                           onClick={this.handleCapture2}
                           style={{
-                            backgroundColor: 'maroon',        
-                            borderColor: '#A43F3F',            
-                            color: '#FFFFFF',                  
-                            borderRadius: '5px',               
-                            padding: '10px 20px',              
-                            fontSize: '1.2em',                 
-                            fontWeight: 'normal',                
-                            cursor: 'pointer',                 
-                            border: '2px solid #A43F3F'
+                            backgroundColor: 'maroon',
+                            borderColor: '#A43F3F',
+                            color: '#FFFFFF',
+                            borderRadius: '5px',
+                            padding: '10px 20px',
+                            fontSize: '1.2em',
+                            fontWeight: 'normal',
+                            cursor: 'pointer',
+                            border: '2px solid #A43F3F',
                           }}
                         >
                           Capture
@@ -470,23 +479,17 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">Card Number</label>
-                      <input
-                        type="text"
-                        id="cardNo"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={cardNo}
-                        onChange={(e) => {
-                          const inputValue = e.target.value;
-                          if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
-                            this.setState({ cardNo: inputValue });
-                          }
-                        }}
-                        pattern="[1-9][0-9]?"
-                        required
-                      />
-                    </div>
+  <label className="form-label" htmlFor="cardNo">Card Number</label>
+  <input
+    type="text"
+    id="cardNo"
+    className="form-control custom-input"
+    style={inputStyle}
+    value={cardNo}
+    readOnly // Card Number field is read-only now
+  />
+</div>
+
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="timeIn">Time In</label>
@@ -571,39 +574,38 @@ class VisitorEntry extends Component {
           </Modal.Footer>
         </Modal>
 
+        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
+          <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Notification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="d-flex justify-content-center align-items-center">
+              <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
+                Card already used, Check your card again
+              </p>
+              <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
+            </div>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '150px' }}>
+              OK
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
 
-              <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
-        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-          <Modal.Title>Notification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="d-flex justify-content-center align-items-center">
-            <p style={{ marginRight: '10px', marginBottom: '0', display: 'flex', alignItems: 'center' }}>
-              Card already used, Check your card again
-            </p>
-            <FaTimesCircle style={{ color: 'red', fontSize: '2rem' }} />
-          </div>
-        </Modal.Body>
-        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-          <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '150px' }}>
-            OK
-          </BootstrapButton>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
-        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-          <Modal.Title>Notification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Please fill out all fields and capture the visitor ID before proceeding.</p>
-        </Modal.Body>
-        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-          <BootstrapButton variant="primary" onClick={() => this.setState({ showNotification: false })} style={{ background: 'maroon', width: '150px' }}>
-            OK
-          </BootstrapButton>
-        </Modal.Footer>
-      </Modal>
+        <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
+          <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+            <Modal.Title>Notification</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>Please fill out all fields and capture the visitor ID before proceeding.</p>
+          </Modal.Body>
+          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+            <BootstrapButton variant="primary" onClick={() => this.setState({ showNotification: false })} style={{ background: 'maroon', width: '150px' }}>
+              OK
+            </BootstrapButton>
+          </Modal.Footer>
+        </Modal>
       </section>
     );
   }

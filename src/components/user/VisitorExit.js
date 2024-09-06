@@ -64,36 +64,38 @@ class VisitorExit extends Component {
   };
 
   handleFetchVisitorImage = async (cardNo) => {
-    const now = new Date();
-    const date = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}`;
-    const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_');
-    const imageUrl = `http://localhost:8080/image/getIDImg/${sanitizedCardNo}/${date}`;
-    console.log(`Fetching image from URL: ${imageUrl}`); // Log the URL to verify
-  
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0]; // Format date as yyyy-MM-dd
+    const imageUrl = `http://localhost:8080/image/getIDImg/${cardNo}/${formattedDate}`;
+
+    console.log(`Fetching image from URL: ${imageUrl}`); // Log the URL to verify it's correct
+
     try {
-      const response = await axios.get(imageUrl, { responseType: 'blob' });
-      const imageObjectURL = URL.createObjectURL(response.data);
-      this.setState({ visitorImage: imageObjectURL });
+        const response = await axios.get(imageUrl, { responseType: 'blob' });
+        const imageObjectURL = URL.createObjectURL(response.data);
+        this.setState({ visitorImage: imageObjectURL });
     } catch (error) {
-      console.error('Error fetching visitor image:', error);
-      this.setState({ errorMessage: 'Failed to load visitor image.', showErrorModal: true });
+        console.error('Error fetching visitor image:', error);
+        this.setState({ errorMessage: 'Failed to load visitor image.', showErrorModal: true });
     }
-  };
+};
+
+
 
   handleLogin = async (e) => {
     e.preventDefault();
     const { cardNo, hours, minutes, ampm } = this.state;
-
+  
     if (!cardNo) {
       alert('Please fill out all fields');
       return;
     }
-
+  
     if (cardNo <= 0 || cardNo > 100) {
       alert('Invalid card number.');
       return;
     }
-
+  
     // Construct timeIn from hours, minutes, and current date
     const now = new Date();
     const day = String(now.getDate()).padStart(2, '0');
@@ -101,17 +103,17 @@ class VisitorExit extends Component {
     const year = now.getFullYear();
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
-    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;
+    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;  // Defined the timeIn variable here
     const uniqueID = uuidv4(); // Generate a unique ID
-
+  
     try {
       console.log(`Fetching details for cardNo: ${cardNo}`);
       const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
-
+  
       if (response.data) {
         console.log(`Fetching image for cardNo: ${cardNo}`);
         await this.handleFetchVisitorImage(cardNo);
-
+  
         this.setState({
           userDetails: response.data,
           firstName: response.data.firstName,
@@ -129,32 +131,34 @@ class VisitorExit extends Component {
       this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
   };
+  
+  
 
   handleConfirmExit = async () => {
     const { cardNo, hours, minutes, ampm } = this.state;
 
     try {
-      const formattedHours = String(hours).padStart(2, '0');
-      const formattedMinutes = String(minutes).padStart(2, '0');
-      const timeOut = `${formattedHours}:${formattedMinutes} ${ampm}`;
+        const formattedHours = String(hours).padStart(2, '0');
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const timeOut = `${formattedHours}:${formattedMinutes} ${ampm}`;
 
-      const response = await axios.put(
-        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+        const response = await axios.put(
+            `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
+            {},
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        );
 
-      console.log('API Response:', response.data);
-      this.setState({ showModal: true, showConfirmModal: false });
+        console.log('API Response:', response.data);
+        this.setState({ showModal: true, showConfirmModal: false });
     } catch (error) {
-      console.error('Time-out failed! Reason:', error.message);
-      this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
+        console.error('Time-out failed! Reason:', error.message);
+        this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
     }
-  };
+};
 
   handleGoBack = () => {
     const { navigate } = this.props;

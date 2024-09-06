@@ -61,7 +61,10 @@ class VisitorPhoto extends Component {
     const year = now.getFullYear();
 
     const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
-    const sanitizedCardNo = cardNo.replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
+    
+    // Convert cardNo to a string before calling replace
+    const sanitizedCardNo = cardNo.toString().replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
+    
     const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
 
     const formData = new FormData();
@@ -186,11 +189,10 @@ class VisitorPhoto extends Component {
               <div className="card bg-glass" style={formStyle}>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
-
+                    <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
 
                     <div style={visitorPhotoSectionStyle}>
-                    <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor Photo</span> </h3>
+                      <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor Photo</span></h3>
 
                       {!showCamera2 && !visitorimage2 && (
                         <button
@@ -243,8 +245,7 @@ class VisitorPhoto extends Component {
                     <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                        <span style={{ fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span><span style={{ color: 'gold' }}> Photo</span></span>
-
+                          <span style={{ fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span><span style={{ color: 'gold' }}> Photo</span></span>
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
@@ -261,15 +262,15 @@ class VisitorPhoto extends Component {
                           variant="primary"
                           onClick={this.handleCapture2}
                           style={{
-                            backgroundColor: 'maroon',        
-                            borderColor: '#A43F3F',            
-                            color: '#FFFFFF',                  
-                            borderRadius: '5px',               
-                            padding: '10px 20px',              
-                            fontSize: '1.2em',                 
-                            fontWeight: 'normal',                
-                            cursor: 'pointer',                 
-                            border: '2px solid #A43F3F'        
+                            backgroundColor: 'maroon',
+                            borderColor: '#A43F3F',
+                            color: '#FFFFFF',
+                            borderRadius: '5px',
+                            padding: '10px 20px',
+                            fontSize: '1.2em',
+                            fontWeight: 'normal',
+                            cursor: 'pointer',
+                            border: '2px solid #A43F3F',
                           }}
                         >
                           Capture
