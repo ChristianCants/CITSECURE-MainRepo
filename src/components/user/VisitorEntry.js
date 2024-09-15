@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle, FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
+import { jsPDF } from 'jspdf'; // Import jsPDF for PDF generation
 import './VisitorEntry.css';
 
 class VisitorEntry extends Component {
@@ -173,13 +174,20 @@ class VisitorEntry extends Component {
     this.fetchNextCardNumber(); // Fetch new card number on form reset
   };
 
-  handleViewMap = () => {
-    window.location.href = '/visitor-navigation';
+  // Generate and download the PDF for the card number
+  generatePDF = () => {
+    const { cardNo } = this.state;
+
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text(`Visitor Card Number: ${cardNo}`, 20, 30);
+    doc.save(`Visitor_Card_${cardNo}.pdf`);
   };
 
   handleNext = () => {
+    this.generatePDF(); // Export card number as PDF
     const { cardNo } = this.state;
-    this.props.navigate('/VisitorPhoto', { state: { cardNo } });
+    this.props.navigate('/VisitorPhoto', { state: { cardNo } }); // Retain the original handleNext functionality
   };
 
   handleClose = () => {
@@ -479,17 +487,16 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-  <label className="form-label" htmlFor="cardNo">Card Number</label>
-  <input
-    type="text"
-    id="cardNo"
-    className="form-control custom-input"
-    style={inputStyle}
-    value={cardNo}
-    readOnly // Card Number field is read-only now
-  />
-</div>
-
+                      <label className="form-label" htmlFor="cardNo">Card Number</label>
+                      <input
+                        type="text"
+                        id="cardNo"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={cardNo}
+                        readOnly // Card Number field is read-only now
+                      />
+                    </div>
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="timeIn">Time In</label>
@@ -558,21 +565,26 @@ class VisitorEntry extends Component {
         </div>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
-          <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-            <Modal.Title>Notification</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="d-flex justify-content-center align-items-center">
-              <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-              <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-            </div>
-          </Modal.Body>
-          <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-            <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
-              Next
-            </BootstrapButton>
-          </Modal.Footer>
+        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+          <Modal.Title>Notification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="d-flex justify-content-center align-items-center">
+            <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
+            <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
+          </div>
+          {/* Display the card number */}
+          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>
+            Your Card No. is: <strong>{cardNo}</strong>
+          </p>
+        </Modal.Body>
+        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+          <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
+            Next
+          </BootstrapButton>
+        </Modal.Footer>
         </Modal>
+
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
