@@ -406,7 +406,7 @@ class AdminPage extends Component {
               <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    
                     <th>Card Number</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -420,7 +420,7 @@ class AdminPage extends Component {
                 <tbody style={{ color: 'black' }}>
                   {filteredUsers.map((user) => (
                     <tr key={user.id}>
-                      <td>{user.id}</td>
+                      
                       <td>{user.cardNo}</td>
                       <td>{user.firstName}</td>
                       <td>{user.lastName}</td>
