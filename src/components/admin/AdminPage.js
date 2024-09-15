@@ -406,7 +406,7 @@ class AdminPage extends Component {
               <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
-                    {/* <th>ID</th> */}
+                    <th>ID</th>
                     <th>Card Number</th>
                     <th>First Name</th>
                     <th>Last Name</th>
