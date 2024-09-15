@@ -565,25 +565,54 @@ class VisitorEntry extends Component {
         </div>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
-        <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-          <Modal.Title>Notification</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="d-flex justify-content-center align-items-center">
-            <p style={{ marginRight: '10px' }}>Form Submitted Successfully!</p>
-            <p style={{ color: 'green', fontSize: '2rem' }}>✓</p>
-          </div>
-          {/* Display the card number */}
-          <p style={{ textAlign: 'center', fontSize: '1.2rem' }}>
-            Your Card No. is: <strong>{cardNo}</strong>
-          </p>
-        </Modal.Body>
-        <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-          <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
-            Next
-          </BootstrapButton>
-        </Modal.Footer>
-        </Modal>
+  <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
+    <Modal.Title>Notification</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {/* Adjusting the success message with more space */}
+    <div className="d-flex justify-content-center align-items-center">
+      <p style={{ marginRight: '10px', marginTop: '0px', marginBottom: '20px' }}> {/* Increased bottom margin */}
+        Form Submitted Successfully!
+      </p>
+      <p style={{ color: 'green', fontSize: '2rem', marginTop: '0px', marginBottom: '20px' }}>✓</p>
+    </div>
+
+    {/* Adjusting the Card No. with more space */}
+    <p style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '20px' }}> {/* Increased bottom margin */}
+      Card No: <strong>{cardNo}</strong>
+    </p>
+
+    {/* Add a flex container for aligning time and CITU-Secure */}
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: '0 10px',
+        marginTop: '30px', // Increased margin-top to spread content upwards
+        marginBottom: '10px', // Increased margin to spread content downwards
+      }}
+    >
+      {/* Display the system time on the left */}
+      <p style={{ fontSize: '1rem', color: 'black', marginBottom: 0 }}>
+        Time: {new Date().toLocaleTimeString()}
+      </p>
+      {/* Display "CITU-Secure" on the right */}
+      <p style={{ fontSize: '1.2rem', color: '#800000', textAlign: 'right', marginBottom: 0 }}>
+        CITU-Secure
+      </p>
+    </div>
+  </Modal.Body>
+  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
+    <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
+      Next
+    </BootstrapButton>
+  </Modal.Footer>
+</Modal>
+
+
+
+
+
 
 
         <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
