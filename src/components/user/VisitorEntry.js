@@ -51,8 +51,10 @@ class VisitorEntry extends Component {
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
     const year = now.getFullYear();
+  
     return `${hours}:${minutes} ${ampm} ${day}/${month}/${year}`;
   };
+  
 
   componentDidMount() {
     const currentTime = this.getCurrentTime();

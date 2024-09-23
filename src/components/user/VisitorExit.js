@@ -35,11 +35,25 @@ class VisitorExit extends Component {
 
   setInitialTime = () => {
     const now = new Date();
-    const hours = String(now.getHours() % 12 || 12).padStart(2, '0'); // Adjust for 12-hour format
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    this.setState({ hours, minutes, ampm });
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';  // Determine AM or PM
+    const formattedHours = String(hours % 12 || 12).padStart(2, '0'); // Convert to 12-hour format
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+  
+    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;
+  
+    this.setState({
+      hours: formattedHours,
+      minutes: formattedMinutes,
+      ampm: ampm,
+      timeIn: timeIn
+    });
   };
+  
 
   handleExit = () => {
     const { navigate } = this.props;
@@ -133,32 +147,30 @@ class VisitorExit extends Component {
   };
   
   
-
   handleConfirmExit = async () => {
     const { cardNo, hours, minutes, ampm } = this.state;
-
+  
     try {
-        const formattedHours = String(hours).padStart(2, '0');
-        const formattedMinutes = String(minutes).padStart(2, '0');
-        const timeOut = `${formattedHours}:${formattedMinutes} ${ampm}`;
-
-        const response = await axios.put(
-            `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
-            {},
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-
-        console.log('API Response:', response.data);
-        this.setState({ showModal: true, showConfirmModal: false });
+      const timeOut = `${hours}:${minutes} ${ampm}`;
+  
+      const response = await axios.put(
+        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      console.log('API Response:', response.data);
+      this.setState({ showModal: true, showConfirmModal: false });
     } catch (error) {
-        console.error('Time-out failed! Reason:', error.message);
-        this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
+      console.error('Time-out failed! Reason:', error.message);
+      this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
     }
-};
+  };
+  
 
   handleGoBack = () => {
     const { navigate } = this.props;
