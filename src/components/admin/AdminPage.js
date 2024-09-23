@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
+import { Table, Container, Row, Col, Modal, Form, Dropdown } from 'react-bootstrap'; // Importing Dropdown for settings
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -9,6 +9,7 @@ import BootstrapButton from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format, parse } from 'date-fns';
+import { Settings as SettingsIcon } from '@mui/icons-material'; // Importing Settings Icon
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -28,7 +29,7 @@ class AdminPage extends Component {
     };
 
     this.handleExportPDF = this.handleExportPDF.bind(this);
-    this.handleExportFilteredPDF = this.handleExportFilteredPDF.bind(this); // Added for filtered export
+    this.handleExportFilteredPDF = this.handleExportFilteredPDF.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.handleUpdateModalClose = this.handleUpdateModalClose.bind(this);
@@ -53,7 +54,8 @@ class AdminPage extends Component {
   };
 
   fetchUsers = () => {
-    axios.get('http://localhost:8080/visitor/getAllVisitors')
+    axios
+      .get('http://localhost:8080/visitor/getAllVisitors')
       .then((response) => {
         this.setState({ users: response.data });
       })
@@ -318,18 +320,21 @@ class AdminPage extends Component {
               </span>
             </li>
           </ul>
-          <Button onClick={this.handleExportPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            Export Data
-          </Button>
-          <Button onClick={this.handleExportFilteredPDF} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            Export Filtered Data
-          </Button>
-          <Button onClick={this.handleStatistics} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            Admin Statistics
-          </Button>
-          <Button onClick={this.handleLogout} style={{ color: 'white', backgroundColor: 'transparent', border: '1px solid white', marginLeft: '10px' }}>
-            Logout
-          </Button>
+
+          {/* Adding Settings Dropdown */}
+          <Dropdown align="end">
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: 'transparent', border: 'none' }}>
+              <SettingsIcon style={{ color: 'white', fontSize: '40px' }} /> {/* Settings Icon */}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={this.handleExportPDF}>Export Data</Dropdown.Item>
+              <Dropdown.Item onClick={this.handleExportFilteredPDF}>Export Filtered Data</Dropdown.Item>
+              <Dropdown.Item onClick={this.handleStatistics}>Admin Statistics</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </header>
 
         <Container style={{ marginBottom: '' }}>
@@ -406,7 +411,6 @@ class AdminPage extends Component {
               <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
-                    
                     <th>Card Number</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -420,7 +424,6 @@ class AdminPage extends Component {
                 <tbody style={{ color: 'black' }}>
                   {filteredUsers.map((user) => (
                     <tr key={user.id}>
-                      
                       <td>{user.cardNo}</td>
                       <td>{user.firstName}</td>
                       <td>{user.lastName}</td>
@@ -484,9 +487,7 @@ class AdminPage extends Component {
           <Modal.Body>
             <div className="d-flex justify-content-center align-items-center">
               <div className="d-flex align-items-center">
-                <p style={{ marginRight: '10px', marginBottom: '0' }}>
-                  Admin Dashboard is for Authorized personnel only.
-                </p>
+                <p style={{ marginRight: '10px', marginBottom: '0' }}>Admin Dashboard is for Authorized personnel only.</p>
                 <FaTimesCircle style={{ color: 'red', fontSize: '2rem', marginBottom: '0' }} />
               </div>
             </div>
