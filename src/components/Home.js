@@ -8,7 +8,7 @@ library.add(faSignInAlt, faSignOutAlt);
 
 class Home extends Component {
   containerStyle = {
-    backgroundImage: `url('/images/Menu5.png')`,
+    backgroundImage: `url('/images/TRY NEW.png')`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     backgroundPosition: 'center',

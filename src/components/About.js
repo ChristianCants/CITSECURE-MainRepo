@@ -15,7 +15,6 @@ class AboutPage extends Component {
         { name: 'Cabante, Jaimes Edward', title: 'Developer' },
         { name: 'Cantiveros, Christian Benedict', title: 'Developer' },
         { name: 'Huyo, Hans Werner', title: 'Developer' },
-       
       ],
     };
   }
@@ -70,11 +69,28 @@ class AboutPage extends Component {
       transition: '0.3s',
     };
 
+    // Glassmorphism style
+    const glassStyle = {
+      width: '1100px',
+      height: '400px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '20px',
+      background: 'rgba(255, 255, 255, 0.2)',  // semi-transparent background
+      borderRadius: '16px',
+      backdropFilter: 'blur(15px)',  // blur effect
+      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',  // light shadow for depth
+      border: '2px solid maroon',  // Maroon border
+    };
+    
+
     return (
       <>
         <header className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom" style={{ backgroundColor: 'maroon', padding: '10px', fontSize: '20px' }}>
           <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-            <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+            <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
             <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
             <span>CITSecure</span>
           </div>
@@ -129,9 +145,9 @@ class AboutPage extends Component {
           </Row>
         </div>
         <section style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ backgroundColor: '#FFEFBA', width: '1100px', height: '400px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={glassStyle}>
             <div style={{ display: 'flex', alignItems: 'center', marginTop: '100px' }}>
-              <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+              <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
               <span style={{ width: '1px', height: '35px', backgroundColor: 'black', margin: '0 5px' }}></span>
               <span>CITU- Secure</span>
             </div>
