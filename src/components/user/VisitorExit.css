@@ -86,3 +86,20 @@ body, html {
   background-color: #e0b21b !important; /* Slightly darker gold */
   border-color: #e0b21b !important;
 }
+
+.custom-dual-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 0.3em solid maroon;       /* Maroon color for 3 sides */
+  border-top-color: gold;           /* Gold color for the top side */
+  border-right-color: maroon;       /* Ensures right side stays maroon */
+  border-radius: 50%;               /* Make it round */
+  animation: spin 1s linear infinite; /* Infinite spinning animation */
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);       /* Makes the spinner rotate infinitely */
+  }
+}
+

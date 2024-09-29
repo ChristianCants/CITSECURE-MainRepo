@@ -28,6 +28,7 @@ class VisitorEntry extends Component {
       visitorimage2: null,
       showCamera2: false,
       isVisitorIdCaptured: false,
+      loading: false,  // Loading state for the spinner
     };
   }
 
@@ -54,7 +55,6 @@ class VisitorEntry extends Component {
   
     return `${hours}:${minutes} ${ampm} ${day}/${month}/${year}`;
   };
-  
 
   componentDidMount() {
     const currentTime = this.getCurrentTime();
@@ -113,6 +113,7 @@ class VisitorEntry extends Component {
 
   handleSignUp = async (e) => {
     e.preventDefault();
+    this.setState({ loading: true });  // Start loading
     const { firstName, lastName, purpose, cardNo, buildingToVisit, timeIn, visitorimage2 } = this.state;
 
     try {
@@ -160,6 +161,8 @@ class VisitorEntry extends Component {
         console.error('Signup failed:', error.response ? error.response.data : error.message);
         this.setState({ showErrorModal: true });
       }
+    } finally {
+      this.setState({ loading: false });  // End loading
     }
   };
 
@@ -235,6 +238,7 @@ class VisitorEntry extends Component {
     this.setState({ showNotification: false });
   };
 
+
   render() {
     const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification, isVisitorIdCaptured } = this.state;
 
@@ -307,7 +311,7 @@ class VisitorEntry extends Component {
                   }}
                 />
               </div>
-
+    
               <div className="card bg-glass" style={formStyle}>
                 <Button
                   variant="contained"
@@ -325,10 +329,20 @@ class VisitorEntry extends Component {
                   Go Back
                 </Button>
                 <div className="card-body px-4 py-5 px-md-5">
-                  <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>
-                      Visitor Entry Form
-                    </h2>
+                  {/* Conditionally render the spinner when loading */}
+                  {this.state.loading ? (
+
+                    <div className="d-flex justify-content-center">
+  <div className="custom-dual-spinner" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+                  ) : (
+                    <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
+                      <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>
+                        Visitor Entry Form
+                      </h2>
 
                     {/* Modal for Visitor */}
                     <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
@@ -559,12 +573,13 @@ class VisitorEntry extends Component {
                     >
                       Submit
                     </button>
-                  </form>
-                </div>
-              </div>
+                    </form>
+              )}
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
         <Modal show={showModal} onHide={this.handleClose} centered>
   <Modal.Header style={{ borderBottom: '2px solid maroon' }}>

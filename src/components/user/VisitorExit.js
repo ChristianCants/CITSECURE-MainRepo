@@ -19,6 +19,7 @@ class VisitorExit extends Component {
       showModal: false,
       showErrorModal: false,
       showConfirmModal: false,
+      loading: false,  // Add loading state for spinner
       userDetails: null,
       errorMessage: '',
       firstName: '',
@@ -95,81 +96,83 @@ class VisitorExit extends Component {
 };
 
 
+handleLogin = async (e) => {
+  e.preventDefault();
+  this.setState({ loading: true });  // Start loading
+  const { cardNo, hours, minutes, ampm } = this.state;
 
-  handleLogin = async (e) => {
-    e.preventDefault();
-    const { cardNo, hours, minutes, ampm } = this.state;
-  
-    if (!cardNo) {
-      alert('Please fill out all fields');
-      return;
-    }
-  
-    if (cardNo <= 0 || cardNo > 100) {
-      alert('Invalid card number.');
-      return;
-    }
-  
-    // Construct timeIn from hours, minutes, and current date
-    const now = new Date();
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
-    const year = now.getFullYear();
-    const formattedHours = String(hours).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;  // Defined the timeIn variable here
-    const uniqueID = uuidv4(); // Generate a unique ID
-  
-    try {
-      console.log(`Fetching details for cardNo: ${cardNo}`);
-      const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
-  
-      if (response.data) {
-        console.log(`Fetching image for cardNo: ${cardNo}`);
-        await this.handleFetchVisitorImage(cardNo);
-  
-        this.setState({
-          userDetails: response.data,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          showConfirmModal: true,
-          timeIn, // Set timeIn in state
-          uniqueID // Set uniqueID in state
-        });
-      } else {
-        console.warn('No visitor currently using this card.');
-        this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
-      }
-    } catch (error) {
-      console.error('Error fetching user details:', error.message);
+  if (!cardNo) {
+    alert('Please fill out all fields');
+    this.setState({ loading: false });
+    return;
+  }
+
+  if (cardNo <= 0 || cardNo > 100) {
+    alert('Invalid card number.');
+    this.setState({ loading: false });
+    return;
+  }
+
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const year = now.getFullYear();
+  const formattedHours = String(hours).padStart(2, '0');
+  const formattedMinutes = String(minutes).padStart(2, '0');
+  const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;
+  const uniqueID = uuidv4();
+
+  try {
+    console.log(`Fetching details for cardNo: ${cardNo}`);
+    const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
+
+    if (response.data) {
+      console.log(`Fetching image for cardNo: ${cardNo}`);
+      await this.handleFetchVisitorImage(cardNo);
+
+      this.setState({
+        userDetails: response.data,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        showConfirmModal: true,
+        timeIn,
+        uniqueID
+      });
+    } else {
       this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
     }
-  };
-  
-  
-  handleConfirmExit = async () => {
-    const { cardNo, hours, minutes, ampm } = this.state;
-  
-    try {
-      const timeOut = `${hours}:${minutes} ${ampm}`;
-  
-      const response = await axios.put(
-        `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-  
-      console.log('API Response:', response.data);
-      this.setState({ showModal: true, showConfirmModal: false });
-    } catch (error) {
-      console.error('Time-out failed! Reason:', error.message);
-      this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
-    }
-  };
+  } catch (error) {
+    console.error('Error fetching user details:', error.message);
+    this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
+  } finally {
+    this.setState({ loading: false });  // End loading
+  }
+};
+
+
+handleConfirmExit = async () => {
+  this.setState({ loading: true });  // Start loading
+  const { cardNo, hours, minutes, ampm } = this.state;
+
+  try {
+    const timeOut = `${hours}:${minutes} ${ampm}`;
+    const response = await axios.put(
+      `http://localhost:8080/visitor/updateVisitorTimeOut/${cardNo}?timeOut=${timeOut}`,
+      {},
+      {
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+
+    console.log('API Response:', response.data);
+    this.setState({ showModal: true, showConfirmModal: false });
+  } catch (error) {
+    console.error('Time-out failed! Reason:', error.message);
+    this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
+  } finally {
+    this.setState({ loading: false });  // End loading
+  }
+};
   
 
   handleGoBack = () => {
@@ -178,7 +181,8 @@ class VisitorExit extends Component {
   };
 
   render() {
-    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, userDetails, errorMessage, visitorImage } = this.state;
+    const { cardNo, hours, minutes, ampm, showModal, showErrorModal, showConfirmModal, loading, userDetails, errorMessage, visitorImage } = this.state;
+  
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/TIME OUT.png")',
@@ -234,58 +238,64 @@ class VisitorExit extends Component {
               >
                 Go Back
               </Button>
+              
               <div className="card-body px-4 py-5 px-md-5">
-                <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
-                  <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Exit</h2>
-                  <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="cardNo">
-                      Card Number
-                    </label>
-                    <input
-                      type="text"
-                      id="cardNo"
-                      className="form-control custom-input"
-                      style={inputStyle}
-                      value={cardNo}
-                      onChange={(e) => {
-                        const inputValue = e.target.value;
-                        if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
-                          this.setState({ cardNo: inputValue });
-                        }
+                {/* Conditionally render the spinner or form */}
+                {loading ? (
+                  <div className="d-flex justify-content-center">
+                    <div className="custom-dual-spinner" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
+                    <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Exit</h2>
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="cardNo">Card Number</label>
+                      <input
+                        type="text"
+                        id="cardNo"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={cardNo}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+                          if (inputValue === '' || (inputValue >= 1 && inputValue <= 100)) {
+                            this.setState({ cardNo: inputValue });
+                          }
+                        }}
+                        pattern="[1-9][0-9]?"
+                        required
+                      />
+                    </div>
+
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="timeOut">Time Out</label>
+                      <input
+                        type="text"
+                        id="timeOut"
+                        className="form-control custom-input"
+                        style={inputStyle}
+                        value={formattedTime}
+                        readOnly
+                        required
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      className="btn btn-primary btn-block mb-4"
+                      style={{
+                        ...loginButtonStyle,
+                        width: '130px',
+                        height: '50px',
                       }}
-                      pattern="[1-9][0-9]?"
-                      required
-                    />
-                  </div>
-
-                  <div className="form-outline mb-4">
-                    <label className="form-label" htmlFor="timeOut">
-                      Time Out
-                    </label>
-                    <input
-                      type="text"
-                      id="timeOut"
-                      className="form-control custom-input"
-                      style={inputStyle}
-                      value={formattedTime}
-                      readOnly
-                      required
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    className="btn btn-primary btn-block mb-4"
-                    style={{
-                      ...loginButtonStyle,
-                      width: '130px',
-                      height: '50px',
-                    }}
-                    endIcon={<SendIcon />}
-                  >
-                    Submit
-                  </Button>
-                </form>
+                      endIcon={<SendIcon />}
+                    >
+                      Submit
+                    </Button>
+                  </form>
+                )}
               </div>
             </div>
           </div>
