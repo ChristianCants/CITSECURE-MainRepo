@@ -185,7 +185,7 @@ handleConfirmExit = async () => {
   
 
     const backgroundImageStyle = {
-      backgroundImage: 'url("images/TIME OUT.png")',
+      backgroundImage: 'url("images/IN&OUT.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       height: '100vh',

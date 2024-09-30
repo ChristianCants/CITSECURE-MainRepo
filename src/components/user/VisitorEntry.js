@@ -245,7 +245,7 @@ class VisitorEntry extends Component {
     const isFormFilled = firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
 
     const backgroundImageStyle = {
-      backgroundImage: 'url("images/TIME IN.png")',
+      backgroundImage: 'url("images/IN&OUT.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       height: 'auto',
