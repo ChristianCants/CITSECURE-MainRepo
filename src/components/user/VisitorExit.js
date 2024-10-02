@@ -19,14 +19,15 @@ class VisitorExit extends Component {
       showModal: false,
       showErrorModal: false,
       showConfirmModal: false,
-      loading: false,  // Add loading state for spinner
+      loading: false,
       userDetails: null,
       errorMessage: '',
       firstName: '',
       lastName: '',
       visitorImage: null,
       timeIn: '', 
-      uniqueID: '' 
+      uniqueID: '',
+      fetchTimeout: null  // Timeout for handling long fetch times
     };
   }
 
@@ -95,11 +96,11 @@ class VisitorExit extends Component {
     }
 };
 
-
 handleLogin = async (e) => {
   e.preventDefault();
-  this.setState({ loading: true });  // Start loading
-  const { cardNo, hours, minutes, ampm } = this.state;
+  this.setState({ loading: true });
+
+  const { cardNo,  } = this.state;
 
   if (!cardNo) {
     alert('Please fill out all fields');
@@ -107,27 +108,15 @@ handleLogin = async (e) => {
     return;
   }
 
-  if (cardNo <= 0 || cardNo > 100) {
-    alert('Invalid card number.');
-    this.setState({ loading: false });
-    return;
-  }
-
-  const now = new Date();
-  const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const year = now.getFullYear();
-  const formattedHours = String(hours).padStart(2, '0');
-  const formattedMinutes = String(minutes).padStart(2, '0');
-  const timeIn = `${formattedHours}-${formattedMinutes}_${day}-${month}-${year}_${ampm}`;
-  const uniqueID = uuidv4();
+  const timeoutId = setTimeout(() => {
+    this.setState({ loading: false, errorMessage: 'Request timed out. Please try again.', showErrorModal: true });
+  }, 10000);  // 10-second timeout
 
   try {
-    console.log(`Fetching details for cardNo: ${cardNo}`);
     const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
+    clearTimeout(timeoutId); // Clear the timeout if the request succeeds
 
     if (response.data) {
-      console.log(`Fetching image for cardNo: ${cardNo}`);
       await this.handleFetchVisitorImage(cardNo);
 
       this.setState({
@@ -135,19 +124,18 @@ handleLogin = async (e) => {
         firstName: response.data.firstName,
         lastName: response.data.lastName,
         showConfirmModal: true,
-        timeIn,
-        uniqueID
+        uniqueID: uuidv4(),
+        loading: false,
       });
     } else {
-      this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
+      this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true, loading: false });
     }
   } catch (error) {
-    console.error('Error fetching user details:', error.message);
-    this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true });
-  } finally {
-    this.setState({ loading: false });  // End loading
+    clearTimeout(timeoutId);
+    this.setState({ errorMessage: 'Failed to fetch visitor details. Please try again.', showErrorModal: true, loading: false });
   }
 };
+
 
 
 handleConfirmExit = async () => {
