@@ -1,3 +1,9 @@
+  .container-background {
+  background-color: #ebebeb;
+  width: 100%;      
+  min-height: 5000px; 
+}
+
   .menu-page {
       background-repeat: no-repeat;
       background-size: cover;

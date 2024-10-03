@@ -20,7 +20,7 @@ class BackgateNGEBuilding extends Component {
                     }}
                 >
                     <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-                        <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+                        <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
                         <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
                         <span>CITSecure</span>
                     </div>

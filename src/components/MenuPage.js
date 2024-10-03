@@ -101,38 +101,39 @@ return (
       </header>
 
 
-      <Container fluid style={{ backgroundColor: '#ebebeb' }}>
-        <Row>
-          <Col sm={12} style={{ position: 'relative' }}>
-            <img
-              src="/images/MenuMap.png"
-              alt="Menu Map"
-              style={{
-                width: '60%',
-                height: 'auto',
-                position: 'absolute',
-                top: '0',
-                left: '60px',
-                transform: 'translate(0, 0)',
-              }}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={3} style={{ position: 'relative', marginLeft: 'auto', marginBottom: '50px', marginTop: '10px' }}>
-            <Card style={{ width: '500px', right: '200px', border: '2px solid maroon', backgroundColor: '#fff9eb' }}>
-            <Card.Header style={{ backgroundColor: 'maroon', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Campus Directory</Card.Header>
-              <Card.Body>
-                <ul style={{ listStyleType: 'none', padding: 0 }}>
-                  {campusLocations.map(location => (
-                    <li key={location}>{location}</li>
-                  ))}
-                </ul>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <Container fluid className="container-background">
+  <Row>
+    <Col sm={12} style={{ position: 'relative' }}>
+      <img
+        src="/images/MenuMap.png"
+        alt="Menu Map"
+        style={{
+          width: '60%',
+          height: 'auto',
+          position: 'absolute',
+          top: '0',
+          left: '60px',
+          transform: 'translate(0, 0)',
+        }}
+      />
+    </Col>
+  </Row>
+  <Row>
+    <Col sm={3} style={{ position: 'relative', marginLeft: 'auto', marginBottom: '50px', marginTop: '10px' }}>
+      <Card style={{ width: '500px', right: '200px', border: '2px solid maroon', backgroundColor: '#fff9eb' }}>
+        <Card.Header style={{ backgroundColor: 'maroon', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Campus Directory</Card.Header>
+        <Card.Body>
+          <ul style={{ listStyleType: 'none', padding: 0 }}>
+            {campusLocations.map(location => (
+              <li key={location}>{location}</li>
+            ))}
+          </ul>
+        </Card.Body>
+      </Card>
+    </Col>
+  </Row>
+</Container>
+
     </>
   );
 };

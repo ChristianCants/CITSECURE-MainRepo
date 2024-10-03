@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Container, Row, Col } from 'react-bootstrap';
+import { Button, Form, Container, Row, Col, Dropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
@@ -8,6 +8,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { Settings as SettingsIcon } from '@mui/icons-material'; // Importing Settings Icon
+
 
 Chart.register(...registerables);
 
@@ -293,58 +295,42 @@ class AdminStatistics extends Component {
     return (
       <div style={{ backgroundColor: '#FFF9EB', minHeight: '1000vh' }}>
         <header
-          className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
-          style={{
-            backgroundColor: 'maroon',
-            padding: '10px',
-            fontSize: '20px',
-          }}
-        >
-          <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-            <img src="/images/CITSecure LOGO.png" alt="CITSecure Logo" width="67" height="60" />
-            <span
-              style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}
-            ></span>
-            <span>CITSecure</span>
-          </div>
-          <ul
-            className="nav nav-pills d-flex justify-content-center"
-            style={{ margin: 0, padding: 0, flexGrow: 1 }}
-          >
-            <li className="nav-item">
-              <span
-                className="nav-link"
-                style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}
-              >
-                Admin Statistics
-              </span>
-            </li>
-          </ul>
-          <div>
-            <Button
-              onClick={this.exportPDF}
-              style={{
-                color: 'white',
-                backgroundColor: 'transparent',
-                border: '1px solid white',
-                marginLeft: '10px',
-              }}
-            >
-              Export to PDF
-            </Button>
-            <Button
-              onClick={this.handleLogout}
-              style={{
-                color: 'white',
-                backgroundColor: 'transparent',
-                border: '1px solid white',
-                marginLeft: '10px',
-              }}
-            >
-              Logout
-            </Button>
-          </div>
-        </header>
+  className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+  style={{
+    backgroundColor: 'maroon',
+    padding: '10px',
+    fontSize: '20px',
+  }}
+>
+  <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+    <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+    <span
+      style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}
+    ></span>
+    <span>CITSecure</span>
+  </div>
+  <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+    <li className="nav-item">
+      <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
+        Admin Statistics
+      </span>
+    </li>
+  </ul>
+
+  {/* Adding Settings Dropdown */}
+  <Dropdown align="end">
+    <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: 'transparent', border: 'none' }}>
+      <SettingsIcon style={{ color: 'white', fontSize: '40px' }} /> {/* Settings Icon */}
+    </Dropdown.Toggle>
+
+    <Dropdown.Menu>
+      <Dropdown.Item onClick={this.exportPDF}>Export Data</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+</header>
+
 
         <Container style={{ marginBottom: '20px' }}>
           <Row>
