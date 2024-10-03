@@ -8,7 +8,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Settings as SettingsIcon } from '@mui/icons-material'; // Importing Settings Icon
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { Settings as SettingsIcon } from '@mui/icons-material';
 
 
 Chart.register(...registerables);
@@ -316,6 +317,21 @@ class AdminStatistics extends Component {
       </span>
     </li>
   </ul>
+
+  <Button
+            variant="contained"
+            startIcon={<ChevronLeftIcon />}
+            onClick={() => window.location.href = '/admin/adminpage'} // Navigates to home page
+            style={{
+              position: 'absolute',
+              top: '36px',
+              right: '95px',
+              backgroundColor: 'white',
+              color: 'maroon',
+            }}
+          >
+            Return
+          </Button>
 
   {/* Adding Settings Dropdown */}
   <Dropdown align="end">
