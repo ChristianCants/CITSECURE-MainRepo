@@ -13,7 +13,7 @@ class AboutPage extends Component {
         { name: 'Alegarbes, Adrian', title: 'Project Manager', image: 'Adrian.jpg' },
         { name: 'Cabante, Jaimes Edward', title: 'Developer', image: 'Jaimes.jpg' },
         { name: 'Cantiveros, Christian Benedict', title: 'Developer', image: 'Christian.jpg' },
-        { name: 'Huyo, Hans Werner', title: 'Developer', image: 'default.jpg' }, // Assuming you don't have an image for Hans yet
+        { name: 'Huyo, Hans Werner', title: 'Developer', image: 'Hans.jpg' }, // Assuming you don't have an image for Hans yet
       ],
     };
   }
@@ -111,18 +111,27 @@ class AboutPage extends Component {
         <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '2em', padding: '10px 100px' }}>
           <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '2em', fontWeight: 'bold', marginBottom: '40px', color: '#8E0018', textDecoration: 'underline', textDecorationThickness: '5px', textDecorationWidth: '0.1em', textDecorationColor: '#F8BD00' }}>MEET THE TEAM</div>
           <Row style={{ justifyContent: 'center' }}>
-            {teamMembers.map((member, index) => (
-              <Col key={index} xs={12} sm={6} md={4} lg={3} style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                <Card style={{ width: '25rem' }}>
-                  <Card.Img variant="top" src={`/images/${member.image}`} alt={`${member.name}`} />
-                  <Card.Body>
-                    <Card.Title style={{ fontSize: '25px', fontWeight: 'bold' }}>{member.name}</Card.Title>
-                    <Card.Text style={{ fontSize: '18px' }}>{member.title}</Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+  {teamMembers.map((member, index) => (
+    <Col key={index} xs={12} sm={6} md={4} lg={3} style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+      <Card style={{ width: '18rem' }}>
+        <Card.Img 
+          variant="top" 
+          src={`/images/${member.image}`} 
+          alt={`${member.name}`} 
+          style={{
+            height: '300px',  // Ensure uniform height
+            objectFit: 'cover',  // This keeps the aspect ratio while cropping the image to fit the dimensions
+          }}
+        />
+        <Card.Body>
+          <Card.Title style={{ fontSize: '25px', fontWeight: 'bold' }}>{member.name}</Card.Title>
+          <Card.Text style={{ fontSize: '18px' }}>{member.title}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Col>
+  ))}
+</Row>
+
         </div>
         <section style={{ padding: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div style={glassStyle}>
