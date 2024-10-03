@@ -248,10 +248,13 @@ class VisitorEntry extends Component {
       backgroundImage: 'url("images/IN&OUT.png")',
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
-      height: 'auto',
+      backgroundPosition: 'center center',
+      minHeight: '100vh',  // Ensures the container covers full viewport height
       width: '100%',
+      position: 'relative',  // Allows proper stacking of elements
       overflowY: 'auto',
     };
+    
 
     const formStyle = {
       border: '3px solid maroon',
@@ -331,14 +334,12 @@ class VisitorEntry extends Component {
                 <div className="card-body px-4 py-5 px-md-5">
                   {/* Conditionally render the spinner when loading */}
                   {this.state.loading ? (
-
-                    <div className="d-flex justify-content-center">
-  <div className="custom-dual-spinner" role="status">
-    <span className="visually-hidden">Loading...</span>
+  <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+    <div className="custom-dual-spinner" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
   </div>
-</div>
-
-                  ) : (
+) : (
                     <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
                       <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>
                         Visitor Entry Form

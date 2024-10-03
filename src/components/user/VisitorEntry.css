@@ -50,18 +50,19 @@ body, html {
     font-size: 24px;
   }
 }
+
 .custom-dual-spinner {
-  width: 3rem;
-  height: 3rem;
+  width: 50px;
+  height: 50px;
   border: 0.3em solid maroon;       /* Maroon color for 3 sides */
   border-top-color: gold;           /* Gold color for the top side */
   border-right-color: maroon;       /* Ensures right side stays maroon */
   border-radius: 50%;               /* Make it round */
-  animation: spin 1s linear infinite; /* Infinite spinning animation */
+  animation: spin 1s linear infinite;
 }
 
+
 @keyframes spin {
-  100% {
-    transform: rotate(360deg);       /* Makes the spinner rotate infinitely */
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
