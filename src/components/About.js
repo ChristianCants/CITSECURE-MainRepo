@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Card, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import './About.css';
@@ -11,23 +10,17 @@ class AboutPage extends Component {
     super(props);
     this.state = {
       teamMembers: [
-        { name: 'Alegarbes, Adrian', title: 'Project Manager' },
-        { name: 'Cabante, Jaimes Edward', title: 'Developer' },
-        { name: 'Cantiveros, Christian Benedict', title: 'Developer' },
-        { name: 'Huyo, Hans Werner', title: 'Developer' },
+        { name: 'Alegarbes, Adrian', title: 'Project Manager', image: 'Adrian.jpg' },
+        { name: 'Cabante, Jaimes Edward', title: 'Developer', image: 'Jaimes.jpg' },
+        { name: 'Cantiveros, Christian Benedict', title: 'Developer', image: 'Christian.jpg' },
+        { name: 'Huyo, Hans Werner', title: 'Developer', image: 'default.jpg' }, // Assuming you don't have an image for Hans yet
       ],
     };
   }
 
-  handleGoBack = () => {
-    const navigate = useNavigate();
-    navigate('/');
-  };
-
   render() {
     const { teamMembers } = this.state;
 
-    // Define styles here
     const styles = {
       backgroundImage: 'url("images/GLE.2.png")',
       backgroundSize: 'cover',
@@ -57,19 +50,6 @@ class AboutPage extends Component {
       lineHeight: '121px',
     };
 
-    const lineStyles = {
-      content: '""',
-      height: '2px',
-      width: '100%',
-      backgroundColor: 'white',
-      position: 'absolute',
-      bottom: '-4px',
-      left: '0',
-      display: 'none', 
-      transition: '0.3s',
-    };
-
-    // Glassmorphism style
     const glassStyle = {
       width: '1100px',
       height: '400px',
@@ -84,7 +64,6 @@ class AboutPage extends Component {
       boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',  // light shadow for depth
       border: '2px solid maroon',  // Maroon border
     };
-    
 
     return (
       <>
@@ -135,6 +114,7 @@ class AboutPage extends Component {
             {teamMembers.map((member, index) => (
               <Col key={index} xs={12} sm={6} md={4} lg={3} style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <Card style={{ width: '25rem' }}>
+                  <Card.Img variant="top" src={`/images/${member.image}`} alt={`${member.name}`} />
                   <Card.Body>
                     <Card.Title style={{ fontSize: '25px', fontWeight: 'bold' }}>{member.name}</Card.Title>
                     <Card.Text style={{ fontSize: '18px' }}>{member.title}</Card.Text>
@@ -156,7 +136,6 @@ class AboutPage extends Component {
               <p>Natalio B. Bacalso Ave, Cebu City, 6000 Cebu</p>
               <p>(032) 261 7741</p>
             </div>
-            <div style={lineStyles}></div>
           </div>
         </section>
         <div style={{ borderTop: '3px solid maroon', margin: '20px auto 30px', width: '90%' }}></div>
