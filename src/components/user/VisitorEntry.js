@@ -7,7 +7,8 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle, FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
-import { jsPDF } from 'jspdf'; // Import jsPDF for PDF generation
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas'; // Import html2canvas to capture the modal content
 import './VisitorEntry.css';
 
 class VisitorEntry extends Component {
@@ -30,6 +31,7 @@ class VisitorEntry extends Component {
       isVisitorIdCaptured: false,
       loading: false,  // Loading state for the spinner
     };
+    this.modalRef = React.createRef();
   }
 
   // Fetch the next available card number from the backend
@@ -181,12 +183,18 @@ class VisitorEntry extends Component {
 
   // Generate and download the PDF for the card number
   generatePDF = () => {
-    const { cardNo } = this.state;
-
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text(`Visitor Card Number: ${cardNo}`, 20, 30);
-    doc.save(`Visitor_Card_${cardNo}.pdf`);
+    const modalElement = document.querySelector('.modal-content'); // Adjust the selector based on your modal
+  
+    html2canvas(modalElement, { scale: 2 }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('landscape', 'px', 'a4'); // Landscape mode
+  
+      const imgWidth = pdf.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save(`Visitor_Card_${this.state.cardNo}.pdf`);
+    });
   };
 
   handleNext = () => {
