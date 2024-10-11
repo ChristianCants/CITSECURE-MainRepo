@@ -582,9 +582,9 @@ class VisitorEntry extends Component {
       </div>
     </div>
 
-        <Modal show={showModal} onHide={this.handleClose} centered>
-  <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
-    <Modal.Title>Notification</Modal.Title>
+    <Modal show={showModal} onHide={this.handleClose} centered>
+  <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
+    <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Notification</Modal.Title>
   </Modal.Header>
   <Modal.Body>
     {/* Adjusting the success message with more space */}
@@ -595,9 +595,14 @@ class VisitorEntry extends Component {
       <p style={{ color: 'green', fontSize: '2rem', marginTop: '0px', marginBottom: '20px' }}>✓</p>
     </div>
 
+    {/* First Name in the center */}
+    <p style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '20px' }}> {/* Increased bottom margin */}
+      First Name: <strong>{this.state.firstName}</strong>
+    </p>
+
     {/* Adjusting the Card No. with more space */}
     <p style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '20px' }}> {/* Increased bottom margin */}
-      Card No: <strong>{cardNo}</strong>
+      Card No: <strong>{this.state.cardNo}</strong>
     </p>
 
     {/* Add a flex container for aligning time and CITU-Secure */}
@@ -606,8 +611,8 @@ class VisitorEntry extends Component {
         display: 'flex',
         justifyContent: 'space-between',
         padding: '0 10px',
-        marginTop: '30px', // Increased margin-top to spread content upwards
-        marginBottom: '10px', // Increased margin to spread content downwards
+        marginTop: '30px',
+        marginBottom: '10px',
       }}
     >
       {/* Display the system time on the left */}
@@ -620,12 +625,14 @@ class VisitorEntry extends Component {
       </p>
     </div>
   </Modal.Body>
-  <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-    <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', width: '150px' }}>
+  <Modal.Footer style={{ borderTop: '5px solid maroon', display: 'flex', justifyContent: 'center' }}>
+    <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', color: '#F4C522', borderColor: 'maroon', padding: '10px 20px', fontSize: '18px', width: '150px', height: '50px' }}>
       Next
     </BootstrapButton>
   </Modal.Footer>
 </Modal>
+
+
 
 
 
