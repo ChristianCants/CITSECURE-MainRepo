@@ -582,61 +582,69 @@ class VisitorEntry extends Component {
       </div>
     </div>
 
-    <Modal show={showModal} onHide={this.handleClose} centered>
-  <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
-    <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Notification</Modal.Title>
-  </Modal.Header>
-  <Modal.Body>
-    {/* Adjusting the success message with more space */}
-    <div className="d-flex justify-content-center align-items-center">
-      <p style={{ marginRight: '10px', marginTop: '0px', marginBottom: '20px' }}> {/* Increased bottom margin */}
-        Form Submitted Successfully!
-      </p>
-      <p style={{ color: 'green', fontSize: '2rem', marginTop: '0px', marginBottom: '20px' }}>✓</p>
-    </div>
+          <Modal show={showModal} onHide={this.handleClose} centered size="lg">
+        {/* Header with logos */}
+        <Modal.Header style={{ borderBottom: '5px solid black', position: 'relative', padding: '0px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+            {/* CIT logo on the left */}
+            <img
+              src="/images/CIT LOGO.png"
+              alt="CIT Logo"
+              style={{ width: '90px', height: '90px', marginLeft: '0px' }}
+            />
+            {/* Card No on the left */}
+            <div style={{ marginLeft: '0px', fontSize: '50px', fontWeight: 'bold', color: 'black' }}>
+              CARD NO: <span style={{ color: 'maroon' }}>{cardNo}</span>
+            </div>
+            {/* CIT-U official logo on the right */}
+            <img
+              src="/images/CIT-U official.png"
+              alt="CIT-U Official Logo"
+              style={{ width: '90px', height: '90px', position: 'absolute', right: '10px' }}
+            />
+          </div>
+        </Modal.Header>
 
-    {/* First Name in the center */}
-    <p style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '20px' }}> {/* Increased bottom margin */}
-      First Name: <strong>{this.state.firstName}</strong>
-    </p>
+        {/* Body with full background watermark and no gaps */}
+        <Modal.Body
+          style={{
+            backgroundImage: 'url("/images/CITU watermark.png")',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            padding: '0px',
+            margin: '0px',
+            position: 'relative',
+          }}
+        >
+          {/* First name in the center */}
+          <div className="d-flex justify-content-center align-items-center" style={{ textAlign: 'center', padding: '50px 0' }}>
+            <div style={{ padding: '20px', backgroundColor: '#FAF3E0', border: '2px solid maroon', borderRadius: '5px', minWidth: '600px' }}>
+              <h1 style={{ fontSize: '5.5rem', fontWeight: 'bold', color: 'black' }}>{this.state.firstName}</h1>
+            </div>
+          </div>
+        </Modal.Body>
 
-    {/* Adjusting the Card No. with more space */}
-    <p style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '20px' }}> {/* Increased bottom margin */}
-      Card No: <strong>{this.state.cardNo}</strong>
-    </p>
+        {/* Footer with Building Visit, Time In, and Next button */}
+        <Modal.Footer style={{ borderTop: '5px solid black', display: 'flex', justifyContent: 'space-between', padding: '10px 50px' }}>
+          {/* Left - Building Visit */}
+          <div style={{ padding: '10px', backgroundColor: '#FAF3E0', border: '1px solid maroon', borderRadius: '5px', minWidth: '150px', textAlign: 'center' }}>
+            <strong style={{ fontSize: '1.2rem', color: 'black' }}>Building Visit:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1rem', marginTop: '5px' }}>{this.state.buildingToVisit || "Not Specified"}</div>
+          </div>
 
-    {/* Add a flex container for aligning time and CITU-Secure */}
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '0 10px',
-        marginTop: '30px',
-        marginBottom: '10px',
-      }}
-    >
-      {/* Display the system time on the left */}
-      <p style={{ fontSize: '1rem', color: 'black', marginBottom: 0 }}>
-        Time: {new Date().toLocaleTimeString()}
-      </p>
-      {/* Display "CITU-Secure" on the right */}
-      <p style={{ fontSize: '1.2rem', color: '#800000', textAlign: 'right', marginBottom: 0 }}>
-        CITU-Secure
-      </p>
-    </div>
-  </Modal.Body>
-  <Modal.Footer style={{ borderTop: '5px solid maroon', display: 'flex', justifyContent: 'center' }}>
-    <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', color: '#F4C522', borderColor: 'maroon', padding: '10px 20px', fontSize: '18px', width: '150px', height: '50px' }}>
-      Next
-    </BootstrapButton>
-  </Modal.Footer>
-</Modal>
+          {/* Center - Next Button */}
+          <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', color: '#F4C522', borderColor: 'maroon', padding: '10px 20px', fontSize: '18px', width: '150px', height: '50px' }}>
+            Next
+          </BootstrapButton>
 
-
-
-
-
-
+          {/* Right - Time In */}
+          <div style={{ padding: '10px', backgroundColor: '#FAF3E0', border: '1px solid maroon', borderRadius: '5px', minWidth: '150px', textAlign: 'center' }}>
+            <strong style={{ fontSize: '1.2rem', color: 'black' }}>Time In:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1rem', marginTop: '5px' }}>{this.state.timeIn || new Date().toLocaleTimeString()}</div>
+          </div>
+        </Modal.Footer>
+      </Modal>
 
 
 
