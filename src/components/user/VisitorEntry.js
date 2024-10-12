@@ -15,6 +15,7 @@ class VisitorEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedGate: '',
       firstName: '',
       lastName: '',
       purpose: '',
@@ -113,46 +114,43 @@ class VisitorEntry extends Component {
     return new Blob([ab], { type: mimeString });
   }
 
+
+
+
   handleSignUp = async (e) => {
     e.preventDefault();
-    this.setState({ loading: true });  // Start loading
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, timeIn, visitorimage2 } = this.state;
-
+    this.setState({ loading: true });
+  
+    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, timeIn, visitorimage2 } = this.state;
+  
+    // Debugging: Log selectedGate before sending
+    console.log('Selected Gate:', selectedGate);
+  
     try {
-      if (!firstName || !lastName || !purpose || !cardNo || !buildingToVisit || !visitorimage2) {
-        this.setState({ showNotification: true });
-        return;
-      }
-
-      const cardNumber = parseInt(cardNo, 10);
-      const isCardUsed = await this.checkCardUsage(cardNumber);
-      if (isCardUsed) {
-        console.log('Card already used, Check your card again');
-        this.setState({ showErrorModal: true });
-        return;
-      }
-
-      const imagePath2 = await this.handleImageUpload2(cardNo);
-
       const formData = {
+        selected_gate: selectedGate,  // Use 'selected_gate' to match the backend field
         firstName,
         lastName,
         purpose,
-        status: 1, // Mark visitor as active
-        cardNo: cardNumber,
+        cardNo: parseInt(cardNo, 10),
         timeIn,
         buildingToVisit,
-        visitorimage2: imagePath2,
+        visitorimage2,
+        status: 1, // Visitor active status
       };
-
-      console.log('Sending data to server:', formData);
-
+      // Debugging: Log form data to ensure it's correct
+      console.log('Form data being sent:', formData);
+  
       const response = await axios.post('http://localhost:8080/visitor/addVisitor', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+  
+  
 
+
+  
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
     } catch (error) {
@@ -170,6 +168,7 @@ class VisitorEntry extends Component {
 
   resetFormInputs = () => {
     this.setState({
+      selectedGate: '',
       firstName: '',
       lastName: '',
       purpose: '',
@@ -248,9 +247,9 @@ class VisitorEntry extends Component {
 
 
   render() {
-    const { firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification, isVisitorIdCaptured } = this.state;
+    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification, isVisitorIdCaptured } = this.state;
 
-    const isFormFilled = firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
+    const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
 
     const backgroundImageStyle = {
       backgroundImage: 'url("images/IN&OUT.png")',
@@ -471,6 +470,27 @@ class VisitorEntry extends Component {
                         {visitorimage2 && <Button variant="secondary" onClick={this.handleRetake2}>Retake</Button>}
                       </Modal.Footer>
                     </Modal>
+
+                     {/* Dropdown for Gate Selection */}
+                     <div className="form-outline mb-4">
+                     <label className="form-label" htmlFor="selectedGate">Select Gate</label>
+                     <select
+  id="selectedGate"
+  className="form-control"
+  value={this.state.selectedGate} // Make sure the state is updated correctly
+  onChange={(e) => this.setState({ selectedGate: e.target.value })}  // This updates the state correctly
+  required
+>
+  <option value="">Select Gate</option>
+  <option value="Front Gate">Front Gate</option>
+  <option value="Back Gate">Back Gate</option>
+</select>
+
+
+        </div>
+
+
+
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="firstName">First Name</label>

@@ -65,4 +65,47 @@ body, html {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}/* Add this to your existing CSS for select fields */
+
+/* Add this to your existing CSS for the "Select Gate" dropdown */
+select {
+  border: 2px solid maroon; /* Set the same border color as the input field */
+  border-radius: 10px; /* Match the border-radius */
+  color: black; /* Text color */
+  background-color: white; /* Set background to white */
+  font-family: 'Roboto', sans-serif; /* Ensure consistent font */
+  width: 100%; /* Full width like the input */
+  padding: 10px; /* Spacing similar to input fields */
+  box-sizing: border-box; /* Include padding in the element's width */
 }
+
+/* Style when the select field is focused */
+select:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: maroon; /* Keep maroon border on focus */
+}
+
+/* Optional: To add padding inside the options */
+select option {
+  padding: 10px;
+}
+
+.custom-select {
+  border: 2px solid maroon; /* Same border color as First Name */
+  border-radius: 10px; /* Match the border-radius */
+  color: black; /* Text color */
+  background-color: white; /* Background color */
+  font-family: 'Roboto', sans-serif; /* Ensure the same font */
+  width: 100%; /* Full width like the input */
+  padding: 8px 16px; /* Adjust padding for more height */
+  font-size: 16px; /* Adjust font size */
+  height: auto; /* Ensure height auto to adjust for text */
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+.custom-select:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: maroon; /* Keep maroon border on focus */
+}
+
+

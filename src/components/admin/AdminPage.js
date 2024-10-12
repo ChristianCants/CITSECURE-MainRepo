@@ -52,17 +52,18 @@ class AdminPage extends Component {
       this.setState({ showErrorModal: true });
     }
   };
-
   fetchUsers = () => {
     axios
-      .get('http://localhost:8080/visitor/getAllVisitors')
+      .get('http://localhost:8080/visitor/getAllVisitors') // API call to fetch visitors
       .then((response) => {
-        this.setState({ users: response.data });
+        console.log('API Response:', response.data); // Log the response data to the console
+        this.setState({ users: response.data }); // Update users state with the fetched data
       })
       .catch((error) => {
-        console.error('Error fetching users:', error.message);
+        console.error('Error fetching users:', error.message); // Log errors in case of failure
       });
   };
+  
 
   handleExportPDF = () => {
     const { users } = this.state;
@@ -169,6 +170,7 @@ class AdminPage extends Component {
                 user.timeIn || '',
                 user.timeOut || '',
                 user.buildingToVisit || '',
+                user.gate_selected || '',
                 user.status === 1 ? 'Card in use' : 'Available',
               ]),
             ],
@@ -418,6 +420,7 @@ class AdminPage extends Component {
                     <th>Time in</th>
                     <th>Time out</th>
                     <th>Building Visited</th>
+                    <th>Gate Selected</th> 
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -431,6 +434,8 @@ class AdminPage extends Component {
                       <td>{user.timeIn}</td>
                       <td>{user.timeOut}</td>
                       <td>{user.buildingToVisit}</td>
+                      <td>{user.selected_gate}</td>
+
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
                         {user.status === 1 ? 'Card in use' : 'Available'}
                       </td>

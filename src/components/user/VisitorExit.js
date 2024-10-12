@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import SendIcon from '@mui/icons-material/Send';
 import { FaCheckCircle } from 'react-icons/fa';
-import { v4 as uuidv4 } from 'uuid';
+//import { v4 as uuidv4 } from 'uuid';
 import './VisitorExit.css';
 
 class VisitorExit extends Component {
@@ -96,45 +96,46 @@ class VisitorExit extends Component {
     }
 };
 
+
 handleLogin = async (e) => {
   e.preventDefault();
   this.setState({ loading: true });
 
-  const { cardNo,  } = this.state;
-
-  if (!cardNo) {
-    alert('Please fill out all fields');
-    this.setState({ loading: false });
-    return;
-  }
-
-  const timeoutId = setTimeout(() => {
-    this.setState({ loading: false, errorMessage: 'Request timed out. Please try again.', showErrorModal: true });
-  }, 10000);  // 10-second timeout
+  const { cardNo } = this.state;
 
   try {
     const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
-    clearTimeout(timeoutId); // Clear the timeout if the request succeeds
 
     if (response.data) {
+      // Log the response to check selectedGate
+      console.log('Visitor details fetched:', response.data);
+
       await this.handleFetchVisitorImage(cardNo);
 
       this.setState({
-        userDetails: response.data,
-        firstName: response.data.firstName,
-        lastName: response.data.lastName,
-        showConfirmModal: true,
-        uniqueID: uuidv4(),
-        loading: false,
+        userDetails: {
+          ...this.state.userDetails,
+          selectedGate: response.data.selectedGate, // Ensure this field is set
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          cardNo: response.data.cardNo,
+          timeIn: response.data.timeIn,
+          purpose: response.data.purpose,
+          buildingToVisit: response.data.buildingToVisit,
+        }
       });
+        
+      
     } else {
-      this.setState({ errorMessage: 'No visitor currently using this card.', showErrorModal: true, loading: false });
+      this.setState({ errorMessage: 'No visitor found for this card.', showErrorModal: true, loading: false });
     }
   } catch (error) {
-    clearTimeout(timeoutId);
-    this.setState({ errorMessage: 'Failed to fetch visitor details. Please try again.', showErrorModal: true, loading: false });
+    console.error('Error fetching visitor details:', error);
+    this.setState({ errorMessage: 'Failed to fetch visitor details.', showErrorModal: true, loading: false });
   }
 };
+
+
 
 
 
@@ -293,6 +294,7 @@ handleConfirmExit = async () => {
           <Modal.Header style={{ borderBottom: '5px solid maroon' }}>
             <Modal.Title style={{ fontWeight: 'bold', fontSize: '24px', color: 'maroon' }}>Card Verification!</Modal.Title>
           </Modal.Header>
+
           <Modal.Body>
             {userDetails ? (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
@@ -306,7 +308,16 @@ handleConfirmExit = async () => {
                       />
                     </div>
                   )}
+
+                  
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', width: '100%', maxWidth: '600px' }}>
+
+                  <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+                  <strong>GATE SELECTED:</strong>
+                   <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.selectedGate}</div>
+                    </div>
+
+
                     <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
                       <strong>FIRST NAME:</strong>
                       <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</div>
