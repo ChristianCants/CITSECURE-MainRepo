@@ -54,7 +54,7 @@ class FrontgateLibraryBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/LibraryMap (front).png"
+                                src="/images/LibraryMap (Front).png"
                                 alt="Library Map"
                                 style={{
                                     width: '60%',

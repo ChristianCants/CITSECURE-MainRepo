@@ -54,7 +54,7 @@ class FrontgateAlliedBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/AlliedMap (front).png"
+                                src="/images/AlliedMap (Front).png"
                                 alt="Allied Map"
                                 style={{
                                     width: '60%',

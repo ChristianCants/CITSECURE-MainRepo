@@ -54,7 +54,7 @@ class FrontgateElementary extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/ElementaryMap (front).png"
+                                src="/images/ElementaryMap (Front).png"
                                 alt="Elementary Map"
                                 style={{
                                     width: '60%',

@@ -54,7 +54,7 @@ class FrontgateRTLBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/RTLMap (front).png"
+                                src="/images/RTLMap (Front).png"
                                 alt="RTL Map"
                                 style={{
                                     width: '60%',

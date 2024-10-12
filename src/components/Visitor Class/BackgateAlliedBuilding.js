@@ -54,7 +54,7 @@ class BackgateAlliedBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/AlliedMap (back).png"
+                                src="/images/AlliedMap (Back).png"
                                 alt="Backgate Allied Map"
                                 style={{
                                     width: '60%',

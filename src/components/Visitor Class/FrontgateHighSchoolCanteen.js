@@ -54,7 +54,7 @@ class FrontgateHighSchoolCanteen extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/HighSchoolCanteenMap (front).png"
+                                src="/images/HighSchoolCanteenMap (Front).png"
                                 alt="High School Canteen Map"
                                 style={{
                                     width: '60%',

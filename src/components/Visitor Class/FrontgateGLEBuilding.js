@@ -54,7 +54,7 @@ class FrontgateGLEBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/GLEMap (front).png"
+                                src="/images/GLEMap (Front).png"
                                 alt="GLE Map"
                                 style={{
                                     width: '60%',

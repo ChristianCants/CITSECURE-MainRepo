@@ -54,7 +54,7 @@ class BackgateElementary extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/ElementaryMap (back).png"
+                                src="/images/ElementaryMap (Back).png"
                                 alt="Backgate Elementary Map"
                                 style={{
                                     width: '60%',

@@ -54,7 +54,7 @@ class FrontgateNGEBuilding extends Component {
                     <Row className="justify-content-center">
                         <Col sm={12} className="d-flex justify-content-center">
                             <img
-                                src="/images/NGEMap (front).png"
+                                src="/images/NGEMap (Front).png"
                                 alt="NGE Map"
                                 style={{
                                     width: '60%',
