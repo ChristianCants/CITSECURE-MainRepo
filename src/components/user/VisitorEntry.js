@@ -81,27 +81,29 @@ class VisitorEntry extends Component {
     const { visitorimage2 } = this.state;
     const blob = this.dataURItoBlob(visitorimage2);
 
-    const formattedTime = this.getCurrentTime().replace(/ /g, '_'); // Format with underscores for file name
-    const sanitizedCardNo = cardNo.toString().replace(/[^a-zA-Z0-9]/g, '_'); // Convert cardNo to string first
-    const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
+    const currentDate = new Date().toISOString().split('T')[0];  // Format date as YYYY-MM-DD
+    const sanitizedCardNo = cardNo.toString().replace(/[^a-zA-Z0-9]/g, '_');  // Sanitize card number
 
     const formData = new FormData();
-    formData.append('file', blob, filename);
+    formData.append('file', blob);  // No need to pass a filename
     formData.append('cardNo', sanitizedCardNo);
-    formData.append('timeIn', formattedTime);
+    formData.append('date', currentDate);  // Use the date only
 
     try {
-      const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      return response.data.replace('Image saved at: ', '');
+        const response = await axios.post('http://localhost:8080/image/uploadIDImg', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data.replace('Image saved at: ', '');
     } catch (error) {
-      console.error('Image upload failed:', error.response ? error.response.data : error.message);
-      throw error;
+        console.error('Image upload failed:', error.response ? error.response.data : error.message);
+        throw error;
     }
-  };
+};
+
+
+  
 
   dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -115,41 +117,36 @@ class VisitorEntry extends Component {
   }
 
 
-
-
   handleSignUp = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
   
-    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, timeIn, visitorimage2 } = this.state;
-  
-    // Debugging: Log selectedGate before sending
-    console.log('Selected Gate:', selectedGate);
+    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, timeIn } = this.state;
   
     try {
+      // First, upload the image for Visitor ID
+      console.log('Starting image upload for cardNo:', cardNo);
+      const visitorImagePath = await this.handleImageUpload2(cardNo);
+      console.log('Image uploaded successfully, path:', visitorImagePath);
+  
+      // Now submit the form data after the image upload is complete
       const formData = {
-        selected_gate: selectedGate,  // Use 'selected_gate' to match the backend field
+        selected_gate: selectedGate,
         firstName,
         lastName,
         purpose,
         cardNo: parseInt(cardNo, 10),
         timeIn,
         buildingToVisit,
-        visitorimage2,
+        visitorImagePath, // Pass the uploaded image path as part of the form data
         status: 1, // Visitor active status
       };
-      // Debugging: Log form data to ensure it's correct
-      console.log('Form data being sent:', formData);
   
       const response = await axios.post('http://localhost:8080/visitor/addVisitor', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
-  
-
-
   
       console.log('Signup successful:', response.data);
       this.setState({ showModal: true });
@@ -166,6 +163,7 @@ class VisitorEntry extends Component {
     }
   };
 
+  
   resetFormInputs = () => {
     this.setState({
       selectedGate: '',
@@ -296,6 +294,10 @@ class VisitorEntry extends Component {
       color: 'maroon',
       backgroundColor: 'white',
       fontFamily: 'Roboto, sans-serif',
+    };
+
+    const gateSelectStyle = {
+      ...buildingToVisitStyle, // Spread operator to reuse the same style for gate select
     };
 
     return (
@@ -471,24 +473,22 @@ class VisitorEntry extends Component {
                       </Modal.Footer>
                     </Modal>
 
-                     {/* Dropdown for Gate Selection */}
-                     <div className="form-outline mb-4">
-                     <label className="form-label" htmlFor="selectedGate">Select Gate</label>
-                     <select
-  id="selectedGate"
-  className="form-control"
-  value={this.state.selectedGate} // Make sure the state is updated correctly
-  onChange={(e) => this.setState({ selectedGate: e.target.value })}  // This updates the state correctly
-  required
->
-  <option value="">Select Gate</option>
-  <option value="Front Gate">Front Gate</option>
-  <option value="Back Gate">Back Gate</option>
-</select>
-
-
-        </div>
-
+                    {/* Select Gate Dropdown */}
+    <div className="form-outline mb-4">
+      <label className="form-label" htmlFor="selectedGate">Select Gate</label>
+      <select
+        id="selectedGate"
+        className="form-control"
+        style={gateSelectStyle} // Apply the same inline style as buildingToVisitStyle
+        value={this.state.selectedGate}
+        onChange={(e) => this.setState({ selectedGate: e.target.value })}
+        required
+      >
+        <option value="">Select Gate</option>
+        <option value="Front Gate">Front Gate</option>
+        <option value="Back Gate">Back Gate</option>
+      </select>
+    </div>
 
 
 

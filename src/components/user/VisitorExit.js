@@ -12,6 +12,7 @@ import './VisitorExit.css';
 class VisitorExit extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       cardNo: '',
       hours: '',
@@ -67,9 +68,14 @@ class VisitorExit extends Component {
   };
 
   handleClose = () => {
-    this.setState({ showModal: false });
+    this.setState({ 
+      showModal: false,        // Close exit confirmation modal
+      showErrorModal: false,   // Ensure error modal is closed
+      showConfirmModal: false  // Ensure confirmation modal is closed
+    });
     this.resetFormInputs();
   };
+  
 
   handleErrorClose = () => {
     this.setState({ showErrorModal: false });
@@ -78,13 +84,11 @@ class VisitorExit extends Component {
   handleConfirmClose = () => {
     this.setState({ showConfirmModal: false });
   };
-
   handleFetchVisitorImage = async (cardNo) => {
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0]; // Format date as yyyy-MM-dd
-    const imageUrl = `http://localhost:8080/image/getIDImg/${cardNo}/${formattedDate}`;
+    const currentDate = new Date().toISOString().split('T')[0];  // Format date as YYYY-MM-DD
 
-    console.log(`Fetching image from URL: ${imageUrl}`); // Log the URL to verify it's correct
+    const imageUrl = `http://localhost:8080/image/getIDImg/${cardNo}/${currentDate}`;
+    console.log(`Fetching image from URL: ${imageUrl}`);
 
     try {
         const response = await axios.get(imageUrl, { responseType: 'blob' });
@@ -107,7 +111,6 @@ handleLogin = async (e) => {
     const response = await axios.get(`http://localhost:8080/visitor/getVisitorByCardNo/${cardNo}`);
 
     if (response.data) {
-      // Log the response to check selectedGate
       console.log('Visitor details fetched:', response.data);
 
       await this.handleFetchVisitorImage(cardNo);
@@ -115,26 +118,37 @@ handleLogin = async (e) => {
       this.setState({
         userDetails: {
           ...this.state.userDetails,
-          selectedGate: response.data.selectedGate, // Ensure this field is set
+          selectedGate: response.data.selected_gate || 'Unknown Gate', // Use the correct field name from the API
           firstName: response.data.firstName,
           lastName: response.data.lastName,
           cardNo: response.data.cardNo,
           timeIn: response.data.timeIn,
           purpose: response.data.purpose,
           buildingToVisit: response.data.buildingToVisit,
-        }
+        },
+        loading: false,         // Stop loading after data is fetched
+        showErrorModal: false,  // Ensure error modal is closed if login is successful
+        showConfirmModal: true  // Show the confirmation modal
       });
-        
       
     } else {
-      this.setState({ errorMessage: 'No visitor found for this card.', showErrorModal: true, loading: false });
+      this.setState({ 
+        errorMessage: 'No visitor found for this card.', 
+        showErrorModal: true,  // Show error modal if visitor not found
+        showConfirmModal: false,  // Hide confirmation modal in case of error
+        loading: false 
+      });
     }
   } catch (error) {
     console.error('Error fetching visitor details:', error);
-    this.setState({ errorMessage: 'Failed to fetch visitor details.', showErrorModal: true, loading: false });
+    this.setState({ 
+      errorMessage: 'Failed to fetch visitor details.', 
+      showErrorModal: true,     // Show error modal on failure
+      showConfirmModal: false,  // Ensure confirmation modal is hidden
+      loading: false            // Stop loading on error
+    });
   }
 };
-
 
 
 
@@ -154,14 +168,24 @@ handleConfirmExit = async () => {
     );
 
     console.log('API Response:', response.data);
-    this.setState({ showModal: true, showConfirmModal: false });
+    this.setState({ 
+      showModal: true,         // Show confirmation modal
+      showConfirmModal: false, // Ensure this modal is hidden
+      showErrorModal: false,   // Ensure error modal is hidden
+    });
   } catch (error) {
     console.error('Time-out failed! Reason:', error.message);
-    this.setState({ errorMessage: 'Time-out failed!', showErrorModal: true });
+    this.setState({ 
+      errorMessage: 'Time-out failed!', 
+      showErrorModal: true,    // Show error modal
+      showConfirmModal: false, // Hide confirmation modal if error occurs
+      showModal: false,        // Hide exit confirmation modal if error occurs
+    });
   } finally {
     this.setState({ loading: false });  // End loading
   }
 };
+
   
 
   handleGoBack = () => {
@@ -231,12 +255,12 @@ handleConfirmExit = async () => {
               <div className="card-body px-4 py-5 px-md-5">
                 {/* Conditionally render the spinner or form */}
                 {loading ? (
-                  <div className="d-flex justify-content-center">
-                    <div className="custom-dual-spinner" role="status">
-                      <span className="visually-hidden">Loading...</span>
-                    </div>
-                  </div>
-                ) : (
+  <div className="d-flex justify-content-center">
+    <div className="custom-dual-spinner" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+  </div>
+) : (
                   <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Exit</h2>
                     <div className="form-outline mb-4">
@@ -296,60 +320,66 @@ handleConfirmExit = async () => {
           </Modal.Header>
 
           <Modal.Body>
-            {userDetails ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                  {visitorImage && (
-                    <div style={{ marginBottom: '20px' }}>
-                      <img
-                        src={visitorImage}
-                        alt="Visitor"
-                        style={{ width: '400px', height: '300px', borderRadius: '5px', border: '2px solid maroon' }}
-                      />
-                    </div>
-                  )}
+  {userDetails ? (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {visitorImage && (
+          <div style={{ marginBottom: '20px' }}>
+            <img
+              src={visitorImage}
+              alt="Visitor"
+              style={{ width: '400px', height: '300px', borderRadius: '5px', border: '2px solid maroon' }}
+            />
+          </div>
+        )}
 
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', width: '100%', maxWidth: '600px' }}>
+        {/* Grid for Visitor Details */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '15px', width: '100%', maxWidth: '600px' }}>
 
-                  <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                  <strong>GATE SELECTED:</strong>
-                   <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.selectedGate}</div>
-                    </div>
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>GATE SELECTED:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.selectedGate}</div>
+          </div>
 
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>FIRST NAME:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</div>
+          </div>
 
-                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>FIRST NAME:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.firstName}</div>
-                    </div>
-                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>LAST NAME:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</div>
-                    </div>
-                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>CARD NO:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</div>
-                    </div>
-                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>TIME IN:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</div>
-                    </div>
-                    <div style={{ marginRight: '20px', padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>PURPOSE:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</div>
-                    </div>
-                    <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                      <strong>BUILDING TO VISIT:</strong>
-                      <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <p>No user details available.</p>
-            )}
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>LAST NAME:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.lastName}</div>
+          </div>
 
-          </Modal.Body>
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>CARD NO:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</div>
+          </div>
+
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>TIME IN:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.timeIn}</div>
+          </div>
+
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>PURPOSE:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.purpose}</div>
+          </div>
+
+          <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+            <strong>BUILDING TO VISIT:</strong>
+            <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.buildingToVisit}</div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  ) : (
+    <p>No user details available.</p>
+  )}
+</Modal.Body>
+
+          
           <Modal.Footer>
     <BootstrapButton 
         variant="secondary" 
