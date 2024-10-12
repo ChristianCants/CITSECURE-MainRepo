@@ -181,6 +181,10 @@ class VisitorEntry extends Component {
   // Generate and download the PDF for the card number
   generatePDF = () => {
     const modalElement = document.querySelector('.modal-content'); // Adjust the selector based on your modal
+    const nextButton = document.querySelector('.next-button'); // Target the "Next" button
+  
+    // Temporarily hide the "Next" button
+    nextButton.style.visibility = 'hidden';
   
     html2canvas(modalElement, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
@@ -191,8 +195,12 @@ class VisitorEntry extends Component {
   
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save(`Visitor_Card_${this.state.cardNo}.pdf`);
+  
+      // Restore the visibility of the "Next" button after PDF generation
+      nextButton.style.visibility = 'visible';
     });
   };
+  
 
   handleNext = () => {
     this.generatePDF(); // Export card number as PDF
@@ -622,8 +630,9 @@ class VisitorEntry extends Component {
             />
             {/* Card No on the left */}
             <div style={{ marginLeft: '0px', fontSize: '50px', fontWeight: 'bold', color: 'black' }}>
-              CARD NO: <span style={{ color: 'maroon' }}>{cardNo}</span>
-            </div>
+            CARD NO: <span style={{ color: 'maroon' }}>{cardNo}</span> 
+            <span style={{ color: 'maroon', fontSize: '35px', marginLeft: '10px' }}>{selectedGate.toUpperCase()}</span>
+          </div>
             {/* CIT-U official logo on the right */}
             <img
               src="/images/CIT-U official.png"
@@ -662,9 +671,22 @@ class VisitorEntry extends Component {
           </div>
 
           {/* Center - Next Button */}
-          <BootstrapButton variant="primary" onClick={this.handleNext} style={{ background: 'maroon', color: '#F4C522', borderColor: 'maroon', padding: '10px 20px', fontSize: '18px', width: '150px', height: '50px' }}>
-            Next
-          </BootstrapButton>
+          <BootstrapButton
+          className="next-button" // Add this class to target it in the PDF function
+          variant="primary"
+          onClick={this.handleNext}
+          style={{
+            background: 'maroon',
+            color: '#F4C522',
+            borderColor: 'maroon',
+            padding: '10px 20px',
+            fontSize: '18px',
+            width: '150px',
+            height: '50px',
+          }}
+        >
+          Next
+        </BootstrapButton>
 
           {/* Right - Time In */}
           <div style={{ padding: '10px', backgroundColor: '#FAF3E0', border: '1px solid maroon', borderRadius: '5px', minWidth: '150px', textAlign: 'center' }}>
