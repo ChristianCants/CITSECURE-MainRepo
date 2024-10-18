@@ -67,14 +67,14 @@ class AdminPage extends Component {
 
   handleExportPDF = () => {
     const { users } = this.state;
-
+  
     localStorage.setItem('allVisitorData', JSON.stringify(users));
-
+  
     if (!users.length) {
       alert('No data to export.');
       return;
     }
-
+  
     const docDefinition = {
       pageOrientation: 'landscape',
       content: [
@@ -83,9 +83,9 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Added a new column for Gate Selected
             body: [
-              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
+              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
               ...users.map((user) => [
                 user.id || '',
                 user.cardNo || '',
@@ -95,6 +95,7 @@ class AdminPage extends Component {
                 user.timeIn || '',
                 user.timeOut || '',
                 user.buildingToVisit || '',
+                user.selected_gate || '', 
                 user.status === 1 ? 'Card in use' : 'Available',
               ]),
             ],
@@ -122,34 +123,35 @@ class AdminPage extends Component {
         },
       },
     };
-
+  
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
     pdfDocGenerator.getBlob((blob) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = 'visitor_list.pdf';
+      downloadLink.download = 'Visitor List Data.pdf';
       downloadLink.click();
     });
   };
+  
 
   handleExportFilteredPDF = () => {
     const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
-
+  
     const filteredUsers = users.filter((user) => {
       const matchesDate =
-        !filterDateTimeIn || parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString();
+        !filterDateTimeIn || format(new Date(user.timeIn), 'dd/MM/yyyy') === format(filterDateTimeIn, 'dd/MM/yyyy');
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
-
+  
       return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
     });
-
+  
     if (!filteredUsers.length) {
       alert('No filtered data to export.');
       return;
     }
-
+  
     const docDefinition = {
       pageOrientation: 'landscape',
       content: [
@@ -158,9 +160,9 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], 
             body: [
-              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Status'],
+              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
               ...filteredUsers.map((user) => [
                 user.id || '',
                 user.cardNo || '',
@@ -170,7 +172,7 @@ class AdminPage extends Component {
                 user.timeIn || '',
                 user.timeOut || '',
                 user.buildingToVisit || '',
-                user.gate_selected || '',
+                user.selected_gate || '', 
                 user.status === 1 ? 'Card in use' : 'Available',
               ]),
             ],
@@ -198,15 +200,16 @@ class AdminPage extends Component {
         },
       },
     };
-
+  
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
     pdfDocGenerator.getBlob((blob) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(blob);
-      downloadLink.download = 'filtered_visitor_list.pdf';
+      downloadLink.download = 'Filtered Data of Visitor List.pdf';
       downloadLink.click();
     });
   };
+  
 
   handleLogout = async () => {
     localStorage.removeItem('uname');
