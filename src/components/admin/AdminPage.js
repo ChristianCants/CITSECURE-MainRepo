@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Container, Row, Col, Modal, Form, Dropdown } from 'react-bootstrap'; // Importing Dropdown for settings
+import { Table, Container, Row, Col, Modal, Form, Dropdown } from 'react-bootstrap'; 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -9,7 +9,7 @@ import BootstrapButton from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { format, parse } from 'date-fns';
-import { Settings as SettingsIcon } from '@mui/icons-material'; // Importing Settings Icon
+import { Settings as SettingsIcon } from '@mui/icons-material'; 
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -135,7 +135,7 @@ class AdminPage extends Component {
   
 
   handleExportFilteredPDF = () => {
-    const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
+    const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
   
     const filteredUsers = users.filter((user) => {
       const matchesDate =
@@ -143,8 +143,9 @@ class AdminPage extends Component {
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
+      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected; 
   
-      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
   
     if (!filteredUsers.length) {
@@ -274,6 +275,10 @@ class AdminPage extends Component {
     this.setState({ filterDateTimeIn: date });
   };
 
+  handleGateSelectedFilterChange = (event) => {
+    this.setState({ filterGateSelected: event.target.value });
+  };
+
   handleCardNumberFilterChange = (event) => {
     this.setState({ filterCardNumber: event.target.value });
   };
@@ -291,7 +296,7 @@ class AdminPage extends Component {
   };
 
   render() {
-    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose } = this.state;
+    const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
 
     const filteredUsers = users.filter((user) => {
       const matchesDate =
@@ -299,8 +304,9 @@ class AdminPage extends Component {
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
+      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected; 
 
-      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose;
+      return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
 
     return (
@@ -342,73 +348,84 @@ class AdminPage extends Component {
           </Dropdown>
         </header>
 
-        <Container style={{ marginBottom: '' }}>
-          <Row className="mb-3">
-            <Col>
-              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Date Filter:</Form.Label>
-                <DatePicker
-                  selected={filterDateTimeIn}
-                  onChange={this.handleDateFilterChange}
-                  dateFormat="dd/MM/yyyy"
-                  placeholderText="dd/mm/yyyy"
-                  className="form-control"
-                  style={{ width: '100%' }}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Card Number:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Card Number"
-                  value={filterCardNumber}
-                  onChange={this.handleCardNumberFilterChange}
-                  className="form-control"
-                  style={{ width: '60%' }}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Building:</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={filterBuilding}
-                  onChange={this.handleBuildingFilterChange}
-                  className="form-control"
-                  style={{ width: '60%' }}
-                >
-                  <option value="">All Buildings</option>
-                  <option value="NGE">NGE</option>
-                  <option value="GLE">GLE</option>
-                  <option value="RTL">RTL</option>
-                  <option value="ALLIED">ALLIED</option>
-                  <option value="ACAD">ACAD</option>
-                  <option value="SAL">SAL</option>
-                  <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-                  <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-                  <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-                  <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group style={{ display: 'flex', alignItems: 'center' }}>
-                <Form.Label style={{ marginRight: '10px', fontWeight: 'bold' }}>Purpose:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Purpose"
-                  value={filterPurpose}
-                  onChange={this.handlePurposeFilterChange}
-                  className="form-control"
-                  style={{ width: '60%' }}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-        </Container>
+            <Container style={{ marginBottom: '20px' }}>
+        <Row className="justify-content-center mb-3">
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label style={{ fontWeight: 'bold' }}>Date Filter:</Form.Label>
+              <DatePicker
+                selected={filterDateTimeIn}
+                onChange={this.handleDateFilterChange}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                className="form-control"
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label style={{ fontWeight: 'bold' }}>Card Number:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Card Number"
+                value={filterCardNumber}
+                onChange={this.handleCardNumberFilterChange}
+                className="form-control"
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label style={{ fontWeight: 'bold' }}>Building:</Form.Label>
+              <Form.Control
+                as="select"
+                value={filterBuilding}
+                onChange={this.handleBuildingFilterChange}
+                className="form-control"
+              >
+                <option value="">All Buildings</option>
+                <option value="NGE">NGE</option>
+                <option value="GLE">GLE</option>
+                <option value="RTL">RTL</option>
+                <option value="ALLIED">ALLIED</option>
+                <option value="ACAD">ACAD</option>
+                <option value="SAL">SAL</option>
+                <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+                <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+                <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+                <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label style={{ fontWeight: 'bold' }}>Purpose:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Purpose"
+                value={filterPurpose}
+                onChange={this.handlePurposeFilterChange}
+                className="form-control"
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <Form.Group>
+              <Form.Label style={{ fontWeight: 'bold' }}>Gate Selected:</Form.Label>
+              <Form.Control
+                as="select"
+                value={this.state.filterGateSelected}
+                onChange={this.handleGateSelectedFilterChange}
+                className="form-control"
+              >
+                <option value="">All Gates</option>
+                <option value="Front Gate">Front Gate</option>
+                <option value="Back Gate">Back Gate</option>
+              </Form.Control>
+            </Form.Group>
+          </Col>
+        </Row>
+      </Container>
 
         <Container fluid className="pt-0">
           <Row>
