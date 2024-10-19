@@ -540,7 +540,7 @@ class VisitorEntry extends Component {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">Card Number</label>
+                      <label className="form-label" htmlFor="cardNo">Visitor No.</label>
                       <input
                         type="text"
                         id="cardNo"
@@ -630,7 +630,7 @@ class VisitorEntry extends Component {
             />
             {/* Card No on the left */}
             <div style={{ marginLeft: '0px', fontSize: '50px', fontWeight: 'bold', color: 'black' }}>
-            CARD NO: <span style={{ color: 'maroon' }}>{cardNo}</span> 
+            VISITOR NO: <span style={{ color: 'maroon' }}>{cardNo}</span> 
             <span style={{ color: 'maroon', fontSize: '35px', marginLeft: '10px' }}>{selectedGate.toUpperCase()}</span>
           </div>
             {/* CIT-U official logo on the right */}

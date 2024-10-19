@@ -83,11 +83,10 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Added a new column for Gate Selected
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], 
             body: [
-              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
+              ['Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
               ...users.map((user) => [
-                user.id || '',
                 user.cardNo || '',
                 user.firstName || '',
                 user.lastName || '',
@@ -133,20 +132,21 @@ class AdminPage extends Component {
     });
   };
   
-
   handleExportFilteredPDF = () => {
     const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
   
     const filteredUsers = users.filter((user) => {
-      const matchesDate =
-        !filterDateTimeIn || format(new Date(user.timeIn), 'dd/MM/yyyy') === format(filterDateTimeIn, 'dd/MM/yyyy');
+      const matchesDate = !filterDateTimeIn || 
+        (user.timeIn && new Date(user.timeIn).toLocaleDateString() === filterDateTimeIn.toLocaleDateString());
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
-      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected; 
+      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected;
   
       return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
+  
+    console.log('Filtered Users:', filteredUsers);  // Add this for debugging purposes
   
     if (!filteredUsers.length) {
       alert('No filtered data to export.');
@@ -161,11 +161,10 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], 
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], 
             body: [
-              ['ID', 'Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
+              ['Visitor No.', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
               ...filteredUsers.map((user) => [
-                user.id || '',
                 user.cardNo || '',
                 user.firstName || '',
                 user.lastName || '',
@@ -210,6 +209,9 @@ class AdminPage extends Component {
       downloadLink.click();
     });
   };
+  
+  
+  
   
 
   handleLogout = async () => {
@@ -364,10 +366,10 @@ class AdminPage extends Component {
           </Col>
           <Col md={2}>
             <Form.Group>
-              <Form.Label style={{ fontWeight: 'bold' }}>Card Number:</Form.Label>
+              <Form.Label style={{ fontWeight: 'bold' }}>Visitor  No.</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Card Number"
+                placeholder="Visitor No."
                 value={filterCardNumber}
                 onChange={this.handleCardNumberFilterChange}
                 className="form-control"
@@ -433,7 +435,7 @@ class AdminPage extends Component {
               <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
-                    <th>Card Number</th>
+                    <th>Visitor No.</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Purpose</th>
