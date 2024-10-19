@@ -352,7 +352,7 @@ handleConfirmExit = async () => {
           </div>
 
           <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-            <strong>VISITOR NO::</strong>
+            <strong>VISITOR NO:</strong>
             <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</div>
           </div>
 
