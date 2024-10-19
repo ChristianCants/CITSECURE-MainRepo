@@ -95,7 +95,7 @@ class AdminPage extends Component {
                 user.timeOut || '',
                 user.buildingToVisit || '',
                 user.selected_gate || '', 
-                user.status === 1 ? 'Card in use' : 'Available',
+                user.status === 1 ? 'Inside Campus' : 'Exited',
               ]),
             ],
           },
@@ -173,7 +173,7 @@ class AdminPage extends Component {
                 user.timeOut || '',
                 user.buildingToVisit || '',
                 user.selected_gate || '', 
-                user.status === 1 ? 'Card in use' : 'Available',
+                user.status === 1 ? 'Inside Campus' : 'Exited',
               ]),
             ],
           },
@@ -459,7 +459,7 @@ class AdminPage extends Component {
                       <td>{user.selected_gate}</td>
 
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
-                        {user.status === 1 ? 'Card in use' : 'Available'}
+                        {user.status === 1 ? 'Inside Campus' : 'Exited'}
                       </td>
                     </tr>
                   ))}

@@ -264,7 +264,7 @@ handleConfirmExit = async () => {
                   <form onSubmit={this.handleLogin} style={{ display: 'flex', flexDirection: 'column' }}>
                     <h2 style={{ color: 'maroon', marginBottom: '30px' }}>Visitor Exit</h2>
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">Card Number</label>
+                      <label className="form-label" htmlFor="cardNo">Visitor Number</label>
                       <input
                         type="text"
                         id="cardNo"
@@ -352,7 +352,7 @@ handleConfirmExit = async () => {
           </div>
 
           <div style={{ padding: '10px', border: '1px solid maroon', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-            <strong>CARD NO:</strong>
+            <strong>VISITOR NO::</strong>
             <div style={{ color: 'maroon', fontWeight: 'bold', fontSize: '18px' }}>{userDetails.cardNo}</div>
           </div>
 
