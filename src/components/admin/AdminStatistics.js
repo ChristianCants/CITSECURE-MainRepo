@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button, Form, Container, Row, Col, Dropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import { parse, format } from 'date-fns';
@@ -10,7 +9,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Settings as SettingsIcon } from '@mui/icons-material';
-
+import axios from 'axios'; // Import Axios
 
 Chart.register(...registerables);
 
@@ -18,7 +17,7 @@ class AdminStatistics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: JSON.parse(localStorage.getItem('visitorData')) || [],
+      data: [], // Initial state for visitor data
       filteredData: [],
       fromDate: null,
       toDate: null,
@@ -27,10 +26,27 @@ class AdminStatistics extends Component {
     };
   }
 
+  // Fetch data from the backend API every 5 seconds for real-time updates
   componentDidMount() {
-    const allData = JSON.parse(localStorage.getItem('allVisitorData')) || [];
-    this.setState({ data: allData, filteredData: allData }, this.filterData);
+    this.fetchData(); // Fetch the data initially
+    this.dataInterval = setInterval(this.fetchData, 5000); // Fetch data every 5 seconds
   }
+
+  componentWillUnmount() {
+    clearInterval(this.dataInterval); // Clean up interval on unmount
+  }
+
+  fetchData = () => {
+    axios
+      .get('http://localhost:8080/visitor/getAllVisitors') // Replace with your backend endpoint
+      .then((response) => {
+        const allData = response.data;
+        this.setState({ data: allData, filteredData: allData }, this.filterData); // Update state with fetched data
+      })
+      .catch((error) => {
+        console.error('Error fetching visitor data:', error.message);
+      });
+  };
 
   handleLogout = () => {
     localStorage.removeItem('uname');
@@ -145,7 +161,7 @@ class AdminStatistics extends Component {
 
       return {
         labels: [
-          'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 
+          'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
           'September', 'October', 'November', 'December'
         ],
         datasets: [
@@ -189,29 +205,28 @@ class AdminStatistics extends Component {
   };
 
   exportPDF = () => {
-    const input = document.getElementById('chart-content'); 
-  
-   
+    const input = document.getElementById('chart-content');
+
     html2canvas(input, {
       scale: 5, // Increase the scale to capture better resolution
-      scrollY: 0, 
-      useCORS: true, 
+      scrollY: 0,
+      useCORS: true,
     })
       .then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4'); 
-  
-        const imgWidth = 210; 
-        const pageHeight = 295; 
-        let imgHeight = (canvas.height * imgWidth) / canvas.width; 
-  
+        const pdf = new jsPDF('p', 'mm', 'a4');
+
+        const imgWidth = 210;
+        const pageHeight = 295;
+        let imgHeight = (canvas.height * imgWidth) / canvas.width;
+
         let heightLeft = imgHeight;
         let position = 0;
-  
+
         // Add the first part of the image to the PDF
         pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
         heightLeft -= pageHeight;
-  
+
         // Add more pages if content overflows
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
@@ -219,7 +234,7 @@ class AdminStatistics extends Component {
           pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
           heightLeft -= pageHeight;
         }
-  
+
         // Save the generated PDF
         pdf.save('AdminStatisticsCharts.pdf');
       })
@@ -227,9 +242,6 @@ class AdminStatistics extends Component {
         console.error('Error exporting to PDF:', err);
       });
   };
-  
-  
-  
 
   render() {
     const { filterBuilding, filterMonth, fromDate, toDate } = this.state;
@@ -294,31 +306,29 @@ class AdminStatistics extends Component {
     };
 
     return (
-      <div style={{ backgroundColor: '#FFF9EB', minHeight: '1000vh' }}>
+      <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
         <header
-  className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
-  style={{
-    backgroundColor: 'maroon',
-    padding: '10px',
-    fontSize: '20px',
-  }}
->
-  <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
-    <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
-    <span
-      style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}
-    ></span>
-    <span>CITSecure</span>
-  </div>
-  <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
-    <li className="nav-item">
-      <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
-        Admin Statistics
-      </span>
-    </li>
-  </ul>
+          className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
+          style={{
+            backgroundColor: 'maroon',
+            padding: '10px',
+            fontSize: '20px',
+          }}
+        >
+          <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
+            <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
+            <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
+            <span>CITSecure</span>
+          </div>
+          <ul className="nav nav-pills d-flex justify-content-center" style={{ margin: 0, padding: 0, flexGrow: 1 }}>
+            <li className="nav-item">
+              <span className="nav-link" style={{ color: 'white', fontSize: '40px', fontWeight: 'bold' }}>
+                Admin Statistics
+              </span>
+            </li>
+          </ul>
 
-  <Button
+          <Button
             variant="contained"
             startIcon={<ChevronLeftIcon />}
             onClick={() => window.location.href = '/admin/adminpage'} // Navigates to home page
@@ -333,20 +343,18 @@ class AdminStatistics extends Component {
             Return
           </Button>
 
-  {/* Adding Settings Dropdown */}
-  <Dropdown align="end">
-    <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: 'transparent', border: 'none' }}>
-      <SettingsIcon style={{ color: 'white', fontSize: '40px' }} /> {/* Settings Icon */}
-    </Dropdown.Toggle>
+          <Dropdown align="end">
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: 'transparent', border: 'none' }}>
+              <SettingsIcon style={{ color: 'white', fontSize: '40px' }} />
+            </Dropdown.Toggle>
 
-    <Dropdown.Menu>
-      <Dropdown.Item onClick={this.exportPDF}>Export Data</Dropdown.Item>
-      <Dropdown.Divider />
-      <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
-</header>
-
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={this.exportPDF}>Export Data</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </header>
 
         <Container style={{ marginBottom: '20px' }}>
           <Row>
@@ -361,7 +369,7 @@ class AdminStatistics extends Component {
                     placeholderText="dd/MM/yyyy"
                     className="form-control"
                   />
-                </div> 
+                </div>
               </Form.Group>
             </Col>
             <Col>
@@ -451,9 +459,4 @@ class AdminStatistics extends Component {
   }
 }
 
-const AdminStatisticsWithNavigate = () => {
-  const navigate = useNavigate();
-  return <AdminStatistics navigate={navigate} />;
-};
-
-export default AdminStatisticsWithNavigate;
+export default AdminStatistics;
