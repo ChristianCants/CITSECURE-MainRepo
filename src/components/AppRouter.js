@@ -33,6 +33,15 @@ import BackgateLibraryBuilding from './Visitor Class/BackgateLibraryBuilding';
 import BackgateAlliedBuilding from './Visitor Class/BackgateAlliedBuilding';
 import BackgateHighSchoolCanteen from './Visitor Class/BackgateHighSchoolCanteen';
 
+import AcadOffices from './Visitor Class/MainOffices/AcadOffices';
+import HighSchoolBuildingOffices from './Visitor Class/MainOffices/HighSchoolBuildingOffices';
+import ElementaryBuildingOffices from './Visitor Class/MainOffices/ElementaryBuildingOffices';
+import GLEBuildingOffices from './Visitor Class/MainOffices/GLEBuildingOffices';
+import RTLBuildingOffices from './Visitor Class/MainOffices/RTLBuildingOffices';
+import NGEBuildingOffices from './Visitor Class/MainOffices/NGEBuildingOffices';
+import LibraryBuildingOffices from './Visitor Class/MainOffices/LibraryBuildingOffices';
+import AlliedBuildingOffices from './Visitor Class/MainOffices/AlliedBuildingOffices';
+
 
 const AppRouter = () => {
     return (
@@ -72,6 +81,17 @@ const AppRouter = () => {
                 <Route path="/backgatelibrarybuilding" element={<BackgateLibraryBuilding/>} />
                 <Route path="/backgatealliedbuilding" element={<BackgateAlliedBuilding/>} />
                 <Route path="/backgatehigh-schoolcanteen" element={<BackgateHighSchoolCanteen/>} />
+
+                {/* Add route for AcadOffices */}
+                <Route path="/acad-offices" element={<AcadOffices />} />
+                <Route path="/highschool-offices" element={<HighSchoolBuildingOffices />} />
+                <Route path="/elementary-offices" element={<ElementaryBuildingOffices />} />
+                <Route path="/gle-offices" element={<GLEBuildingOffices />} />
+                <Route path="/rtl-offices" element={<RTLBuildingOffices/>} />
+                <Route path="/nge-offices" element={<NGEBuildingOffices/>} />
+                <Route path="/library-offices" element={<LibraryBuildingOffices/>} />
+                <Route path="/allied-offices" element={<AlliedBuildingOffices/>} />
+
             </Routes>
         </Router>
     );

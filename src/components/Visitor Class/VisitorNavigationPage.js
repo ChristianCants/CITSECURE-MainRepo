@@ -6,7 +6,8 @@ import './VisitorNavigationPage.css';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { useNavigate } from 'react-router-dom';
-import DoorFrontIcon from '@mui/icons-material/DoorFront';  
+import DoorFrontIcon from '@mui/icons-material/DoorFront';
+import OfficeBuildingIcon from '@mui/icons-material/Business';
 
 class VisitorNavigationPage extends React.Component {
     constructor(props) {
@@ -116,6 +117,12 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
+    {/* Main Offices Button */}
+    <Link to="/acad-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
+        </button>
+    </Link>
     {/* Back Gate Button */}
     <Link to="/backgateacadbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
@@ -144,6 +151,12 @@ class VisitorNavigationPage extends React.Component {
     <Link to="/frontgatehighschool" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Main Offices Button */}
+    <Link to="/highschool-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
@@ -176,6 +189,12 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
+    {/* Main Offices Button */}
+    <Link to="/elementary-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
+        </button>
+    </Link>
     {/* Back Gate Button */}
     <Link to="/backgateelementary" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
@@ -204,6 +223,12 @@ class VisitorNavigationPage extends React.Component {
     <Link to="/frontgateglebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Main Offices Button */}
+    <Link to="/gle-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
@@ -237,6 +262,12 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
+    {/* Main Offices Button */}
+    <Link to="" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
+        </button>
+    </Link>
     {/* Back Gate Button */}
     <Link to="/backgatemaincanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
@@ -266,6 +297,12 @@ class VisitorNavigationPage extends React.Component {
     <Link to="/frontgatertlbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Main Offices Button */}
+    <Link to="/rtl-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
@@ -298,6 +335,12 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
+    {/* Main Offices Button */}
+    <Link to="/nge-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
+        </button>
+    </Link>
     {/* Back Gate Button */}
     <Link to="/Backgatengebuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
@@ -326,6 +369,12 @@ class VisitorNavigationPage extends React.Component {
     <Link to="/frontgatelibrarybuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Main Offices Button */}
+    <Link to="/library-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
@@ -359,6 +408,12 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
+    {/* Main Offices Button */}
+    <Link to="/allied-offices" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
+        </button>
+    </Link>
     {/* Back Gate Button */}
     <Link to="/Backgatealliedbuilding" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
@@ -387,6 +442,12 @@ class VisitorNavigationPage extends React.Component {
     <Link to="/frontgatehigh-schoolcanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>
             Front Gate <DoorFrontIcon />
+        </button>
+    </Link>
+    {/* Main Offices Button */}
+    <Link to="" style={{ textDecoration: 'none' }}>
+        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
+            Main Offices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
