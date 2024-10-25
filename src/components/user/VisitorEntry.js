@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Chip from '@mui/material/Chip';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { FaTimesCircle, FaCamera } from 'react-icons/fa';
@@ -253,117 +252,288 @@ class VisitorEntry extends Component {
 
 
   render() {
-    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, showModal, showErrorModal, timeIn, showCamera, visitorimage, showCamera2, visitorimage2, showNotification, isVisitorIdCaptured } = this.state;
-
+    const {
+      selectedGate,
+      firstName,
+      lastName,
+      purpose,
+      cardNo,
+      buildingToVisit,
+      showModal,
+      showErrorModal,
+      timeIn,
+      showCamera,
+      visitorimage,
+      showCamera2,
+      visitorimage2,
+      showNotification,
+      isVisitorIdCaptured 
+    } = this.state;
+  
     const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
+  
+    const formContainerStyle = {
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '20px',
+      backgroundColor: '#f0e1d2',
+      borderRadius: '10px',
+      border: '2px solid maroon',
+      width: '100%',
+      maxWidth: '1200px',
+      margin: '0 auto',
+    };
+  
+    const headerStyle = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      paddingBottom: '10px',
+      borderBottom: '2px solid maroon',
+    };
+  
+    const logoStyle = {
+      width: '90px',
+      height: '90px',
+    };
+  
+    const formTitleStyle = {
+      fontSize: '40px',
+      color: 'maroon',
+      textAlign: 'left',
+      flex: 1,
+    };
 
-    const backgroundImageStyle = {
-      backgroundImage: 'url("images/IN&OUT.png")',
-      backgroundRepeat: 'no-repeat',
+    // Back button style
+    const goBackButtonStyle = {
+      backgroundColor: 'transparent',
+      color: 'maroon',
+      border: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      cursor: 'pointer',
+    };
+  
+    const leftColumnStyle = {
+      flexBasis: '55%', // More space for the left
+    };
+  
+    const rightColumnStyle = {
+      flexBasis: '40%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'right',
+    };
+  
+    const formFieldStyle = {
+      marginBottom: '20px',
+    };
+  
+    const visitorIdSectionStyle = {
+      border: isVisitorIdCaptured ? '2px solid maroon' : '2px solid maroon',
+      borderRadius: '10px',
+      padding: '20px',
+      width: '100%',
+      marginTop: '20px',
+      textAlign: 'center',
+    };
+
+    const sectionStyle = {
+      padding: '40px',
+      backgroundImage: 'url("/images/GLE.2.png")', 
       backgroundSize: 'cover',
       backgroundPosition: 'center center',
-      minHeight: '100vh',  // Ensures the container covers full viewport height
+      backgroundRepeat: 'no-repeat',
+      minHeight: '100vh',
       width: '100%',
-      position: 'relative',  // Allows proper stacking of elements
+      position: 'relative',
       overflowY: 'auto',
     };
-    
-
-    const formStyle = {
-      border: '3px solid maroon',
-      borderRadius: '8px',
-      padding: '15px',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Set to transparent
-      fontFamily: 'Roboto, sans-serif',
-      position: 'relative',
-    };
-
-    const inputStyle = {
-      borderColor: 'maroon',
-      borderRadius: '10px',
-      color: 'black',
-      backgroundColor: 'white',
-      fontFamily: 'Roboto, sans-serif',
-      width: '100%',
-    };
-
-    const timeInInputStyle = {
-      ...inputStyle,
-      border: 'none', // Remove border specifically for "Time In"
-    };
-
-    const visitorIdSectionStyle = isVisitorIdCaptured
-      ? { border: '2px solid maroon', padding: '10px', marginBottom: '10px' }
-      : { padding: '10px', marginBottom: '10px' };
-
-    const buildingToVisitStyle = {
-      borderColor: 'maroon',
-      borderRadius: '10px',
-      color: 'maroon',
-      backgroundColor: 'white',
-      fontFamily: 'Roboto, sans-serif',
-    };
-
-    const gateSelectStyle = {
-      ...buildingToVisitStyle, // Spread operator to reuse the same style for gate select
-    };
-
+  
     return (
-      <section
-        className="background-radial-gradient overflow-hidden"
-        style={{
-          ...backgroundImageStyle,
-          backgroundColor: 'rgba(0, 0, 0, 0)', // Set to transparent
-        }}
-      >
-        <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-          <div className="row gx-lg-5 align-items-center mb-5">
-            <div className="col-lg-6 mb-5 mb-lg-0" style={{ zIndex: 10 }}></div>
-            <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <Chip
-                  label="Access Campus Map after Visitor Entry Form"
-                  style={{
-                    textAlign: 'center',
-                    borderRadius: '100px',
-                    marginBottom: '5px',
-                    color: 'white',
-                  }}
-                />
+      <section style={sectionStyle}>
+        <div style={formContainerStyle}>
+          {/* Header Section */}
+          <div style={headerStyle}>
+            <img src="/images/CIT LOGO.png" alt="CIT Logo" style={logoStyle} />
+            <h1 style={formTitleStyle}>Visitor Entry Form</h1>
+            <img src="/images/CIT-U official.png" alt="CIT-U Logo" style={logoStyle} />
+          </div>
+  
+          {/* Form Fields */}
+          <form onSubmit={this.handleSignUp}>
+          <div style={{ display: 'flex', width: '100%', gap: '20px' }}> {/* Add gap between columns */}
+              {/* Left Column */}
+              <div style={leftColumnStyle}>
+                <div className="row">
+                  <div className="col">
+                    <div style={formFieldStyle}>
+                      <label>First Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={firstName}
+                        onChange={(e) => this.setState({ firstName: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div style={formFieldStyle}>
+                      <label>Last Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={lastName}
+                        onChange={(e) => this.setState({ lastName: e.target.value })}
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+  
+                <div style={formFieldStyle}>
+                  <label>Purpose</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={purpose}
+                    onChange={(e) => this.setState({ purpose: e.target.value })}
+                    required
+                  />
+                </div>
+  
+                <div className="row">
+                  <div className="col">
+                    <div style={formFieldStyle}>
+                      <label>Visitor No.</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={cardNo}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                  <div className="col">
+                    <div style={formFieldStyle}>
+                      <label>Time In</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        value={timeIn}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                </div>
+  
+                <div style={formFieldStyle}>
+                  <label>Building to Visit</label>
+                  <select
+                    className="form-control"
+                    value={buildingToVisit}
+                    onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
+                    required
+                  >
+                    <option value="">Select Buildings</option>
+                    <option value="NGE">NGE</option>
+                    <option value="GLE">GLE</option>
+                    <option value="RTL">RTL</option>
+                    <option value="ALLIED">ALLIED</option>
+                    <option value="ACAD">ACAD</option>
+                    <option value="SAL">SAL</option>
+                    <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+                    <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+                    <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+                    <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+                  </select>
+                </div>
+  
+                <div style={formFieldStyle}>
+                  <label>Select Gate</label>
+                  <select
+                    className="form-control"
+                    value={selectedGate}
+                    onChange={(e) => this.setState({ selectedGate: e.target.value })}
+                    required
+                  >
+                    <option value="">Select Gate</option>
+                    <option value="Front Gate">Front Gate</option>
+                    <option value="Back Gate">Back Gate</option>
+                  </select>
+                </div>
               </div>
-    
-              <div className="card bg-glass" style={formStyle}>
-                <Button
-                  variant="contained"
-                  startIcon={<ChevronLeftIcon />}
-                  onClick={this.handleGoBack} // Call the handleGoBack function
-                  style={{
-                    position: 'absolute',
-                    top: '10px',
-                    right: '10px',
-                    backgroundColor: 'transparent',
-                    color: 'maroon',
-                    boxShadow: 'none',
-                  }}
-                >
-                  Go Back
-                </Button>
-                <div className="card-body px-4 py-5 px-md-5">
-                  {/* Conditionally render the spinner when loading */}
-                  {this.state.loading ? (
-  <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-    <div className="custom-dual-spinner" role="status">
-      <span className="visually-hidden">Loading...</span>
-    </div>
-  </div>
-) : (
-                    <form onSubmit={this.handleSignUp} style={{ display: 'flex', flexDirection: 'column' }}>
-                      <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>
-                        Visitor Entry Form
-                      </h2>
+  
+              {/* Right Column - Visitor ID Section */}
+              <div style={rightColumnStyle}>
+                <div style={visitorIdSectionStyle}>
+                  <h3 style={{ color: 'maroon' }}>Visitor ID</h3>
+                  {!visitorimage2 && (
+                    <button
+                      className="btn btn-primary"
+                      onClick={this.handleCameraOpen2}
+                      style={{
+                        backgroundColor: '#800000',
+                        borderColor: '#800000',
+                        padding: '10px 20px',
+                        color: '#fff',
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <FaCamera style={{ marginRight: '10px' }} /> Capture ID
+                    </button>
+                  )}
+  
+                  {visitorimage2 && (
+                    <div>
+                      <img src={visitorimage2} alt="Captured ID" width="100%" style={{ marginBottom: '10px' }} />
+                      <button
+                        className="btn btn-danger"
+                        onClick={this.handleRetake2}
+                        style={{
+                          backgroundColor: '#A43F3F',
+                          padding: '10px 20px',
+                          color: '#fff',
+                          borderRadius: '8px',
+                        }}
+                      >
+                        Retake
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+  
+            {/* Submit Button */}
+            <div style={{ textAlign: 'center', marginTop: '20px', width: '100%' }}>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{
+                  backgroundColor: 'maroon',
+                  borderColor: 'maroon',
+                  padding: '10px 30px',
+                  fontSize: '20px',
+                  width: '200px',
+                }}
+                disabled={!isFormFilled}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
 
-                    {/* Modal for Visitor */}
-                    <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
+          {/* Go Back Button with Chevron Icon */}
+          <button onClick={() => this.props.navigate('/')} style={goBackButtonStyle}>
+            <ChevronLeftIcon /> Go Back
+          </button>
+        </div>
+
+        {/* Modal for Visitor */}
+        <Modal show={showCamera} onHide={() => this.setState({ showCamera: false })} centered>
                       <Modal.Header closeButton style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
                           <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '1.2em', marginLeft: '120px' }}>VISITOR</span>
@@ -393,63 +563,9 @@ class VisitorEntry extends Component {
                         {visitorimage && <Button variant="secondary" onClick={this.handleRetake}>Retake</Button>}
                       </Modal.Footer>
                     </Modal>
-
-                    {/* Second section for Visitor ID */}
-                    <div style={visitorIdSectionStyle}>
-                      <h3 style={{ marginBottom: '10px' }}>
-                        <span style={{ color: 'maroon' }}> Visitor ID</span>
-                      </h3>
-
-                      {!showCamera2 && !visitorimage2 && (
-                        <button
-                          className="btn btn-primary btn-block mb-4"
-                          onClick={this.handleCameraOpen2}
-                          style={{
-                            background: '#800000',
-                            borderColor: '#800000',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '20px 15px',
-                            fontSize: '16px',
-                            borderRadius: '15px',
-                            width: '140px',
-                            height: '50px',
-                            color: '#ffffff', // Text color
-                          }}
-                        >
-                          Capture ID <FaCamera style={{ marginLeft: '7px' }} />
-                        </button>
-                      )}
-
-                      {visitorimage2 && (
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                          <img src={visitorimage2} alt="Captured" width="100%" />
-                          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                            <button
-                              className="btn btn-primary btn-block mb-4"
-                              onClick={this.handleRetake2}
-                              style={{
-                                background: '#A43F3F',
-                                borderRadius: '15px',
-                                padding: '10px 20px',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                width: '130px',
-                                height: '50px',
-                                margin: '0 10px',
-                              }}
-                            >
-                              Retake
-                            </button>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Modal for Visitor ID capture */}
-                    <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
+            
+            {/* Modal for Visitor ID capture */}
+            <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
                       <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
                           <span style={{ color: 'maroon', fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}> VISITOR</span>
@@ -480,143 +596,6 @@ class VisitorEntry extends Component {
                         {visitorimage2 && <Button variant="secondary" onClick={this.handleRetake2}>Retake</Button>}
                       </Modal.Footer>
                     </Modal>
-
-                    {/* Select Gate Dropdown */}
-    <div className="form-outline mb-4">
-      <label className="form-label" htmlFor="selectedGate">Select Gate</label>
-      <select
-        id="selectedGate"
-        className="form-control"
-        style={gateSelectStyle} // Apply the same inline style as buildingToVisitStyle
-        value={this.state.selectedGate}
-        onChange={(e) => this.setState({ selectedGate: e.target.value })}
-        required
-      >
-        <option value="">Select Gate</option>
-        <option value="Front Gate">Front Gate</option>
-        <option value="Back Gate">Back Gate</option>
-      </select>
-    </div>
-
-
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="firstName">First Name</label>
-                      <input
-                        type="text"
-                        id="firstName"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={firstName}
-                        onChange={(e) => this.setState({ firstName: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="lastName">Last Name</label>
-                      <input
-                        type="text"
-                        id="lastName"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={lastName}
-                        onChange={(e) => this.setState({ lastName: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="purpose">Purpose</label>
-                      <input
-                        type="text"
-                        id="purpose"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={purpose}
-                        onChange={(e) => this.setState({ purpose: e.target.value })}
-                        required
-                      />
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="cardNo">Visitor No.</label>
-                      <input
-                        type="text"
-                        id="cardNo"
-                        className="form-control custom-input"
-                        style={inputStyle}
-                        value={cardNo}
-                        readOnly // Card Number field is read-only now
-                      />
-                    </div>
-
-                    <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="timeIn">Time In</label>
-                      <input
-                        type="text"
-                        id="timeIn"
-                        className="form-control custom-input"
-                        style={inputStyle.id === 'timeIn' ? timeInInputStyle : inputStyle}
-                        value={timeIn}
-                        readOnly
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="buildingToVisit">Building to Visit</label>
-                      <select
-                        id="buildingToVisit"
-                        className="form-control"
-                        style={buildingToVisitStyle}
-                        value={buildingToVisit}
-                        onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
-                        required
-                      >
-                        <option value="">Select Buildings</option>
-                        <option value="NGE">NGE</option>
-                        <option value="GLE">GLE</option>
-                        <option value="RTL">RTL</option>
-                        <option value="ALLIED">ALLIED</option>
-                        <option value="ACAD">ACAD</option>
-                        <option value="SAL">SAL</option>
-                        <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-                        <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-                        <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-                        <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
-                      </select>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-block mb-4"
-                      disabled={!isFormFilled}
-                      style={{
-                        background: isFormFilled ? '#800000' : '#cccccc',
-                        borderRadius: '15px',
-                        borderColor: isFormFilled ? '#800000' : '#cccccc',
-                        marginTop: '30px',
-                        width: '130px',
-                        height: '50px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '10px',
-                        fontSize: '16px',
-                        color: '#ffffff',
-                        cursor: isFormFilled ? 'pointer' : 'not-allowed',
-                      }}
-                    >
-                      Submit
-                    </button>
-                    </form>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
           <Modal show={showModal} onHide={this.handleClose} centered size="lg">
         {/* Header with logos */}
