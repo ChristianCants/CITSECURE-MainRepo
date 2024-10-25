@@ -429,43 +429,49 @@ class VisitorEntry extends Component {
                   </div>
                 </div>
   
-                <div style={formFieldStyle}>
-                  <label>Building to Visit</label>
-                  <select
-                    className="form-control"
-                    value={buildingToVisit}
-                    onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
-                    required
-                  >
-                    <option value="">Select Buildings</option>
-                    <option value="NGE">NGE</option>
-                    <option value="GLE">GLE</option>
-                    <option value="RTL">RTL</option>
-                    <option value="ALLIED">ALLIED</option>
-                    <option value="ACAD">ACAD</option>
-                    <option value="SAL">SAL</option>
-                    <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-                    <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-                    <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-                    <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
-                  </select>
+                {/* Row for Building to Visit and Select Gate */}
+              <div className="row">
+                <div className="col">
+                  <div style={formFieldStyle}>
+                    <label>Building to Visit</label>
+                    <select
+                      className="form-control"
+                      value={buildingToVisit}
+                      onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
+                      required
+                    >
+                      <option value="">Select Buildings</option>
+                      <option value="NGE">NGE</option>
+                      <option value="GLE">GLE</option>
+                      <option value="RTL">RTL</option>
+                      <option value="ALLIED">ALLIED</option>
+                      <option value="ACAD">ACAD</option>
+                      <option value="SAL">SAL</option>
+                      <option value="MAIN CANTEEN">MAIN CANTEEN</option>
+                      <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
+                      <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
+                      <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+                    </select>
+                  </div>
                 </div>
-  
-                <div style={formFieldStyle}>
-                  <label>Select Gate</label>
-                  <select
-                    className="form-control"
-                    value={selectedGate}
-                    onChange={(e) => this.setState({ selectedGate: e.target.value })}
-                    required
-                  >
-                    <option value="">Select Gate</option>
-                    <option value="Front Gate">Front Gate</option>
-                    <option value="Back Gate">Back Gate</option>
-                  </select>
+                <div className="col">
+                  <div style={formFieldStyle}>
+                    <label>Select Gate</label>
+                    <select
+                      className="form-control"
+                      value={selectedGate}
+                      onChange={(e) => this.setState({ selectedGate: e.target.value })}
+                      required
+                    >
+                      <option value="">Select Gate</option>
+                      <option value="Front Gate">Front Gate</option>
+                      <option value="Back Gate">Back Gate</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-  
+            </div>
+            
               {/* Right Column - Visitor ID Section */}
               <div style={rightColumnStyle}>
                 <div style={visitorIdSectionStyle}>
