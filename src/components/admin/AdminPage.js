@@ -152,19 +152,18 @@ class AdminPage extends Component {
       alert('No filtered data to export.');
       return;
     }
-  
     const docDefinition = {
       pageOrientation: 'landscape',
       content: [
-        { text: 'Filtered Visitor Records 2024', style: 'header' },
+        { text: 'Visitor Records 2024', style: 'header' },
         {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], 
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Add an extra width for officeVisited
             body: [
-              ['Visitor No.', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Gate Selected', 'Status'],
-              ...filteredUsers.map((user) => [
+              ['Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Office Visited', 'Gate Selected', 'Status'],
+              ...users.map((user) => [
                 user.cardNo || '',
                 user.firstName || '',
                 user.lastName || '',
@@ -172,6 +171,7 @@ class AdminPage extends Component {
                 user.timeIn || '',
                 user.timeOut || '',
                 user.buildingToVisit || '',
+                user.officeVisited || '', // Add officeVisited
                 user.selected_gate || '', 
                 user.status === 1 ? 'Inside Campus' : 'Exited',
               ]),
@@ -297,19 +297,20 @@ class AdminPage extends Component {
     return format(date, 'dd/MM/yyyy');
   };
 
+  
   render() {
     const { users, showUpdateModal, updatedUserData, showErrorModal, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
 
     const filteredUsers = users.filter((user) => {
-      const matchesDate =
-        !filterDateTimeIn || parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString();
+      const matchesDate = !filterDateTimeIn || parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date()).toDateString() === filterDateTimeIn.toDateString();
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
-      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected; 
+      const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected;
 
       return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
+
 
     return (
       <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
@@ -435,13 +436,14 @@ class AdminPage extends Component {
               <Table striped bordered hover style={{ backgroundColor: 'white' }}>
                 <thead>
                   <tr>
-                    <th>Visitor No.</th>
+                     <th>Visitor No.</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Purpose</th>
                     <th>Time in</th>
                     <th>Time out</th>
                     <th>Building Visited</th>
+                    <th>Office Visited</th> {/* New Column */}
                     <th>Gate Selected</th> 
                     <th>Status</th>
                   </tr>
@@ -456,6 +458,7 @@ class AdminPage extends Component {
                       <td>{user.timeIn}</td>
                       <td>{user.timeOut}</td>
                       <td>{user.buildingToVisit}</td>
+                      <td>{user.officeVisited}</td>
                       <td>{user.selected_gate}</td>
 
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>

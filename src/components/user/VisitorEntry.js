@@ -11,6 +11,7 @@ import html2canvas from 'html2canvas'; // Import html2canvas to capture the moda
 import './VisitorEntry.css';
 
 class VisitorEntry extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +21,8 @@ class VisitorEntry extends Component {
       purpose: '',
       cardNo: '',
       buildingToVisit: '',
+      selectedOffice: '',
+      offices: [],
       showModal: false,
       showNotification: false,
       showErrorModal: false,
@@ -31,8 +34,79 @@ class VisitorEntry extends Component {
       isVisitorIdCaptured: false,
       loading: false,  // Loading state for the spinner
     };
+
     this.modalRef = React.createRef();
+     // Define buildings and their respective offices
+     this.buildingOffices = {
+      "ACAD": [
+        "College of Engineering and Architecture",
+        "CES Department",
+        "Alumni Affairs Office",
+        "SSD",
+        "Office of Property Custodian",
+        "IMDC",
+        "Jurani Hall",
+        "CMBA-DHM Department",
+        "Fine Dining",
+        "CASE Department",
+        "DLLC",
+        "Industrial Engineering Department",
+        "Architecture Department"
+      ],
+      "NGE": [
+        "MIS/CREATE Department",
+        "CCS Department",
+        "Wildcats Innovation",
+        "Technical Support Group",
+        "CNAHS"
+      ],
+      "ALLIED": [
+        "CEA-Electrical Engineering Department",
+        "CEA-Civil Engineering Department",
+        "Power House",
+        "CEA-Chemical Engineering Department",
+        "CEA-Mechanical Engineering Department",
+        "DEMPC",
+        "Mining Engineering Department"
+      ],
+      "RTL": [
+        "Executive Office",
+        "FAO",
+        "University Registrar",
+        "CMBA",
+        "OAS",
+        "College Guidance",
+        "NLO",
+        "MSDO",
+        "ETO",
+        "SSO",
+        "SHS",
+        "MASSCOM LAB",
+        "CASE-DHBS_PSYCH",
+        "CASE-BIO",
+        "MARKETING OFFICE"
+      ],
+      "GLE": [
+        "RDCO/ITSO",
+        "Vice President for Academic Affairs",
+        "IMPO",
+        "QAO",
+        "Human Resource Management",
+        "CEA-CPE Department",
+        "CEA-ECE Department"
+      ],
+      "SAL": [
+        "JHS PRINCIPAL’S OFFICE",
+        "JHS-COMP. LAB.",
+        "SHS registrar",
+        "GYM",
+        "CASE-PE",
+        "COLLEGE LIBRARY",
+        "MAIN CLINIC"
+      ],
+    };
   }
+  
 
   // Fetch the next available card number from the backend
   fetchNextCardNumber = async () => {
@@ -119,63 +193,66 @@ class VisitorEntry extends Component {
   handleSignUp = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
-  
-    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, timeIn } = this.state;
-  
+
+    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, selectedOffice, timeIn } = this.state;
+
     try {
-      // First, upload the image for Visitor ID
-      console.log('Starting image upload for cardNo:', cardNo);
-      const visitorImagePath = await this.handleImageUpload2(cardNo);
-      console.log('Image uploaded successfully, path:', visitorImagePath);
-  
-      // Now submit the form data after the image upload is complete
-      const formData = {
-        selected_gate: selectedGate,
-        firstName,
-        lastName,
-        purpose,
-        cardNo: parseInt(cardNo, 10),
-        timeIn,
-        buildingToVisit,
-        visitorImagePath, // Pass the uploaded image path as part of the form data
-        status: 1, // Visitor active status
-      };
-  
-      const response = await axios.post('http://localhost:8080/visitor/addVisitor', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      console.log('Signup successful:', response.data);
-      this.setState({ showModal: true });
+        // First, upload the image for Visitor ID
+        console.log('Starting image upload for cardNo:', cardNo);
+        const visitorImagePath = await this.handleImageUpload2(cardNo);
+        console.log('Image uploaded successfully, path:', visitorImagePath);
+
+        // Now submit the form data after the image upload is complete
+        const formData = {
+            selected_gate: selectedGate,
+            firstName,
+            lastName,
+            purpose,
+            cardNo: parseInt(cardNo, 10),
+            timeIn,
+            buildingToVisit,
+            officeVisited: selectedOffice, // Ensure this matches the backend field
+            visitorImagePath,
+            status: 1,
+        };
+
+        const response = await axios.post('http://localhost:8080/visitor/addVisitor', formData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        console.log('Signup successful:', response.data);
+        this.setState({ showModal: true });
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        console.error('Card is already in use');
-        this.setState({ showErrorModal: true, errorMessage: 'Card already used, check your card again' });
-      } else {
-        console.error('Signup failed:', error.response ? error.response.data : error.message);
-        this.setState({ showErrorModal: true });
-      }
+        if (error.response && error.response.status === 409) {
+            console.error('Card is already in use');
+            this.setState({ showErrorModal: true, errorMessage: 'Card already used, check your card again' });
+        } else {
+            console.error('Signup failed:', error.response ? error.response.data : error.message);
+            this.setState({ showErrorModal: true });
+        }
     } finally {
-      this.setState({ loading: false });  // End loading
+        this.setState({ loading: false });  // End loading
     }
-  };
+};
+
 
   
   resetFormInputs = () => {
     this.setState({
-      selectedGate: '',
-      firstName: '',
-      lastName: '',
-      purpose: '',
-      buildingToVisit: '',
-      visitorimage: null,
-      visitorimage2: null,
+        selectedGate: '',
+        firstName: '',
+        lastName: '',
+        purpose: '',
+        buildingToVisit: '',
+        selectedOffice: '',
+        visitorimage: null,
+        visitorimage2: null,
     });
-
     this.fetchNextCardNumber(); // Fetch new card number on form reset
-  };
+};
+
 
   // Generate and download the PDF for the card number
   generatePDF = () => {
@@ -199,7 +276,13 @@ class VisitorEntry extends Component {
       nextButton.style.visibility = 'visible';
     });
   };
-  
+
+  handleBuildingChange = (e) => {
+    const buildingToVisit = e.target.value;
+    const offices = this.buildingOffices[buildingToVisit] || [];
+    this.setState({ buildingToVisit, offices, selectedOffice: '' });
+  };
+
 
   handleNext = () => {
     this.generatePDF(); // Export card number as PDF
@@ -259,6 +342,8 @@ class VisitorEntry extends Component {
       purpose,
       cardNo,
       buildingToVisit,
+      offices,
+      selectedOffice,
       showModal,
       showErrorModal,
       timeIn,
@@ -270,13 +355,13 @@ class VisitorEntry extends Component {
       isVisitorIdCaptured 
     } = this.state;
   
-    const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && visitorimage2;
+    const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && selectedOffice && visitorimage2;
   
     const formContainerStyle = {
       display: 'flex',
       flexDirection: 'column',
       padding: '20px',
-      backgroundColor: '#f0e1d2',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
       borderRadius: '10px',
       border: '2px solid maroon',
       width: '100%',
@@ -429,48 +514,39 @@ class VisitorEntry extends Component {
                   </div>
                 </div>
   
-                {/* Row for Building to Visit and Select Gate */}
-              <div className="row">
-                <div className="col">
-                  <div style={formFieldStyle}>
-                    <label>Building to Visit</label>
-                    <select
-                      className="form-control"
-                      value={buildingToVisit}
-                      onChange={(e) => this.setState({ buildingToVisit: e.target.value })}
-                      required
-                    >
+               
+                <div className="row">
+                  <div className="col">
+                    <label>Buildings</label>
+                    <select className="form-control" value={buildingToVisit} onChange={this.handleBuildingChange} required>
                       <option value="">Select Buildings</option>
-                      <option value="NGE">NGE</option>
-                      <option value="GLE">GLE</option>
-                      <option value="RTL">RTL</option>
-                      <option value="ALLIED">ALLIED</option>
-                      <option value="ACAD">ACAD</option>
-                      <option value="SAL">SAL</option>
-                      <option value="MAIN CANTEEN">MAIN CANTEEN</option>
-                      <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
-                      <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
-                      <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+                      {Object.keys(this.buildingOffices).map((building) => (
+                        <option key={building} value={building}>{building}</option>
+                      ))}
                     </select>
                   </div>
-                </div>
-                <div className="col">
-                  <div style={formFieldStyle}>
+                  <div className="col">
                     <label>Select Gate</label>
-                    <select
-                      className="form-control"
-                      value={selectedGate}
-                      onChange={(e) => this.setState({ selectedGate: e.target.value })}
-                      required
-                    >
+                    <select className="form-control" value={selectedGate} onChange={(e) => this.setState({ selectedGate: e.target.value })} required>
                       <option value="">Select Gate</option>
                       <option value="Front Gate">Front Gate</option>
                       <option value="Back Gate">Back Gate</option>
                     </select>
                   </div>
                 </div>
+
+                {offices.length > 0 && (
+                  <div>
+                    <label>Office to Visit</label>
+                    <select className="form-control" value={selectedOffice} onChange={(e) => this.setState({ selectedOffice: e.target.value })} required>
+                      <option value="">Select Office</option>
+                      {offices.map((office, index) => (
+                        <option key={index} value={office}>{office}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
               </div>
-            </div>
             
               {/* Right Column - Visitor ID Section */}
               <div style={rightColumnStyle}>
