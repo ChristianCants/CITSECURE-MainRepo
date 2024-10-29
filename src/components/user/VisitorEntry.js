@@ -759,7 +759,7 @@ class VisitorEntry extends Component {
 
 
 
-        <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
+        {/* <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
           <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
             <Modal.Title>Notification</Modal.Title>
           </Modal.Header>
@@ -776,7 +776,7 @@ class VisitorEntry extends Component {
               OK
             </BootstrapButton>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
 
         <Modal show={showNotification} onHide={() => this.setState({ showNotification: false })} centered>
           <Modal.Header style={{ borderBottom: '2px solid maroon' }}>
