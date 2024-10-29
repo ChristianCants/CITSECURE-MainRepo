@@ -80,14 +80,14 @@ class RTLBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/Academic Building.jpg"
-                                alt="Academic Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/RTL Executive Office.jpg"
+                                alt="Executive Office"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>Academic Building</h5>
-                                    <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office.</p>
+                                    <h5>Executive Office</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
@@ -96,14 +96,94 @@ class RTLBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/High School Building.jpg"
-                                alt="High School Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/RTL CMBA.jpg"
+                                alt="CMBA"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>High School Building</h5>
-                                    <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life.</p>
+                                    <h5>College of Management Business & Accountancy</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Third Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL FAD.jpg"
+                                alt="FAD"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Finance and Accounting Department</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fourth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL Guidance Center.jpg"
+                                alt="Guidance Office"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>College Guidance Center</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fifth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL OAS.jpg"
+                                alt="OAS"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Office of Admissions and Scholarships</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Sixth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL TSG.jpg"
+                                alt="TSG"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Technical Support Group Office</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Seventh Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL University Registrar.jpg"
+                                alt="University Registrar"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>University Registrar</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
