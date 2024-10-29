@@ -82,7 +82,7 @@ class NGEBuildingOffices extends React.Component {
                                 className="d-block w-100"
                                 src="images/NGE InnovationLab.jpg"
                                 alt="Innovation Lab"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -98,7 +98,7 @@ class NGEBuildingOffices extends React.Component {
                                 className="d-block w-100"
                                 src="images/NGE CCS Faculty Office.jpg"
                                 alt="CCS Faculty Office"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -114,7 +114,7 @@ class NGEBuildingOffices extends React.Component {
                                 className="d-block w-100"
                                 src="images/NGE CNAHS.jpg"
                                 alt="CNAHS Office"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -130,7 +130,7 @@ class NGEBuildingOffices extends React.Component {
                                 className="d-block w-100"
                                 src="images/NGE Create.jpg"
                                 alt="Create Office"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
@@ -146,7 +146,7 @@ class NGEBuildingOffices extends React.Component {
                                 className="d-block w-100"
                                 src="images/NGE CCS Office.jpg"
                                 alt="CCS Office"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
