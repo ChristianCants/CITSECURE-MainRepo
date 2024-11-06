@@ -80,14 +80,14 @@ class AlliedBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/Academic Building.jpg"
-                                alt="Academic Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/Allied CED.jpg"
+                                alt="Allied CED"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>Academic Building</h5>
-                                    <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office.</p>
+                                    <h5>Civil Engineering Department</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
@@ -96,14 +96,62 @@ class AlliedBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/High School Building.jpg"
-                                alt="High School Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/Allied DCE.jpg"
+                                alt="Allied CED"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>High School Building</h5>
-                                    <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life.</p>
+                                    <h5>Department of Chemical Engineering</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Third Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/Allied EED.jpg"
+                                alt="Allied EED"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Electrical Engineering Department</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fourth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/Allied Mech ED.jpg"
+                                alt="Allied Mech ED"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Mechanical Engineering Department</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fifth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/Allied MED.jpg"
+                                alt="Allied MED"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Mining Engineering Department</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>

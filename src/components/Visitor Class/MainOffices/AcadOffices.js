@@ -107,6 +107,86 @@ class AcadOffices extends React.Component {
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
+
+                        {/* Third Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/ACAD Alumni.jpg"
+                                alt="Acad Alumni"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Alumni Office</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fourth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/ACAD CCJ & SSD.jpg"
+                                alt="Acad CCJ & SSD"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>College of Criminal Justice & Safety and Security Department</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fifth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/ACAD Chapel.jpg"
+                                alt="Acad Chapel"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Chapel</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Sixth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/ACAD INMDC.jpg"
+                                alt="Acad INMDC"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Instructional Materials Distribuition Center</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Seventh Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/ACAD OPC.jpg"
+                                alt="Acad OPC"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Office of the Property Custodian</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
                     </Carousel>
 
                     {/* Line at the bottom of the page */}

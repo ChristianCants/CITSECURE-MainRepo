@@ -187,6 +187,38 @@ class RTLBuildingOffices extends React.Component {
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
+
+                         {/* Eighth Carousel Item */}
+                         <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL ETO.jpg"
+                                alt="Enrollement Technical Office"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Enrollement Technical Office</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                         {/* Ninth Carousel Item */}
+                         <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/RTL LP.jpg"
+                                alt="Learning Patio"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>The Learning Patio</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
                     </Carousel>
 
                     {/* Line at the bottom of the page */}

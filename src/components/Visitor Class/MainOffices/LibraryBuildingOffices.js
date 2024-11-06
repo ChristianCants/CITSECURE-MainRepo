@@ -80,30 +80,30 @@ class LibraryBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/Academic Building.jpg"
-                                alt="Academic Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/Library Clinic.jpg"
+                                alt="Clinic"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>Academic Building</h5>
-                                    <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office.</p>
+                                    <h5>School Medical Dental Clinic</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
 
-                        {/* Second Carousel Item */}
-                        <Carousel.Item>
+                       {/* Eight Carousel Item */}
+                       <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/High School Building.jpg"
-                                alt="High School Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/Main Canteen Espascio.jpg"
+                                alt="Maiin Canteen Espascio"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>High School Building</h5>
-                                    <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life.</p>
+                                    <h5>Espasyo</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>

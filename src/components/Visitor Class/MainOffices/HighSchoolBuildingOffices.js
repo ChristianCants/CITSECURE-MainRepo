@@ -80,14 +80,14 @@ class HighSchoolBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/Academic Building.jpg"
-                                alt="Academic Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/High School CAT.jpg"
+                                alt="High School Cat"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>Academic Building</h5>
-                                    <p>The Academic Building is a hub for various academic and administrative functions, including Architecture, Tourism, Industrial Engineering, Hospital Management, Alumni Office, Safety and Security, and Property Custodian Office.</p>
+                                    <h5>CAT Office</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
@@ -96,14 +96,62 @@ class HighSchoolBuildingOffices extends React.Component {
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="images/High School Building.jpg"
-                                alt="High School Building"
-                                style={{ height: '700px', width: '100%', objectFit: 'cover' }}
+                                src="images/High School PED.jpg"
+                                alt="High School Cat"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
                             />
                             <Carousel.Caption style={carouselCaptionStyle}>
                                 <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
-                                    <h5>High School Building</h5>
-                                    <p>Explore the hallways of our high school, a dynamic environment geared for academic advancement and exciting student life.</p>
+                                    <h5>Physical Education Department</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Third Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/High School PO.jpg"
+                                alt="High School PO"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Principal's Office</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fourth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/High School RO.jpg"
+                                alt="High Registrar Office"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Registrar's Office</h5>
+                                    <p>Need Details</p>
+                                </div>
+                            </Carousel.Caption>
+                        </Carousel.Item>
+
+                        {/* Fifth Carousel Item */}
+                        <Carousel.Item>
+                            <img
+                                className="d-block w-100"
+                                src="images/High School SSO.jpg"
+                                alt="High School Cat"
+                                style={{ height: '800px', width: '100%', objectFit: 'cover' }}
+                            />
+                            <Carousel.Caption style={carouselCaptionStyle}>
+                                <div style={{ color: 'black', display: 'flex', flexDirection: 'column' }}>
+                                    <h5>Junior High School Student Success Office</h5>
+                                    <p>Need Details</p>
                                 </div>
                             </Carousel.Caption>
                         </Carousel.Item>
