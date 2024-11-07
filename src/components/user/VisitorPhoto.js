@@ -1,110 +1,40 @@
 import React, { Component } from 'react';
 import { Modal, Button as BootstrapButton } from 'react-bootstrap';
-import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Chip from '@mui/material/Chip';
-import { FaCamera } from 'react-icons/fa';
 import { MdSend } from 'react-icons/md'; // Import the submit icon
-import Webcam from 'react-webcam';
 import './VisitorEntry.css'; // Import the CSS file
 
 class VisitorPhoto extends Component {
   constructor(props) {
+
     super(props);
-    const { state } = this.props.location;
+    
     this.state = {
       accept: false,
       showModal: false,
       showErrorModal: false,
       showNotificationModal: false,
-      systemTime: '',
-      cardNo: state?.cardNo || '', // Retrieve cardNo from location state or set to empty string
-      isVisitorPhotoCaptured: false, // State to manage border visibility
+      showNotificationModal1: false, // Added this state for the specific notification
     };
   }
 
-  getCurrentTime = () => {
-    const now = new Date();
-    const hours = now.getHours() % 12 || 12;
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
-    const formattedTime = `${hours}:${minutes} ${ampm}`;
-    return formattedTime;
+  handleAcceptChange = (event) => {
+    this.setState({ accept: event.target.checked });
   };
 
-  componentDidMount() {
-    const currentTime = this.getCurrentTime();
-    this.setState({ systemTime: currentTime });
-  }
-
-  dataURItoBlob = (dataURI) => {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: mimeString });
-  };
-
-  handleImageUpload2 = async (cardNo) => {
-    const { visitorimage2 } = this.state;
-    const blob = this.dataURItoBlob(visitorimage2);
-
-    const now = new Date();
-    const hours = String(now.getHours() % 12 || 12).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-    const year = now.getFullYear();
-
-    const formattedTime = `${hours}-${minutes}_${day}-${month}-${year}`;
-    
-    // Convert cardNo to a string before calling replace
-    const sanitizedCardNo = cardNo.toString().replace(/[^a-zA-Z0-9]/g, '_'); // Ensure cardNo is also sanitized
-    
-    const filename = `${sanitizedCardNo}_${formattedTime}_visitorimage.jpg`;
-
-    const formData = new FormData();
-    formData.append('file', blob, filename);
-    formData.append('cardNo', sanitizedCardNo);
-    formData.append('timeIn', formattedTime); // Use formattedTime
-
-    try {
-      const response = await axios.post('http://localhost:8080/image/uploadVisitorImg', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Image upload successful:', response.data);
-      return response.data.replace('Image saved at: ', '');
-    } catch (error) {
-      console.error('Image upload failed:', error.response ? error.response.data : error.message);
-      throw error;
-    }
-  };
-
-  handleAcknowledged = () => {
-    this.setState({ showNotificationModal1: true });
-  };
-  
-
-  handleSubmit = async (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
-    const { accept } = this.state;
-
-    if (accept) {
-      try {
-        await this.handleCloseNotification();
-        this.setState({ showModal: true });
-      } catch (error) {
-        console.error('Error during form submission:', error);
-        this.setState({ showErrorModal: true });
-      }
+    if (this.state.accept) {
+      // Logic for successful form submission (example: display the success modal)
+      this.setState({ showModal: true });
     } else {
-      this.setState({ showNotificationModal1: true, accept: true });
+      this.setState({ showErrorModal: true });
     }
+  };
+
+  handleClose = () => {
+    this.setState({ showModal: false });
   };
 
   handleErrorClose = () => {
@@ -116,7 +46,7 @@ class VisitorPhoto extends Component {
   };
 
   handleCloseNotification = () => {
-    this.setState({ showNotificationModal1: false });
+    this.setState({ showNotificationModal: false, showNotificationModal1: false });
   };
 
   handleViewMap = () => {
@@ -142,7 +72,7 @@ class VisitorPhoto extends Component {
       border: '3px solid maroon',
       borderRadius: '8px',
       padding: '15px',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)', // Set to transparent
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
       fontFamily: 'Roboto, sans-serif',
       maxWidth: '600px',
       width: '1000px',
@@ -183,38 +113,31 @@ class VisitorPhoto extends Component {
                     <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Privacy Policies</h2>
 
                     <div style={visitorPhotoSectionStyle}>
-                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginTop: '15px' }}>
-                          We value your privacy and are committed to protecting your personal information. Please read the following policies carefully to understand how we collect, use, and protect your data.
-                        </p>
+                      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginTop: '15px' }}>
+                        We value your privacy and are committed to protecting your personal information. Please read the following policies carefully to understand how we collect, use, and protect your data.
+                      </p>
 
-                        <ul style={{ textAlign: 'left', padding: '0 20px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>
-                          <li><strong>Data Collection:</strong> We collect only the data necessary for campus security and visitor management purposes.</li>
-                          <li><strong>Use of Information:</strong> Your data is used solely for verifying and documenting entry to the premises.</li>
-                          <li><strong>Protection of Data:</strong> We employ strict security protocols to protect your information from unauthorized access.</li>
-                          <li><strong>Consent:</strong> By proceeding, you consent to the capture of your image and storage of relevant details for campus access purposes.</li>
-                          <li><strong>Contact:</strong> For questions or concerns, please reach out to the SSD office.</li>
-                        </ul>
+                      <ul style={{ textAlign: 'left', padding: '0 20px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>
+                        <li><strong>Data Collection:</strong> We collect only the data necessary for campus security and visitor management purposes.</li>
+                        <li><strong>Use of Information:</strong> Your data is used solely for verifying and documenting entry to the premises.</li>
+                        <li><strong>Protection of Data:</strong> We employ strict security protocols to protect your information from unauthorized access.</li>
+                        <li><strong>Consent:</strong> By proceeding, you consent to the capture of your image and storage of relevant details for campus access purposes.</li>
+                        <li><strong>Contact:</strong> For questions or concerns, please reach out to the SSD office.</li>
+                      </ul>
 
-                      {!accept && (
-                        <button
-                          className="btn btn-primary btn-block mb-4"
-                          onClick={this.handleAcknowledged}
-                          style={{
-                            background: '#800000',
-                            borderColor: '#800000',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: '10px 20px',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            borderRadius: '8px',
-                            color: '#ffffff',
-                          }}
-                        >
-                          Acknowledge / I Accept
-                        </button>
-                      )}
+                      <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '20px' }}>
+  <input
+    type="checkbox"
+    checked={accept}
+    onChange={this.handleAcceptChange}
+    aria-label="I Accept Privacy Policies"
+    style={{ marginRight: '10px', marginTop: '4px' }} // Slight top margin to align vertically with the text
+  />
+  <div style={{ color: '#555', fontSize: '14px', lineHeight: '1.5' }}>
+    Thank you for acknowledging our Privacy Policies. Your consent to the terms enables us to proceed with securing and managing your visitor access in accordance with our privacy standards.
+  </div>
+</div>
+
                     </div>
 
                     <BootstrapButton
@@ -241,6 +164,7 @@ class VisitorPhoto extends Component {
                     </BootstrapButton>
                   </form>
 
+                  {/* Success Modal */}
                   <Modal show={showModal} onHide={this.handleClose} centered>
                     <Modal.Header style={{ borderBottom: '2px solid #800000' }}>
                       <Modal.Title>Notification</Modal.Title>
@@ -256,11 +180,11 @@ class VisitorPhoto extends Component {
                         variant="primary" 
                         onClick={this.handleViewMap} 
                         style={{ 
-                          background: '#800000',  // Yellow-Gold for View Maps
+                          background: '#800000',  
                           borderColor: '#800000',
                           width: '150px',
-                          color: '#F4C522',        // Text color set to black
-                          fontWeight: 'bold'       // Slightly bolder text for emphasis
+                          color: '#F4C522',       
+                          fontWeight: 'bold'       
                         }}
                       >
                         View Maps
@@ -270,11 +194,11 @@ class VisitorPhoto extends Component {
                         variant="primary" 
                         onClick={() => window.location.href = '/'} 
                         style={{ 
-                          background: '#800000', // Deep Maroon for Exit
+                          background: '#800000', 
                           borderColor: '#800000',
                           width: '150px',
                           color: '#fff',
-                          fontWeight: 'bold'   // Slightly bolder text for emphasis
+                          fontWeight: 'bold'   
                         }}
                       >
                         Exit
@@ -282,6 +206,7 @@ class VisitorPhoto extends Component {
                     </Modal.Footer>
                   </Modal>
 
+                  {/* Error Modal */}
                   <Modal show={showErrorModal} onHide={this.handleErrorClose} centered>
                     <Modal.Header>
                       <Modal.Title style={{ color: 'red' }}>Error</Modal.Title>
@@ -296,6 +221,7 @@ class VisitorPhoto extends Component {
                     </Modal.Footer>
                   </Modal>
 
+                  {/* Additional Notification Modals */}
                   <Modal show={showNotificationModal} onHide={this.handleCloseNotification} centered>
                     <Modal.Header>
                       <Modal.Title style={{ color: 'orange' }}>Notification</Modal.Title>

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { FaTimesCircle, FaCamera } from 'react-icons/fa';
+import {FaCamera } from 'react-icons/fa';
 import Webcam from 'react-webcam';
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas'; // Import html2canvas to capture the modal content
@@ -345,7 +345,7 @@ class VisitorEntry extends Component {
       offices,
       selectedOffice,
       showModal,
-      showErrorModal,
+      
       timeIn,
       showCamera,
       visitorimage,
