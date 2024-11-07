@@ -13,8 +13,7 @@ class VisitorPhoto extends Component {
     super(props);
     const { state } = this.props.location;
     this.state = {
-      showCamera2: false,
-      visitorimage2: null,
+      accept: false,
       showModal: false,
       showErrorModal: false,
       showNotificationModal: false,
@@ -86,33 +85,25 @@ class VisitorPhoto extends Component {
     }
   };
 
-  handleCapture2 = () => {
-    const visitorimage2 = this.webcam2.getScreenshot();
-    this.setState({ visitorimage2, showCamera2: false, isVisitorPhotoCaptured: true });
+  handleAcknowledged = () => {
+    this.setState({ showNotificationModal1: true });
   };
-
-  handleRetake2 = () => {
-    this.setState({ visitorimage2: null, showCamera2: true });
-  };
-
-  handleCameraOpen2 = () => {
-    this.setState({ showCamera2: true });
-  };
+  
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { visitorimage2, cardNo } = this.state;
+    const { accept } = this.state;
 
-    if (visitorimage2) {
+    if (accept) {
       try {
-        await this.handleImageUpload2(cardNo);
+        await this.handleCloseNotification();
         this.setState({ showModal: true });
       } catch (error) {
         console.error('Error during form submission:', error);
         this.setState({ showErrorModal: true });
       }
     } else {
-      this.setState({ showNotificationModal: true });
+      this.setState({ showNotificationModal1: true, accept: true });
     }
   };
 
@@ -125,7 +116,7 @@ class VisitorPhoto extends Component {
   };
 
   handleCloseNotification = () => {
-    this.setState({ showNotificationModal: false });
+    this.setState({ showNotificationModal1: false });
   };
 
   handleViewMap = () => {
@@ -133,9 +124,9 @@ class VisitorPhoto extends Component {
   };
 
   render() {
-    const { showModal, showErrorModal, showCamera2, visitorimage2, showNotificationModal, isVisitorPhotoCaptured } = this.state;
+    const { showModal, showErrorModal, accept, showNotificationModal1, showNotificationModal, isVisitorPhotoCaptured } = this.state;
 
-    const isFormFilled = visitorimage2;
+    const isFormFilled = accept;
 
     const backgroundImageStyle = {
       background: 'url("images/TIME IN.png")',
@@ -160,8 +151,8 @@ class VisitorPhoto extends Component {
     };
 
     const visitorPhotoSectionStyle = isVisitorPhotoCaptured
-      ? { border: '2px solid maroon', padding: '10px', marginBottom: '10px' }
-      : { padding: '10px', marginBottom: '10px' };
+      ? { border: '2px solid maroon', padding: '10px', marginBottom: '2px' }
+      : { padding: '10px', marginBottom: '2px' };
 
     return (
       <section
@@ -189,94 +180,42 @@ class VisitorPhoto extends Component {
               <div className="card bg-glass" style={formStyle}>
                 <div className="card-body px-4 py-5 px-md-5">
                   <form onSubmit={this.handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-                    <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Visitor Entry Form</h2>
+                    <h2 style={{ color: 'maroon', fontSize: '30px', marginBottom: '30px', textAlign: 'center' }}>Privacy Policies</h2>
 
                     <div style={visitorPhotoSectionStyle}>
-                      <h3 style={{ marginBottom: '10px' }}><span style={{ color: 'maroon' }}>Visitor Photo</span></h3>
+                        <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333', marginTop: '15px' }}>
+                          We value your privacy and are committed to protecting your personal information. Please read the following policies carefully to understand how we collect, use, and protect your data.
+                        </p>
 
-                      {!showCamera2 && !visitorimage2 && (
+                        <ul style={{ textAlign: 'left', padding: '0 20px', color: '#555', fontSize: '15px', lineHeight: '1.5' }}>
+                          <li><strong>Data Collection:</strong> We collect only the data necessary for campus security and visitor management purposes.</li>
+                          <li><strong>Use of Information:</strong> Your data is used solely for verifying and documenting entry to the premises.</li>
+                          <li><strong>Protection of Data:</strong> We employ strict security protocols to protect your information from unauthorized access.</li>
+                          <li><strong>Consent:</strong> By proceeding, you consent to the capture of your image and storage of relevant details for campus access purposes.</li>
+                          <li><strong>Contact:</strong> For questions or concerns, please reach out to the SSD office.</li>
+                        </ul>
+
+                      {!accept && (
                         <button
                           className="btn btn-primary btn-block mb-4"
-                          onClick={this.handleCameraOpen2}
+                          onClick={this.handleAcknowledged}
                           style={{
                             background: '#800000',
                             borderColor: '#800000',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            padding: '20px 15px',
+                            padding: '10px 20px',
                             fontSize: '16px',
-                            borderRadius: '15px',
-                            width: '130px',
-                            height: '50px',
+                            fontWeight: 'bold',
+                            borderRadius: '8px',
                             color: '#ffffff',
                           }}
                         >
-                          Capture ID <FaCamera style={{ marginLeft: '7px' }} />
+                          Acknowledge / I Accept
                         </button>
                       )}
-
-                      {visitorimage2 && (
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                          <img src={visitorimage2} alt="Captured" width="100%" />
-                          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-                            <button
-                              className="btn btn-primary btn-block mb-4"
-                              onClick={this.handleRetake2}
-                              style={{
-                                background: '#A43F3F',
-                                borderRadius: '15px',
-                                padding: '10px 20px',
-                                color: '#fff',
-                                border: 'none',
-                                cursor: 'pointer',
-                                width: '130px',
-                                height: '50px',
-                                margin: '0 10px',
-                              }}
-                            >
-                              Retake
-                            </button>
-                          </div>
-                        </div>
-                      )}
                     </div>
-
-                    <Modal show={showCamera2} onHide={() => this.setState({ showCamera2: false })} centered>
-                      <Modal.Header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Modal.Title style={{ textAlign: 'center', display: 'flex', alignItems: 'center', margin: '0', padding: '0px' }}>
-                          <span style={{ fontWeight: 'bold', fontSize: '40px', marginLeft: '10px' }}><span style={{ color: 'maroon' }}>Visitor</span><span style={{ color: 'gold' }}> Photo</span></span>
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Webcam
-                          audio={false}
-                          ref={(webcam) => { this.webcam2 = webcam; }}
-                          screenshotFormat="image/jpeg"
-                          width="100%"
-                          height="100%"
-                        />
-                      </Modal.Body>
-                      <Modal.Footer style={{ display: 'flex', justifyContent: 'center' }}>
-                        <BootstrapButton
-                          variant="primary"
-                          onClick={this.handleCapture2}
-                          style={{
-                            backgroundColor: 'maroon',
-                            borderColor: '#A43F3F',
-                            color: '#FFFFFF',
-                            borderRadius: '5px',
-                            padding: '10px 20px',
-                            fontSize: '1.2em',
-                            fontWeight: 'normal',
-                            cursor: 'pointer',
-                            border: '2px solid #A43F3F',
-                          }}
-                        >
-                          Capture
-                        </BootstrapButton>
-                      </Modal.Footer>
-                    </Modal>
 
                     <BootstrapButton
                       variant="primary"
@@ -297,7 +236,7 @@ class VisitorPhoto extends Component {
                         color: '#ffffff',
                       }}
                     >
-                      Submit Form
+                      Submit
                       <MdSend style={{ marginLeft: '10px' }} />
                     </BootstrapButton>
                   </form>
@@ -363,6 +302,20 @@ class VisitorPhoto extends Component {
                     </Modal.Header>
                     <Modal.Body>
                       <p>Please complete the Visitor Entry Form before submitting.</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
+                        Close
+                      </BootstrapButton>
+                    </Modal.Footer>
+                  </Modal>
+
+                  <Modal show={showNotificationModal1} onHide={this.handleCloseNotification} centered>
+                    <Modal.Header>
+                      <Modal.Title style={{ color: 'red' }}>Notification</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p>You acknowledged the privacy policies.</p>
                     </Modal.Body>
                     <Modal.Footer>
                       <BootstrapButton variant="secondary" onClick={this.handleCloseNotification}>
