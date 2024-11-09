@@ -342,7 +342,6 @@ class AdminPage extends Component {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={this.handleExportPDF}>Export Data</Dropdown.Item>
               <Dropdown.Item onClick={this.handleExportFilteredPDF}>Export Filtered Data</Dropdown.Item>
               <Dropdown.Item onClick={this.handleStatistics}>Admin Statistics</Dropdown.Item>
               <Dropdown.Divider />

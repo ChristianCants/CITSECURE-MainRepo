@@ -122,25 +122,41 @@ class AdminStatistics extends Component {
 
   getBuildingData = () => {
     const { filteredData } = this.state;
-
+  
     const buildingCounts = filteredData.reduce((acc, item) => {
       acc[item.buildingToVisit] = (acc[item.buildingToVisit] || 0) + 1;
       return acc;
     }, {});
-
+  
+    // Array of colors for each building
+    const colors = [
+      'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)',
+      'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)'
+    ];
+  
+    const borderColors = [
+      'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)',
+      'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+      'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)'
+    ];
+  
     return {
       labels: Object.keys(buildingCounts),
       datasets: [
         {
           label: 'Number of Visits',
           data: Object.values(buildingCounts),
-          backgroundColor: 'rgba(75,192,192,0.2)',
-          borderColor: 'rgba(75,192,192,1)',
+          backgroundColor: colors.slice(0, Object.keys(buildingCounts).length), // Assign unique colors
+          borderColor: borderColors.slice(0, Object.keys(buildingCounts).length), // Assign unique border colors
           borderWidth: 2,
         },
       ],
     };
   };
+  
 
   getMonthData = () => {
     const { filteredData, filterMonth } = this.state;
@@ -306,7 +322,7 @@ class AdminStatistics extends Component {
     };
 
     return (
-      <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
+      <div style={{ backgroundColor: '#FFF9EB', minHeight: '500vh' }}>
         <header
           className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
           style={{
@@ -429,13 +445,41 @@ class AdminStatistics extends Component {
           <Button onClick={this.clearFilters} variant="danger" className="mt-2">Clear Filters</Button>
         </Container>
 
-        <div id="chart-content">
-          <Container style={{ height: '500px', marginBottom: '20px' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
-              {this.formatDateRange()}
-            </h3>
-            <Bar data={chartData} options={chartOptions} />
-          </Container>
+                <div id="chart-content">
+                <Container style={{ height: '500px', marginBottom: '20px', display: 'flex' }}>
+  <div style={{ flex: 1 }}>
+    <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
+      {this.formatDateRange()}
+    </h3>
+    <Bar data={chartData} options={chartOptions} />
+  </div>
+
+  {/* Right-aligned custom legend with title and bold font */}
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '20px' }}>
+    <h4 style={{ fontWeight: 'bold', marginBottom: '10px' }}>Legend</h4>
+    {chartData.labels.map((label, index) => (
+      <div key={label} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+        <span
+          style={{
+            display: 'inline-block',
+            width: '15px',
+            height: '15px',
+            backgroundColor: chartData.datasets[0].backgroundColor[index],
+            marginRight: '8px',
+            border: '1px solid black',
+            verticalAlign: 'middle',
+          }}
+        ></span>
+        <span style={{ fontWeight: 'bold', fontSize: '14px', lineHeight: '15px', verticalAlign: 'middle' }}>
+          {label}
+        </span>
+      </div>
+    ))}
+  </div>
+</Container>
+
+
+
 
           {filterMonth && (
             <Container style={{ height: '500px', marginBottom: '20px' }}>
