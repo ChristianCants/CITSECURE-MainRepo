@@ -23,8 +23,108 @@ class AdminStatistics extends Component {
       toDate: null,
       filterBuilding: '',
       filterMonth: '',
+      offices: [], 
     };
   }
+
+  updateOffices = (building) => {
+    const buildingOffices = {
+      "ACAD": [
+        "College of Engineering and Architecture",
+        "CES Department",
+        "Alumni Affairs Office",
+        "SSD",
+        "Office of Property Custodian",
+        "IMDC",
+        "Jurani Hall",
+        "CMBA-DHM Department",
+        "Fine Dining",
+        "CASE Department",
+        "DLLC",
+        "Industrial Engineering Department",
+        "Architecture Department"
+      ],
+      "NGE": [
+        "MIS/CREATE Department",
+        "CCS Department",
+        "Wildcats Innovation",
+        "Technical Support Group",
+        "CNAHS"
+      ],
+      "ALLIED": [
+        "CEA-Electrical Engineering Department",
+        "CEA-Civil Engineering Department",
+        "Power House",
+        "CEA-Chemical Engineering Department",
+        "CEA-Mechanical Engineering Department",
+        "DEMPC",
+        "Mining Engineering Department"
+      ],
+      "RTL": [
+        "Executive Office",
+        "FAO",
+        "University Registrar",
+        "CMBA",
+        "OAS",
+        "College Guidance",
+        "NLO",
+        "MSDO",
+        "ETO",
+        "SSO",
+        "SHS",
+        "MASSCOM LAB",
+        "CASE-DHBS_PSYCH",
+        "CASE-BIO",
+        "MARKETING OFFICE"
+      ],
+      "GLE": [
+        "RDCO/ITSO",
+        "Vice President for Academic Affairs",
+        "IMPO",
+        "QAO",
+        "Human Resource Management",
+        "CEA-CPE Department",
+        "CEA-ECE Department"
+      ],
+      "SAL": [
+        "JHS PRINCIPAL’S OFFICE",
+        "JHS-COMP. LAB.",
+        "SHS registrar",
+        "GYM",
+        "CASE-PE",
+        "COLLEGE LIBRARY",
+        "MAIN CLINIC"
+      ],
+      "MAIN CANTEEN": [
+        "Dining Hall",
+        "Food Service Office",
+        "Supplies Storage",
+        "Maintenance"
+      ],
+      "HIGHSCHOOL CANTEEN": [
+        "Student Dining Area",
+        "Canteen Staff Room",
+        "Food Prep Area"
+      ],
+      "ELEMENTARY BUILDING": [
+        "Grade 1 Classroom",
+        "Grade 2 Classroom",
+        "Faculty Room",
+        "Library"
+      ],
+      "WILDCATS LIBRARY": [
+        "Reading Area",
+        "Computer Section",
+        "Research Section",
+        "Administrative Office"
+      ]
+    };
+  
+    const offices = buildingOffices[building] || [];
+    this.setState({ offices, filterOffice: '' }); // Reset office filter when building changes
+  };
+  
+  
 
   // Fetch data from the backend API every 5 seconds for real-time updates
   componentDidMount() {
@@ -55,8 +155,15 @@ class AdminStatistics extends Component {
   };
 
   handleFilterChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value }, this.filterData);
+    const { name, value } = event.target;
+    this.setState({ [name]: value }, () => {
+      if (name === "filterBuilding") {
+        this.updateOffices(value); // Update offices when building is selected
+      }
+      this.filterData();
+    });
   };
+  
 
   handleDateChange = (date, name) => {
     this.setState({ [name]: date }, this.filterData);
@@ -75,45 +182,42 @@ class AdminStatistics extends Component {
   };
 
   filterData = () => {
-    const { data, fromDate, toDate, filterBuilding, filterMonth } = this.state;
-
+    const { data, fromDate, toDate, filterBuilding, filterOffice, filterMonth } = this.state;
+  
     let filteredData = data;
-
-    // Filter by date range if dates are provided
+  
     if (fromDate && toDate) {
       filteredData = filteredData.filter((item) => {
         if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-
         const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
-
-        // Check if the parsed date is within the selected date range
         return parsedDate >= fromDate && parsedDate <= toDate;
       });
     }
-
-    // Filter by building
+  
     if (filterBuilding) {
       filteredData = filteredData.filter((item) => item.buildingToVisit === filterBuilding);
     }
-
-    // Filter by specific month, but skip if "All months" is selected
+  
+    if (filterOffice) {
+      filteredData = filteredData.filter((item) => item.officeVisited === filterOffice);
+    }
+  
     if (filterMonth && filterMonth !== "all") {
       filteredData = filteredData.filter((item) => {
         if (!item.timeIn || typeof item.timeIn !== 'string') {
           return false;
         }
-
         const parsedDate = parse(item.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
         const month = parsedDate.getMonth() + 1;
-
         return String(month).padStart(2, '0') === filterMonth;
       });
     }
-
+  
     this.setState({ filteredData });
   };
+  
 
   getTotalVisits = () => {
     const { filteredData } = this.state;
@@ -122,25 +226,41 @@ class AdminStatistics extends Component {
 
   getBuildingData = () => {
     const { filteredData } = this.state;
-
+  
     const buildingCounts = filteredData.reduce((acc, item) => {
       acc[item.buildingToVisit] = (acc[item.buildingToVisit] || 0) + 1;
       return acc;
     }, {});
-
+  
+    // Array of colors for each building
+    const colors = [
+      'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)',
+      'rgba(75, 192, 192, 0.6)', 'rgba(153, 102, 255, 0.6)'
+    ];
+  
+    const borderColors = [
+      'rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)',
+      'rgba(255, 99, 132, 0.8)', 'rgba(54, 162, 235, 0.8)', 'rgba(255, 206, 86, 0.8)',
+      'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)'
+    ];
+  
     return {
       labels: Object.keys(buildingCounts),
       datasets: [
         {
           label: 'Number of Visits',
           data: Object.values(buildingCounts),
-          backgroundColor: 'rgba(75,192,192,0.2)',
-          borderColor: 'rgba(75,192,192,1)',
+          backgroundColor: colors.slice(0, Object.keys(buildingCounts).length), // Assign unique colors
+          borderColor: borderColors.slice(0, Object.keys(buildingCounts).length), // Assign unique border colors
           borderWidth: 2,
         },
       ],
     };
   };
+  
 
   getMonthData = () => {
     const { filteredData, filterMonth } = this.state;
@@ -244,77 +364,38 @@ class AdminStatistics extends Component {
   };
 
   render() {
-    const { filterBuilding, filterMonth, fromDate, toDate } = this.state;
+    const { filterBuilding, filterOffice, filterMonth, fromDate, toDate, offices } = this.state;
     const chartData = this.getBuildingData();
     const monthChartData = this.getMonthData();
-
+  
     const chartOptions = {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
           labels: {
-            font: {
-              weight: 'bold',
-            },
+            font: { weight: 'bold' },
             color: '#000000',
           },
         },
       },
       scales: {
         x: {
-          grid: {
-            color: 'rgba(0, 0, 0, 0.1)',
-            lineWidth: 1,
-          },
-          ticks: {
-            font: {
-              weight: 'bold',
-            },
-            color: '#000000',
-          },
-          title: {
-            display: true,
-            text: 'Building',
-            font: {
-              weight: 'bold',
-            },
-            color: '#000000',
-          },
+          grid: { color: 'rgba(0, 0, 0, 0.1)', lineWidth: 1 },
+          ticks: { font: { weight: 'bold' }, color: '#000000' },
+          title: { display: true, text: 'Building', font: { weight: 'bold' }, color: '#000000' },
         },
         y: {
-          grid: {
-            color: 'rgba(0, 0, 0, 0.8)',
-            lineWidth: 1.5,
-          },
-          ticks: {
-            font: {
-              weight: 'bold',
-            },
-            color: '#000000',
-          },
-          title: {
-            display: true,
-            text: 'Number of Visits',
-            font: {
-              weight: 'bold',
-            },
-            color: '#000000',
-          },
+          grid: { color: 'rgba(0, 0, 0, 0.8)', lineWidth: 1.5 },
+          ticks: { font: { weight: 'bold' }, color: '#000000' },
+          title: { display: true, text: 'Number of Visits', font: { weight: 'bold' }, color: '#000000' },
         },
       },
     };
-
+  
     return (
-      <div style={{ backgroundColor: '#FFF9EB', minHeight: '100vh' }}>
-        <header
-          className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom"
-          style={{
-            backgroundColor: 'maroon',
-            padding: '10px',
-            fontSize: '20px',
-          }}
-        >
+      <div style={{ backgroundColor: '#FFF9EB', minHeight: '500vh' }}>
+        <header className="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom" style={{ backgroundColor: 'maroon', padding: '10px', fontSize: '20px' }}>
           <div style={{ color: 'white', display: 'flex', alignItems: 'center' }}>
             <img src="/images/CIT LOGO.png" alt="CITSecure Logo" width="67" height="60" />
             <span style={{ width: '2.5px', height: '40px', backgroundColor: 'white', margin: '0 5px' }}></span>
@@ -327,27 +408,13 @@ class AdminStatistics extends Component {
               </span>
             </li>
           </ul>
-
-          <Button
-            variant="contained"
-            startIcon={<ChevronLeftIcon />}
-            onClick={() => window.location.href = '/admin/adminpage'} // Navigates to home page
-            style={{
-              position: 'absolute',
-              top: '36px',
-              right: '95px',
-              backgroundColor: 'white',
-              color: 'maroon',
-            }}
-          >
+          <Button variant="contained" startIcon={<ChevronLeftIcon />} onClick={() => window.location.href = '/admin/adminpage'} style={{ position: 'absolute', top: '36px', right: '95px', backgroundColor: 'white', color: 'maroon' }}>
             Return
           </Button>
-
           <Dropdown align="end">
             <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{ backgroundColor: 'transparent', border: 'none' }}>
               <SettingsIcon style={{ color: 'white', fontSize: '40px' }} />
             </Dropdown.Toggle>
-
             <Dropdown.Menu>
               <Dropdown.Item onClick={this.exportPDF}>Export Data</Dropdown.Item>
               <Dropdown.Divider />
@@ -355,7 +422,7 @@ class AdminStatistics extends Component {
             </Dropdown.Menu>
           </Dropdown>
         </header>
-
+  
         <Container style={{ marginBottom: '20px' }}>
           <Row>
             <Col>
@@ -390,7 +457,7 @@ class AdminStatistics extends Component {
               <Form.Group>
                 <Form.Label>Building:</Form.Label>
                 <Form.Control as="select" name="filterBuilding" value={filterBuilding} onChange={this.handleFilterChange}>
-                  <option value="">Select Buildings</option>
+                  <option value="">Select Building</option>
                   <option value="NGE">NGE</option>
                   <option value="GLE">GLE</option>
                   <option value="RTL">RTL</option>
@@ -401,6 +468,23 @@ class AdminStatistics extends Component {
                   <option value="HIGHSCHOOL CANTEEN">HIGHSCHOOL CANTEEN</option>
                   <option value="ELEMENTARY BUILDING">ELEMENTARY BUILDING</option>
                   <option value="WILDCATS LIBRARY">WILDCATS LIBRARY</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group>
+                <Form.Label>Offices Visited:</Form.Label>
+                <Form.Control
+                  as="select"
+                  name="filterOffice"
+                  value={filterOffice}
+                  onChange={this.handleFilterChange}
+                  disabled={!filterBuilding} // Disable if no building is selected
+                >
+                  <option value="">Select Office</option>
+                  {offices.map((office) => (
+                    <option key={office} value={office}>{office}</option>
+                  ))}
                 </Form.Control>
               </Form.Group>
             </Col>
@@ -428,35 +512,50 @@ class AdminStatistics extends Component {
           </Row>
           <Button onClick={this.clearFilters} variant="danger" className="mt-2">Clear Filters</Button>
         </Container>
-
+  
         <div id="chart-content">
-          <Container style={{ height: '500px', marginBottom: '20px' }}>
-            <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
-              {this.formatDateRange()}
-            </h3>
-            <Bar data={chartData} options={chartOptions} />
+          <Container style={{ height: '500px', marginBottom: '20px', display: 'flex' }}>
+            <div style={{ flex: 1 }}>
+              <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>{this.formatDateRange()}</h3>
+              <Bar data={chartData} options={chartOptions} />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: '20px' }}>
+              <h4 style={{ fontWeight: 'bold', marginBottom: '10px' }}>Legend</h4>
+              {chartData.labels.map((label, index) => (
+                <div key={label} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+                  <span style={{
+                    display: 'inline-block',
+                    width: '15px',
+                    height: '15px',
+                    backgroundColor: chartData.datasets[0].backgroundColor[index],
+                    marginRight: '8px',
+                    border: '1px solid black',
+                    verticalAlign: 'middle',
+                  }}></span>
+                  <span style={{ fontWeight: 'bold', fontSize: '14px', lineHeight: '15px', verticalAlign: 'middle' }}>{label}</span>
+                </div>
+              ))}
+            </div>
           </Container>
-
+  
           {filterMonth && (
             <Container style={{ height: '500px', marginBottom: '20px' }}>
               <h3 style={{ textAlign: 'center', marginBottom: '20px' }}>
                 {filterMonth === "all" ? "Monthly Visit Statistics" : 
                   `Number of Visits in the Month of ${new Date(0, parseInt(filterMonth) - 1).toLocaleString('default', { month: 'long' })}`}
               </h3>
-
+  
               {filterMonth !== "all" && (
-                <h4 style={{ textAlign: 'center', color: 'black' }}>
-                  Total Visits = {this.getTotalVisits()}
-                </h4>
+                <h4 style={{ textAlign: 'center', color: 'black' }}>Total Visits = {this.getTotalVisits()}</h4>
               )}
-
+  
               <Bar data={monthChartData} options={chartOptions} />
             </Container>
           )}
         </div>
       </div>
     );
-  }
+  }  
 }
 
 export default AdminStatistics;
