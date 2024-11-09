@@ -15,6 +15,7 @@ class VisitorEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
       selectedGate: '',
       firstName: '',
       lastName: '',
@@ -23,6 +24,7 @@ class VisitorEntry extends Component {
       buildingToVisit: '',
       selectedOffice: '',
       offices: [],
+      assignedPerson: '', // New state for assigned person
       showModal: false,
       showNotification: false,
       showErrorModal: false,
@@ -194,7 +196,7 @@ class VisitorEntry extends Component {
     e.preventDefault();
     this.setState({ loading: true });
 
-    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, selectedOffice, timeIn } = this.state;
+    const { selectedGate, firstName, lastName, purpose, cardNo, buildingToVisit, selectedOffice, assignedPerson, timeIn } = this.state;
 
     try {
         // First, upload the image for Visitor ID
@@ -211,7 +213,8 @@ class VisitorEntry extends Component {
             cardNo: parseInt(cardNo, 10),
             timeIn,
             buildingToVisit,
-            officeVisited: selectedOffice, // Ensure this matches the backend field
+            officeVisited: selectedOffice,
+            assignedPerson, 
             visitorImagePath,
             status: 1,
         };
@@ -246,6 +249,7 @@ class VisitorEntry extends Component {
         lastName: '',
         purpose: '',
         buildingToVisit: '',
+        assignedPerson: '', 
         selectedOffice: '',
         visitorimage: null,
         visitorimage2: null,
@@ -345,7 +349,7 @@ class VisitorEntry extends Component {
       offices,
       selectedOffice,
       showModal,
-      
+      assignedPerson,
       timeIn,
       showCamera,
       visitorimage,
@@ -355,7 +359,7 @@ class VisitorEntry extends Component {
       isVisitorIdCaptured 
     } = this.state;
   
-    const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && selectedOffice && visitorimage2;
+    const isFormFilled = selectedGate && firstName && lastName && purpose && cardNo && buildingToVisit && selectedOffice && assignedPerson  && visitorimage2;
   
     const formContainerStyle = {
       display: 'flex',
@@ -448,165 +452,182 @@ class VisitorEntry extends Component {
   
           {/* Form Fields */}
           <form onSubmit={this.handleSignUp}>
-          <div style={{ display: 'flex', width: '100%', gap: '20px' }}> {/* Add gap between columns */}
-              {/* Left Column */}
-              <div style={leftColumnStyle}>
-                <div className="row">
-                  <div className="col">
-                    <div style={formFieldStyle}>
-                      <label>First Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={firstName}
-                        onChange={(e) => this.setState({ firstName: e.target.value })}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div style={formFieldStyle}>
-                      <label>Last Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={lastName}
-                        onChange={(e) => this.setState({ lastName: e.target.value })}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div>
-  
-                <div style={formFieldStyle}>
-                  <label>Purpose</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={purpose}
-                    onChange={(e) => this.setState({ purpose: e.target.value })}
-                    required
-                  />
-                </div>
-  
-                <div className="row">
-                  <div className="col">
-                    <div style={formFieldStyle}>
-                      <label>Visitor No.</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={cardNo}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div style={formFieldStyle}>
-                      <label>Time In</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        value={timeIn}
-                        readOnly
-                      />
-                    </div>
-                  </div>
-                </div>
-  
-               
-                <div className="row">
-                  <div className="col">
-                    <label>Buildings</label>
-                    <select className="form-control" value={buildingToVisit} onChange={this.handleBuildingChange} required>
-                      <option value="">Select Buildings</option>
-                      {Object.keys(this.buildingOffices).map((building) => (
-                        <option key={building} value={building}>{building}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="col">
-                    <label>Select Gate</label>
-                    <select className="form-control" value={selectedGate} onChange={(e) => this.setState({ selectedGate: e.target.value })} required>
-                      <option value="">Select Gate</option>
-                      <option value="Front Gate">Front Gate</option>
-                      <option value="Back Gate">Back Gate</option>
-                    </select>
-                  </div>
-                </div>
+  <div style={{ display: 'flex', width: '100%', gap: '20px' }}> {/* Add gap between columns */}
+    {/* Left Column */}
+    <div style={leftColumnStyle}>
+      <div className="row">
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>First Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={firstName}
+              onChange={(e) => this.setState({ firstName: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>Last Name</label>
+            <input
+              type="text"
+              className="form-control"
+              value={lastName}
+              onChange={(e) => this.setState({ lastName: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+      </div>
 
-                {offices.length > 0 && (
-                  <div>
-                    <label>Office to Visit</label>
-                    <select className="form-control" value={selectedOffice} onChange={(e) => this.setState({ selectedOffice: e.target.value })} required>
-                      <option value="">Select Office</option>
-                      {offices.map((office, index) => (
-                        <option key={index} value={office}>{office}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-              </div>
-            
-              {/* Right Column - Visitor ID Section */}
-              <div style={rightColumnStyle}>
-                <div style={visitorIdSectionStyle}>
-                  <h3 style={{ color: 'maroon' }}>Visitor ID</h3>
-                  {!visitorimage2 && (
-                    <button
-                      className="btn btn-primary"
-                      onClick={this.handleCameraOpen2}
-                      style={{
-                        backgroundColor: '#800000',
-                        borderColor: '#800000',
-                        padding: '10px 20px',
-                        color: '#fff',
-                        borderRadius: '8px',
-                      }}
-                    >
-                      <FaCamera style={{ marginRight: '10px' }} /> Capture ID
-                    </button>
-                  )}
+      {/* Purpose and Assigned Person Row */}
+      <div className="row">
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>Purpose</label>
+            <input
+              type="text"
+              className="form-control"
+              value={purpose}
+              onChange={(e) => this.setState({ purpose: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>Assigned Person</label>
+            <input
+              type="text"
+              className="form-control"
+              value={assignedPerson}
+              onChange={(e) => this.setState({ assignedPerson: e.target.value })}
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>Visitor No.</label>
+            <input
+              type="text"
+              className="form-control"
+              value={cardNo}
+              readOnly
+            />
+          </div>
+        </div>
+        <div className="col">
+          <div style={formFieldStyle}>
+            <label>Time In</label>
+            <input
+              type="text"
+              className="form-control"
+              value={timeIn}
+              readOnly
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col">
+          <label>Buildings</label>
+          <select className="form-control" value={buildingToVisit} onChange={this.handleBuildingChange} required>
+            <option value="">Select Buildings</option>
+            {Object.keys(this.buildingOffices).map((building) => (
+              <option key={building} value={building}>{building}</option>
+            ))}
+          </select>
+        </div>
+        <div className="col">
+          <label>Select Gate</label>
+          <select className="form-control" value={selectedGate} onChange={(e) => this.setState({ selectedGate: e.target.value })} required>
+            <option value="">Select Gate</option>
+            <option value="Front Gate">Front Gate</option>
+            <option value="Back Gate">Back Gate</option>
+          </select>
+        </div>
+      </div>
+
+      {offices.length > 0 && (
+        <div style={formFieldStyle}>
+          <label>Office to Visit</label>
+          <select className="form-control" value={selectedOffice} onChange={(e) => this.setState({ selectedOffice: e.target.value })} required>
+            <option value="">Select Office</option>
+            {offices.map((office, index) => (
+              <option key={index} value={office}>{office}</option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+    
+    {/* Right Column - Visitor ID Section */}
+    <div style={rightColumnStyle}>
+      <div style={visitorIdSectionStyle}>
+        <h3 style={{ color: 'maroon' }}>Visitor ID</h3>
+        {!visitorimage2 && (
+          <button
+            className="btn btn-primary"
+            onClick={this.handleCameraOpen2}
+            style={{
+              backgroundColor: '#800000',
+              borderColor: '#800000',
+              padding: '10px 20px',
+              color: '#fff',
+              borderRadius: '8px',
+            }}
+          >
+            <FaCamera style={{ marginRight: '10px' }} /> Capture ID
+          </button>
+        )}
+
+        {visitorimage2 && (
+          <div>
+            <img src={visitorimage2} alt="Captured ID" width="100%" style={{ marginBottom: '10px' }} />
+            <button
+              className="btn btn-danger"
+              onClick={this.handleRetake2}
+              style={{
+                backgroundColor: '#A43F3F',
+                padding: '10px 20px',
+                color: '#fff',
+                borderRadius: '8px',
+              }}
+            >
+              Retake
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
   
-                  {visitorimage2 && (
-                    <div>
-                      <img src={visitorimage2} alt="Captured ID" width="100%" style={{ marginBottom: '10px' }} />
-                      <button
-                        className="btn btn-danger"
-                        onClick={this.handleRetake2}
-                        style={{
-                          backgroundColor: '#A43F3F',
-                          padding: '10px 20px',
-                          color: '#fff',
-                          borderRadius: '8px',
-                        }}
-                      >
-                        Retake
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-  
-            {/* Submit Button */}
-            <div style={{ textAlign: 'center', marginTop: '20px', width: '100%' }}>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                style={{
-                  backgroundColor: 'maroon',
-                  borderColor: 'maroon',
-                  padding: '10px 30px',
-                  fontSize: '20px',
-                  width: '200px',
-                }}
-                disabled={!isFormFilled}
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+  {/* Submit Button */}
+  <div style={{ textAlign: 'center', marginTop: '20px', width: '100%' }}>
+    <button
+      type="submit"
+      className="btn btn-primary"
+      style={{
+        backgroundColor: 'maroon',
+        borderColor: 'maroon',
+        padding: '10px 30px',
+        fontSize: '20px',
+        width: '200px',
+      }}
+      disabled={!isFormFilled}
+    >
+      Submit
+    </button>
+  </div>
+</form>
+
 
           {/* Go Back Button with Chevron Icon */}
           <button onClick={() => this.props.navigate('/')} style={goBackButtonStyle}>
