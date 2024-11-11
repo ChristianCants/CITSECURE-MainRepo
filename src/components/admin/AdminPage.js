@@ -160,9 +160,9 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Add an extra width for officeVisited
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Add an extra width for officeVisited
             body: [
-              ['Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Office Visited', 'Gate Selected', 'Status'],
+              ['Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Office Visited', 'Assigned Person', 'Gate Selected', 'Status'],
               ...users.map((user) => [
                 user.cardNo || '',
                 user.firstName || '',
@@ -172,6 +172,7 @@ class AdminPage extends Component {
                 user.timeOut || '',
                 user.buildingToVisit || '',
                 user.officeVisited || '', // Add officeVisited
+                user.assignedPerson || '',
                 user.selected_gate || '', 
                 user.status === 1 ? 'Inside Campus' : 'Exited',
               ]),
@@ -442,7 +443,8 @@ class AdminPage extends Component {
                     <th>Time in</th>
                     <th>Time out</th>
                     <th>Building Visited</th>
-                    <th>Office Visited</th> {/* New Column */}
+                    <th>Office Visited</th>
+                    <th>Assigned Person</th> {/* New Column */}
                     <th>Gate Selected</th> 
                     <th>Status</th>
                   </tr>
@@ -458,6 +460,7 @@ class AdminPage extends Component {
                       <td>{user.timeOut}</td>
                       <td>{user.buildingToVisit}</td>
                       <td>{user.officeVisited}</td>
+                      <td>{user.assignedPerson}</td>
                       <td>{user.selected_gate}</td>
 
                       <td style={{ color: user.status === 1 ? 'red' : 'green' }}>
