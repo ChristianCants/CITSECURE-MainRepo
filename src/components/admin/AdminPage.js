@@ -134,24 +134,25 @@ class AdminPage extends Component {
   
   handleExportFilteredPDF = () => {
     const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
-  
+
     const filteredUsers = users.filter((user) => {
       const matchesDate = !filterDateTimeIn || 
-        (user.timeIn && new Date(user.timeIn).toLocaleDateString() === filterDateTimeIn.toLocaleDateString());
+        (user.timeIn && new Date(user.timeIn).toLocaleDateString() === new Date(filterDateTimeIn).toLocaleDateString());
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
       const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected;
-  
+
       return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
-  
-    console.log('Filtered Users:', filteredUsers);  // Add this for debugging purposes
-  
+
+    console.log('Filtered Users:', filteredUsers);
+
     if (!filteredUsers.length) {
       alert('No filtered data to export.');
       return;
     }
+
     const docDefinition = {
       pageOrientation: 'landscape',
       content: [
@@ -160,10 +161,10 @@ class AdminPage extends Component {
           style: 'table',
           table: {
             headerRows: 1,
-            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'], // Add an extra width for officeVisited
+            widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
             body: [
               ['Card Number', 'First Name', 'Last Name', 'Purpose', 'Time In', 'Time Out', 'Building Visited', 'Office Visited', 'Assigned Person', 'Gate Selected', 'Status'],
-              ...users.map((user) => [
+              ...filteredUsers.map((user) => [
                 user.cardNo || '',
                 user.firstName || '',
                 user.lastName || '',
@@ -171,9 +172,9 @@ class AdminPage extends Component {
                 user.timeIn || '',
                 user.timeOut || '',
                 user.buildingToVisit || '',
-                user.officeVisited || '', // Add officeVisited
+                user.officeVisited || '',
                 user.assignedPerson || '',
-                user.selected_gate || '', 
+                user.selected_gate || '',
                 user.status === 1 ? 'Inside Campus' : 'Exited',
               ]),
             ],
@@ -201,7 +202,7 @@ class AdminPage extends Component {
         },
       },
     };
-  
+
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
     pdfDocGenerator.getBlob((blob) => {
       const downloadLink = document.createElement('a');
@@ -210,6 +211,8 @@ class AdminPage extends Component {
       downloadLink.click();
     });
   };
+
+
   
   
   
