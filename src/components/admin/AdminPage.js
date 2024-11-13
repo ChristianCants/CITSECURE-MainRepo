@@ -134,20 +134,20 @@ class AdminPage extends Component {
   
   handleExportFilteredPDF = () => {
     const { users, filterDateTimeIn, filterCardNumber, filterBuilding, filterPurpose, filterGateSelected } = this.state;
-
+  
     const filteredUsers = users.filter((user) => {
-      const matchesDate = !filterDateTimeIn || 
-        (user.timeIn && new Date(user.timeIn).toLocaleDateString() === new Date(filterDateTimeIn).toLocaleDateString());
+      const userDate = parse(user.timeIn, 'hh:mm a dd/MM/yyyy', new Date());
+      const matchesDate = !filterDateTimeIn || (userDate && userDate.toDateString() === filterDateTimeIn.toDateString());
       const matchesCardNumber = !filterCardNumber || user.cardNo.toString().includes(filterCardNumber);
       const matchesBuilding = !filterBuilding || user.buildingToVisit === filterBuilding;
       const matchesPurpose = !filterPurpose || user.purpose.toLowerCase().includes(filterPurpose.toLowerCase());
       const matchesGateSelected = !filterGateSelected || user.selected_gate === filterGateSelected;
-
+  
       return matchesDate && matchesCardNumber && matchesBuilding && matchesPurpose && matchesGateSelected;
     });
-
+  
     console.log('Filtered Users:', filteredUsers);
-
+  
     if (!filteredUsers.length) {
       alert('No filtered data to export.');
       return;
@@ -528,7 +528,7 @@ class AdminPage extends Component {
             </div>
           </Modal.Body>
           <Modal.Footer style={{ borderTop: '2px solid maroon', display: 'flex', justifyContent: 'center' }}>
-            <BootstrapButton variant="primary" onClick={this.handleErrorClose} style={{ background: 'maroon', width: '200px' }}>
+            <BootstrapButton variant="primary" onClick={this.handleErrorClose} stAyle={{ background: 'maroon', width: '200px' }}>
               OK
             </BootstrapButton>
           </Modal.Footer>
