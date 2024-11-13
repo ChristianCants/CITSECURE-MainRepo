@@ -227,12 +227,19 @@ class AdminStatistics extends Component {
   getBuildingData = () => {
     const { filteredData } = this.state;
   
+    // Calculate the visit counts for each building
     const buildingCounts = filteredData.reduce((acc, item) => {
       acc[item.buildingToVisit] = (acc[item.buildingToVisit] || 0) + 1;
       return acc;
     }, {});
   
-    // Array of colors for each building
+    // Determine the highest visit count and the building with that count
+    const maxCount = Math.max(...Object.values(buildingCounts));
+    const mostVisitedBuilding = Object.keys(buildingCounts).find(
+      (building) => buildingCounts[building] === maxCount
+    );
+  
+    // Default colors for each building
     const colors = [
       'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)',
       'rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)',
@@ -247,19 +254,34 @@ class AdminStatistics extends Component {
       'rgba(75, 192, 192, 0.8)', 'rgba(153, 102, 255, 0.8)'
     ];
   
+    // Define a special color for the most visited building
+    const highlightColor = 'rgba(255, 0, 0, 0.5)';
+    const highlightBorderColor = 'rgba(255, 0, 0, 1)';
+  
+    // Get the index of the most visited building
+    const buildingLabels = Object.keys(buildingCounts);
+    const buildingData = Object.values(buildingCounts);
+    const mostVisitedIndex = buildingLabels.indexOf(mostVisitedBuilding);
+  
     return {
-      labels: Object.keys(buildingCounts),
+      labels: buildingLabels,
       datasets: [
         {
-          label: 'Number of Visits',
-          data: Object.values(buildingCounts),
-          backgroundColor: colors.slice(0, Object.keys(buildingCounts).length), // Assign unique colors
-          borderColor: borderColors.slice(0, Object.keys(buildingCounts).length), // Assign unique border colors
+          label: `Highest Number of Visits: ${mostVisitedBuilding} (${maxCount})`,
+          data: buildingData,
+          backgroundColor: buildingLabels.map((_, index) =>
+            index === mostVisitedIndex ? highlightColor : colors[index]
+          ),
+          borderColor: buildingLabels.map((_, index) =>
+            index === mostVisitedIndex ? highlightBorderColor : borderColors[index]
+          ),
           borderWidth: 2,
         },
       ],
     };
   };
+  
+    
   
 
   getMonthData = () => {

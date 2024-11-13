@@ -571,7 +571,7 @@ class VisitorEntry extends Component {
     {/* Right Column - Visitor ID Section */}
     <div style={rightColumnStyle}>
       <div style={visitorIdSectionStyle}>
-        <h3 style={{ color: 'maroon' }}>Visitor ID</h3>
+        <h3 style={{ color: 'maroon' }}>Visitor Photo</h3>
         {!visitorimage2 && (
           <button
             className="btn btn-primary"
@@ -584,7 +584,7 @@ class VisitorEntry extends Component {
               borderRadius: '8px',
             }}
           >
-            <FaCamera style={{ marginRight: '10px' }} /> Capture ID
+            <FaCamera style={{ marginRight: '10px' }} /> Take Photo
           </button>
         )}
 
