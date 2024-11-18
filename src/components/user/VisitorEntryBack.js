@@ -443,7 +443,7 @@ class VisitorEntryBackGate extends Component {
           {/* Header Section */}
           <div style={headerStyle}>
             <img src="/images/CIT LOGO.png" alt="CIT Logo" style={logoStyle} />
-            <h1 style={formTitleStyle}>Visitor Entry Form</h1>
+            <h1 style={formTitleStyle}>Visitor Back-Gate Entry Form</h1>
             <img src="/images/CIT-U official.png" alt="CIT-U Logo" style={logoStyle} />
           </div>
   
@@ -542,7 +542,7 @@ class VisitorEntryBackGate extends Component {
             ))}
           </select>
         </div>
-        
+
         <div className="col">
     <label>Selected Gate</label>
     <input type="text" className="form-control" value={selectedGate} readOnly />

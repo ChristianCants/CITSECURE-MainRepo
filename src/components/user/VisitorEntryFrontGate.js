@@ -447,7 +447,7 @@ class VisitorEntryFrontGate extends Component {
           {/* Header Section */}
           <div style={headerStyle}>
             <img src="/images/CIT LOGO.png" alt="CIT Logo" style={logoStyle} />
-            <h1 style={formTitleStyle}>Visitor Entry Form</h1>
+            <h1 style={formTitleStyle}>Visitor Front-Gate Entry Form</h1>
             <img src="/images/CIT-U official.png" alt="CIT-U Logo" style={logoStyle} />
           </div>
   
