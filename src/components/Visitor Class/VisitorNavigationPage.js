@@ -118,7 +118,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/acad-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-acad" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -154,7 +154,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/highschool-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-highschool" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -190,7 +190,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/elementary-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-elementary" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -226,9 +226,9 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/gle-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-gle" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
-            Main Offices <OfficeBuildingIcon />
+            Main Offle-ices <OfficeBuildingIcon />
         </button>
     </Link>
     {/* Back Gate Button */}
@@ -300,7 +300,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/rtl-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-rtl" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -336,7 +336,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/nge-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-nge" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -372,7 +372,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/library-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-library" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -409,7 +409,7 @@ class VisitorNavigationPage extends React.Component {
         </button>
     </Link>
     {/* Main Offices Button */}
-    <Link to="/allied-offices" style={{ textDecoration: 'none' }}>
+    <Link to="/offices-allied" style={{ textDecoration: 'none' }}>
         <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
             Main Offices <OfficeBuildingIcon />
         </button>
@@ -444,12 +444,7 @@ class VisitorNavigationPage extends React.Component {
             Front Gate <DoorFrontIcon />
         </button>
     </Link>
-    {/* Main Offices Button */}
-    <Link to="" style={{ textDecoration: 'none' }}>
-        <button style={{ ...directionButtonStyles, backgroundColor: 'black', color: 'white' }}>
-            Main Offices <OfficeBuildingIcon />
-        </button>
-    </Link>
+    
     {/* Back Gate Button */}
     <Link to="/Backgatehigh-schoolcanteen" style={{ textDecoration: 'none' }}>
         <button style={directionButtonStyles}>

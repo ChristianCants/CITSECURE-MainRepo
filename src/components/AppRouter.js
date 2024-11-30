@@ -73,38 +73,38 @@ const AppRouter = () => {
                 <Route path="/visitorentry/backgate" element={<VisitorEntryBackGate />} />
 
                 {/* Front Gate Routes */}
-                <Route path="/frontgate/acadbuilding" element={<FrontgateAcadBuilding />} />
-                <Route path="/frontgate/highschool" element={<FrontgateHighSchool />} />
-                <Route path="/frontgate/elementary" element={<FrontgateElementary />} />
-                <Route path="/frontgate/glebuilding" element={<FrontgateGLEBuilding />} />
-                <Route path="/frontgate/maincanteen" element={<FrontgateMainCanteen />} />
-                <Route path="/frontgate/rtlbuilding" element={<FrontgateRTLBuilding />} />
-                <Route path="/frontgate/ngebuilding" element={<FrontgateNGEBuilding />} />
-                <Route path="/frontgate/librarybuilding" element={<FrontgateLibraryBuilding />} />
-                <Route path="/frontgate/alliedbuilding" element={<FrontgateAlliedBuilding />} />
-                <Route path="/frontgate/highschool-canteen" element={<FrontgateHighSchoolCanteen />} />
+                <Route path="/frontgateacadbuilding" element={<FrontgateAcadBuilding />} />
+                <Route path="/frontgatehighschool" element={<FrontgateHighSchool />} />
+                <Route path="/frontgateelementary" element={<FrontgateElementary />} />
+                <Route path="/frontgateglebuilding" element={<FrontgateGLEBuilding />} />
+                <Route path="/frontgatemaincanteen" element={<FrontgateMainCanteen />} />
+                <Route path="/frontgatertlbuilding" element={<FrontgateRTLBuilding />} />
+                <Route path="/frontgatengebuilding" element={<FrontgateNGEBuilding />} />
+                <Route path="/frontgatelibrarybuilding" element={<FrontgateLibraryBuilding />} />
+                <Route path="/frontgatealliedbuilding" element={<FrontgateAlliedBuilding />} />
+                <Route path="/frontgatehighschool-canteen" element={<FrontgateHighSchoolCanteen />} />
 
                 {/* Back Gate Routes */}
-                <Route path="/backgate/acadbuilding" element={<BackgateAcadBuilding />} />
-                <Route path="/backgate/highschool" element={<BackgateHighSchool />} />
-                <Route path="/backgate/elementary" element={<BackgateElementary />} />
-                <Route path="/backgate/glebuilding" element={<BackgateGLEBuilding />} />
-                <Route path="/backgate/maincanteen" element={<BackgateMainCanteen />} />
-                <Route path="/backgate/rtlbuilding" element={<BackgateRTLBuilding />} />
-                <Route path="/backgate/ngebuilding" element={<BackgateNGEBuilding />} />
-                <Route path="/backgate/librarybuilding" element={<BackgateLibraryBuilding />} />
-                <Route path="/backgate/alliedbuilding" element={<BackgateAlliedBuilding />} />
-                <Route path="/backgate/highschool-canteen" element={<BackgateHighSchoolCanteen />} />
+                <Route path="/backgateacadbuilding" element={<BackgateAcadBuilding />} />
+                <Route path="/backgatehighschool" element={<BackgateHighSchool />} />
+                <Route path="/backgateelementary" element={<BackgateElementary />} />
+                <Route path="/backgateglebuilding" element={<BackgateGLEBuilding />} />
+                <Route path="/backgatemaincanteen" element={<BackgateMainCanteen />} />
+                <Route path="/backgatertlbuilding" element={<BackgateRTLBuilding />} />
+                <Route path="/backgatengebuilding" element={<BackgateNGEBuilding />} />
+                <Route path="/backgatelibrarybuilding" element={<BackgateLibraryBuilding />} />
+                <Route path="/backgatealliedbuilding" element={<BackgateAlliedBuilding />} />
+                <Route path="/backgatehighschool-canteen" element={<BackgateHighSchoolCanteen />} />
 
                 {/* Office Routes */}
-                <Route path="/offices/acad" element={<AcadOffices />} />
-                <Route path="/offices/highschool" element={<HighSchoolBuildingOffices />} />
-                <Route path="/offices/elementary" element={<ElementaryBuildingOffices />} />
-                <Route path="/offices/gle" element={<GLEBuildingOffices />} />
-                <Route path="/offices/rtl" element={<RTLBuildingOffices />} />
-                <Route path="/offices/nge" element={<NGEBuildingOffices />} />
-                <Route path="/offices/library" element={<LibraryBuildingOffices />} />
-                <Route path="/offices/allied" element={<AlliedBuildingOffices />} />
+                <Route path="/offices-acad" element={<AcadOffices />} />
+                <Route path="/offices-highschool" element={<HighSchoolBuildingOffices />} />
+                <Route path="/offices-elementary" element={<ElementaryBuildingOffices />} />
+                <Route path="/offices-gle" element={<GLEBuildingOffices />} />
+                <Route path="/offices-rtl" element={<RTLBuildingOffices />} />
+                <Route path="/offices-nge" element={<NGEBuildingOffices />} />
+                <Route path="/offices-library" element={<LibraryBuildingOffices />} />
+                <Route path="/offices-allied" element={<AlliedBuildingOffices />} />
             </Routes>
         </Router>
     );
