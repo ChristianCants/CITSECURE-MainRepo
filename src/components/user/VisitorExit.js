@@ -59,6 +59,12 @@ class VisitorExit extends Component {
     }
   };
 
+  handleErrorClose = () => {
+    this.setState({
+      showErrorModal: false, 
+    });
+  };
+
   handleLogin = async (e) => {
     e.preventDefault();
     this.setState({ loading: true });
@@ -146,7 +152,14 @@ class VisitorExit extends Component {
     const formattedTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
 
     return (
-      <section className="background-radial-gradient overflow-hidden" style={{ backgroundImage: 'url("images/IN&OUT.png")', height: '100vh', overflow: 'hidden' }}>
+      <section  className="background-radial-gradient overflow-hidden" 
+          style={{
+            backgroundImage: 'url("images/TRY NEW.png")',
+            backgroundSize: 'cover', 
+            backgroundRepeat: 'no-repeat', 
+            backgroundPosition: 'center', 
+            height: '100vh',
+            overflow: 'hidden',}}>
         <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 d-flex justify-content-end align-items-center">
           <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
             <div className="card bg-glass" style={{ border: '3px solid maroon', borderRadius: '8px', padding: '15px', backgroundColor: 'rgba(255, 255, 255, 0.8)' }}>

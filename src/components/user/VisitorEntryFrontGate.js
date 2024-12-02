@@ -17,7 +17,7 @@ class VisitorEntryFrontGate extends Component {
     super(props);
     this.state = {
 
-      selectedGate: 'front Gate',
+      selectedGate: 'Front Gate',
       firstName: '',
       lastName: '',
       purpose: '',
