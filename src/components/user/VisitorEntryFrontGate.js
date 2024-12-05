@@ -40,13 +40,16 @@ class VisitorEntryFrontGate extends Component {
 
     this.modalRef = React.createRef();
      // Define buildings and their respective offices
+
      this.buildingOffices = {
+
       "ACAD": [
+
         "College of Engineering and Architecture",
         "CES Department",
         "Alumni Affairs Office",
         "SSD",
-        "Office of Property Custodian",
+        "Property Custodian Office",
         "IMDC",
         "Jurani Hall",
         "CMBA-DHM Department",
@@ -56,13 +59,17 @@ class VisitorEntryFrontGate extends Component {
         "Industrial Engineering Department",
         "Architecture Department"
       ],
+
       "NGE": [
+
         "MIS/CREATE Department",
         "CCS Department",
         "Wildcats Innovation",
         "Technical Support Group",
-        "CNAHS"
+        "CNAHS",
+        "Case Room"
       ],
+
       "ALLIED": [
         "CEA-Electrical Engineering Department",
         "CEA-Civil Engineering Department",
@@ -72,6 +79,7 @@ class VisitorEntryFrontGate extends Component {
         "DEMPC",
         "Mining Engineering Department"
       ],
+
       "RTL": [
         "Executive Office",
         "FAO",
@@ -89,7 +97,9 @@ class VisitorEntryFrontGate extends Component {
         "CASE-BIO",
         "MARKETING OFFICE"
       ],
+
       "GLE": [
+
         "RDCO/ITSO",
         "Vice President for Academic Affairs",
         "IMPO",
@@ -98,15 +108,52 @@ class VisitorEntryFrontGate extends Component {
         "CEA-CPE Department",
         "CEA-ECE Department"
       ],
+      
       "SAL": [
         "JHS PRINCIPAL’S OFFICE",
         "JHS-COMP. LAB.",
         "SHS registrar",
         "GYM",
         "CASE-PE",
-        "COLLEGE LIBRARY",
         "MAIN CLINIC"
       ],
+
+      "ELEM": [
+        
+        "Elem Principal's  Office",
+        "Elem - Computer Lab",
+        "Elem Guidance Office",
+        "Elem Library",
+        "Waiting Area",
+        "Playground",
+        "Activity Center",
+        "Elem Registrar",
+        "Elem Clinic"
+        
+
+         
+      ],
+
+
+      "University Library": [
+        
+        "COLLGE LIBRARY",
+        "SENIOR-HIGH LIBRARY",
+        "LRAC",
+        "ACTIVITY CENTER",
+         
+      ],
+
+
+      "GYM": [
+        
+        "PE DEPARTMENT",
+        "Covered Court",
+        "University GYM"
+         
+      ],
+
+
     };
   }
   

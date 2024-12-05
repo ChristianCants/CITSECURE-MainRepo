@@ -96,6 +96,7 @@ class VisitorEntryBackGate extends Component {
         "CEA-CPE Department",
         "CEA-ECE Department"
       ],
+      
       "SAL": [
         "JHS PRINCIPAL’S OFFICE",
         "JHS-COMP. LAB.",
@@ -105,6 +106,43 @@ class VisitorEntryBackGate extends Component {
         "COLLEGE LIBRARY",
         "MAIN CLINIC"
       ],
+
+      
+      "ELEM": [
+        
+        "Elem Principal's  Office",
+        "Elem - Computer Lab",
+        "Elem Guidance Office",
+        "Elem Library",
+        "Waiting Area",
+        "Playground",
+        "Activity Center",
+        "Elem Registrar",
+        "Elem Clinic"
+        
+
+         
+      ],
+
+
+      "University Library": [
+        
+        "COLLGE LIBRARY",
+        "SENIOR-HIGH LIBRARY",
+        "LRAC",
+        "ACTIVITY CENTER",
+         
+      ],
+
+
+      "GYM": [
+        
+        "PE DEPARTMENT",
+        "Covered Court",
+        "University GYM"
+         
+      ],
+
     };
   }
   
